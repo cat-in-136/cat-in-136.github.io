@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="4.0.1">Jekyll</generator>
   <link href="https://cat-in-136.github.io/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://cat-in-136.github.io/" rel="alternate" type="text/html" />
-  <updated>2020-09-06T14:13:03+09:00</updated>
+  <updated>2020-10-03T12:49:06+09:00</updated>
   <id>https://cat-in-136.github.io/</id>
 
   
@@ -17,6 +17,723 @@
 
   
   
+  
+    <entry>
+      <title type="html">Diff between firefox 82.0 beta 6 default preference and firefox 81.0.1</title>
+      <link href="https://cat-in-136.github.io/2020/10/diff-between-firefox-820-beta-6-default.html" rel="alternate" type="text/html" title="Diff between firefox 82.0 beta 6 default preference and firefox 81.0.1" />
+      <published>2020-10-03T12:46:13+09:00</published>
+      <updated>2020-10-03T12:46:13+09:00</updated>
+      <id>https://cat-in-136.github.io/2020/10/diff-between-firefox-820-beta-6-default</id>
+      
+      
+      
+      <content type="html" xml:base="https://cat-in-136.github.io/2020/10/diff-between-firefox-820-beta-6-default.html">&lt;p&gt;
+This is difference between the default preference of Firefox 82.0 beta 6 and one of 81.0.1.
+This diff table is generated with my small script &lt;a href=&quot;https://github.com/cat-in-136/firefox-prefjs-surveyer&quot;&gt;firefox-prefjs-surveyer&lt;/a&gt;.
+&lt;/p&gt;
+
+&lt;div&gt;
+&lt;table class=&quot;diff_firefox82_pref_diff&quot;&gt;
+&lt;caption&gt;Preference difference&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;&lt;td&gt;Pref&lt;/td&gt;&lt;td&gt;Firefox 81.0.1&lt;/td&gt;&lt;td&gt;Firefox 82.0 beta 6&lt;/td&gt;&lt;/tr&gt;
+&lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;releaseNotesURL&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;channel&lt;/td&gt;
+        &lt;td&gt;release&lt;/td&gt;
+        &lt;td&gt;beta&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;url.&lt;wbr /&gt;details&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/notes&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/beta/notes&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;url.&lt;wbr /&gt;manual&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/beta&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;cache.&lt;wbr /&gt;offline.&lt;wbr /&gt;storage.&lt;wbr /&gt;enable&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;defaultbrowser.&lt;wbr /&gt;notificationbar&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;show&lt;wbr /&gt;Bookmarks&lt;wbr /&gt;Toolbar&lt;wbr /&gt;After&lt;wbr /&gt;Migration&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;asrouter.&lt;wbr /&gt;providers.&lt;wbr /&gt;cfr&lt;/td&gt;
+        &lt;td class=&quot;json&quot;&gt;{&amp;quot;id&amp;quot;:&amp;quot;cfr&amp;quot;,&amp;quot;enabled&amp;quot;:true,&amp;quot;type&amp;quot;:&amp;quot;remote-settings&amp;quot;,&amp;quot;bucket&amp;quot;:&amp;quot;cfr&amp;quot;,&amp;quot;frequency&amp;quot;:{&amp;quot;custom&amp;quot;:[{&amp;quot;period&amp;quot;:&amp;quot;daily&amp;quot;,&amp;quot;cap&amp;quot;:1}]},&amp;quot;categories&amp;quot;:[&amp;quot;cfrAddons&amp;quot;,&amp;quot;cfrFeatures&amp;quot;],&amp;quot;updateCycleInMs&amp;quot;:3600000}&lt;/td&gt;
+        &lt;td class=&quot;json&quot;&gt;{&amp;quot;id&amp;quot;:&amp;quot;cfr&amp;quot;,&amp;quot;enabled&amp;quot;:true,&amp;quot;type&amp;quot;:&amp;quot;remote-settings&amp;quot;,&amp;quot;bucket&amp;quot;:&amp;quot;cfr&amp;quot;,&amp;quot;updateCycleInMs&amp;quot;:3600000}&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;asrouter.&lt;wbr /&gt;providers.&lt;wbr /&gt;cfr-fxa&lt;/td&gt;
+        &lt;td class=&quot;json&quot;&gt;{&amp;quot;id&amp;quot;:&amp;quot;cfr-fxa&amp;quot;,&amp;quot;enabled&amp;quot;:true,&amp;quot;type&amp;quot;:&amp;quot;remote-settings&amp;quot;,&amp;quot;bucket&amp;quot;:&amp;quot;cfr-fxa&amp;quot;,&amp;quot;frequency&amp;quot;:{&amp;quot;custom&amp;quot;:[{&amp;quot;period&amp;quot;:&amp;quot;daily&amp;quot;,&amp;quot;cap&amp;quot;:1}]},&amp;quot;updateCycleInMs&amp;quot;:3600000}&lt;/td&gt;
+        &lt;td class=&quot;json&quot;&gt;{&amp;quot;id&amp;quot;:&amp;quot;cfr-fxa&amp;quot;,&amp;quot;enabled&amp;quot;:true,&amp;quot;type&amp;quot;:&amp;quot;remote-settings&amp;quot;,&amp;quot;bucket&amp;quot;:&amp;quot;cfr-fxa&amp;quot;,&amp;quot;updateCycleInMs&amp;quot;:3600000}&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;discoverystream.&lt;wbr /&gt;region-stories-block&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;FR&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;ut.&lt;wbr /&gt;events&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;search.&lt;wbr /&gt;geoSpecific&lt;wbr /&gt;Defaults&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;search.&lt;wbr /&gt;geoSpecific&lt;wbr /&gt;Defaults.&lt;wbr /&gt;url&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://search.services.mozilla.com/1/%APP%/%VERSION%/%CHANNEL%/%LOCALE%/%REGION%/%DISTRIBUTION%/%DISTRIBUTION_VERSION%&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;search.&lt;wbr /&gt;modern&lt;wbr /&gt;Config&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;update2.&lt;wbr /&gt;disable&lt;wbr /&gt;OneOffs&lt;wbr /&gt;Horizontal&lt;wbr /&gt;Key&lt;wbr /&gt;Navigation&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;update2.&lt;wbr /&gt;empty&lt;wbr /&gt;Search&lt;wbr /&gt;Behavior&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;2&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;devtools.&lt;wbr /&gt;netmonitor.&lt;wbr /&gt;features.&lt;wbr /&gt;server&lt;wbr /&gt;Sent&lt;wbr /&gt;Events&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;devtools.&lt;wbr /&gt;whatsnew.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;devtools.&lt;wbr /&gt;whatsnew.&lt;wbr /&gt;feature-enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;block_&lt;wbr /&gt;download_&lt;wbr /&gt;in_&lt;wbr /&gt;sandboxed_&lt;wbr /&gt;iframes&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;disable_&lt;wbr /&gt;window_&lt;wbr /&gt;open_&lt;wbr /&gt;feature.&lt;wbr /&gt;close&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;disable_&lt;wbr /&gt;window_&lt;wbr /&gt;open_&lt;wbr /&gt;feature.&lt;wbr /&gt;location&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;disable_&lt;wbr /&gt;window_&lt;wbr /&gt;open_&lt;wbr /&gt;feature.&lt;wbr /&gt;menubar&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;disable_&lt;wbr /&gt;window_&lt;wbr /&gt;open_&lt;wbr /&gt;feature.&lt;wbr /&gt;minimizable&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;disable_&lt;wbr /&gt;window_&lt;wbr /&gt;open_&lt;wbr /&gt;feature.&lt;wbr /&gt;personalbar&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;disable_&lt;wbr /&gt;window_&lt;wbr /&gt;open_&lt;wbr /&gt;feature.&lt;wbr /&gt;resizable&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;disable_&lt;wbr /&gt;window_&lt;wbr /&gt;open_&lt;wbr /&gt;feature.&lt;wbr /&gt;status&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;disable_&lt;wbr /&gt;window_&lt;wbr /&gt;open_&lt;wbr /&gt;feature.&lt;wbr /&gt;titlebar&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;disable_&lt;wbr /&gt;window_&lt;wbr /&gt;open_&lt;wbr /&gt;feature.&lt;wbr /&gt;toolbar&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;document.&lt;wbr /&gt;exec_&lt;wbr /&gt;command.&lt;wbr /&gt;nested_&lt;wbr /&gt;calls_&lt;wbr /&gt;allowed&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;max_&lt;wbr /&gt;script_&lt;wbr /&gt;run_&lt;wbr /&gt;time_&lt;wbr /&gt;without_&lt;wbr /&gt;important_&lt;wbr /&gt;user_&lt;wbr /&gt;input&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;10&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;media.&lt;wbr /&gt;mediasession.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;media.&lt;wbr /&gt;silence_&lt;wbr /&gt;duration_&lt;wbr /&gt;for_&lt;wbr /&gt;audibility&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;2.&lt;wbr /&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;min_&lt;wbr /&gt;background_&lt;wbr /&gt;timeout_&lt;wbr /&gt;value_&lt;wbr /&gt;without_&lt;wbr /&gt;budget_&lt;wbr /&gt;throttling&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;1000&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;script_&lt;wbr /&gt;loader.&lt;wbr /&gt;external_&lt;wbr /&gt;scripts.&lt;wbr /&gt;speculative_&lt;wbr /&gt;omt_&lt;wbr /&gt;parse.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;security.&lt;wbr /&gt;https_&lt;wbr /&gt;only_&lt;wbr /&gt;mode_&lt;wbr /&gt;send_&lt;wbr /&gt;http_&lt;wbr /&gt;background_&lt;wbr /&gt;request&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;security.&lt;wbr /&gt;sanitizer.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;storage.&lt;wbr /&gt;next_&lt;wbr /&gt;gen&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;window.&lt;wbr /&gt;content.&lt;wbr /&gt;untrusted.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;editor.&lt;wbr /&gt;hr_&lt;wbr /&gt;element.&lt;wbr /&gt;allow_&lt;wbr /&gt;to_&lt;wbr /&gt;delete_&lt;wbr /&gt;from_&lt;wbr /&gt;following_&lt;wbr /&gt;line&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;extensions.&lt;wbr /&gt;formautofill.&lt;wbr /&gt;creditCards.&lt;wbr /&gt;available&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;extensions.&lt;wbr /&gt;formautofill.&lt;wbr /&gt;creditCards.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;extensions.&lt;wbr /&gt;pocket.&lt;wbr /&gt;onSaveRecs&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;extensions.&lt;wbr /&gt;pocket.&lt;wbr /&gt;onSaveRecs.&lt;wbr /&gt;locales&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;en-US,&lt;wbr /&gt;en-GB,&lt;wbr /&gt;en-CA&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;extensions.&lt;wbr /&gt;post&lt;wbr /&gt;Download&lt;wbr /&gt;ThirdParty&lt;wbr /&gt;Prompt&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;extensions.&lt;wbr /&gt;webcompat-reporter.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;general.&lt;wbr /&gt;smoothScroll.&lt;wbr /&gt;mouseWheel.&lt;wbr /&gt;duration&lt;wbr /&gt;MaxMS&lt;/td&gt;
+        &lt;td&gt;400&lt;/td&gt;
+        &lt;td&gt;200&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;general.&lt;wbr /&gt;smoothScroll.&lt;wbr /&gt;mouseWheel.&lt;wbr /&gt;duration&lt;wbr /&gt;MinMS&lt;/td&gt;
+        &lt;td&gt;200&lt;/td&gt;
+        &lt;td&gt;50&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;general.&lt;wbr /&gt;smoothScroll.&lt;wbr /&gt;mouseWheel.&lt;wbr /&gt;migration&lt;wbr /&gt;Percent&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;100&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;geo.&lt;wbr /&gt;provider.&lt;wbr /&gt;network.&lt;wbr /&gt;compare.&lt;wbr /&gt;url&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY%&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;geo.&lt;wbr /&gt;provider.&lt;wbr /&gt;network.&lt;wbr /&gt;url&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY%&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;gfx.&lt;wbr /&gt;webrender.&lt;wbr /&gt;debug.&lt;wbr /&gt;disable-raster-root-scale&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;mem.&lt;wbr /&gt;gc_&lt;wbr /&gt;helper_&lt;wbr /&gt;thread_&lt;wbr /&gt;ratio&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;50&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;mem.&lt;wbr /&gt;gc_&lt;wbr /&gt;max_&lt;wbr /&gt;helper_&lt;wbr /&gt;threads&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;8&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;off_&lt;wbr /&gt;thread_&lt;wbr /&gt;parse_&lt;wbr /&gt;global&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;counter-ancestor-scope.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;file-chooser-button.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;file-selector-button.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;is-and-where-better-error-recovery.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;moz-any-is-is.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;dynamic-reflow-roots.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;mathml.&lt;wbr /&gt;legacy_&lt;wbr /&gt;number_&lt;wbr /&gt;syntax.&lt;wbr /&gt;disabled&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;mathml.&lt;wbr /&gt;nonzero_&lt;wbr /&gt;unitless_&lt;wbr /&gt;lengths.&lt;wbr /&gt;disabled&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;media.&lt;wbr /&gt;clockdrift.&lt;wbr /&gt;buffering&lt;/td&gt;
+        &lt;td&gt;5&lt;/td&gt;
+        &lt;td&gt;50&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;media.&lt;wbr /&gt;ffmpeg.&lt;wbr /&gt;low-latency.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;media.&lt;wbr /&gt;navigator.&lt;wbr /&gt;video.&lt;wbr /&gt;offer_&lt;wbr /&gt;rtcp_&lt;wbr /&gt;rsize&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;media.&lt;wbr /&gt;peerconnection.&lt;wbr /&gt;dtls.&lt;wbr /&gt;version.&lt;wbr /&gt;min&lt;/td&gt;
+        &lt;td&gt;770&lt;/td&gt;
+        &lt;td&gt;771&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;media.&lt;wbr /&gt;peerconnection.&lt;wbr /&gt;mtransport_&lt;wbr /&gt;process&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;media.&lt;wbr /&gt;videocontrols.&lt;wbr /&gt;picture-in-picture.&lt;wbr /&gt;video-toggle.&lt;wbr /&gt;mode&lt;/td&gt;
+        &lt;td&gt;-1&lt;/td&gt;
+        &lt;td&gt;2&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;preload&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;process.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;trr.&lt;wbr /&gt;split_&lt;wbr /&gt;horizon_&lt;wbr /&gt;mitigations&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;pdfjs.&lt;wbr /&gt;render&lt;wbr /&gt;Interactive&lt;wbr /&gt;Forms&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;permissions.&lt;wbr /&gt;isolateBy.&lt;wbr /&gt;private&lt;wbr /&gt;Browsing&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;print.&lt;wbr /&gt;default_&lt;wbr /&gt;dpi&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;144.&lt;wbr /&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;print.&lt;wbr /&gt;tab_&lt;wbr /&gt;modal.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;privacy.&lt;wbr /&gt;annotate_&lt;wbr /&gt;channels.&lt;wbr /&gt;strict_&lt;wbr /&gt;list.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;privacy.&lt;wbr /&gt;purge_&lt;wbr /&gt;trackers.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;privacy.&lt;wbr /&gt;purge_&lt;wbr /&gt;trackers.&lt;wbr /&gt;logging.&lt;wbr /&gt;level&lt;/td&gt;
+        &lt;td&gt;Error&lt;/td&gt;
+        &lt;td&gt;Warn&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;privacy.&lt;wbr /&gt;window.&lt;wbr /&gt;name.&lt;wbr /&gt;update.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;prompts.&lt;wbr /&gt;modalType.&lt;wbr /&gt;httpAuth&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;3&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;prompts.&lt;wbr /&gt;tab&lt;wbr /&gt;Chrome&lt;wbr /&gt;Prompt&lt;wbr /&gt;SubDialog&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;bad_&lt;wbr /&gt;cert_&lt;wbr /&gt;domain_&lt;wbr /&gt;error.&lt;wbr /&gt;url_&lt;wbr /&gt;fix_&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;caps.&lt;wbr /&gt;allow_&lt;wbr /&gt;uri_&lt;wbr /&gt;is_&lt;wbr /&gt;ui_&lt;wbr /&gt;resource_&lt;wbr /&gt;in_&lt;wbr /&gt;checkloaduriflags&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;disallow_&lt;wbr /&gt;non_&lt;wbr /&gt;local_&lt;wbr /&gt;systemprincipal_&lt;wbr /&gt;in_&lt;wbr /&gt;tests&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;intermediate_&lt;wbr /&gt;preloading_&lt;wbr /&gt;healer.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;remote_&lt;wbr /&gt;settings.&lt;wbr /&gt;crlite_&lt;wbr /&gt;filters.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;view-source.&lt;wbr /&gt;reachable-from-inner-protocol&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;engine.&lt;wbr /&gt;bookmarks.&lt;wbr /&gt;validation.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;engine.&lt;wbr /&gt;creditcards.&lt;wbr /&gt;available&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;engine.&lt;wbr /&gt;passwords.&lt;wbr /&gt;validation.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;prefs.&lt;wbr /&gt;sync.&lt;wbr /&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;asrouter.&lt;wbr /&gt;userprefs.&lt;wbr /&gt;cfr.&lt;wbr /&gt;addons&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;prefs.&lt;wbr /&gt;sync.&lt;wbr /&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;asrouter.&lt;wbr /&gt;userprefs.&lt;wbr /&gt;cfr.&lt;wbr /&gt;features&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;prefs.&lt;wbr /&gt;sync.&lt;wbr /&gt;browser.&lt;wbr /&gt;sessionstore.&lt;wbr /&gt;warnOnQuit&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;prefs.&lt;wbr /&gt;sync.&lt;wbr /&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;suggest.&lt;wbr /&gt;topsites&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;prefs.&lt;wbr /&gt;sync.&lt;wbr /&gt;general.&lt;wbr /&gt;autoScroll&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;prefs.&lt;wbr /&gt;sync.&lt;wbr /&gt;general.&lt;wbr /&gt;smoothScroll&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;prefs.&lt;wbr /&gt;sync.&lt;wbr /&gt;media.&lt;wbr /&gt;videocontrols.&lt;wbr /&gt;picture-in-picture.&lt;wbr /&gt;video-toggle.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;prefs.&lt;wbr /&gt;sync.&lt;wbr /&gt;privacy.&lt;wbr /&gt;userContext.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;prefs.&lt;wbr /&gt;sync.&lt;wbr /&gt;privacy.&lt;wbr /&gt;userContext.&lt;wbr /&gt;new&lt;wbr /&gt;TabContainer&lt;wbr /&gt;On&lt;wbr /&gt;LeftClick.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;prefs.&lt;wbr /&gt;sync.&lt;wbr /&gt;ui.&lt;wbr /&gt;osk.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;toolkit.&lt;wbr /&gt;about&lt;wbr /&gt;Processes.&lt;wbr /&gt;show&lt;wbr /&gt;All&lt;wbr /&gt;Subframes&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;toolkit.&lt;wbr /&gt;about&lt;wbr /&gt;Processes.&lt;wbr /&gt;show&lt;wbr /&gt;Threads&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;trailhead.&lt;wbr /&gt;firstrun.&lt;wbr /&gt;branches&lt;/td&gt;
+        &lt;td&gt;join-dynamic&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;trailhead.&lt;wbr /&gt;firstrun.&lt;wbr /&gt;newtab.&lt;wbr /&gt;triplets&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;webgl.&lt;wbr /&gt;enable-ahardwarebuffer&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;webgl.&lt;wbr /&gt;out-of-process.&lt;wbr /&gt;shmem-size&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;100000&lt;/td&gt;
+      &lt;/tr&gt;
+
+    &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;style type=&quot;text/css&quot;&gt;&lt;!-- /* --&gt;&lt;![CDATA[ /* */
+table.diff_firefox82_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
+table.diff_firefox82_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
+table.diff_firefox82_pref_diff thead td { background-color: #ddd; font-weight: bold; }
+table.diff_firefox82_pref_diff td.json,
+table.diff_firefox82_pref_diff td.uri,
+table.diff_firefox82_pref_diff td.dump { word-break: break-all; }
+table.diff_firefox82_pref_diff td.undefined { color: #888; font-style: italic; }
+table.diff_firefox82_pref_diff tr.sameval td:first-child { color: #444; }
+table.diff_firefox82_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
+table.diff_firefox82_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
+table.diff_firefox82_pref_diff tbody tr:hover { background-color: #eee; }
+table.diff_firefox82_pref_diff tbody tr { transition: background 0.125s ease-in-out 0s; }
+/* ]]&gt;&lt;!-- */ --&gt;&lt;/style&gt;</content>
+      
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>cat_in_136</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="pref diff" />
+      
+        <category term="mozilla" />
+      
+
+      
+        <summary type="html">This is difference between the default preference of Firefox 82.0 beta 6 and one of 81.0.1. This diff table is generated with my small script firefox-prefjs-surveyer. Preference difference PrefFirefox 81.0.1Firefox 82.0 beta 6 app.releaseNotesURL https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew app.update.channel release beta app.update.url.details https://www.mozilla.org/%LOCALE%/firefox/notes https://www.mozilla.org/%LOCALE%/firefox/beta/notes app.update.url.manual https://www.mozilla.org/%LOCALE%/firefox/ https://www.mozilla.org/%LOCALE%/firefox/beta browser.cache.offline.storage.enable true false browser.defaultbrowser.notificationbar false true browser.migrate.showBookmarksToolbarAfterMigration false true browser.newtabpage.activity-stream.asrouter.providers.cfr {&amp;quot;id&amp;quot;:&amp;quot;cfr&amp;quot;,&amp;quot;enabled&amp;quot;:true,&amp;quot;type&amp;quot;:&amp;quot;remote-settings&amp;quot;,&amp;quot;bucket&amp;quot;:&amp;quot;cfr&amp;quot;,&amp;quot;frequency&amp;quot;:{&amp;quot;custom&amp;quot;:[{&amp;quot;period&amp;quot;:&amp;quot;daily&amp;quot;,&amp;quot;cap&amp;quot;:1}]},&amp;quot;categories&amp;quot;:[&amp;quot;cfrAddons&amp;quot;,&amp;quot;cfrFeatures&amp;quot;],&amp;quot;updateCycleInMs&amp;quot;:3600000} {&amp;quot;id&amp;quot;:&amp;quot;cfr&amp;quot;,&amp;quot;enabled&amp;quot;:true,&amp;quot;type&amp;quot;:&amp;quot;remote-settings&amp;quot;,&amp;quot;bucket&amp;quot;:&amp;quot;cfr&amp;quot;,&amp;quot;updateCycleInMs&amp;quot;:3600000} browser.newtabpage.activity-stream.asrouter.providers.cfr-fxa {&amp;quot;id&amp;quot;:&amp;quot;cfr-fxa&amp;quot;,&amp;quot;enabled&amp;quot;:true,&amp;quot;type&amp;quot;:&amp;quot;remote-settings&amp;quot;,&amp;quot;bucket&amp;quot;:&amp;quot;cfr-fxa&amp;quot;,&amp;quot;frequency&amp;quot;:{&amp;quot;custom&amp;quot;:[{&amp;quot;period&amp;quot;:&amp;quot;daily&amp;quot;,&amp;quot;cap&amp;quot;:1}]},&amp;quot;updateCycleInMs&amp;quot;:3600000} {&amp;quot;id&amp;quot;:&amp;quot;cfr-fxa&amp;quot;,&amp;quot;enabled&amp;quot;:true,&amp;quot;type&amp;quot;:&amp;quot;remote-settings&amp;quot;,&amp;quot;bucket&amp;quot;:&amp;quot;cfr-fxa&amp;quot;,&amp;quot;updateCycleInMs&amp;quot;:3600000} browser.newtabpage.activity-stream.discoverystream.region-stories-block undefined FR browser.newtabpage.activity-stream.telemetry.ut.events false true browser.search.geoSpecificDefaults true undefined browser.search.geoSpecificDefaults.url https://search.services.mozilla.com/1/%APP%/%VERSION%/%CHANNEL%/%LOCALE%/%REGION%/%DISTRIBUTION%/%DISTRIBUTION_VERSION% undefined browser.search.modernConfig true undefined browser.urlbar.update2.disableOneOffsHorizontalKeyNavigation undefined false browser.urlbar.update2.emptySearchBehavior undefined 2 devtools.netmonitor.features.serverSentEvents false true devtools.whatsnew.enabled false undefined devtools.whatsnew.feature-enabled false undefined dom.block_download_in_sandboxed_iframes false true dom.disable_window_open_feature.close false undefined dom.disable_window_open_feature.location true undefined dom.disable_window_open_feature.menubar false undefined dom.disable_window_open_feature.minimizable false undefined dom.disable_window_open_feature.personalbar false undefined dom.disable_window_open_feature.resizable true undefined dom.disable_window_open_feature.status true undefined dom.disable_window_open_feature.titlebar false undefined dom.disable_window_open_feature.toolbar false undefined dom.document.exec_command.nested_calls_allowed true false dom.max_script_run_time_without_important_user_input undefined 10 dom.media.mediasession.enabled false true dom.media.silence_duration_for_audibility undefined 2.0 dom.min_background_timeout_value_without_budget_throttling undefined 1000 dom.script_loader.external_scripts.speculative_omt_parse.enabled false true dom.security.https_only_mode_send_http_background_request undefined true dom.security.sanitizer.enabled undefined false dom.storage.next_gen false true dom.window.content.untrusted.enabled true false editor.hr_element.allow_to_delete_from_following_line undefined false extensions.formautofill.creditCards.available false true extensions.formautofill.creditCards.enabled false true extensions.pocket.onSaveRecs undefined false extensions.pocket.onSaveRecs.locales undefined en-US,en-GB,en-CA extensions.postDownloadThirdPartyPrompt undefined true extensions.webcompat-reporter.enabled false true general.smoothScroll.mouseWheel.durationMaxMS 400 200 general.smoothScroll.mouseWheel.durationMinMS 200 50 general.smoothScroll.mouseWheel.migrationPercent undefined 100 geo.provider.network.compare.url undefined https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY% geo.provider.network.url https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY% https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY% gfx.webrender.debug.disable-raster-root-scale false undefined javascript.options.mem.gc_helper_thread_ratio undefined 50 javascript.options.mem.gc_max_helper_threads undefined 8 javascript.options.off_thread_parse_global undefined true layout.css.counter-ancestor-scope.enabled undefined true layout.css.file-chooser-button.enabled false undefined layout.css.file-selector-button.enabled undefined true layout.css.is-and-where-better-error-recovery.enabled undefined true layout.css.moz-any-is-is.enabled false true layout.dynamic-reflow-roots.enabled false true mathml.legacy_number_syntax.disabled true undefined mathml.nonzero_unitless_lengths.disabled true undefined media.clockdrift.buffering 5 50 media.ffmpeg.low-latency.enabled false undefined media.navigator.video.offer_rtcp_rsize undefined true media.peerconnection.dtls.version.min 770 771 media.peerconnection.mtransport_process false true media.videocontrols.picture-in-picture.video-toggle.mode -1 2 network.preload false true network.process.enabled false true network.trr.split_horizon_mitigations undefined true pdfjs.renderInteractiveForms false true permissions.isolateBy.privateBrowsing false true print.default_dpi undefined 144.0 print.tab_modal.enabled false true privacy.annotate_channels.strict_list.enabled false true privacy.purge_trackers.enabled false true privacy.purge_trackers.logging.level Error Warn privacy.window.name.update.enabled undefined false prompts.modalType.httpAuth undefined 3 prompts.tabChromePromptSubDialog false true security.bad_cert_domain_error.url_fix_enabled false true security.caps.allow_uri_is_ui_resource_in_checkloaduriflags undefined false security.disallow_non_local_systemprincipal_in_tests undefined false security.intermediate_preloading_healer.enabled false true security.remote_settings.crlite_filters.enabled false true security.view-source.reachable-from-inner-protocol false undefined services.sync.engine.bookmarks.validation.enabled undefined true services.sync.engine.creditcards.available false true services.sync.engine.passwords.validation.enabled undefined true services.sync.prefs.sync.browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons undefined true services.sync.prefs.sync.browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features undefined true services.sync.prefs.sync.browser.sessionstore.warnOnQuit undefined true services.sync.prefs.sync.browser.urlbar.suggest.topsites undefined true services.sync.prefs.sync.general.autoScroll undefined true services.sync.prefs.sync.general.smoothScroll undefined true services.sync.prefs.sync.media.videocontrols.picture-in-picture.video-toggle.enabled undefined true services.sync.prefs.sync.privacy.userContext.enabled undefined true services.sync.prefs.sync.privacy.userContext.newTabContainerOnLeftClick.enabled undefined true services.sync.prefs.sync.ui.osk.enabled undefined true toolkit.aboutProcesses.showAllSubframes undefined false toolkit.aboutProcesses.showThreads undefined false toolkit.telemetry.enabled false true trailhead.firstrun.branches join-dynamic undefined trailhead.firstrun.newtab.triplets undefined webgl.enable-ahardwarebuffer undefined false webgl.out-of-process.shmem-size undefined 100000</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Diff between firefox 81.0 beta 6 default preference and firefox 80.0.1</title>
@@ -4330,187 +5047,6 @@ by clicking the button (highlighted with red box) on PulseAudio Volume Control.&
 
       
         <summary type="html">TL;DR % pacmd load-module module-null-sink sink_name=NullSink % gst-launch-1.0 pulsesrc device=... ! pitch pitch=2 ! pulsesink device=NullSink % pavucontrol Null sink as a loopback device At first, create a null sink to output the pitch-shifted audio to. % pacmd load-module module-null-sink sink_name=NullSink As written in the document, a null sink have a monitor source. All sinks have a corresponding “monitor” source which makes the null sink a practical way to plumb output to input. So, we can use it as a loopback device. i.e. It means to output pitch-shifted audio to the null device and use the monitor device as a recording device. Apply filter on GStreamer To check the microphone device name, execute pacmd list-sources | grep name. % pacmd list-sources | grep name name: &amp;lt;alsa_output.usb-XXXX_USB_PnP_Audio_Device-XX.analog-stereo.monitor&amp;gt; name: &amp;lt;alsa_input.usb-XXXX_USB_PnP_Audio_Device-XX.mono-fallback&amp;gt; name: &amp;lt;alsa_output.pci-XXXX_XX_XX.X.analog-stereo.monitor&amp;gt; name: &amp;lt;alsa_input.pci-XXXX_XX_XX.X.analog-stereo&amp;gt; name: &amp;lt;NullSink.monitor&amp;gt; name: &amp;lt;alsa_output.pci-XXXX_XX_XX.X.hdmi-stereo-extraX.monitor&amp;gt; Device names ending in .monitor means monitor devices, not actual microphones. In this example, following devices are actual microphones: alsa_input.usb-XXXX_USB_PnP_Audio_Device-XX.mono-fallback alsa_input.pci-XXXX_XX_XX.X.analog-stereo Here, let’s apply a pitch filter to the first device (USB-connected microphone). % gst-launch-1.0 pulsesrc device=alsa_input.usb-XXXX_USB_PnP_Audio_Device-XX.mono-fallback ! \ pitch pitch=2 ! \ pulsesink device=NullSink Of cause, replace device=... with microphone device name of your environment. FYI: source device and sink device can be dynamically reconfigurable by PulseAudio Volume Control as describe on the next section. Application-specific audio device PulseAudio can control playback device and recording device per application. Change the recording device to null sink for the app you want to use. It can change dynamically! For example, you can change the recording device for Skype app by clicking the button (highlighted with red box) on PulseAudio Volume Control. Screenshot of PulseAudio Volume Control Choose the null sink, and then pitch-shifted voice will sent to Skype app. References Modules, PulseAudio Document pitch, GStreamer API References LinuxにおけるSkypeとPulseaudioを用いたスプリット/ミキシング - Chienomi</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Porting GLSL Sandbox effect to GStreamer glshader element</title>
-      <link href="https://cat-in-136.github.io/2020/05/port-glsl-sandbox-effect-to-gstreamer-glshader.html" rel="alternate" type="text/html" title="Porting GLSL Sandbox effect to GStreamer glshader element" />
-      <published>2020-05-03T00:48:01+09:00</published>
-      <updated>2020-05-03T00:48:01+09:00</updated>
-      <id>https://cat-in-136.github.io/2020/05/port-glsl-sandbox-effect-to-gstreamer-glshader</id>
-      
-      
-      
-      <content type="html" xml:base="https://cat-in-136.github.io/2020/05/port-glsl-sandbox-effect-to-gstreamer-glshader.html">&lt;p&gt;GStreamer has various filter elements, among which is
-&lt;a href=&quot;https://gstreamer.freedesktop.org/documentation/opengl/glshader.html&quot;&gt;OpenGL fragment shader filter “glshader”&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;This filter accepts GLSL vertex source and shader,
-but you can specify only shader. For example:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gst-launch-1.0 videotestsrc ! glupload ! glshader fragment=&quot;\&quot;`cat myshader.frag`\&quot;&quot; ! glimagesink
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;“Shader” can create real-time effect/demo “movie” like posted in &lt;a href=&quot;http://glslsandbox.com/&quot;&gt;GLSLSandbox&lt;/a&gt; and &lt;a href=&quot;https://www.shadertoy.com/&quot;&gt;Shadertoy&lt;/a&gt;.
-So, I looked into how to stream “shader” into Gstreamer.&lt;/p&gt;
-
-&lt;h3 id=&quot;input-is-required&quot;&gt;Input is required&lt;/h3&gt;
-
-&lt;p&gt;An input is actually required for glshader.
-glshader is an implement of &lt;code class=&quot;highlighter-rouge&quot;&gt;GstBaseTransform&lt;/code&gt;, which shall have a sink pad.&lt;/p&gt;
-
-&lt;figure&gt; &lt;img class=&quot;fitcontain&quot; src=&quot;/images/2020-05-03-port-glsl-sandbox-effect-to-gstreamer-glshader-diagram-glshader.svg&quot; width=&quot;957&quot; height=&quot;256&quot; loading=&quot;lazy&quot; /&gt;
-&lt;figcaption&gt;Example diagram of glshader&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;If no input required to the filter, the a dummy input is required.
-I believe gltestsrc is good,
-because using OpenGL source is the most efficient way to stream it to the glshader element
-without conversion.&lt;/p&gt;
-
-&lt;h3 id=&quot;shader-parameter-incompatibility-between-gstreamer-and-glslsandbox&quot;&gt;Shader parameter incompatibility between GStreamer and GLSLSandbox&lt;/h3&gt;
-
-&lt;p&gt;glshader varying and uniform parameters:&lt;/p&gt;
-
-&lt;div class=&quot;language-glsl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;varying&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;vec2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v_texcoord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;uniform&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;sampler2D&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;uniform&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;uniform&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;uniform&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;GLSLSandbox uniform parameters:&lt;/p&gt;
-
-&lt;div class=&quot;language-glsl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;uniform&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;uniform&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;vec2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mouse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;uniform&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;vec2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resolution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;uniform&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;sampler2D&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;backbuffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Here, it is impossible to port some uniforms such as &lt;code class=&quot;highlighter-rouge&quot;&gt;mouse&lt;/code&gt; into glshader.
-&lt;code class=&quot;highlighter-rouge&quot;&gt;time&lt;/code&gt; can be ported in the same value.
-&lt;code class=&quot;highlighter-rouge&quot;&gt;resolution&lt;/code&gt; can be ported to &lt;code class=&quot;highlighter-rouge&quot;&gt;vec2(width, height)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;The output parameter &lt;code class=&quot;highlighter-rouge&quot;&gt;gl_FragColor&lt;/code&gt; is same.
-&lt;code class=&quot;highlighter-rouge&quot;&gt;Gl_FragCoord&lt;/code&gt; can be used in the same way, but the coordinate systems are different.&lt;/p&gt;
-
-&lt;figure&gt; &lt;object width=&quot;673&quot; height=&quot;184&quot; data=&quot;/images/2020-05-03-port-glsl-sandbox-effect-to-gstreamer-glshader-coordinate-system.svg&quot;&gt;&lt;/object&gt;
-&lt;figcaption&gt;Coordinate system difference&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;The coordinate transformation is required to acquire the same output image.
-For example,&lt;/p&gt;
-
-&lt;div class=&quot;language-glsl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// For GLSLSandbox&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#ifdef GL_ES
-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;precision&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;mediump&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#endif
-&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#extension GL_OES_standard_derivatives : enable
-&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;uniform&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;uniform&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;vec2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mouse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;uniform&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;vec2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resolution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;kt&quot;&gt;vec2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uv&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;gl_FragCoord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resolution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;gl_FragColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;vec4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-glsl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// For GStreamer glshader&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#version 100
-#ifdef GL_ES
-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;precision&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;mediump&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#endif
-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;varying&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;vec2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v_texcoord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;uniform&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;sampler2D&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;uniform&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;uniform&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;uniform&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;kt&quot;&gt;vec2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uv&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;vec2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;gl_FragCoord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;gl_FragCoord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;vec2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;gl_FragColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;vec4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Both yield same output as following:&lt;/p&gt;
-
-&lt;figure&gt; &lt;img src=&quot;/images/2020-05-03-port-glsl-sandbox-effect-to-gstreamer-glshader-example.png&quot; width=&quot;320&quot; height=&quot;240&quot; loading=&quot;lazy&quot; /&gt;
-&lt;figcaption&gt;Example output&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;h3 id=&quot;output-sink&quot;&gt;Output sink&lt;/h3&gt;
-
-&lt;p&gt;All that’s left is to connect some filters and sinks after the glshader in the usual GStreamer way.&lt;/p&gt;
-
-&lt;p&gt;For example, to show a window, connect glimagesink directly:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;% gst-launch-1.0 gltestsrc pattern=black ! \
-      glshader fragment=&quot;\&quot;$(cat myshader.frag)\&quot;&quot; ! \
-      glimagesink
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;To redirect a V4L2 device, conversion is required before connect to the device:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;% gst-launch-1.0 gltestsrc pattern=black ! \
-      glshader fragment=&quot;\&quot;$(cat myshader.frag)\&quot;&quot; ! \
-      gldownload ! \
-      videoconvert ! \
-      videoscale ! \
-      video/x-raw,width=640,height=480,framerate=30/1,format=YUY2 ! \
-      v4l2sink device=/dev/video1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;To generate a PNG file…&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;% gst-launch-1.0 gltestsrc pattern=black num-buffers=1 ! \
-      glshader fragment=&quot;\&quot;$(cat myshader.frag)\&quot;&quot; ! \
-      gldownload ! \
-      videoconvert ! \
-      pngenc ! \
-      filesink location=capture1.png
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;reference&quot;&gt;Reference&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://gstreamer.freedesktop.org/documentation/opengl/glshader.html&quot;&gt;glshader&lt;/a&gt;, GStreamer API Reference&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://gstreamer.freedesktop.org/documentation/base/gstbasetransform.html&quot;&gt;GstBaseTransform&lt;/a&gt;, GStreamer API Reference&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://gstreamer.freedesktop.org/documentation/opengl/gltestsrc.html&quot;&gt;gltestsrc&lt;/a&gt;, GStreamer API Reference&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/mrdoob/glsl-sandbox&quot;&gt;mrdoob/glsl-sandbox: Online live editor for fragment shaders.&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/jolivain/gst-shadertoy&quot;&gt;jolivain/gst-shadertoy: Scripts for using some ShaderToy shaders in GStreamer&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content>
-      
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name></name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="glsl" />
-      
-        <category term="gstreamer" />
-      
-
-      
-        <summary type="html">GStreamer has various filter elements, among which is OpenGL fragment shader filter “glshader”. This filter accepts GLSL vertex source and shader, but you can specify only shader. For example: gst-launch-1.0 videotestsrc ! glupload ! glshader fragment=&quot;\&quot;`cat myshader.frag`\&quot;&quot; ! glimagesink “Shader” can create real-time effect/demo “movie” like posted in GLSLSandbox and Shadertoy. So, I looked into how to stream “shader” into Gstreamer. Input is required An input is actually required for glshader. glshader is an implement of GstBaseTransform, which shall have a sink pad. Example diagram of glshader If no input required to the filter, the a dummy input is required. I believe gltestsrc is good, because using OpenGL source is the most efficient way to stream it to the glshader element without conversion. Shader parameter incompatibility between GStreamer and GLSLSandbox glshader varying and uniform parameters: varying vec2 v_texcoord; uniform sampler2D tex; uniform float time; uniform float width; uniform float height; GLSLSandbox uniform parameters: uniform float time; uniform vec2 mouse; uniform vec2 resolution; uniform sampler2D backbuffer; Here, it is impossible to port some uniforms such as mouse into glshader. time can be ported in the same value. resolution can be ported to vec2(width, height). The output parameter gl_FragColor is same. Gl_FragCoord can be used in the same way, but the coordinate systems are different. Coordinate system difference The coordinate transformation is required to acquire the same output image. For example, // For GLSLSandbox #ifdef GL_ES precision mediump float; #endif #extension GL_OES_standard_derivatives : enable uniform float time; uniform vec2 mouse; uniform vec2 resolution; void main( void ) { vec2 uv = gl_FragCoord.xy / resolution; gl_FragColor = vec4( uv.x, uv.y, 1.0, 1.0 ); } // For GStreamer glshader #version 100 #ifdef GL_ES precision mediump float; #endif varying vec2 v_texcoord; uniform sampler2D tex; uniform float time; uniform float width; uniform float height; void main() { vec2 uv = vec2(gl_FragCoord.x, height - gl_FragCoord.y) / vec2(width, height); gl_FragColor = vec4( uv.x, uv.y, 1.0, 1.0 ); } Both yield same output as following: Example output Output sink All that’s left is to connect some filters and sinks after the glshader in the usual GStreamer way. For example, to show a window, connect glimagesink directly: % gst-launch-1.0 gltestsrc pattern=black ! \ glshader fragment=&quot;\&quot;$(cat myshader.frag)\&quot;&quot; ! \ glimagesink To redirect a V4L2 device, conversion is required before connect to the device: % gst-launch-1.0 gltestsrc pattern=black ! \ glshader fragment=&quot;\&quot;$(cat myshader.frag)\&quot;&quot; ! \ gldownload ! \ videoconvert ! \ videoscale ! \ video/x-raw,width=640,height=480,framerate=30/1,format=YUY2 ! \ v4l2sink device=/dev/video1 To generate a PNG file… % gst-launch-1.0 gltestsrc pattern=black num-buffers=1 ! \ glshader fragment=&quot;\&quot;$(cat myshader.frag)\&quot;&quot; ! \ gldownload ! \ videoconvert ! \ pngenc ! \ filesink location=capture1.png Reference glshader, GStreamer API Reference GstBaseTransform, GStreamer API Reference gltestsrc, GStreamer API Reference mrdoob/glsl-sandbox: Online live editor for fragment shaders. jolivain/gst-shadertoy: Scripts for using some ShaderToy shaders in GStreamer</summary>
       
 
       
