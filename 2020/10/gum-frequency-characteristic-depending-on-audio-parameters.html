@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,max-scale=10,min-scale=0.5,user-scalable=yes" />
+  <title>getUserMedia() Frequency Characteristic depending on audio parameters</title>
+
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="https://code.cdn.mozilla.net/fonts/fira.css" />
+
+  <link rel="canonical" href="https://cat-in-136.github.io/2020/10/gum-frequency-characteristic-depending-on-audio-parameters.html" />
+  <link rel="alternate" type="application/rss+xml" title="cat_in_136.blog() &raquo; Feed" href="/feed.xml" />
+  <meta property="og:url" content="https://cat-in-136.github.io/2020/10/gum-frequency-characteristic-depending-on-audio-parameters.html" />
+  <meta property="og:title" content="getUserMedia() Frequency Characteristic depending on audio parameters" /><meta property="og:description" content="Sound quality is not so good when sharing video/music in some browser-based online conference sys..." /><meta property="og:type" content="article" /><meta property="og:site_name" content="cat_in_136.blog()" /><meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@cat_in_136" />
+  <meta name="twitter:creator" content="@cat_in_136" />
+</head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" href="/">cat_in_136.blog()</a>
+    <nav class="site-nav">
+      <a href="javascript:void(0);" class="menu-icon" title="barger button"></a>
+      <div class="trigger"><a class="page-link" href="/about">About</a><a class="page-link" href="/archive">Archive</a><a class="page-link" href="/tags">Tags</a></div>
+    </nav>
+  </div>
+</header>
+<div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name"><a href="/2020/10/gum-frequency-characteristic-depending-on-audio-parameters.html" itemprop="url">getUserMedia() Frequency Characteristic depending on audio parameters</a></h1>
+
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2020-10-04T16:15:35+09:00">2020-10-04T16:15:35+09:00</span></div><div class="post-meta">Tags:
+      <span itemprop="keywords"><a class="tag" href="/tags/getusermedia">Getusermedia</a><a class="tag" href="/tags/audio">Audio</a></span></div><div class="post-meta">
+      Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2020-10-04-gum-frequency-characteristic-depending-on-audio-parameters.md" class="source-path">_posts/2020-10-04-gum-frequency-characteristic-depending-on-audio-parameters.md</a>
+        (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2020-10-04-gum-frequency-characteristic-depending-on-audio-parameters.md">History</a>)
+    </div><div class="post-meta">
+      <a href="#comments"><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2020/10/gum-frequency-characteristic-depending-on-audio-parameters.html">↓Comments</span></a>
+      <script id="dsq-count-scr" src="https://catin136blog.disqus.com/count.js" defer="defer" async="async"></script>
+    </div>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Sound quality is not so good when sharing video/music in some browser-based online conference system.
+In my qualitative research on this issue, I found that the parameters of <code class="highlighter-rouge">getUserMedia()</code> audio affect the sound quality.
+This post describes this relations.</p>
+
+<h2 id="experiment-setup">Experiment Setup</h2>
+
+<figure> <object width="328" height="789" data="/images/2020-10-04-gum-frequency-characteristic-exp-chart.svg"></object>
+<figcaption>Method of the experiment</figcaption>
+</figure>
+
+<p>At first, I crate white noise using LADSPA’s “White Noise Source”.
+I played it and routed it to the browser as a source (like as a microphone source).</p>
+
+<p>I made a HTML/JavaScript code that output/loopback from the source to the speaker output and draw the waveform and spectrum on the canvas of the input.</p>
+
+<p><a href="https://gist.github.com/cat-in-136/efe21ea1567c4fdf2b26187cbb0d4a86">https://gist.github.com/cat-in-136/efe21ea1567c4fdf2b26187cbb0d4a86</a></p>
+
+<p>Press the Start button to executes <code class="highlighter-rouge">getUserMedia()</code> and browser starts receiving audio from the source (white noise).
+It outputs it to the speaker, and then does time/frequency analysis in <a href="https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode"><code class="highlighter-rouge">AnalyserNode</code></a>.</p>
+
+<p>Note that if the microphone and the speaker are close to each other, you may hear feedback, so I added a 1 second delay for safety.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">audioCtx</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AudioContext</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">audioSrc</span> <span class="o">=</span> <span class="nx">audioCtx</span><span class="p">.</span><span class="nx">createMediaStreamSource</span><span class="p">(</span><span class="nx">stream</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">synthDelay</span> <span class="o">=</span> <span class="nx">audioCtx</span><span class="p">.</span><span class="nx">createDelay</span><span class="p">();</span>
+<span class="nx">synthDelay</span><span class="p">.</span><span class="nx">delayTime</span><span class="p">.</span><span class="nx">setValueAtTime</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">audioCtx</span><span class="p">.</span><span class="nx">currentTime</span><span class="p">);</span> <span class="c1">// add 1 sec delay for safety.</span>
+<span class="kd">const</span> <span class="nx">analyser</span> <span class="o">=</span> <span class="nx">audioCtx</span><span class="p">.</span><span class="nx">createAnalyser</span><span class="p">();</span>
+<span class="nx">audioSrc</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">synthDelay</span><span class="p">);</span>
+<span class="nx">synthDelay</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">audioCtx</span><span class="p">.</span><span class="nx">destination</span><span class="p">);</span>
+<span class="nx">synthDelay</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">analyser</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>I confirmed that changing the parameter settings (<a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints"><code class="highlighter-rouge">MediaTrackConstraints</code></a>) affects the waveforms/frequency characteristics.</p>
+
+<p>I used the PulseAudio monitor device and I didn’t use a <em>real microphone</em>, so there is no audio noise.
+Of couse, the reproducibility of the quantization noise is not guaranteed because the audio level is adjusted at each stage in PulseAudio.</p>
+
+<h2 id="results">Results</h2>
+
+<p>Chronium/Electron:</p>
+
+<blockquote class="twitter-tweet" data-conversation="none" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">Frequency characteristic of WebRTC audio seems to be depending on audio parameter. <a href="https://t.co/0w2FIdkgKE">pic.twitter.com/0w2FIdkgKE</a></p>&mdash; cat_in_136 (@cat_in_136) <a href="https://twitter.com/cat_in_136/status/1264489740738297857?ref_src=twsrc%5Etfw">May 24, 2020</a></blockquote>
+<script async="async" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>There was a big difference. In particular, it is worth noting that setting both <code class="highlighter-rouge">echoCancellation</code> and <code class="highlighter-rouge">noiseSuppression</code> to <code class="highlighter-rouge">false</code> yields flat frequency characteristics.</p>
+
+<p>Firefox:</p>
+
+<blockquote class="twitter-tweet" data-conversation="none" data-dnt="true"><p lang="en" dir="ltr">Almost same as Firefox, but echoCancellation seems to be kinda unstable. <a href="https://t.co/NOf4ksJApc">pic.twitter.com/NOf4ksJApc</a></p>&mdash; cat_in_136 (@cat_in_136) <a href="https://twitter.com/cat_in_136/status/1264558026343628800?ref_src=twsrc%5Etfw">May 24, 2020</a></blockquote>
+<script async="async" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>Almost same as Chronium/Electron (sorry for typo in my tweet), but</p>
+
+<ul>
+  <li>No matter how I tried, gain of near the high frequencies was lower, and I couldn’t get completely flat frequency charactestics.</li>
+  <li><code class="highlighter-rouge">echoCancellation</code> behaves unstable.</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/applyConstraints"><code class="highlighter-rouge">MediaStreamTrack.applyConstraints()</code></a> allows parameters to be dynamically set. It was useful for testing.</li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>In the web conferencing system on browser, the sound quality may deteriorate because the signal is filtered by the <code class="highlighter-rouge">getUserMedia()</code> setting, especially <code class="highlighter-rouge">echoCancellation</code> and <code class="highlighter-rouge">noiseSuppression</code>.
+It is not due to the opus encoding and so on, but is done in the preprocessing.</p>
+
+<p>Therefore, when shareing video/music and you are concerned about the sound quality, you should check the settings and make sure that <code class="highlighter-rouge">echoCancellation</code> and <code class="highlighter-rouge">noiseSuppression</code> are set to <code class="highlighter-rouge">false</code>.
+On the other hand, if you’re just making a voice call with a <em>real microphone</em>, these settings are useful and should be left at default.</p>
+
+  </div>
+
+  <footer class="post-footer">
+    <details id="comments">
+      <summary><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2020/10/gum-frequency-characteristic-depending-on-audio-parameters.html">Comments</span></summary>
+      <div id="disqus_thread"></div>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <script type="application/javascript" src="/javascript/disqus_loader.js" defer="defer" async="async"></script>
+    </details>
+  </footer>
+</article><aside class="post-related">
+  <h2>Related Posts</h2>
+  <ul class="post-list"><li class="post-item">
+    <a class="post-link" href="/2017/10/list-of-all-the-config-provided-by-configuration-mania.html">
+      <span class="post-meta">2017-10-26</span>
+      <span class="post-title">List of all the Config provided by Configuration Mania</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2017/07/apply-to-html-svg-filter-inkscape.html">
+      <span class="post-meta">2017-07-22</span>
+      <span class="post-title">Apply to HTML elements the SVG filters of inkscape preset filters</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2020/05/noted-apply-pitch-filter-to-live-microphone.html">
+      <span class="post-meta">2020-05-05</span>
+      <span class="post-title">Noted: Apply pitch filter to live microphone on linux</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2020/05/port-glsl-sandbox-effect-to-gstreamer-glshader.html">
+      <span class="post-meta">2020-05-03</span>
+      <span class="post-title">Porting GLSL Sandbox effect to GStreamer glshader element</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2019/10/use-marionette-to-obtain-firefox-internal-information-easily.html">
+      <span class="post-meta">2019-10-20</span>
+      <span class="post-title">Use Marionette to obtain Firefox internal information easily</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2013/12/why-cannot-upload-photo-to-blogger-and.html">
+      <span class="post-meta">2013-12-28</span>
+      <span class="post-title">Why cannot upload a photo to Blogger and Why is &quot;In order to select an item from your online storage, please sign in&quot; displayed?</span><img class="post-thumb" src="/images/error.png" loading="lazy" alt="thumbnail" /></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2017/08/code-reading-firefox-send.html">
+      <span class="post-meta">2017-08-12</span>
+      <span class="post-title">Code Reading: &quot;Firefox Send&quot; encryption</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2010/08/study-for-adding-menuitem-to-firefox4s.html">
+      <span class="post-meta">2010-08-15</span>
+      <span class="post-title">Study for adding a menuitem to Firefox4&#39;s &quot;Firefox button&quot;</span><img class="post-thumb" src="/images/fx_btn.png" loading="lazy" alt="thumbnail" /></a>
+  </li>
+</ul>
+</aside>
+      </div>
+    </div><footer class="site-footer">
+  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
+  <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
+    <h2 class="footer-heading">cat_in_136.blog()</h2>
+    <p>
+      © 2020
+      <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
+        <a href="/about"><span itemprop="name">cat_in_136</span></a>
+      </span>;
+      Content is available under a
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license" itemprop="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">CC BY-NC-SA 4.0</a>
+      unless otherwise noted.
+    </p>
+  </div>
+</footer>
+</body>
+</html>

@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="4.0.1">Jekyll</generator>
   <link href="https://cat-in-136.github.io/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://cat-in-136.github.io/" rel="alternate" type="text/html" />
-  <updated>2020-10-03T12:49:06+09:00</updated>
+  <updated>2020-10-04T16:18:03+09:00</updated>
   <id>https://cat-in-136.github.io/</id>
 
   
@@ -17,6 +17,111 @@
 
   
   
+  
+    <entry>
+      <title type="html">getUserMedia() Frequency Characteristic depending on audio parameters</title>
+      <link href="https://cat-in-136.github.io/2020/10/gum-frequency-characteristic-depending-on-audio-parameters.html" rel="alternate" type="text/html" title="getUserMedia() Frequency Characteristic depending on audio parameters" />
+      <published>2020-10-04T16:15:35+09:00</published>
+      <updated>2020-10-04T16:15:35+09:00</updated>
+      <id>https://cat-in-136.github.io/2020/10/gum-frequency-characteristic-depending-on-audio-parameters</id>
+      
+      
+      
+      <content type="html" xml:base="https://cat-in-136.github.io/2020/10/gum-frequency-characteristic-depending-on-audio-parameters.html">&lt;p&gt;Sound quality is not so good when sharing video/music in some browser-based online conference system.
+In my qualitative research on this issue, I found that the parameters of &lt;code class=&quot;highlighter-rouge&quot;&gt;getUserMedia()&lt;/code&gt; audio affect the sound quality.
+This post describes this relations.&lt;/p&gt;
+
+&lt;h2 id=&quot;experiment-setup&quot;&gt;Experiment Setup&lt;/h2&gt;
+
+&lt;figure&gt; &lt;object width=&quot;328&quot; height=&quot;789&quot; data=&quot;/images/2020-10-04-gum-frequency-characteristic-exp-chart.svg&quot;&gt;&lt;/object&gt;
+&lt;figcaption&gt;Method of the experiment&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;At first, I crate white noise using LADSPA’s “White Noise Source”.
+I played it and routed it to the browser as a source (like as a microphone source).&lt;/p&gt;
+
+&lt;p&gt;I made a HTML/JavaScript code that output/loopback from the source to the speaker output and draw the waveform and spectrum on the canvas of the input.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://gist.github.com/cat-in-136/efe21ea1567c4fdf2b26187cbb0d4a86&quot;&gt;https://gist.github.com/cat-in-136/efe21ea1567c4fdf2b26187cbb0d4a86&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Press the Start button to executes &lt;code class=&quot;highlighter-rouge&quot;&gt;getUserMedia()&lt;/code&gt; and browser starts receiving audio from the source (white noise).
+It outputs it to the speaker, and then does time/frequency analysis in &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AnalyserNode&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Note that if the microphone and the speaker are close to each other, you may hear feedback, so I added a 1 second delay for safety.&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;audioCtx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;AudioContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;audioSrc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;audioCtx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createMediaStreamSource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;synthDelay&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;audioCtx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createDelay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;synthDelay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;delayTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setValueAtTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;audioCtx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;currentTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// add 1 sec delay for safety.&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;analyser&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;audioCtx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createAnalyser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;audioSrc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;synthDelay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;synthDelay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;audioCtx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;destination&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;synthDelay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;analyser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;I confirmed that changing the parameter settings (&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;MediaTrackConstraints&lt;/code&gt;&lt;/a&gt;) affects the waveforms/frequency characteristics.&lt;/p&gt;
+
+&lt;p&gt;I used the PulseAudio monitor device and I didn’t use a &lt;em&gt;real microphone&lt;/em&gt;, so there is no audio noise.
+Of couse, the reproducibility of the quantization noise is not guaranteed because the audio level is adjusted at each stage in PulseAudio.&lt;/p&gt;
+
+&lt;h2 id=&quot;results&quot;&gt;Results&lt;/h2&gt;
+
+&lt;p&gt;Chronium/Electron:&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-conversation=&quot;none&quot; data-dnt=&quot;true&quot; data-theme=&quot;light&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Frequency characteristic of WebRTC audio seems to be depending on audio parameter. &lt;a href=&quot;https://t.co/0w2FIdkgKE&quot;&gt;pic.twitter.com/0w2FIdkgKE&lt;/a&gt;&lt;/p&gt;&amp;mdash; cat_in_136 (@cat_in_136) &lt;a href=&quot;https://twitter.com/cat_in_136/status/1264489740738297857?ref_src=twsrc%5Etfw&quot;&gt;May 24, 2020&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;async&quot; src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;There was a big difference. In particular, it is worth noting that setting both &lt;code class=&quot;highlighter-rouge&quot;&gt;echoCancellation&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;noiseSuppression&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;false&lt;/code&gt; yields flat frequency characteristics.&lt;/p&gt;
+
+&lt;p&gt;Firefox:&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-conversation=&quot;none&quot; data-dnt=&quot;true&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Almost same as Firefox, but echoCancellation seems to be kinda unstable. &lt;a href=&quot;https://t.co/NOf4ksJApc&quot;&gt;pic.twitter.com/NOf4ksJApc&lt;/a&gt;&lt;/p&gt;&amp;mdash; cat_in_136 (@cat_in_136) &lt;a href=&quot;https://twitter.com/cat_in_136/status/1264558026343628800?ref_src=twsrc%5Etfw&quot;&gt;May 24, 2020&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;async&quot; src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Almost same as Chronium/Electron (sorry for typo in my tweet), but&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;No matter how I tried, gain of near the high frequencies was lower, and I couldn’t get completely flat frequency charactestics.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;echoCancellation&lt;/code&gt; behaves unstable.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/applyConstraints&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;MediaStreamTrack.applyConstraints()&lt;/code&gt;&lt;/a&gt; allows parameters to be dynamically set. It was useful for testing.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;In the web conferencing system on browser, the sound quality may deteriorate because the signal is filtered by the &lt;code class=&quot;highlighter-rouge&quot;&gt;getUserMedia()&lt;/code&gt; setting, especially &lt;code class=&quot;highlighter-rouge&quot;&gt;echoCancellation&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;noiseSuppression&lt;/code&gt;.
+It is not due to the opus encoding and so on, but is done in the preprocessing.&lt;/p&gt;
+
+&lt;p&gt;Therefore, when shareing video/music and you are concerned about the sound quality, you should check the settings and make sure that &lt;code class=&quot;highlighter-rouge&quot;&gt;echoCancellation&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;noiseSuppression&lt;/code&gt; are set to &lt;code class=&quot;highlighter-rouge&quot;&gt;false&lt;/code&gt;.
+On the other hand, if you’re just making a voice call with a &lt;em&gt;real microphone&lt;/em&gt;, these settings are useful and should be left at default.&lt;/p&gt;</content>
+      
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name></name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="getUserMedia" />
+      
+        <category term="audio" />
+      
+
+      
+        <summary type="html">Sound quality is not so good when sharing video/music in some browser-based online conference system. In my qualitative research on this issue, I found that the parameters of getUserMedia() audio affect the sound quality. This post describes this relations. Experiment Setup Method of the experiment At first, I crate white noise using LADSPA’s “White Noise Source”. I played it and routed it to the browser as a source (like as a microphone source). I made a HTML/JavaScript code that output/loopback from the source to the speaker output and draw the waveform and spectrum on the canvas of the input. https://gist.github.com/cat-in-136/efe21ea1567c4fdf2b26187cbb0d4a86 Press the Start button to executes getUserMedia() and browser starts receiving audio from the source (white noise). It outputs it to the speaker, and then does time/frequency analysis in AnalyserNode. Note that if the microphone and the speaker are close to each other, you may hear feedback, so I added a 1 second delay for safety. const audioCtx = new AudioContext(); const audioSrc = audioCtx.createMediaStreamSource(stream); const synthDelay = audioCtx.createDelay(); synthDelay.delayTime.setValueAtTime(1, audioCtx.currentTime); // add 1 sec delay for safety. const analyser = audioCtx.createAnalyser(); audioSrc.connect(synthDelay); synthDelay.connect(audioCtx.destination); synthDelay.connect(analyser); I confirmed that changing the parameter settings (MediaTrackConstraints) affects the waveforms/frequency characteristics. I used the PulseAudio monitor device and I didn’t use a real microphone, so there is no audio noise. Of couse, the reproducibility of the quantization noise is not guaranteed because the audio level is adjusted at each stage in PulseAudio. Results Chronium/Electron: Frequency characteristic of WebRTC audio seems to be depending on audio parameter. pic.twitter.com/0w2FIdkgKE&amp;mdash; cat_in_136 (@cat_in_136) May 24, 2020 There was a big difference. In particular, it is worth noting that setting both echoCancellation and noiseSuppression to false yields flat frequency characteristics. Firefox: Almost same as Firefox, but echoCancellation seems to be kinda unstable. pic.twitter.com/NOf4ksJApc&amp;mdash; cat_in_136 (@cat_in_136) May 24, 2020 Almost same as Chronium/Electron (sorry for typo in my tweet), but No matter how I tried, gain of near the high frequencies was lower, and I couldn’t get completely flat frequency charactestics. echoCancellation behaves unstable. MediaStreamTrack.applyConstraints() allows parameters to be dynamically set. It was useful for testing. Conclusion In the web conferencing system on browser, the sound quality may deteriorate because the signal is filtered by the getUserMedia() setting, especially echoCancellation and noiseSuppression. It is not due to the opus encoding and so on, but is done in the preprocessing. Therefore, when shareing video/music and you are concerned about the sound quality, you should check the settings and make sure that echoCancellation and noiseSuppression are set to false. On the other hand, if you’re just making a voice call with a real microphone, these settings are useful and should be left at default.</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Diff between firefox 82.0 beta 6 default preference and firefox 81.0.1</title>
@@ -4925,128 +5030,6 @@ Node.js から直接 GStreamer を叩いて v4l2 loopback device に投入する
 
       
         <summary type="html">Snap Cameraの linux 版がないせいで… 多くの linux ユーザがバーチャル背景を実現しようと…と予想していたが、 あんまし記事が上がっていないので書いておく。 TL;DR https://github.com/cat-in-136/bodypix-fun/blob/master/README.md 合成 先行事例Open Source Virtual Background | BenTheElderで、BodyPixの実行を GPU 支援を有効にした docker 上の Node.js でサーバプログラムとして実行して、他を python でやるという回りくどいことをやっていたので、これは面倒くさいということで、早速この成果をベースに自分自身で拵えてみようということになったのである。 まずは、Jitsi meet の背景ブラーにも使われているオープンソースのライブラリ BodyPix を使って、簡単なバーチャル背景合成をするプログラムを作るところから始めた。 bodypix は TensorFlow.js ベースでありブラウザ・Node.jsのどちらでも推論を実行させることができる。 ブラウザで動かすとブラウザの外に持っていくのが面倒なので Node.js で動かすこととした。 処理自体は簡単で、bodypix で推論を実行net.segmentPerson()してやるとdataに 人物が入ったところに 1 が、そうでないところに 0 が入った二値画像が生成される。 これをマスクとして背景画像とカメラ画像を合成してやれば良い。 この初回の実装は非常に雑なので説明は省略するが、bodypix 以外のところが重く 640x480 のサイズでさえ一周で1秒超えという非常に遅いものが出来上がった。 TensorFlow の様々な高速化を台無しにする他の処理の重さはダメだろうということで見直しが必要となった。 そこでカメラ処理や画像合成処理において高速に動きそうなライブラリを使う必要性をきづいたわけである。 昔ながらからあるこの手の定番のライブラリである OpenCV を Node.js から使うことができる opencv4nodejs を見つけたため、これで カメラの扱いとマスク合成などの画像処理を行うこととした。 // ... const tf = require('@tensorflow/tfjs-node-gpu'); const bodyPix = require('@tensorflow-models/body-pix'); const cv = require('opencv4nodejs'); (async () =&amp;gt; { const vCap = new cv.VideoCapture(argv['input']); // ... const background = (!!argv['background']) ? cv.imread(argv['background']).resize(height, width) : new cv.Mat(height, width, cv.CV_8UC3, [0, 255, 0]); // ... try { while (true) { let frame = vCap.read(); if (frame.empty) { break; } frame = frame.resize(height, width); console.time('bodyPix'); const image = tf.tensor3d(await frame.getData(), [height, width, 3]); const { data } = await net.segmentPerson(image, { flipHorizontal: false, internalResolution: 'medium', segmentationThreshold: 0.7, }); image.dispose(); console.timeEnd('bodyPix'); const mask = new cv.Mat(new Uint8Array(data), height, width, cv.CV_8U); const outFrame = new cv.Mat(height, width, frame.type); background.copyTo(outFrame); frame.copyTo(outFrame, mask); // ... if (argv['preview']) { cv.imshow('out', outFrame); // ... } } // ... } })(); 上におおよその処理の流れを示した。bodypix 以外の処理は OpenCV で書いたが、 TensorFlow.js でも書けると思うが、今はこうしてある。 bodypix のよくあるサンプルプログラムでは image.dispose() に相当する処理が 抜けているがこれを実行しないとメモリを食いつぶすので注意が必要だ。 OpenCV は自動開放してくれるらしくこのような手動での開放処理は無くとも問題は発生しなかった。 プログラム自体は cat-in-136/bodypix-fun にあげたが、 npm i を実行したら（OpenCVのコンパイルをするので時間がそれなりにかかる）、 下記のように実行すれば良い。--help で使い方も出すようにしてあるので詳細は参照されたし。 % node ./app.js -i 0 --preview -b 背景画像.jpg 仮想ウェブカメラとの結合 昔からあるので、また定番なため有名化と思うが v4l2loopback を入れれば良い。 README を読め、だけの話だが、例えば下記のようにすると /dev/video2 という仮想ウェブカメラの v4l2 device file が生えてくる % sudo modprobe v4l2loopback devices=1 video_nr=2 exclusive_caps=1 exclusive_caps=1 がポイントで、これがないと単なるキャプチャデバイス扱いになるのか、ブラウザから選べないので今回の用途では必ず追加しておく必要がある。 あとは /dev/video2 に前述の合成結果を流し込めばいい。 OpenCV のウィンドウに出す機能 (cv.imshow()) も動いたので、これで画面を表示して、 GStreamer ximagesrc でウィンドウごとにキャプチャして、 v4l2sinkに流し込むことにした。 % gst-launch-1.0 -v ximagesrc xid=$XWINDOW_ID use-damage=false ! \ videoconvert ! \ videoscale ! \ &quot;video/x-raw,width=640,height=480,framerate=30/1,format=YUY2&quot; ! \ v4l2sink device=/dev/video2 $XWINDOW_ID は xwininfo(1) で調べて各自の環境に変えること。 いまは GStreamer を使ったが、OBS Studio を使ってウィンドウをキャプチャして、 それを obs-v4l2sink で流し込んでも良い。 あとはオンライン会議アプリから仮想ウェブカメラを読み取れば良い。 ウィンドウキャプチャを介する「ズル」を克服しようとして挫折 仮想ウェブカメラに投入する所でウィンドウキャプチャを介することとしたが、 これははっきり言ってズルである。 ここのズルをなんとかしようと数日頑張ったが、結局 JavaScript というかロジックの難解さもしくはマルチメディアフレームワークの難解さから切り上げることとした。 真面目に実装する場合は、画像データを適切な形式にして仮想ウェブカメラの v4l2 loopback device に投げ込まないといけない。 ただ、 bodypix の処理が重かったりばらつきがでるのでいわゆるフレーム落ちを考慮して非同期処理として 一種のキューイング処理が必要となる。これはこれで面倒くさく、また汎用性が欠ける。 そこでウィンドウキャプチャをして仮想ウェブカメラに GStreamer を使ったのであるが、 Node.js から直接 GStreamer を叩いて v4l2 loopback device に投入することを考えた。 GStreamer はなんでもありな非常にリッチなマルチメディアフレームワークであって、 動画（や音声）の一連の処理を、 複数の source/filter/sink からなる一連のパイプライン処理として行い、 それらのエレメントを変えてやれば同様の処理が容易にできる。 例えば sink をストリーミングにすればストリーミングできるし、 同様にしてウィンドウ表示、ファイル保存もできる。filter も同様だ。 ただ、これはあくまで実現性の話で、そういう風に作れるかどうかはフレームワークを使うプログラマに委ねられている。 実際にはエレメントを変えれば勝手にいい感じにしてくれる魔法が働いているわけではなく、形式変換を指示していかなければならない。 パイプラインを play する際にネゴシエーションが行われて、解決可能な場合は解決して形式を補ってくれる。 複雑なパイプラインを組んでいくとネゴシエーションが不十分なので、色々と指示する必要がある。 サイズはあっているか変更するか、フォーマットはあっているか、タイミング(framerate)はあっているか、処理速度のばらつきなどのためキューイングは必要か、…などだ。 この形式変換を指示していかなければならないのは、フレームワークを使う側になっている（という設計方針だろう）。 ただ、問題は、合わなかったときにエラーメッセージが貧弱であり、ひどい場合は何も出力されないまま正常終了するのである。 これは非常に辛く、困難を極めて力が及ばなかった。 というわけで、ズルをしない方法にするのは諦めた。 今の OpenCV の手法で10fps程度の処理速度はでているため、いったん完了とした。 バグ: FATAL: Module v4l2loopback is in use. v4l2 loopback device が busy 状態になって以後使えなくなるバグがある。 原因はわかっていない。 おまけ: ウェブカメラ画像じゃなくて動画に適用してみた図 bodypix-fun は、OpenCV のビデオキャプチャ処理 new cv.VideoCapture() が、 ビデオデバイス入力とカメラを切り替えが容易なのでそういうふうにも作ってある。 node app.js -i foobar.mp4 --preview のように実行すれば良い。 動画に適用してみた例。「ローマの休日」より 参考文献 Benjamin Elder, “Open Source Virtual Background”, April 9th, 2020 Takatsugu Nokubi, 任意のバーチャル背景を使えるページを作った, Qiita tfujiwar418, TensorFlow.jsがWebGLで並列計算を実行する仕組みを理解する - 開発日誌</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Noted: Apply pitch filter to live microphone on linux</title>
-      <link href="https://cat-in-136.github.io/2020/05/noted-apply-pitch-filter-to-live-microphone.html" rel="alternate" type="text/html" title="Noted: Apply pitch filter to live microphone on linux" />
-      <published>2020-05-05T18:12:34+09:00</published>
-      <updated>2020-05-05T18:12:34+09:00</updated>
-      <id>https://cat-in-136.github.io/2020/05/noted-apply-pitch-filter-to-live-microphone</id>
-      
-      
-      
-      <content type="html" xml:base="https://cat-in-136.github.io/2020/05/noted-apply-pitch-filter-to-live-microphone.html">&lt;h3 id=&quot;tldr&quot;&gt;TL;DR&lt;/h3&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;% pacmd load-module module-null-sink sink_name=NullSink
-% gst-launch-1.0 pulsesrc device=... ! pitch pitch=2 ! pulsesink device=NullSink
-% pavucontrol
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;null-sink-as-a-loopback-device&quot;&gt;Null sink as a loopback device&lt;/h3&gt;
-
-&lt;p&gt;At first, create a &lt;em&gt;null sink&lt;/em&gt; to output the pitch-shifted audio to.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;% pacmd load-module module-null-sink sink_name=NullSink
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/Modules/#module-null-sink&quot;&gt;As written in the document&lt;/a&gt;,
-a null sink have a monitor source.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;All sinks have a corresponding “monitor” source which makes the null sink a practical way to plumb output to input.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;So, we can use it as a loopback device.
-i.e. It means to output pitch-shifted audio to the null device and
-use the monitor device as a recording device.&lt;/p&gt;
-
-&lt;h3 id=&quot;apply-filter-on-gstreamer&quot;&gt;Apply filter on GStreamer&lt;/h3&gt;
-
-&lt;p&gt;To check the microphone device name, execute &lt;code class=&quot;highlighter-rouge&quot;&gt;pacmd list-sources | grep name&lt;/code&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;% pacmd list-sources | grep name
-        name: &amp;lt;alsa_output.usb-XXXX_USB_PnP_Audio_Device-XX.analog-stereo.monitor&amp;gt;
-        name: &amp;lt;alsa_input.usb-XXXX_USB_PnP_Audio_Device-XX.mono-fallback&amp;gt;
-        name: &amp;lt;alsa_output.pci-XXXX_XX_XX.X.analog-stereo.monitor&amp;gt;
-        name: &amp;lt;alsa_input.pci-XXXX_XX_XX.X.analog-stereo&amp;gt;
-        name: &amp;lt;NullSink.monitor&amp;gt;
-        name: &amp;lt;alsa_output.pci-XXXX_XX_XX.X.hdmi-stereo-extraX.monitor&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Device names ending in &lt;code class=&quot;highlighter-rouge&quot;&gt;.monitor&lt;/code&gt; means monitor devices, not actual microphones.
-In this example, following devices are actual microphones:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;alsa_input.usb-XXXX_USB_PnP_Audio_Device-XX.mono-fallback&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;alsa_input.pci-XXXX_XX_XX.X.analog-stereo&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Here, let’s apply a &lt;code class=&quot;highlighter-rouge&quot;&gt;pitch&lt;/code&gt; filter to the first device (USB-connected microphone).&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;% gst-launch-1.0 pulsesrc device=alsa_input.usb-XXXX_USB_PnP_Audio_Device-XX.mono-fallback ! \
-    pitch pitch=2 ! \
-    pulsesink device=NullSink
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Of cause, replace &lt;code class=&quot;highlighter-rouge&quot;&gt;device=...&lt;/code&gt; with microphone device name of your environment.&lt;/p&gt;
-
-&lt;p&gt;FYI: source device and sink device can be dynamically reconfigurable
-by PulseAudio Volume Control as describe on the next section.&lt;/p&gt;
-
-&lt;h3 id=&quot;application-specific-audio-device&quot;&gt;Application-specific audio device&lt;/h3&gt;
-
-&lt;p&gt;PulseAudio can control playback device and recording device per application.
-Change the recording device to null sink for the app you want to use.
-It can change dynamically!&lt;/p&gt;
-
-&lt;p&gt;For example, you can change the recording device for &lt;em&gt;Skype&lt;/em&gt; app
-by clicking the button (highlighted with red box) on PulseAudio Volume Control.&lt;/p&gt;
-
-&lt;figure&gt;
-&lt;img src=&quot;/images/2020-05-05-noted-apply-pitch-filter-to-live-microphone-pavucontrol.svg&quot; width=&quot;549&quot; height=&quot;390&quot; loading=&quot;lazy&quot; /&gt;
-&lt;figcaption&gt;Screenshot of PulseAudio Volume Control&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Choose the null sink, and then pitch-shifted voice will sent to Skype app.&lt;/p&gt;
-
-&lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/Modules/&quot;&gt;Modules&lt;/a&gt;, PulseAudio Document&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://gstreamer.freedesktop.org/documentation/soundtouch/pitch.html&quot;&gt;pitch&lt;/a&gt;, GStreamer API References&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://chienomi.org/archives/livewithlinux/1069&quot;&gt;LinuxにおけるSkypeとPulseaudioを用いたスプリット/ミキシング - Chienomi&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content>
-      
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name></name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="gstreamer" />
-      
-        <category term="linux" />
-      
-        <category term="pulseaudio" />
-      
-
-      
-        <summary type="html">TL;DR % pacmd load-module module-null-sink sink_name=NullSink % gst-launch-1.0 pulsesrc device=... ! pitch pitch=2 ! pulsesink device=NullSink % pavucontrol Null sink as a loopback device At first, create a null sink to output the pitch-shifted audio to. % pacmd load-module module-null-sink sink_name=NullSink As written in the document, a null sink have a monitor source. All sinks have a corresponding “monitor” source which makes the null sink a practical way to plumb output to input. So, we can use it as a loopback device. i.e. It means to output pitch-shifted audio to the null device and use the monitor device as a recording device. Apply filter on GStreamer To check the microphone device name, execute pacmd list-sources | grep name. % pacmd list-sources | grep name name: &amp;lt;alsa_output.usb-XXXX_USB_PnP_Audio_Device-XX.analog-stereo.monitor&amp;gt; name: &amp;lt;alsa_input.usb-XXXX_USB_PnP_Audio_Device-XX.mono-fallback&amp;gt; name: &amp;lt;alsa_output.pci-XXXX_XX_XX.X.analog-stereo.monitor&amp;gt; name: &amp;lt;alsa_input.pci-XXXX_XX_XX.X.analog-stereo&amp;gt; name: &amp;lt;NullSink.monitor&amp;gt; name: &amp;lt;alsa_output.pci-XXXX_XX_XX.X.hdmi-stereo-extraX.monitor&amp;gt; Device names ending in .monitor means monitor devices, not actual microphones. In this example, following devices are actual microphones: alsa_input.usb-XXXX_USB_PnP_Audio_Device-XX.mono-fallback alsa_input.pci-XXXX_XX_XX.X.analog-stereo Here, let’s apply a pitch filter to the first device (USB-connected microphone). % gst-launch-1.0 pulsesrc device=alsa_input.usb-XXXX_USB_PnP_Audio_Device-XX.mono-fallback ! \ pitch pitch=2 ! \ pulsesink device=NullSink Of cause, replace device=... with microphone device name of your environment. FYI: source device and sink device can be dynamically reconfigurable by PulseAudio Volume Control as describe on the next section. Application-specific audio device PulseAudio can control playback device and recording device per application. Change the recording device to null sink for the app you want to use. It can change dynamically! For example, you can change the recording device for Skype app by clicking the button (highlighted with red box) on PulseAudio Volume Control. Screenshot of PulseAudio Volume Control Choose the null sink, and then pitch-shifted voice will sent to Skype app. References Modules, PulseAudio Document pitch, GStreamer API References LinuxにおけるSkypeとPulseaudioを用いたスプリット/ミキシング - Chienomi</summary>
       
 
       
