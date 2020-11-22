@@ -56,25 +56,25 @@ v4.29 → v5.2 へのアップデートだったのだが、
   <li>The schema plugin is now deprecated. Switch to defining the schema before creating the model class using the Database schema methods. (ref. <a href="http://sequel.jeremyevans.net/rdoc/files/doc/release_notes/4_45_0_txt.html">4.45.0txt</a>)
     <ul>
       <li>schema plugin が廃止されたが、代替が指示されておらず意味を理解するまで時間がかかったが、
-結論は plugin の読み込み (<code class="highlighter-rouge">Sequel::Model.plugin(:schema)</code>) を消すだけだった。</li>
+結論は plugin の読み込み (<code class="language-plaintext highlighter-rouge">Sequel::Model.plugin(:schema)</code>) を消すだけだった。</li>
       <li>スキーマを定義した後にモデルクラスを呼び出すという暗黙的なことになった。</li>
       <li>普通(?)、そういう使い方をすると思うので schema plugin は御役御免でよい。</li>
     </ul>
   </li>
-  <li>The <code class="highlighter-rouge">Dataset#and</code>, <code class="highlighter-rouge">exclude_where</code>, <code class="highlighter-rouge">interval</code>, and range methods are now deprecated. Undeprecated copies are now available in the new <code class="highlighter-rouge">sequel_4_dataset_methods</code> extension. (ref <a href="http://sequel.jeremyevans.net/rdoc/files/doc/release_notes/4_48_0_txt.html">4.48.0.txt</a>)
+  <li>The <code class="language-plaintext highlighter-rouge">Dataset#and</code>, <code class="language-plaintext highlighter-rouge">exclude_where</code>, <code class="language-plaintext highlighter-rouge">interval</code>, and range methods are now deprecated. Undeprecated copies are now available in the new <code class="language-plaintext highlighter-rouge">sequel_4_dataset_methods</code> extension. (ref <a href="http://sequel.jeremyevans.net/rdoc/files/doc/release_notes/4_48_0_txt.html">4.48.0.txt</a>)
     <ul>
-      <li>微妙な例で示すと <code class="highlighter-rouge">Foo.where(:bar =&gt; 1).and(:baz =&gt; 2)</code> のような呼び出しの <code class="highlighter-rouge">and</code> が使えなくなった。
+      <li>微妙な例で示すと <code class="language-plaintext highlighter-rouge">Foo.where(:bar =&gt; 1).and(:baz =&gt; 2)</code> のような呼び出しの <code class="language-plaintext highlighter-rouge">and</code> が使えなくなった。
         <ul>
-          <li>単純な置き換えならば <code class="highlighter-rouge">Foo.where(:bar =&gt; 1).where(:baz =&gt; 2)</code> のように <code class="highlighter-rouge">where</code> をどんどんつなげていけば良い</li>
-          <li>なおこの例だと <code class="highlighter-rouge">Foo.where(:bar =&gt; 1, :baz =&gt; 2)</code> のようにも書けるのでリファクタした
+          <li>単純な置き換えならば <code class="language-plaintext highlighter-rouge">Foo.where(:bar =&gt; 1).where(:baz =&gt; 2)</code> のように <code class="language-plaintext highlighter-rouge">where</code> をどんどんつなげていけば良い</li>
+          <li>なおこの例だと <code class="language-plaintext highlighter-rouge">Foo.where(:bar =&gt; 1, :baz =&gt; 2)</code> のようにも書けるのでリファクタした
             <ul>
-              <li>ただ <code class="highlighter-rouge">:bar =&gt; 1</code> と <code class="highlighter-rouge">:baz =&gt; 2</code> の判定が別関数といった場合には、 <code class="highlighter-rouge">where</code> をつなげていくしかない</li>
+              <li>ただ <code class="language-plaintext highlighter-rouge">:bar =&gt; 1</code> と <code class="language-plaintext highlighter-rouge">:baz =&gt; 2</code> の判定が別関数といった場合には、 <code class="language-plaintext highlighter-rouge">where</code> をつなげていくしかない</li>
             </ul>
           </li>
         </ul>
       </li>
       <li>たぶんかなり古い?記述だったぽい</li>
-      <li><code class="highlighter-rouge">or</code> とかは引き続き使える</li>
+      <li><code class="language-plaintext highlighter-rouge">or</code> とかは引き続き使える</li>
     </ul>
   </li>
 </ol>

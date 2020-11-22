@@ -54,7 +54,7 @@
 
 <p>app.rb, e.g.:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>require "sinatra"
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>require "sinatra"
 
 get "/" do
   "Hello, world!"
@@ -63,15 +63,15 @@ end
 
 <p>Since config.ru and Gemfile are very very straight forward, they’re omitted.</p>
 
-<p>In my situation, I hosted these codes on <em>private</em> git repository, e.g. <code class="highlighter-rouge">git@private:repository-of/helloworldapp.git</code>.
+<p>In my situation, I hosted these codes on <em>private</em> git repository, e.g. <code class="language-plaintext highlighter-rouge">git@private:repository-of/helloworldapp.git</code>.
 (I’ve pushed a public key for the repository to openshift;
 like described on “<a href="https://blog.openshift.com/deploying-from-private-git-repositories/">Deploying From Private Git Repositories</a>”)</p>
 
 <h3 id="prep-work">Prep work</h3>
 
-<p>Export the <code class="highlighter-rouge">buildconfig</code> and the public key for the app: <code class="highlighter-rouge">helloworldapp</code>.</p>
+<p>Export the <code class="language-plaintext highlighter-rouge">buildconfig</code> and the public key for the app: <code class="language-plaintext highlighter-rouge">helloworldapp</code>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% oc export buildconfig helloworldapp -o yaml &gt; buildconfig-helloworldapp.yaml
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% oc export buildconfig helloworldapp -o yaml &gt; buildconfig-helloworldapp.yaml
 % oc export secret sshsecret -o yaml &gt; sshsecret.yaml
 </code></pre></div></div>
 
@@ -82,13 +82,13 @@ like described on “<a href="https://blog.openshift.com/deploying-from-private-
 <p>Create new app according to the method written on the Developer Guide:
 <a href="https://docs.openshift.org/latest/dev_guide/new_app.html">Creating New Applications</a>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% oc new-project foobar-project
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% oc new-project foobar-project
 % oc new-app git@private:repository-of/helloworldapp.git
 </code></pre></div></div>
 
 <p>The first build will fail because of lack of the public key and any other build configuration.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% oc create -f sshsecret.yaml
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% oc create -f sshsecret.yaml
 % oc replace -f buildconfig-helloworldapp.yaml
 </code></pre></div></div>
 
@@ -99,7 +99,7 @@ like described on “<a href="https://blog.openshift.com/deploying-from-private-
 <ul>
   <li>Find a much more suitable method</li>
   <li>Support for DB (postgresql, mysql, …)</li>
-  <li>Investigate why <code class="highlighter-rouge">oc export all -o yaml &gt; project.yaml</code> and <code class="highlighter-rouge">oc create -f project.yaml</code> does not work</li>
+  <li>Investigate why <code class="language-plaintext highlighter-rouge">oc export all -o yaml &gt; project.yaml</code> and <code class="language-plaintext highlighter-rouge">oc create -f project.yaml</code> does not work</li>
 </ul>
 
 

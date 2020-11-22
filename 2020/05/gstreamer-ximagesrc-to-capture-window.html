@@ -58,7 +58,7 @@ getDisplayMedia demoで試せばすぐわかるがウィンドウ毎にキャプ
 
 <h3 id="tldr">TL;DR</h3>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% gst-launch-1.0 -v ximagesrc xid=$XWINDOW_ID ! videoconvert ! autovideosink
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% gst-launch-1.0 -v ximagesrc xid=$XWINDOW_ID ! videoconvert ! autovideosink
 </code></pre></div></div>
 
 <h3 id="ximagesrc">ximagesrc</h3>
@@ -76,7 +76,7 @@ getDisplayMedia demoで試せばすぐわかるがウィンドウ毎にキャプ
 <p>XID というのは X Window の Window id のことだ。
 典型的な方法としては xwininfo を使って調べる。</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% xwininfo                                                                                                  ~
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% xwininfo                                                                                                  ~
 
 xwininfo: Please select the window about which you
           would like information by clicking the
@@ -86,7 +86,7 @@ xwininfo: Please select the window about which you
 
 <p>マウスポインタが「＋」の形に変わるので、XID 調べたいウィンドウをクリックすると情報が表示される。</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xwininfo: Window id: 0xc000007 "Noto Sans CJK JP"
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xwininfo: Window id: 0xc000007 "Noto Sans CJK JP"
 
   Absolute upper-left X:  568
   Absolute upper-left Y:  239
@@ -110,13 +110,13 @@ xwininfo: Please select the window about which you
   -geometry 802x641+568+239
 </code></pre></div></div>
 
-<p>長々と貼り付けたが今注目するのは <code class="highlighter-rouge">Window id: 0xc000007</code> のところだけで XID は <code class="highlighter-rouge">0xc000007</code> ということになる。
+<p>長々と貼り付けたが今注目するのは <code class="language-plaintext highlighter-rouge">Window id: 0xc000007</code> のところだけで XID は <code class="language-plaintext highlighter-rouge">0xc000007</code> ということになる。
 このとき、下記のように入力して使うことになる。</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% gst-launch-1.0 -v ximagesrc xid=0xc000007 ! videoconvert ! autovideosink
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% gst-launch-1.0 -v ximagesrc xid=0xc000007 ! videoconvert ! autovideosink
 </code></pre></div></div>
 
-<p>なお、XID を調べるのならば <code class="highlighter-rouge">wmctrl -l</code> を実行して XID 一覧を出してそこから探しても良い。
+<p>なお、XID を調べるのならば <code class="language-plaintext highlighter-rouge">wmctrl -l</code> を実行して XID 一覧を出してそこから探しても良い。
 ただこの手法だと同一のウィンドウ名（タイトル）がある場合は区別が付かない。</p>
 
 <h3 id="videoconvert--autovideosink">videoconvert ! autovideosink</h3>
@@ -160,7 +160,7 @@ in the class field of their element information, and also have a non-zero autopl
 
 <p>コマンドとしては例えば下記のようになる。</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% gst-launch-1.0 -v ximagesrc startx=1920 ! videoconvert ! autovideosink
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% gst-launch-1.0 -v ximagesrc startx=1920 ! videoconvert ! autovideosink
 </code></pre></div></div>
 
 <h3 id="参考文献">参考文献</h3>

@@ -52,28 +52,28 @@
 
 <p>これは本当にARM aarch64なELFバイナリファイルを生成している。</p>
 
-<p>Termuxの仕組みは<code class="highlighter-rouge">/data/data/com.termux/files/</code>をprefixとした環境になっているので、
-<code class="highlighter-rouge">/data/data/com.termux/files/usr/lib</code>にいろいろな共有ライブラリ(dynamic library)がある。</p>
+<p>Termuxの仕組みは<code class="language-plaintext highlighter-rouge">/data/data/com.termux/files/</code>をprefixとした環境になっているので、
+<code class="language-plaintext highlighter-rouge">/data/data/com.termux/files/usr/lib</code>にいろいろな共有ライブラリ(dynamic library)がある。</p>
 
-<p>ところで、上で作ったhelloファイルが必要とする共有ライブラリは、<code class="highlighter-rouge">libdl.so</code>と<code class="highlighter-rouge">libc.so</code>なのだが、
-<code class="highlighter-rouge">/data/data/com.termux/files/usr/lib</code>には存在しなかった。
-調べてみたところ、<code class="highlighter-rouge">/system/lib/libdl.so</code>と<code class="highlighter-rouge">/system/lib/libc.so</code>を参照しているようであった。
+<p>ところで、上で作ったhelloファイルが必要とする共有ライブラリは、<code class="language-plaintext highlighter-rouge">libdl.so</code>と<code class="language-plaintext highlighter-rouge">libc.so</code>なのだが、
+<code class="language-plaintext highlighter-rouge">/data/data/com.termux/files/usr/lib</code>には存在しなかった。
+調べてみたところ、<code class="language-plaintext highlighter-rouge">/system/lib/libdl.so</code>と<code class="language-plaintext highlighter-rouge">/system/lib/libc.so</code>を参照しているようであった。
 つまり、システムで使えるものは使う方針のようだ。</p>
 
-<p>adbからアクセスできる<code class="highlighter-rouge">/data/local/tmp/</code>にコピーしたら、非Termux環境で使えた。</p>
+<p>adbからアクセスできる<code class="language-plaintext highlighter-rouge">/data/local/tmp/</code>にコピーしたら、非Termux環境で使えた。</p>
 
 <p>方法は以下の通り。</p>
 
 <p>一旦Termuxでsdcard領域に退避させる。</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pwd
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pwd
 /data/data/com.termux/files/home
 $ cp hello storage/shared
 </code></pre></div></div>
 
-<p>これをadbから<code class="highlighter-rouge">/data/local/tmp/</code>にコピーする。これはsdcard領域では実行権限が付与できないからである。</p>
+<p>これをadbから<code class="language-plaintext highlighter-rouge">/data/local/tmp/</code>にコピーする。これはsdcard領域では実行権限が付与できないからである。</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ adb shell
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ adb shell
 $ cp /sdcard/hello /data/local/tmp
 $ chmod +x /data/local/tmp/hello
 $ /data/local/tmp/hello

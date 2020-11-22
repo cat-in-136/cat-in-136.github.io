@@ -53,7 +53,7 @@
 
 <p>したがって、現在のFirefoxのGUIはWebComponentsでいわば再実装されたXULで書かれている。WebComponentsなのでHTMLで書かれていることになる（正しくはXHTML）。</p>
 
-<p>これはFirefoxで<code class="highlighter-rouge">chrome://content/browser/browser.xhtml</code>と打ち込んだ後で、開発者ツールなどで確認することができる。</p>
+<p>これはFirefoxで<code class="language-plaintext highlighter-rouge">chrome://content/browser/browser.xhtml</code>と打ち込んだ後で、開発者ツールなどで確認することができる。</p>
 
 <figure>
 <img class="fitcontain" src="/images/2020-02-24_xulhasbeenported_browser-html.png" width="1024" height="726" loading="lazy" />
@@ -62,7 +62,7 @@
 
 <h2 id="xul-の-webcomponents-構造と-xbl-構造を雑に眺めてみる">XUL の WebComponents 構造と XBL 構造を雑に眺めてみる</h2>
 
-<p>上述の開発者ツールで、たとえばダウンロードボタンが<code class="highlighter-rouge">toolbarbutton</code>という要素名なのだが、これはWebComponentsで登録されたものであることは、下記を実行すれば直ちにわかる。</p>
+<p>上述の開発者ツールで、たとえばダウンロードボタンが<code class="language-plaintext highlighter-rouge">toolbarbutton</code>という要素名なのだが、これはWebComponentsで登録されたものであることは、下記を実行すれば直ちにわかる。</p>
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#downloads-button</span><span class="dl">"</span><span class="p">)</span> <span class="k">instanceof</span> <span class="nx">customElements</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">toolbarbutton</span><span class="dl">"</span><span class="p">)</span>
 <span class="c1">// =&gt; true</span>
@@ -89,25 +89,25 @@
 <p>クラス階層を表すと下記の通りとなる。</p>
 
 <ul>
-  <li><code class="highlighter-rouge">Object</code>
+  <li><code class="language-plaintext highlighter-rouge">Object</code>
     <ul>
-      <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget"><code class="highlighter-rouge">EventTarget</code></a>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget"><code class="language-plaintext highlighter-rouge">EventTarget</code></a>
         <ul>
-          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node"><code class="highlighter-rouge">Node</code></a>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node"><code class="language-plaintext highlighter-rouge">Node</code></a>
             <ul>
-              <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element"><code class="highlighter-rouge">Element</code></a>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element"><code class="language-plaintext highlighter-rouge">Element</code></a>
                 <ul>
-                  <li><code class="highlighter-rouge">XULElement</code> (<a href="https://dxr.mozilla.org/mozilla-central/source/dom/xul/nsXULElement.h">nsXULElement.h</a>)
+                  <li><code class="language-plaintext highlighter-rouge">XULElement</code> (<a href="https://dxr.mozilla.org/mozilla-central/source/dom/xul/nsXULElement.h">nsXULElement.h</a>)
                     <ul>
-                      <li><code class="highlighter-rouge">MozElementBase</code> (chrome://global/content/customElements.js)
+                      <li><code class="language-plaintext highlighter-rouge">MozElementBase</code> (chrome://global/content/customElements.js)
                         <ul>
-                          <li><code class="highlighter-rouge">BaseControl</code> (chrome://global/content/customElements.js)
+                          <li><code class="language-plaintext highlighter-rouge">BaseControl</code> (chrome://global/content/customElements.js)
                             <ul>
-                              <li><code class="highlighter-rouge">BaseText</code> (chrome://global/content/customElements.js)
+                              <li><code class="language-plaintext highlighter-rouge">BaseText</code> (chrome://global/content/customElements.js)
                                 <ul>
-                                  <li><code class="highlighter-rouge">MozButtonBase</code> (chrome://global/content/elements/button.js)
+                                  <li><code class="language-plaintext highlighter-rouge">MozButtonBase</code> (chrome://global/content/elements/button.js)
                                     <ul>
-                                      <li><code class="highlighter-rouge">MozToolbarbutton</code> (chrome://global/content/elements/toolbarbutton.js)</li>
+                                      <li><code class="language-plaintext highlighter-rouge">MozToolbarbutton</code> (chrome://global/content/elements/toolbarbutton.js)</li>
                                     </ul>
                                   </li>
                                 </ul>
@@ -128,22 +128,22 @@
   </li>
 </ul>
 
-<p><code class="highlighter-rouge">Object</code>〜<code class="highlighter-rouge">Element</code>まではDOM要素で共通だ。
-HTML要素の場合は<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement"><code class="highlighter-rouge">HTMLElement</code></a>が共通祖先になるが、
-XUL要素の場合はあくまで<code class="highlighter-rouge">HTMLElement</code>ではなく<code class="highlighter-rouge">XULElement</code>である。</p>
+<p><code class="language-plaintext highlighter-rouge">Object</code>〜<code class="language-plaintext highlighter-rouge">Element</code>まではDOM要素で共通だ。
+HTML要素の場合は<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement"><code class="language-plaintext highlighter-rouge">HTMLElement</code></a>が共通祖先になるが、
+XUL要素の場合はあくまで<code class="language-plaintext highlighter-rouge">HTMLElement</code>ではなく<code class="language-plaintext highlighter-rouge">XULElement</code>である。</p>
 
 <p>ちなみにXBL時代の古いFirefoxを使って同様に階層を調べると下記の通りと判明した。</p>
 
 <ul>
-  <li><code class="highlighter-rouge">Object</code>
+  <li><code class="language-plaintext highlighter-rouge">Object</code>
     <ul>
-      <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget"><code class="highlighter-rouge">EventTarget</code></a>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget"><code class="language-plaintext highlighter-rouge">EventTarget</code></a>
         <ul>
-          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node"><code class="highlighter-rouge">Node</code></a>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node"><code class="language-plaintext highlighter-rouge">Node</code></a>
             <ul>
-              <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element"><code class="highlighter-rouge">Element</code></a>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element"><code class="language-plaintext highlighter-rouge">Element</code></a>
                 <ul>
-                  <li><code class="highlighter-rouge">XULElement</code> (<a href="https://dxr.mozilla.org/mozilla-central/source/dom/xul/nsXULElement.h">nsXULElement.h</a>)
+                  <li><code class="language-plaintext highlighter-rouge">XULElement</code> (<a href="https://dxr.mozilla.org/mozilla-central/source/dom/xul/nsXULElement.h">nsXULElement.h</a>)
                     <ul>
                       <li>chrome://global/content/bindings/general.xml#basecontrol
                         <ul>
@@ -172,10 +172,10 @@ XUL要素の場合はあくまで<code class="highlighter-rouge">HTMLElement</co
 
 <p>これは意図してやったことだが、
 XBL時代の階層をほぼそのままにWebComponentsに移行していることがよくわかる。
-<code class="highlighter-rouge">BaseControl</code>以下がかつてXBLであった対応性がよくわかる。
+<code class="language-plaintext highlighter-rouge">BaseControl</code>以下がかつてXBLであった対応性がよくわかる。
 それらのXBLで書かれていたところをJavaScriptに置き換えられたのだ。</p>
 
-<p>興味深いことに<code class="highlighter-rouge">XULElement</code>はネイティブコードのままで変えていない。
+<p>興味深いことに<code class="language-plaintext highlighter-rouge">XULElement</code>はネイティブコードのままで変えていない。
 設計は変えずに実装方法だけを現代化した、リファクタリングしたというのはすごい。</p>
 
 <h2 id="参考文献">参考文献</h2>

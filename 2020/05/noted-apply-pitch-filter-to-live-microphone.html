@@ -43,7 +43,7 @@
   <div class="post-content" itemprop="articleBody">
     <h3 id="tldr">TL;DR</h3>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% pacmd load-module module-null-sink sink_name=NullSink
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% pacmd load-module module-null-sink sink_name=NullSink
 % gst-launch-1.0 pulsesrc device=... ! pitch pitch=2 ! pulsesink device=NullSink
 % pavucontrol
 </code></pre></div></div>
@@ -52,7 +52,7 @@
 
 <p>At first, create a <em>null sink</em> to output the pitch-shifted audio to.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% pacmd load-module module-null-sink sink_name=NullSink
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% pacmd load-module module-null-sink sink_name=NullSink
 </code></pre></div></div>
 
 <p><a href="https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/Modules/#module-null-sink">As written in the document</a>,
@@ -68,9 +68,9 @@ use the monitor device as a recording device.</p>
 
 <h3 id="apply-filter-on-gstreamer">Apply filter on GStreamer</h3>
 
-<p>To check the microphone device name, execute <code class="highlighter-rouge">pacmd list-sources | grep name</code>.</p>
+<p>To check the microphone device name, execute <code class="language-plaintext highlighter-rouge">pacmd list-sources | grep name</code>.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% pacmd list-sources | grep name
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% pacmd list-sources | grep name
         name: &lt;alsa_output.usb-XXXX_USB_PnP_Audio_Device-XX.analog-stereo.monitor&gt;
         name: &lt;alsa_input.usb-XXXX_USB_PnP_Audio_Device-XX.mono-fallback&gt;
         name: &lt;alsa_output.pci-XXXX_XX_XX.X.analog-stereo.monitor&gt;
@@ -79,22 +79,22 @@ use the monitor device as a recording device.</p>
         name: &lt;alsa_output.pci-XXXX_XX_XX.X.hdmi-stereo-extraX.monitor&gt;
 </code></pre></div></div>
 
-<p>Device names ending in <code class="highlighter-rouge">.monitor</code> means monitor devices, not actual microphones.
+<p>Device names ending in <code class="language-plaintext highlighter-rouge">.monitor</code> means monitor devices, not actual microphones.
 In this example, following devices are actual microphones:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">alsa_input.usb-XXXX_USB_PnP_Audio_Device-XX.mono-fallback</code></li>
-  <li><code class="highlighter-rouge">alsa_input.pci-XXXX_XX_XX.X.analog-stereo</code></li>
+  <li><code class="language-plaintext highlighter-rouge">alsa_input.usb-XXXX_USB_PnP_Audio_Device-XX.mono-fallback</code></li>
+  <li><code class="language-plaintext highlighter-rouge">alsa_input.pci-XXXX_XX_XX.X.analog-stereo</code></li>
 </ul>
 
-<p>Here, let’s apply a <code class="highlighter-rouge">pitch</code> filter to the first device (USB-connected microphone).</p>
+<p>Here, let’s apply a <code class="language-plaintext highlighter-rouge">pitch</code> filter to the first device (USB-connected microphone).</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% gst-launch-1.0 pulsesrc device=alsa_input.usb-XXXX_USB_PnP_Audio_Device-XX.mono-fallback ! \
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% gst-launch-1.0 pulsesrc device=alsa_input.usb-XXXX_USB_PnP_Audio_Device-XX.mono-fallback ! \
     pitch pitch=2 ! \
     pulsesink device=NullSink
 </code></pre></div></div>
 
-<p>Of cause, replace <code class="highlighter-rouge">device=...</code> with microphone device name of your environment.</p>
+<p>Of cause, replace <code class="language-plaintext highlighter-rouge">device=...</code> with microphone device name of your environment.</p>
 
 <p>FYI: source device and sink device can be dynamically reconfigurable
 by PulseAudio Volume Control as describe on the next section.</p>

@@ -45,7 +45,7 @@
 
 <ul>
   <li>VID:PID - 0483:5750</li>
-  <li>Product ID: <code class="highlighter-rouge">STMicroelectronics LED badge -- mini LED display -- 11x44</code></li>
+  <li>Product ID: <code class="language-plaintext highlighter-rouge">STMicroelectronics LED badge -- mini LED display -- 11x44</code></li>
   <li>uses HID Protocol</li>
   <li>64 byte packet size</li>
 </ul>
@@ -81,13 +81,13 @@
 
 <h3 id="header-first-report-to-send">Header (first report to send):</h3>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>id[5]: "Hello"
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>id[5]: "Hello"
 padding[59]: all 0x00
 </code></pre></div></div>
 
 <h3 id="second-report">Second report:</h3>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0000   00 00 10 22 33 44 55 66 77 00 08 00 00 03 08 03
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0000   00 00 10 22 33 44 55 66 77 00 08 00 00 03 08 03
           ^^ -------------------------------------------- 1st message Frame/Speed/Blink/Effect
              ^^ ----------------------------------------- 2nd message Frame/Speed/Blink/Effect
                     ...
@@ -106,7 +106,7 @@ padding[59]: all 0x00
 </code></pre></div></div>
 
 <p>Frame/Speed/Blink/Effect coding:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0bFSSSBEEE
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0bFSSSBEEE
   ^ -------- 0: no frame, 1: frame
    ^^^ ----- Scrolling speed [0..7]
       ^ ---- 0: no blink, 1: blink
@@ -114,7 +114,7 @@ padding[59]: all 0x00
 </code></pre></div></div>
 
 <p>Message offset/length coding:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>08 00 00 01
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>08 00 00 01
 ^^ ---------- Fix number to indicate the coding
    ^^ ------- Offset to starting message data (set a proper value even if the message length is zero)
       ^^ ---- ? (should be set to zero)
@@ -132,7 +132,7 @@ The 2nd bit corresponds to 2nd left pixel, and so on.</p>
 
 <p>For example, when 1st message length is set to 1 and 2nd message offset is set to 1 and 2nd message length is set to 2:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1st line (3rd report)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1st line (3rd report)
   11 22 33 00 00 ...
   ^^ --------------- 1st line (top), 1st message
      ^^^^^ --------- 1st line (top), 2nd message

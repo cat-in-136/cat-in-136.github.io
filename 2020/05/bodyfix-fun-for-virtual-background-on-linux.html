@@ -58,7 +58,7 @@
 <p>bodypix は TensorFlow.js ベースでありブラウザ・Node.jsのどちらでも推論を実行させることができる。
 ブラウザで動かすとブラウザの外に持っていくのが面倒なので Node.js で動かすこととした。</p>
 
-<p>処理自体は簡単で、bodypix で推論を実行<code class="highlighter-rouge">net.segmentPerson()</code>してやると<code class="highlighter-rouge">data</code>に
+<p>処理自体は簡単で、bodypix で推論を実行<code class="language-plaintext highlighter-rouge">net.segmentPerson()</code>してやると<code class="language-plaintext highlighter-rouge">data</code>に
 人物が入ったところに 1 が、そうでないところに 0 が入った二値画像が生成される。
 これをマスクとして背景画像とカメラ画像を合成してやれば良い。</p>
 
@@ -122,42 +122,42 @@ TensorFlow の様々な高速化を台無しにする他の処理の重さはダ
 <p>上におおよその処理の流れを示した。bodypix 以外の処理は OpenCV で書いたが、
 TensorFlow.js でも書けると思うが、今はこうしてある。</p>
 
-<p>bodypix のよくあるサンプルプログラムでは <code class="highlighter-rouge">image.dispose()</code> に相当する処理が
+<p>bodypix のよくあるサンプルプログラムでは <code class="language-plaintext highlighter-rouge">image.dispose()</code> に相当する処理が
 抜けているがこれを実行しないとメモリを食いつぶすので注意が必要だ。
 OpenCV は自動開放してくれるらしくこのような手動での開放処理は無くとも問題は発生しなかった。</p>
 
 <p>プログラム自体は <a href="https://github.com/cat-in-136/bodypix-fun">cat-in-136/bodypix-fun</a> にあげたが、
-<code class="highlighter-rouge">npm i</code> を実行したら（OpenCVのコンパイルをするので時間がそれなりにかかる）、
-下記のように実行すれば良い。<code class="highlighter-rouge">--help</code> で使い方も出すようにしてあるので詳細は参照されたし。</p>
+<code class="language-plaintext highlighter-rouge">npm i</code> を実行したら（OpenCVのコンパイルをするので時間がそれなりにかかる）、
+下記のように実行すれば良い。<code class="language-plaintext highlighter-rouge">--help</code> で使い方も出すようにしてあるので詳細は参照されたし。</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% node ./app.js -i 0 --preview -b 背景画像.jpg
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% node ./app.js -i 0 --preview -b 背景画像.jpg
 </code></pre></div></div>
 
 <h3 id="仮想ウェブカメラとの結合">仮想ウェブカメラとの結合</h3>
 
 <p>昔からあるので、また定番なため有名化と思うが <a href="https://github.com/umlaeute/v4l2loopback">v4l2loopback</a> を入れれば良い。</p>
 
-<p><a href="https://github.com/umlaeute/v4l2loopback/blob/master/README.md">README</a> を読め、だけの話だが、例えば下記のようにすると <code class="highlighter-rouge">/dev/video2</code> という仮想ウェブカメラの v4l2 device file が生えてくる</p>
+<p><a href="https://github.com/umlaeute/v4l2loopback/blob/master/README.md">README</a> を読め、だけの話だが、例えば下記のようにすると <code class="language-plaintext highlighter-rouge">/dev/video2</code> という仮想ウェブカメラの v4l2 device file が生えてくる</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% sudo modprobe v4l2loopback devices=1 video_nr=2 exclusive_caps=1
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% sudo modprobe v4l2loopback devices=1 video_nr=2 exclusive_caps=1
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">exclusive_caps=1</code> がポイントで、これがないと単なるキャプチャデバイス扱いになるのか、ブラウザから選べないので今回の用途では必ず追加しておく必要がある。</p>
+<p><code class="language-plaintext highlighter-rouge">exclusive_caps=1</code> がポイントで、これがないと単なるキャプチャデバイス扱いになるのか、ブラウザから選べないので今回の用途では必ず追加しておく必要がある。</p>
 
-<p>あとは <code class="highlighter-rouge">/dev/video2</code> に前述の合成結果を流し込めばいい。</p>
+<p>あとは <code class="language-plaintext highlighter-rouge">/dev/video2</code> に前述の合成結果を流し込めばいい。</p>
 
-<p>OpenCV のウィンドウに出す機能 (<code class="highlighter-rouge">cv.imshow()</code>) も動いたので、これで画面を表示して、
+<p>OpenCV のウィンドウに出す機能 (<code class="language-plaintext highlighter-rouge">cv.imshow()</code>) も動いたので、これで画面を表示して、
 <a href="/2020/05/gstreamer-ximagesrc-to-capture-window.html">GStreamer ximagesrc でウィンドウごとにキャプチャ</a>して、
-<code class="highlighter-rouge">v4l2sink</code>に流し込むことにした。</p>
+<code class="language-plaintext highlighter-rouge">v4l2sink</code>に流し込むことにした。</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% gst-launch-1.0 -v ximagesrc xid=$XWINDOW_ID use-damage=false ! \
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% gst-launch-1.0 -v ximagesrc xid=$XWINDOW_ID use-damage=false ! \
      videoconvert ! \
      videoscale ! \
      "video/x-raw,width=640,height=480,framerate=30/1,format=YUY2" ! \
      v4l2sink device=/dev/video2
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">$XWINDOW_ID</code> は <code class="highlighter-rouge">xwininfo(1)</code> で調べて各自の環境に変えること。</p>
+<p><code class="language-plaintext highlighter-rouge">$XWINDOW_ID</code> は <code class="language-plaintext highlighter-rouge">xwininfo(1)</code> で調べて各自の環境に変えること。</p>
 
 <p>いまは GStreamer を使ったが、OBS Studio を使ってウィンドウをキャプチャして、
 それを <a href="https://github.com/CatxFish/obs-v4l2sink">obs-v4l2sink</a> で流し込んでも良い。</p>
@@ -205,9 +205,9 @@ Node.js から直接 GStreamer を叩いて v4l2 loopback device に投入する
 
 <h3 id="おまけ-ウェブカメラ画像じゃなくて動画に適用してみた図">おまけ: ウェブカメラ画像じゃなくて動画に適用してみた図</h3>
 
-<p>bodypix-fun は、OpenCV のビデオキャプチャ処理 <code class="highlighter-rouge">new cv.VideoCapture()</code> が、
+<p>bodypix-fun は、OpenCV のビデオキャプチャ処理 <code class="language-plaintext highlighter-rouge">new cv.VideoCapture()</code> が、
 ビデオデバイス入力とカメラを切り替えが容易なのでそういうふうにも作ってある。
-<code class="highlighter-rouge">node app.js -i foobar.mp4 --preview</code> のように実行すれば良い。</p>
+<code class="language-plaintext highlighter-rouge">node app.js -i foobar.mp4 --preview</code> のように実行すれば良い。</p>
 
 <figure>
 <img src="/images/2020-05-11-bodypix-fun-for-virtual-ground-on-linux-demo-roman-holiday.jpg" width="640" height="480" loading="lazy" />

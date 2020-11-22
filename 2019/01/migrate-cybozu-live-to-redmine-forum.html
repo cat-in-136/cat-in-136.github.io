@@ -95,17 +95,17 @@
 
 <h3 id="添付ファイル">添付ファイル</h3>
 
-<p>掲示板などの情報から添付ファイル情報として <code class="highlighter-rouge">cbl:attachement</code> という要素があり、添付ファイルのIDは取得できる。サイボウズの API 仕様にあるように<a href="https://developer.cybozulive.com/doc/current/pub/fileDownload.html">ファイルダウンロードAPIは画像のみの対応</a>である。実際に呼び出しても、<strong>画像ファイル以外はエラーを吐く</strong> という<a href="http://dotnsf.blog.jp/archives/1068218167.html">挙動が報告</a>されているし、筆者の手元でもそうなった。</p>
+<p>掲示板などの情報から添付ファイル情報として <code class="language-plaintext highlighter-rouge">cbl:attachement</code> という要素があり、添付ファイルのIDは取得できる。サイボウズの API 仕様にあるように<a href="https://developer.cybozulive.com/doc/current/pub/fileDownload.html">ファイルダウンロードAPIは画像のみの対応</a>である。実際に呼び出しても、<strong>画像ファイル以外はエラーを吐く</strong> という<a href="http://dotnsf.blog.jp/archives/1068218167.html">挙動が報告</a>されているし、筆者の手元でもそうなった。</p>
 
 <p>共有フォルダ（一括ダウンロード）機能は、画像以外の任意のファイルが保存できるが、コメントなどとの <strong>対応性に関する情報は与えられない</strong> 。また、同一ファイル名が ZIP 内で重複するのを防ぐため、ZIP 保存するとファイル名の末尾にランダムな文字列が付加される（このランダムな文字列はエクスポートするたびに異なるため、識別子としては使えない）。</p>
 
 <p>というわけで、画像は API で、非画像は悩んだ末に簡易的なスクレイピング（単にクッキーを食わせてダウンロード）で取得した。</p>
 
-<p>これとは別の話で、いずれの手段を使っても画像ファイルに関しては <strong>オリジナルのファイルを取り出すことはできない</strong> 。サイボウズ上の画像ファイルサイズが 1,145 kB と書いてあっても得られるダウンロードされるファイルは 197.0 kB といったような感じである。<code class="highlighter-rouge">optipng</code> などで非常に最適化をかけた画像については、逆にファイルサイズが肥大化していることもあるようだ。</p>
+<p>これとは別の話で、いずれの手段を使っても画像ファイルに関しては <strong>オリジナルのファイルを取り出すことはできない</strong> 。サイボウズ上の画像ファイルサイズが 1,145 kB と書いてあっても得られるダウンロードされるファイルは 197.0 kB といったような感じである。<code class="language-plaintext highlighter-rouge">optipng</code> などで非常に最適化をかけた画像については、逆にファイルサイズが肥大化していることもあるようだ。</p>
 
 <h3 id="photojpg-問題">photo.jpg 問題</h3>
 
-<p>添付ファイルをダウンロードしてみたら、<a href="https://live.cybozu.co.jp/info/2016122101.html">旧モバイルアプリ</a>で上げた画像ファイルは <code class="highlighter-rouge">photo.jpg</code> という名前のファイルになっているが、中身が JPEG ではなくて PNG になっていた。</p>
+<p>添付ファイルをダウンロードしてみたら、<a href="https://live.cybozu.co.jp/info/2016122101.html">旧モバイルアプリ</a>で上げた画像ファイルは <code class="language-plaintext highlighter-rouge">photo.jpg</code> という名前のファイルになっているが、中身が JPEG ではなくて PNG になっていた。</p>
 
 <p>なお、API でダウンロードしたとしても手動でダウンロードしたとしてもPNGファイルになっていたので、ファイル名 <em>（拡張子）が間違って保存されている</em> らしい。</p>
 
@@ -117,7 +117,7 @@
 
 <p><a href="https://github.com/cat-in-136/redmine_hearts">cat-in-136/redmine_hearts</a></p>
 
-<p>ひとつ API 上でややこしいところがある。<a href="https://developer.cybozulive.com/doc/current/pub/good.html">good の API レスポンス</a>において自分のいいね!と他人のいいね!は異なるかたちで表せられる。自分のは <code class="highlighter-rouge">cblGood:set</code> で、他人のは <code class="highlighter-rouge">cbl:who</code> だ。</p>
+<p>ひとつ API 上でややこしいところがある。<a href="https://developer.cybozulive.com/doc/current/pub/good.html">good の API レスポンス</a>において自分のいいね!と他人のいいね!は異なるかたちで表せられる。自分のは <code class="language-plaintext highlighter-rouge">cblGood:set</code> で、他人のは <code class="language-plaintext highlighter-rouge">cbl:who</code> だ。</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nt">&lt;cblGood:set&gt;</span>true<span class="nt">&lt;/cblGood:set&gt;</span>
     <span class="nt">&lt;cbl:who</span> <span class="na">valueString=</span><span class="s">"佐藤 昇"</span> <span class="na">id=</span><span class="s">"1:1"</span> <span class="nt">/&gt;</span>
@@ -136,8 +136,8 @@
 </code></pre></div></div>
 
 <p>なお、Member IDはAPIのアクセスの他に「プロフィールの詳細」を開いてURLを確認することでも得られる。
-例えば、プロフィールの詳細のページのURLが <code class="highlighter-rouge">https://cybozulive.com/mpAddress/list?mid=1%3A2</code> ならば、
-Member ID は <code class="highlighter-rouge">1:2</code> である。</p>
+例えば、プロフィールの詳細のページのURLが <code class="language-plaintext highlighter-rouge">https://cybozulive.com/mpAddress/list?mid=1%3A2</code> ならば、
+Member ID は <code class="language-plaintext highlighter-rouge">1:2</code> である。</p>
 
 <h3 id="発言番号とパーマリンク">発言番号とパーマリンク</h3>
 
@@ -147,7 +147,7 @@ Member ID は <code class="highlighter-rouge">1:2</code> である。</p>
 
 <ul>
   <li>発言番号は、苦肉の策だが subject 文字列に置換して移行</li>
-  <li>パーマリンクも苦肉の策ながら、テキストメッセージの末尾に書いた（miscconf.yaml にて<code class="highlighter-rouge">import_source_to_content: true</code>を指定した場合）</li>
+  <li>パーマリンクも苦肉の策ながら、テキストメッセージの末尾に書いた（miscconf.yaml にて<code class="language-plaintext highlighter-rouge">import_source_to_content: true</code>を指定した場合）</li>
 </ul>
 
 <p>これらは、あとは興味あるやつは頑張れ!というスタンスに基づく。使い勝手は悪いが、検索すれば見つけられるから後追いはできるようにはなるはずである。</p>
@@ -160,10 +160,10 @@ Member ID は <code class="highlighter-rouge">1:2</code> である。</p>
 
 <p>入る予定が redmine 4.1 系になるらしい。だが、redmine 4 系への移行は、そもそもまだ開発段階のバージョンである上に、プラグインなど互換の都合上、慎重にならざるを得ないため今回は作業を見送ることとした。よって、手作業パッチをすることとした。</p>
 
-<p>ところで、変換スクリプトで変換かけたフォーラムだと <code class="highlighter-rouge">message#1234</code> といったリンクの複数ページがうまく行かないが、
+<p>ところで、変換スクリプトで変換かけたフォーラムだと <code class="language-plaintext highlighter-rouge">message#1234</code> といったリンクの複数ページがうまく行かないが、
 このパッチを当てることで実は正しく動くようになる。</p>
 
-<p><code class="highlighter-rouge">MessageController#show</code> にて <code class="highlighter-rouge">r=1234</code> というパラメータを渡すことで、pagination を対処する処理があったが、これは ID が過去から昇順で並んでいるのが前提でないと動かない。</p>
+<p><code class="language-plaintext highlighter-rouge">MessageController#show</code> にて <code class="language-plaintext highlighter-rouge">r=1234</code> というパラメータを渡すことで、pagination を対処する処理があったが、これは ID が過去から昇順で並んでいるのが前提でないと動かない。</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">if</span> <span class="n">params</span><span class="p">[</span><span class="ss">:r</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">page</span><span class="p">.</span><span class="nf">nil?</span>
       <span class="n">offset</span> <span class="o">=</span> <span class="vi">@topic</span><span class="p">.</span><span class="nf">children</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="no">Message</span><span class="p">.</span><span class="nf">table_name</span><span class="si">}</span><span class="s2">.id &lt; ?"</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="ss">:r</span><span class="p">].</span><span class="nf">to_i</span><span class="p">).</span><span class="nf">count</span>
@@ -173,7 +173,7 @@ Member ID は <code class="highlighter-rouge">1:2</code> である。</p>
 
 <p>インポートスクリプトは、元のサイボウズLive の rss をそのままなめていっている挙動のせいでこれとは逆順に並んでいるため動作しなかった。</p>
 
-<p>ところで<a href="https://www.redmine.org/issues/26030">#26030</a>のパッチを投入した結果（あるいは redmine 4.1+）、ここのコードが下記のように、整列のところで <code class="highlighter-rouge">created_on</code> も見るようになっている。</p>
+<p>ところで<a href="https://www.redmine.org/issues/26030">#26030</a>のパッチを投入した結果（あるいは redmine 4.1+）、ここのコードが下記のように、整列のところで <code class="language-plaintext highlighter-rouge">created_on</code> も見るようになっている。</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">replies_order</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">current</span><span class="p">.</span><span class="nf">wants_comments_in_reverse_order?</span> <span class="p">?</span> <span class="s1">'DESC'</span> <span class="p">:</span> <span class="s1">'ASC'</span>
     <span class="vi">@replies</span> <span class="o">=</span> <span class="vi">@topic</span><span class="p">.</span><span class="nf">children</span><span class="p">.</span>
@@ -186,7 +186,7 @@ Member ID は <code class="highlighter-rouge">1:2</code> である。</p>
     <span class="k">end</span>
 </code></pre></div></div>
 
-<p>このお陰で、変換スクリプトで変換かけたフォーラムだと <code class="highlighter-rouge">message#1234</code> といったリンクの複数ページがうまく行かない不具合は結果的に解決できた。めでたしめでたし。（パッチをあたっていないときでも動作するような改造はやらないことにした。）</p>
+<p>このお陰で、変換スクリプトで変換かけたフォーラムだと <code class="language-plaintext highlighter-rouge">message#1234</code> といったリンクの複数ページがうまく行かない不具合は結果的に解決できた。めでたしめでたし。（パッチをあたっていないときでも動作するような改造はやらないことにした。）</p>
 
 <h3 id="emoji">emoji</h3>
 
@@ -194,7 +194,7 @@ Member ID は <code class="highlighter-rouge">1:2</code> である。</p>
 
 <p>原因は、mysql を utf8mb4 ではなく utf8 で運用しているため5バイト(以上)文字は正しく表現できないのが原因だった。これは普通にredmineを使っていても注意が必要だ。</p>
 
-<p>対策は、実態参照で変換することとすることとした（miscconf.yaml にて<code class="highlighter-rouge">escape_emoji: true</code>を指定した場合）。また実態参照にするかどうかの判断をemojiかどうかではなく5バイト(以上)文字かどうかにすることとした。新し目の絵文字をいちいちフォローするのは困難であるし、こうすると mysql の制限に合った処理かつ処理としても簡素である。</p>
+<p>対策は、実態参照で変換することとすることとした（miscconf.yaml にて<code class="language-plaintext highlighter-rouge">escape_emoji: true</code>を指定した場合）。また実態参照にするかどうかの判断をemojiかどうかではなく5バイト(以上)文字かどうかにすることとした。新し目の絵文字をいちいちフォローするのは困難であるし、こうすると mysql の制限に合った処理かつ処理としても簡素である。</p>
 
 <p>なお5バイト(以上)文字かどうかを判断する正規表現は下記の通りである:</p>
 
@@ -205,9 +205,9 @@ Member ID は <code class="highlighter-rouge">1:2</code> である。</p>
 
 <h2 id="移行処理について">移行処理について</h2>
 
-<p>移行処理自体は <code class="highlighter-rouge">bundle exec rails run ./replace-from-cybozu-to-redmine.rb</code> で実行すればよいので、heroku 上で実行するために <code class="highlighter-rouge">heroku run bundle exec rails run ./replace-from-cybozu-to-redmine.rb</code> としてもよい。</p>
+<p>移行処理自体は <code class="language-plaintext highlighter-rouge">bundle exec rails run ./replace-from-cybozu-to-redmine.rb</code> で実行すればよいので、heroku 上で実行するために <code class="language-plaintext highlighter-rouge">heroku run bundle exec rails run ./replace-from-cybozu-to-redmine.rb</code> としてもよい。</p>
 
-<p>…のであるが、実際にこれを動かすと1時間ちょっと経過したところで <code class="highlighter-rouge">heroku run</code> のプロセスが切られた。つまるところ1時間以内に実行が完了しないとNGのようであり、変換量が多いときにはNGのようである。愚直なバッチ処理なのでどうしてもこのスクリプトの実行には時間がかかる。またローカルでスクリプトを単純に動かすのも cleardb のアクセスのせいで時間がかかる。</p>
+<p>…のであるが、実際にこれを動かすと1時間ちょっと経過したところで <code class="language-plaintext highlighter-rouge">heroku run</code> のプロセスが切られた。つまるところ1時間以内に実行が完了しないとNGのようであり、変換量が多いときにはNGのようである。愚直なバッチ処理なのでどうしてもこのスクリプトの実行には時間がかかる。またローカルでスクリプトを単純に動かすのも cleardb のアクセスのせいで時間がかかる。</p>
 
 <p>そこで、一旦 cleardb のバックアップ用 sql ファイルをローカルのmysqlにインポートして、ローカルのmysql + リモートdropbox で変換を実施して、
 あとで mysql をcleardbにインポートする策をとることにした。
@@ -219,8 +219,8 @@ Member ID は <code class="highlighter-rouge">1:2</code> である。</p>
 
 <ul>
   <li>HTML形式の本文 (HTMLコードを取得する方法が API 上ない。scraping するのが面倒なのでやっていない)</li>
-  <li>「<code class="highlighter-rouge">&gt;xxx</code>」のリンク</li>
-  <li>メッセージ本文のインライン画像貼り付け（<code class="highlighter-rouge">[file:1]</code>を置換すればできるが面倒なのでやっていない）</li>
+  <li>「<code class="language-plaintext highlighter-rouge">&gt;xxx</code>」のリンク</li>
+  <li>メッセージ本文のインライン画像貼り付け（<code class="language-plaintext highlighter-rouge">[file:1]</code>を置換すればできるが面倒なのでやっていない）</li>
   <li>トピックのカテゴリ (階層構造なしでフラットにトピックが並ぶ)</li>
   <li>トピックに対する「★お気に入り」</li>
   <li>アンケート機能</li>

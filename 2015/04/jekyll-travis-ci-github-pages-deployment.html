@@ -49,14 +49,14 @@
   <li>Travis-CI のビルド処理は<a href="http://docs.travis-ci.com/user/workers/container-based-infrastructure/" title="Travis CI: Using container-based infrastructure">コンテナ型仮想化で動いて</a>いる。
     <ul>
       <li>OS は ubuntu 。ただし、何か細工しているかもしれないが未調査。</li>
-      <li>よって <code class="highlighter-rouge">.travis.yml</code> は <code class="highlighter-rouge">Dockerfile</code> のノリで書く。</li>
-      <li><code class="highlighter-rouge">apt-get</code> も使える。また、<a href="http://docs.travis-ci.com/user/apt/" title="Travis CI: APT Sources and Packages">aptアドオン</a>?の形でも使える。</li>
+      <li>よって <code class="language-plaintext highlighter-rouge">.travis.yml</code> は <code class="language-plaintext highlighter-rouge">Dockerfile</code> のノリで書く。</li>
+      <li><code class="language-plaintext highlighter-rouge">apt-get</code> も使える。また、<a href="http://docs.travis-ci.com/user/apt/" title="Travis CI: APT Sources and Packages">aptアドオン</a>?の形でも使える。</li>
     </ul>
   </li>
   <li>ruby まわりの前提として rvm 、bundle 使用が無難
     <ul>
-      <li>bundle 使わないですべて Apt で管理することもできるが、<code class="highlighter-rouge">Gemfile</code> をコミットした運用がよいだろう。</li>
-      <li><code class="highlighter-rouge">rake</code> は <code class="highlighter-rouge">bundle exec rake</code> のように、ruby は <code class="highlighter-rouge">bundle</code> を介して使用しよう。</li>
+      <li>bundle 使わないですべて Apt で管理することもできるが、<code class="language-plaintext highlighter-rouge">Gemfile</code> をコミットした運用がよいだろう。</li>
+      <li><code class="language-plaintext highlighter-rouge">rake</code> は <code class="language-plaintext highlighter-rouge">bundle exec rake</code> のように、ruby は <code class="language-plaintext highlighter-rouge">bundle</code> を介して使用しよう。</li>
     </ul>
   </li>
   <li>Github のレポジトリに push したい場合は、何らかの秘密鍵を入れこむか、アクセストークンを使用する。
@@ -64,14 +64,14 @@
       <li>鍵・アクセストークンともに公開すべきではないので、レポジトリに平文で格納しないこと。
         <ul>
           <li><a href="https://www.npmjs.com/package/travis-encrypt">travis-encrypt</a> を使えば暗号化されたテキストでやりとりできるので、センシティブな情報をやりとりするのにつかえる。</li>
-          <li><code class="highlighter-rouge">travis encrypt -r ユーザ名/レポジトリ名 FOO=bar</code> とした上で <code class="highlighter-rouge">.travis.yml</code> に暗号化したテキストを書くのと、Travis の設定で環境変数 <code class="highlighter-rouge">FOO=bar</code> を非公開で設定するのは、動きに差はほどんどない。が、環境変数だったら後者の方がずっと楽。
+          <li><code class="language-plaintext highlighter-rouge">travis encrypt -r ユーザ名/レポジトリ名 FOO=bar</code> とした上で <code class="language-plaintext highlighter-rouge">.travis.yml</code> に暗号化したテキストを書くのと、Travis の設定で環境変数 <code class="language-plaintext highlighter-rouge">FOO=bar</code> を非公開で設定するのは、動きに差はほどんどない。が、環境変数だったら後者の方がずっと楽。
             <ul>
-              <li>設定箇所への直リンは <code class="highlighter-rouge">https://travis-ci.org/ユーザ名/レポジトリ名/settings/env_vars</code></li>
+              <li>設定箇所への直リンは <code class="language-plaintext highlighter-rouge">https://travis-ci.org/ユーザ名/レポジトリ名/settings/env_vars</code></li>
             </ul>
           </li>
         </ul>
       </li>
-      <li>アクセストークンを使って git にアクセスするは、<a href="https://github.com/settings/tokens">https://github.com/settings/tokens</a> から Personal access token を生成し、<code class="highlighter-rouge">https://$GH_TOKEN@github.com/ユーザ名/レポジトリ名.git</code> から git clone すればよい。というか、これだけなのでアクセストークンの方がずっと簡単。
+      <li>アクセストークンを使って git にアクセスするは、<a href="https://github.com/settings/tokens">https://github.com/settings/tokens</a> から Personal access token を生成し、<code class="language-plaintext highlighter-rouge">https://$GH_TOKEN@github.com/ユーザ名/レポジトリ名.git</code> から git clone すればよい。というか、これだけなのでアクセストークンの方がずっと簡単。
         <ul>
           <li>アクセストークンは環境変数としておいて上述の方法をつかってレポジトリに公開しないようにする。</li>
         </ul>
@@ -91,25 +91,25 @@
 
 <ol>
   <li>Travis を Jekyll ソースのレポジトリと紐付ける。</li>
-  <li>bundle を使用するように変更。<code class="highlighter-rouge">Gemfile</code> と <code class="highlighter-rouge">Gemfile.lock</code> を使用するように変更（厳密にはきちんと使っていなかったのできちんと書いた）。</li>
-  <li><code class="highlighter-rouge">Rakefile</code> に初期化コードも含めて本当にすべて動くようにした。(<code class="highlighter-rouge">setup</code> タスクの追加)</li>
-  <li><code class="highlighter-rouge">.travis.yml</code> を記載
+  <li>bundle を使用するように変更。<code class="language-plaintext highlighter-rouge">Gemfile</code> と <code class="language-plaintext highlighter-rouge">Gemfile.lock</code> を使用するように変更（厳密にはきちんと使っていなかったのできちんと書いた）。</li>
+  <li><code class="language-plaintext highlighter-rouge">Rakefile</code> に初期化コードも含めて本当にすべて動くようにした。(<code class="language-plaintext highlighter-rouge">setup</code> タスクの追加)</li>
+  <li><code class="language-plaintext highlighter-rouge">.travis.yml</code> を記載
     <ul>
       <li>LSI を使用するので、Apt で GSL ライブラリをインストールするようにした。</li>
-      <li><code class="highlighter-rouge">bundle install</code> は特に書かなくても <code class="highlighter-rouge">language: ruby</code> になっていれば動くみたい。</li>
-      <li><code class="highlighter-rouge">rake setup</code>、<code class="highlighter-rouge">rake generate</code> を呼び出す…のだが、<code class="highlighter-rouge">bundle exec rake setup</code> のように bundle を通して呼ぶようにする。</li>
+      <li><code class="language-plaintext highlighter-rouge">bundle install</code> は特に書かなくても <code class="language-plaintext highlighter-rouge">language: ruby</code> になっていれば動くみたい。</li>
+      <li><code class="language-plaintext highlighter-rouge">rake setup</code>、<code class="language-plaintext highlighter-rouge">rake generate</code> を呼び出す…のだが、<code class="language-plaintext highlighter-rouge">bundle exec rake setup</code> のように bundle を通して呼ぶようにする。</li>
       <li>環境変数のうちレポジトリに登録してしまってよいものを記載する。</li>
     </ul>
   </li>
-  <li>github アクセストークンを取得し、Travis CI の設定で環境変数 <code class="highlighter-rouge">GH_TOKEN</code> に設定する。 <code class="highlighter-rouge">.travis.yml</code> でそれを参照するべきところは <code class="highlighter-rouge">$GH_TOKEN</code> に置き換える。</li>
-  <li><code class="highlighter-rouge">git push</code> すると Travis が動いてくれるのでログを確認し、エラーがなくなるまで check &amp; try する。</li>
+  <li>github アクセストークンを取得し、Travis CI の設定で環境変数 <code class="language-plaintext highlighter-rouge">GH_TOKEN</code> に設定する。 <code class="language-plaintext highlighter-rouge">.travis.yml</code> でそれを参照するべきところは <code class="language-plaintext highlighter-rouge">$GH_TOKEN</code> に置き換える。</li>
+  <li><code class="language-plaintext highlighter-rouge">git push</code> すると Travis が動いてくれるのでログを確認し、エラーがなくなるまで check &amp; try する。</li>
 </ol>
 
 <p>アクセストークンの隠蔽には少し苦労した。
-ビルドログにて環境変数を設定する所はきちんと <code class="highlighter-rouge">$ export GH_TOKEN=[secure]</code> のように隠蔽してくれるのだが、
-<code class="highlighter-rouge">git push</code> のところでどうしても <code class="highlighter-rouge">To https://XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX@github.com/cat-in-136/cat-in-136.github.io.git</code> のようなログが表示される。
-しかも標準出力ではなく標準 <em>エラー</em> 出力に吐かれているので <code class="highlighter-rouge">&gt; /dev/null</code> でも表示されてしまう。
-というわけで、<code class="highlighter-rouge">git push</code> を呼び出す所は強引だが <code class="highlighter-rouge">bundle exec rake -q deploy 2&gt;&amp;1 | sed "s/${GH_TOKEN}/\${GH_TOKEN}/g"</code> とした。
+ビルドログにて環境変数を設定する所はきちんと <code class="language-plaintext highlighter-rouge">$ export GH_TOKEN=[secure]</code> のように隠蔽してくれるのだが、
+<code class="language-plaintext highlighter-rouge">git push</code> のところでどうしても <code class="language-plaintext highlighter-rouge">To https://XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX@github.com/cat-in-136/cat-in-136.github.io.git</code> のようなログが表示される。
+しかも標準出力ではなく標準 <em>エラー</em> 出力に吐かれているので <code class="language-plaintext highlighter-rouge">&gt; /dev/null</code> でも表示されてしまう。
+というわけで、<code class="language-plaintext highlighter-rouge">git push</code> を呼び出す所は強引だが <code class="language-plaintext highlighter-rouge">bundle exec rake -q deploy 2&gt;&amp;1 | sed "s/${GH_TOKEN}/\${GH_TOKEN}/g"</code> とした。
 （標準エラー出力を標準出力にぶちこんで、さらにそれを sed でテキスト置換）</p>
 
 <h4 id="参考文献">参考文献</h4>

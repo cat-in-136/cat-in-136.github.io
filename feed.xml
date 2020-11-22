@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <feed xmlns="http://www.w3.org/2005/Atom" >
-  <generator uri="https://jekyllrb.com/" version="4.0.1">Jekyll</generator>
+  <generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator>
   <link href="https://cat-in-136.github.io/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://cat-in-136.github.io/" rel="alternate" type="text/html" />
-  <updated>2020-11-22T16:18:49+09:00</updated>
+  <updated>2020-11-22T16:29:01+09:00</updated>
   <id>https://cat-in-136.github.io/</id>
 
   
@@ -1522,7 +1522,7 @@ table.diff_firefox83_pref_diff tbody tr { transition: background 0.125s ease-in-
       
       
       <content type="html" xml:base="https://cat-in-136.github.io/2020/10/gum-frequency-characteristic-depending-on-audio-parameters.html">&lt;p&gt;Sound quality is not so good when sharing video/music in some browser-based online conference system.
-In my qualitative research on this issue, I found that the parameters of &lt;code class=&quot;highlighter-rouge&quot;&gt;getUserMedia()&lt;/code&gt; audio affect the sound quality.
+In my qualitative research on this issue, I found that the parameters of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;getUserMedia()&lt;/code&gt; audio affect the sound quality.
 This post describes this relations.&lt;/p&gt;
 
 &lt;h2 id=&quot;experiment-setup&quot;&gt;Experiment Setup&lt;/h2&gt;
@@ -1538,8 +1538,8 @@ I played it and routed it to the browser as a source (like as a microphone sourc
 
 &lt;p&gt;&lt;a href=&quot;https://gist.github.com/cat-in-136/efe21ea1567c4fdf2b26187cbb0d4a86&quot;&gt;https://gist.github.com/cat-in-136/efe21ea1567c4fdf2b26187cbb0d4a86&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Press the Start button to executes &lt;code class=&quot;highlighter-rouge&quot;&gt;getUserMedia()&lt;/code&gt; and browser starts receiving audio from the source (white noise).
-It outputs it to the speaker, and then does time/frequency analysis in &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AnalyserNode&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Press the Start button to executes &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;getUserMedia()&lt;/code&gt; and browser starts receiving audio from the source (white noise).
+It outputs it to the speaker, and then does time/frequency analysis in &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AnalyserNode&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Note that if the microphone and the speaker are close to each other, you may hear feedback, so I added a 1 second delay for safety.&lt;/p&gt;
 
@@ -1553,7 +1553,7 @@ It outputs it to the speaker, and then does time/frequency analysis in &lt;a hre
 &lt;span class=&quot;nx&quot;&gt;synthDelay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;analyser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;I confirmed that changing the parameter settings (&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;MediaTrackConstraints&lt;/code&gt;&lt;/a&gt;) affects the waveforms/frequency characteristics.&lt;/p&gt;
+&lt;p&gt;I confirmed that changing the parameter settings (&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MediaTrackConstraints&lt;/code&gt;&lt;/a&gt;) affects the waveforms/frequency characteristics.&lt;/p&gt;
 
 &lt;p&gt;I used the PulseAudio monitor device and I didn’t use a &lt;em&gt;real microphone&lt;/em&gt;, so there is no audio noise.
 Of couse, the reproducibility of the quantization noise is not guaranteed because the audio level is adjusted at each stage in PulseAudio.&lt;/p&gt;
@@ -1565,7 +1565,7 @@ Of couse, the reproducibility of the quantization noise is not guaranteed becaus
 &lt;blockquote class=&quot;twitter-tweet&quot; data-conversation=&quot;none&quot; data-dnt=&quot;true&quot; data-theme=&quot;light&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Frequency characteristic of WebRTC audio seems to be depending on audio parameter. &lt;a href=&quot;https://t.co/0w2FIdkgKE&quot;&gt;pic.twitter.com/0w2FIdkgKE&lt;/a&gt;&lt;/p&gt;&amp;mdash; cat_in_136 (@cat_in_136) &lt;a href=&quot;https://twitter.com/cat_in_136/status/1264489740738297857?ref_src=twsrc%5Etfw&quot;&gt;May 24, 2020&lt;/a&gt;&lt;/blockquote&gt;
 &lt;script async=&quot;async&quot; src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
 
-&lt;p&gt;There was a big difference. In particular, it is worth noting that setting both &lt;code class=&quot;highlighter-rouge&quot;&gt;echoCancellation&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;noiseSuppression&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;false&lt;/code&gt; yields flat frequency characteristics.&lt;/p&gt;
+&lt;p&gt;There was a big difference. In particular, it is worth noting that setting both &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;echoCancellation&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;noiseSuppression&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;false&lt;/code&gt; yields flat frequency characteristics.&lt;/p&gt;
 
 &lt;p&gt;Firefox:&lt;/p&gt;
 
@@ -1576,16 +1576,16 @@ Of couse, the reproducibility of the quantization noise is not guaranteed becaus
 
 &lt;ul&gt;
   &lt;li&gt;No matter how I tried, gain of near the high frequencies was lower, and I couldn’t get completely flat frequency charactestics.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;echoCancellation&lt;/code&gt; behaves unstable.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/applyConstraints&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;MediaStreamTrack.applyConstraints()&lt;/code&gt;&lt;/a&gt; allows parameters to be dynamically set. It was useful for testing.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;echoCancellation&lt;/code&gt; behaves unstable.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/applyConstraints&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MediaStreamTrack.applyConstraints()&lt;/code&gt;&lt;/a&gt; allows parameters to be dynamically set. It was useful for testing.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
 
-&lt;p&gt;In the web conferencing system on browser, the sound quality may deteriorate because the signal is filtered by the &lt;code class=&quot;highlighter-rouge&quot;&gt;getUserMedia()&lt;/code&gt; setting, especially &lt;code class=&quot;highlighter-rouge&quot;&gt;echoCancellation&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;noiseSuppression&lt;/code&gt;.
+&lt;p&gt;In the web conferencing system on browser, the sound quality may deteriorate because the signal is filtered by the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;getUserMedia()&lt;/code&gt; setting, especially &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;echoCancellation&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;noiseSuppression&lt;/code&gt;.
 It is not due to the opus encoding and so on, but is done in the preprocessing.&lt;/p&gt;
 
-&lt;p&gt;Therefore, when shareing video/music and you are concerned about the sound quality, you should check the settings and make sure that &lt;code class=&quot;highlighter-rouge&quot;&gt;echoCancellation&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;noiseSuppression&lt;/code&gt; are set to &lt;code class=&quot;highlighter-rouge&quot;&gt;false&lt;/code&gt;.
+&lt;p&gt;Therefore, when shareing video/music and you are concerned about the sound quality, you should check the settings and make sure that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;echoCancellation&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;noiseSuppression&lt;/code&gt; are set to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;false&lt;/code&gt;.
 On the other hand, if you’re just making a voice call with a &lt;em&gt;real microphone&lt;/em&gt;, these settings are useful and should be left at default.&lt;/p&gt;</content>
       
 
@@ -3607,7 +3607,7 @@ table.diff_firefox80_pref_diff tbody tr { transition: background 0.125s ease-in-
 
 &lt;ul&gt;
   &lt;li&gt;VID:PID - 0483:5750&lt;/li&gt;
-  &lt;li&gt;Product ID: &lt;code class=&quot;highlighter-rouge&quot;&gt;STMicroelectronics LED badge -- mini LED display -- 11x44&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Product ID: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;STMicroelectronics LED badge -- mini LED display -- 11x44&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;uses HID Protocol&lt;/li&gt;
   &lt;li&gt;64 byte packet size&lt;/li&gt;
 &lt;/ul&gt;
@@ -3643,13 +3643,13 @@ table.diff_firefox80_pref_diff tbody tr { transition: background 0.125s ease-in-
 
 &lt;h3 id=&quot;header-first-report-to-send&quot;&gt;Header (first report to send):&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;id[5]: &quot;Hello&quot;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;id[5]: &quot;Hello&quot;
 padding[59]: all 0x00
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;second-report&quot;&gt;Second report:&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;0000   00 00 10 22 33 44 55 66 77 00 08 00 00 03 08 03
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;0000   00 00 10 22 33 44 55 66 77 00 08 00 00 03 08 03
           ^^ -------------------------------------------- 1st message Frame/Speed/Blink/Effect
              ^^ ----------------------------------------- 2nd message Frame/Speed/Blink/Effect
                     ...
@@ -3668,7 +3668,7 @@ padding[59]: all 0x00
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Frame/Speed/Blink/Effect coding:&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;0bFSSSBEEE
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;0bFSSSBEEE
   ^ -------- 0: no frame, 1: frame
    ^^^ ----- Scrolling speed [0..7]
       ^ ---- 0: no blink, 1: blink
@@ -3676,7 +3676,7 @@ padding[59]: all 0x00
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Message offset/length coding:&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;08 00 00 01
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;08 00 00 01
 ^^ ---------- Fix number to indicate the coding
    ^^ ------- Offset to starting message data (set a proper value even if the message length is zero)
       ^^ ---- ? (should be set to zero)
@@ -3694,7 +3694,7 @@ The 2nd bit corresponds to 2nd left pixel, and so on.&lt;/p&gt;
 
 &lt;p&gt;For example, when 1st message length is set to 1 and 2nd message offset is set to 1 and 2nd message length is set to 2:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1st line (3rd report)
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1st line (3rd report)
   11 22 33 00 00 ...
   ^^ --------------- 1st line (top), 1st message
      ^^^^^ --------- 1st line (top), 2nd message
@@ -5364,9 +5364,9 @@ Java Desktop App に移植することをここ最近やっていた。&lt;/p&gt
   &lt;p&gt;User setting is stored at&lt;/p&gt;
 
   &lt;ul&gt;
-    &lt;li&gt;windows: &lt;code class=&quot;highlighter-rouge&quot;&gt;\HKEY_CURRENT_USER\Software\JavaSoft\Prefs\io\github\cat_in_136\jadice&lt;/code&gt; on the registry&lt;/li&gt;
-    &lt;li&gt;macos: &lt;code class=&quot;highlighter-rouge&quot;&gt;/io/github/cat_in_136/jadice&lt;/code&gt; on &lt;code class=&quot;highlighter-rouge&quot;&gt;~/Library/Preferences/com.apple.java.util.prefs.plist&lt;/code&gt;&lt;/li&gt;
-    &lt;li&gt;linux: &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.java/.userPrefs/io/github/_!':!}@&quot;0!&amp;amp;8!a@&quot;u!&amp;amp;8!:@!z!$}=/jadice/prefs.xml&lt;/code&gt;&lt;/li&gt;
+    &lt;li&gt;windows: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\HKEY_CURRENT_USER\Software\JavaSoft\Prefs\io\github\cat_in_136\jadice&lt;/code&gt; on the registry&lt;/li&gt;
+    &lt;li&gt;macos: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/io/github/cat_in_136/jadice&lt;/code&gt; on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/Library/Preferences/com.apple.java.util.prefs.plist&lt;/code&gt;&lt;/li&gt;
+    &lt;li&gt;linux: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.java/.userPrefs/io/github/_!':!}@&quot;0!&amp;amp;8!a@&quot;u!&amp;amp;8!:@!z!$}=/jadice/prefs.xml&lt;/code&gt;&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/blockquote&gt;
 

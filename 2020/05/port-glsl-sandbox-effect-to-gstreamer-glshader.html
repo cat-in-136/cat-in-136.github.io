@@ -48,7 +48,7 @@
 but you can specify only shader. For example:</p>
 
 <blockquote>
-  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gst-launch-1.0 videotestsrc ! glupload ! glshader fragment="\"`cat myshader.frag`\"" ! glimagesink
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gst-launch-1.0 videotestsrc ! glupload ! glshader fragment="\"`cat myshader.frag`\"" ! glimagesink
 </code></pre></div>  </div>
 </blockquote>
 
@@ -58,7 +58,7 @@ So, I looked into how to stream “shader” into Gstreamer.</p>
 <h3 id="input-is-required">Input is required</h3>
 
 <p>An input is actually required for glshader.
-glshader is an implement of <code class="highlighter-rouge">GstBaseTransform</code>, which shall have a sink pad.</p>
+glshader is an implement of <code class="language-plaintext highlighter-rouge">GstBaseTransform</code>, which shall have a sink pad.</p>
 
 <figure> <img class="fitcontain" src="/images/2020-05-03-port-glsl-sandbox-effect-to-gstreamer-glshader-diagram-glshader.svg" width="957" height="256" loading="lazy" />
 <figcaption>Example diagram of glshader</figcaption>
@@ -88,12 +88,12 @@ without conversion.</p>
 <span class="k">uniform</span> <span class="kt">sampler2D</span> <span class="n">backbuffer</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>Here, it is impossible to port some uniforms such as <code class="highlighter-rouge">mouse</code> into glshader.
-<code class="highlighter-rouge">time</code> can be ported in the same value.
-<code class="highlighter-rouge">resolution</code> can be ported to <code class="highlighter-rouge">vec2(width, height)</code>.</p>
+<p>Here, it is impossible to port some uniforms such as <code class="language-plaintext highlighter-rouge">mouse</code> into glshader.
+<code class="language-plaintext highlighter-rouge">time</code> can be ported in the same value.
+<code class="language-plaintext highlighter-rouge">resolution</code> can be ported to <code class="language-plaintext highlighter-rouge">vec2(width, height)</code>.</p>
 
-<p>The output parameter <code class="highlighter-rouge">gl_FragColor</code> is same.
-<code class="highlighter-rouge">Gl_FragCoord</code> can be used in the same way, but the coordinate systems are different.</p>
+<p>The output parameter <code class="language-plaintext highlighter-rouge">gl_FragColor</code> is same.
+<code class="language-plaintext highlighter-rouge">Gl_FragCoord</code> can be used in the same way, but the coordinate systems are different.</p>
 
 <figure> <object width="673" height="184" data="/images/2020-05-03-port-glsl-sandbox-effect-to-gstreamer-glshader-coordinate-system.svg"></object>
 <figcaption>Coordinate system difference</figcaption>
@@ -148,14 +148,14 @@ For example,</p>
 
 <p>For example, to show a window, connect glimagesink directly:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% gst-launch-1.0 gltestsrc pattern=black ! \
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% gst-launch-1.0 gltestsrc pattern=black ! \
       glshader fragment="\"$(cat myshader.frag)\"" ! \
       glimagesink
 </code></pre></div></div>
 
 <p>To redirect a V4L2 device, conversion is required before connect to the device:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% gst-launch-1.0 gltestsrc pattern=black ! \
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% gst-launch-1.0 gltestsrc pattern=black ! \
       glshader fragment="\"$(cat myshader.frag)\"" ! \
       gldownload ! \
       videoconvert ! \
@@ -166,7 +166,7 @@ For example,</p>
 
 <p>To generate a PNG file…</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% gst-launch-1.0 gltestsrc pattern=black num-buffers=1 ! \
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% gst-launch-1.0 gltestsrc pattern=black num-buffers=1 ! \
       glshader fragment="\"$(cat myshader.frag)\"" ! \
       gldownload ! \
       videoconvert ! \

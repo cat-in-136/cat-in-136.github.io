@@ -42,7 +42,7 @@
 
   <div class="post-content" itemprop="articleBody">
     <p>Sound quality is not so good when sharing video/music in some browser-based online conference system.
-In my qualitative research on this issue, I found that the parameters of <code class="highlighter-rouge">getUserMedia()</code> audio affect the sound quality.
+In my qualitative research on this issue, I found that the parameters of <code class="language-plaintext highlighter-rouge">getUserMedia()</code> audio affect the sound quality.
 This post describes this relations.</p>
 
 <h2 id="experiment-setup">Experiment Setup</h2>
@@ -58,8 +58,8 @@ I played it and routed it to the browser as a source (like as a microphone sourc
 
 <p><a href="https://gist.github.com/cat-in-136/efe21ea1567c4fdf2b26187cbb0d4a86">https://gist.github.com/cat-in-136/efe21ea1567c4fdf2b26187cbb0d4a86</a></p>
 
-<p>Press the Start button to executes <code class="highlighter-rouge">getUserMedia()</code> and browser starts receiving audio from the source (white noise).
-It outputs it to the speaker, and then does time/frequency analysis in <a href="https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode"><code class="highlighter-rouge">AnalyserNode</code></a>.</p>
+<p>Press the Start button to executes <code class="language-plaintext highlighter-rouge">getUserMedia()</code> and browser starts receiving audio from the source (white noise).
+It outputs it to the speaker, and then does time/frequency analysis in <a href="https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode"><code class="language-plaintext highlighter-rouge">AnalyserNode</code></a>.</p>
 
 <p>Note that if the microphone and the speaker are close to each other, you may hear feedback, so I added a 1 second delay for safety.</p>
 
@@ -73,7 +73,7 @@ It outputs it to the speaker, and then does time/frequency analysis in <a href="
 <span class="nx">synthDelay</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">analyser</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>I confirmed that changing the parameter settings (<a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints"><code class="highlighter-rouge">MediaTrackConstraints</code></a>) affects the waveforms/frequency characteristics.</p>
+<p>I confirmed that changing the parameter settings (<a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints"><code class="language-plaintext highlighter-rouge">MediaTrackConstraints</code></a>) affects the waveforms/frequency characteristics.</p>
 
 <p>I used the PulseAudio monitor device and I didn’t use a <em>real microphone</em>, so there is no audio noise.
 Of couse, the reproducibility of the quantization noise is not guaranteed because the audio level is adjusted at each stage in PulseAudio.</p>
@@ -85,7 +85,7 @@ Of couse, the reproducibility of the quantization noise is not guaranteed becaus
 <blockquote class="twitter-tweet" data-conversation="none" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">Frequency characteristic of WebRTC audio seems to be depending on audio parameter. <a href="https://t.co/0w2FIdkgKE">pic.twitter.com/0w2FIdkgKE</a></p>&mdash; cat_in_136 (@cat_in_136) <a href="https://twitter.com/cat_in_136/status/1264489740738297857?ref_src=twsrc%5Etfw">May 24, 2020</a></blockquote>
 <script async="async" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-<p>There was a big difference. In particular, it is worth noting that setting both <code class="highlighter-rouge">echoCancellation</code> and <code class="highlighter-rouge">noiseSuppression</code> to <code class="highlighter-rouge">false</code> yields flat frequency characteristics.</p>
+<p>There was a big difference. In particular, it is worth noting that setting both <code class="language-plaintext highlighter-rouge">echoCancellation</code> and <code class="language-plaintext highlighter-rouge">noiseSuppression</code> to <code class="language-plaintext highlighter-rouge">false</code> yields flat frequency characteristics.</p>
 
 <p>Firefox:</p>
 
@@ -96,16 +96,16 @@ Of couse, the reproducibility of the quantization noise is not guaranteed becaus
 
 <ul>
   <li>No matter how I tried, gain of near the high frequencies was lower, and I couldn’t get completely flat frequency charactestics.</li>
-  <li><code class="highlighter-rouge">echoCancellation</code> behaves unstable.</li>
-  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/applyConstraints"><code class="highlighter-rouge">MediaStreamTrack.applyConstraints()</code></a> allows parameters to be dynamically set. It was useful for testing.</li>
+  <li><code class="language-plaintext highlighter-rouge">echoCancellation</code> behaves unstable.</li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/applyConstraints"><code class="language-plaintext highlighter-rouge">MediaStreamTrack.applyConstraints()</code></a> allows parameters to be dynamically set. It was useful for testing.</li>
 </ul>
 
 <h2 id="conclusion">Conclusion</h2>
 
-<p>In the web conferencing system on browser, the sound quality may deteriorate because the signal is filtered by the <code class="highlighter-rouge">getUserMedia()</code> setting, especially <code class="highlighter-rouge">echoCancellation</code> and <code class="highlighter-rouge">noiseSuppression</code>.
+<p>In the web conferencing system on browser, the sound quality may deteriorate because the signal is filtered by the <code class="language-plaintext highlighter-rouge">getUserMedia()</code> setting, especially <code class="language-plaintext highlighter-rouge">echoCancellation</code> and <code class="language-plaintext highlighter-rouge">noiseSuppression</code>.
 It is not due to the opus encoding and so on, but is done in the preprocessing.</p>
 
-<p>Therefore, when shareing video/music and you are concerned about the sound quality, you should check the settings and make sure that <code class="highlighter-rouge">echoCancellation</code> and <code class="highlighter-rouge">noiseSuppression</code> are set to <code class="highlighter-rouge">false</code>.
+<p>Therefore, when shareing video/music and you are concerned about the sound quality, you should check the settings and make sure that <code class="language-plaintext highlighter-rouge">echoCancellation</code> and <code class="language-plaintext highlighter-rouge">noiseSuppression</code> are set to <code class="language-plaintext highlighter-rouge">false</code>.
 On the other hand, if you’re just making a voice call with a <em>real microphone</em>, these settings are useful and should be left at default.</p>
 
   </div>

@@ -43,7 +43,7 @@
   <div class="post-content" itemprop="articleBody">
     <p>I’ve been tracking updates/differences in Firefox default settings <a href="/2010/08/diff-of-firefox4-default-preference.html">since around 2010</a>.</p>
 
-<p>It used to be a semi-manual process to extract files like prefs.js from <a href="https://developer.mozilla.org/en-US/docs/Mozilla/About_omni.ja_%28formerly_omni.jar%29"><code class="highlighter-rouge">omni.ja</code> files</a> Firefox, and then combine them using <code class="highlighter-rouge">cat</code> command.</p>
+<p>It used to be a semi-manual process to extract files like prefs.js from <a href="https://developer.mozilla.org/en-US/docs/Mozilla/About_omni.ja_%28formerly_omni.jar%29"><code class="language-plaintext highlighter-rouge">omni.ja</code> files</a> Firefox, and then combine them using <code class="language-plaintext highlighter-rouge">cat</code> command.</p>
 
 <p>Recently, more and more settings are embedded inside libxul.so instead of writing them in text file (like prefs.js).
 In addition, <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1563555">to make it easier to use with trust, these settings were changed to be generated from YAML files</a> when building Firefox binaries.
@@ -56,17 +56,17 @@ The old methods are not making much sense.</p>
 <blockquote>
   <p>Create a temporary folder to use a <em>fresh clean</em> profile.</p>
 
-  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% mkdir /tmp/profile_dir
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% mkdir /tmp/profile_dir
 </code></pre></div>  </div>
 
   <p>Run firefox in headless mode.</p>
 
-  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% /path/to/firefox -profile /tmp/profile_dir -marionette -headless
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% /path/to/firefox -profile /tmp/profile_dir -marionette -headless
 </code></pre></div>  </div>
 
   <p>Execute fetcher.js to obtain all default prefs.</p>
 
-  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% node fetcher.js &gt; prefall.json
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% node fetcher.js &gt; prefall.json
 </code></pre></div>  </div>
 </blockquote>
 
@@ -86,9 +86,9 @@ The old methods are not making much sense.</p>
     <span class="nx">process</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">prefs</span><span class="p">));</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">fetcher.js</code> opens about:config and run some snippets.
+<p><code class="language-plaintext highlighter-rouge">fetcher.js</code> opens about:config and run some snippets.
 about:config supports firefox private interfaces (used to be available with old extensions).
-So, <code class="highlighter-rouge">fetcher.js</code> is able to access Firefox preference information.</p>
+So, <code class="language-plaintext highlighter-rouge">fetcher.js</code> is able to access Firefox preference information.</p>
 
 <p>The comparison logic is the same as in the past.
 I ported from code running in the browser to code running on Node.js.
