@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,max-scale=10,min-scale=0.5,user-scalable=yes" />
+  <title>Setup of Selenium + geckodriver is now well-simplified</title>
+
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="https://code.cdn.mozilla.net/fonts/fira.css" />
+
+  <link rel="canonical" href="https://cat-in-136.github.io/2021/01/setup-of-seleniumgeckodriver-is-now-well-simplified.html" />
+  <link rel="alternate" type="application/rss+xml" title="cat_in_136.blog() &raquo; Feed" href="/feed.xml" />
+  <meta property="og:url" content="https://cat-in-136.github.io/2021/01/setup-of-seleniumgeckodriver-is-now-well-simplified.html" />
+  <meta property="og:title" content="Setup of Selenium + geckodriver is now well-simplified" /><meta property="og:description" content="As written in the past post, I had been using foxr, a thin library of the Firefox marionette remo..." /><meta property="og:type" content="article" /><meta property="og:site_name" content="cat_in_136.blog()" /><meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@cat_in_136" />
+  <meta name="twitter:creator" content="@cat_in_136" />
+</head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" href="/">cat_in_136.blog()</a>
+    <nav class="site-nav">
+      <a href="javascript:void(0);" class="menu-icon" title="barger button"></a>
+      <div class="trigger"><a class="page-link" href="/about">About</a><a class="page-link" href="/archive">Archive</a><a class="page-link" href="/tags">Tags</a></div>
+    </nav>
+  </div>
+</header>
+<div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name"><a href="/2021/01/setup-of-seleniumgeckodriver-is-now-well-simplified.html" itemprop="url">Setup of Selenium + geckodriver is now well-simplified</a></h1>
+
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2021-01-03T15:32:47+09:00">2021-01-03T15:32:47+09:00</span></div><div class="post-meta">Tags:
+      <span itemprop="keywords"><a class="tag" href="/tags/firefox">Firefox</a><a class="tag" href="/tags/mozilla">Mozilla</a><a class="tag" href="/tags/webdriver">Webdriver</a></span></div><div class="post-meta">
+      Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2021-01-03-setup-of-seleniumgeckodriver-is-now-well-simplified.md" class="source-path">_posts/2021-01-03-setup-of-seleniumgeckodriver-is-now-well-simplified.md</a>
+        (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2021-01-03-setup-of-seleniumgeckodriver-is-now-well-simplified.md">History</a>)
+    </div><div class="post-meta">
+      <a href="#comments"><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2021/01/setup-of-seleniumgeckodriver-is-now-well-simplified.html">↓Comments</span></a>
+      <script id="dsq-count-scr" src="https://catin136blog.disqus.com/count.js" defer="defer" async="async"></script>
+    </div>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>As written in <a href="/2019/10/use-marionette-to-obtain-firefox-internal-information-easily.html">the past post</a>,
+I had been using <a href="https://www.npmjs.com/package/foxr">foxr</a>, a thin library of the Firefox marionette remote protocol,
+to automatically control Firefox.
+However, some of automated procedure didn’t work now, so I switched to the <strong>standard</strong>-way setup of
+<a href="https://www.selenium.dev/documentation/en/webdriver/">Selenium WebDriver</a> with
+<a href="https://github.com/mozilla/geckodriver">geckodriver</a>. I found its setup had become much simpler.</p>
+
+<h2 id="tldr">TL;DR</h2>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i geckodriver selenium-webdriver
+</code></pre></div></div>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">Builder</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">selenium-webdriver</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">firefox</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">selenium-webdriver/firefox</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">geckodriver</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">options</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">firefox</span><span class="p">.</span><span class="nx">Options</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">headless</span><span class="p">();</span>
+<span class="c1">//.setBinary(executablePath);</span>
+
+<span class="kd">const</span> <span class="nx">driver</span> <span class="o">=</span> <span class="k">await</span> <span class="k">new</span> <span class="nx">Builder</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">forBrowser</span><span class="p">(</span><span class="dl">'</span><span class="s1">firefox</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">setFirefoxOptions</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">build</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h2 id="no-need-to-download-geckodriver-manually">No need to download geckodriver manually</h2>
+
+<p><a href="https://www.npmjs.com/package/geckodriver">A NPM package geckodriver</a> is a downloader
+for https://github.com/mozilla/geckodriver/releases.</p>
+
+<p>When you install this package, it will start downloading geckodriver as follows:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% npm i geckodriver --save
+
+&gt; geckodriver@1.21.1 postinstall /tmp/a/node_modules/geckodriver
+&gt; node index.js
+
+Downloading geckodriver... Extracting... Complete.
+</code></pre></div></div>
+
+<p>geckodriver is available at <code class="language-plaintext highlighter-rouge">node_modules/.bin/geckodriver</code> and <code class="language-plaintext highlighter-rouge">node_modules/geckodriver/geckodriver</code>.</p>
+
+<h2 id="no-need-to-add-geckodriver-to-the-system-path-manually">No need to add geckodriver to the system PATH manually</h2>
+
+<p><code class="language-plaintext highlighter-rouge">require('geckodriver')</code> adds the directory where geckodriver is located to the system PATH.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">assert</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">assert</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">geckodriver</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PATH</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">delimiter</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="dl">'</span><span class="s1">node_modules/geckodriver</span><span class="dl">'</span><span class="p">)),</span> <span class="kc">true</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Instead of manually downloading the geckodriver file and configuring the system PATH,
+you can simply add this library to the package.json <code class="language-plaintext highlighter-rouge">dependencies</code>.</p>
+
+<h2 id="just-only-use-selenium-webdriverfirefox">Just only use selenium-webdriver/firefox</h2>
+
+<p>Hence, if you simply add <code class="language-plaintext highlighter-rouge">require('geckodriver')</code>, it will work fine!</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">Builder</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">selenium-webdriver</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">firefox</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">selenium-webdriver/firefox</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">geckodriver</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">options</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">firefox</span><span class="p">.</span><span class="nx">Options</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">headless</span><span class="p">();</span>
+<span class="c1">//.setBinary(executablePath);</span>
+
+<span class="kd">const</span> <span class="nx">driver</span> <span class="o">=</span> <span class="k">await</span> <span class="k">new</span> <span class="nx">Builder</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">forBrowser</span><span class="p">(</span><span class="dl">'</span><span class="s1">firefox</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">setFirefoxOptions</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">build</span><span class="p">();</span>
+</code></pre></div></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <details id="comments">
+      <summary><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2021/01/setup-of-seleniumgeckodriver-is-now-well-simplified.html">Comments</span></summary>
+      <div id="disqus_thread"></div>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <script type="application/javascript" src="/javascript/disqus_loader.js" defer="defer" async="async"></script>
+    </details>
+  </footer>
+</article><aside class="post-related">
+  <h2>Related Posts</h2>
+  <ul class="post-list"><li class="post-item">
+    <a class="post-link" href="/2017/10/list-of-all-the-config-provided-by-configuration-mania.html">
+      <span class="post-meta">2017-10-26</span>
+      <span class="post-title">List of all the Config provided by Configuration Mania</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2019/10/use-marionette-to-obtain-firefox-internal-information-easily.html">
+      <span class="post-meta">2019-10-20</span>
+      <span class="post-title">Use Marionette to obtain Firefox internal information easily</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2017/08/code-reading-firefox-send.html">
+      <span class="post-meta">2017-08-12</span>
+      <span class="post-title">Code Reading: &quot;Firefox Send&quot; encryption</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2018/02/progress-of-year.html">
+      <span class="post-meta">2018-02-02</span>
+      <span class="post-title">年の進捗</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2020/10/gum-frequency-characteristic-depending-on-audio-parameters.html">
+      <span class="post-meta">2020-10-04</span>
+      <span class="post-title">getUserMedia() Frequency Characteristic depending on audio parameters</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2014/11/How-to-create-a-javascript-xpcom-component-on-bootstrapped-addon.html">
+      <span class="post-meta">2014-11-16</span>
+      <span class="post-title">How to create a JavaScript XPCOM component on bootstrapped addon</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2010/03/webgl-options-on-configuration-mania.html">
+      <span class="post-meta">2010-03-13</span>
+      <span class="post-title">WebGL options on Configuration Mania</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2010/05/oopp-setting-on-configuration-mania.html">
+      <span class="post-meta">2010-05-04</span>
+      <span class="post-title">OOPP Setting on Configuration Mania</span><img class="post-thumb" src="/images/oop-setting-screenshot1.png" loading="lazy" alt="thumbnail" /></a>
+  </li>
+</ul>
+</aside>
+      </div>
+    </div><footer class="site-footer">
+  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
+  <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
+    <h2 class="footer-heading">cat_in_136.blog()</h2>
+    <p>
+      © 2021
+      <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
+        <a href="/about"><span itemprop="name">cat_in_136</span></a>
+      </span>;
+      Content is available under a
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license" itemprop="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">CC BY-NC-SA 4.0</a>
+      unless otherwise noted.
+    </p>
+  </div>
+</footer>
+</body>
+</html>
