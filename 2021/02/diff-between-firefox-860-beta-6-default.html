@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,max-scale=10,min-scale=0.5,user-scalable=yes" />
+  <title>Diff between firefox 86.0 beta 6 default preference and firefox 85.0.1</title>
+
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="https://code.cdn.mozilla.net/fonts/fira.css" />
+
+  <link rel="canonical" href="https://cat-in-136.github.io/2021/02/diff-between-firefox-860-beta-6-default.html" />
+  <link rel="alternate" type="application/rss+xml" title="cat_in_136.blog() &raquo; Feed" href="/feed.xml" />
+  <meta property="og:url" content="https://cat-in-136.github.io/2021/02/diff-between-firefox-860-beta-6-default.html" />
+  <meta property="og:title" content="Diff between firefox 86.0 beta 6 default preference and firefox 85.0.1" /><meta property="og:description" content="This is difference between the default preference of Firefox 86.0 beta 6 and one of 85.0.1. This ..." /><meta property="og:type" content="article" /><meta property="og:site_name" content="cat_in_136.blog()" /><meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@cat_in_136" />
+  <meta name="twitter:creator" content="@cat_in_136" />
+</head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" href="/">cat_in_136.blog()</a>
+    <nav class="site-nav">
+      <a href="javascript:void(0);" class="menu-icon" title="barger button"></a>
+      <div class="trigger"><a class="page-link" href="/about">About</a><a class="page-link" href="/archive">Archive</a><a class="page-link" href="/tags">Tags</a></div>
+    </nav>
+  </div>
+</header>
+<div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name"><a href="/2021/02/diff-between-firefox-860-beta-6-default.html" itemprop="url">Diff between firefox 86.0 beta 6 default preference and firefox 85.0.1</a></h1>
+
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2021-02-07T12:43:39+09:00">2021-02-07T12:43:39+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2021-02-07T12:49:07+09:00">2021-02-07T12:49:07+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
+      <span itemprop="keywords"><a class="tag" href="/tags/pref-diff">Pref diff</a><a class="tag" href="/tags/mozilla">Mozilla</a></span></div><div class="post-meta">
+      Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2021-02-07-diff-between-firefox-860-beta-6-default.html" class="source-path">_posts/2021-02-07-diff-between-firefox-860-beta-6-default.html</a>
+        (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2021-02-07-diff-between-firefox-860-beta-6-default.html">History</a>)
+    </div><div class="post-meta">
+      <a href="#comments"><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2021/02/diff-between-firefox-860-beta-6-default.html">↓Comments</span></a>
+      <script id="dsq-count-scr" src="https://catin136blog.disqus.com/count.js" defer="defer" async="async"></script>
+    </div>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>
+This is difference between the default preference of Firefox 86.0 beta 6 and one of 85.0.1.
+This diff table is generated with my small script <a href="https://github.com/cat-in-136/firefox-prefjs-surveyer">firefox-prefjs-surveyer</a>.
+</p>
+
+<div>
+<table class="diff_firefox86_pref_diff">
+<caption>Preference difference</caption>
+<thead>
+<tr><td>Pref</td><td>Firefox 85.0.1</td><td>Firefox 86.0 beta 6</td></tr>
+</thead>
+    <tbody>
+      <tr class="newkey">
+        <td>app.<wbr />normandy.<wbr />test-prefs.<wbr />bool</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>app.<wbr />normandy.<wbr />test-prefs.<wbr />integer</td>
+        <td class="undefined">undefined</td>
+        <td>0</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>app.<wbr />normandy.<wbr />test-prefs.<wbr />string</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />releaseNotesURL</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_campaign=whatsnew</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-browser&amp;utm_campaign=whatsnew</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />releaseNotesURL.<wbr />aboutDialog</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=about-dialog</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=about-dialog</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />channel</td>
+        <td>release</td>
+        <td>beta</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />url.<wbr />details</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/notes</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/beta/notes</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />url.<wbr />manual</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/beta</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>apz.<wbr />gtk.<wbr />touchpad_<wbr />pinch.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>apz.<wbr />popups.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />contentblocking.<wbr />cfr-milestone.<wbr />milestones</td>
+        <td class="json">[1000, 5000, 10000, 25000, 50000, 100000, 500000]</td>
+        <td class="json">[1000, 5000, 10000, 25000, 50000, 100000, 250000, 314159, 500000, 750000, 1000000, 1250000, 1500000, 1750000, 2000000, 2250000, 2500000, 8675309]</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />contentblocking.<wbr />features.<wbr />strict</td>
+        <td>tp,<wbr />tpPrivate,<wbr />cookieBehavior4,<wbr />cm,<wbr />fp,<wbr />stp,<wbr />lvl2</td>
+        <td>tp,<wbr />tpPrivate,<wbr />cookieBehavior5,<wbr />cm,<wbr />fp,<wbr />stp,<wbr />lvl2</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />contentblocking.<wbr />state-partitioning.<wbr />mvp.<wbr />ui.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />defaultbrowser.<wbr />notificationbar</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />download.<wbr />hide_<wbr />plugins_<wbr />without_<wbr />extensions</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />download.<wbr />show_<wbr />plugins_<wbr />in_<wbr />list</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />engagement.<wbr />ctrlTab.<wbr />has-used</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />engagement.<wbr />library-button.<wbr />has-used</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />discoverystream.<wbr />spocs-endpoint-query</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />new<wbr />Newtab<wbr />Experience.<wbr />colors</td>
+        <td class="undefined">undefined</td>
+        <td>#0090ED,<wbr />#FF4F5F,<wbr />#2AC3A2,<wbr />#FF7139,<wbr />#A172FF,<wbr />#FFA437,<wbr />#FF2A8A</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />telemetry.<wbr />ut.<wbr />events</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />partnerlink.<wbr />attributionURL</td>
+        <td class="uri">https://topsites.services.mozilla.com/cid/amzn_2020_a1</td>
+        <td class="uri">https://topsites.services.mozilla.com/cid/</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />partnerlink.<wbr />campaign.<wbr />topsites</td>
+        <td class="undefined">undefined</td>
+        <td>amzn_2020_a1</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />ssb.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />tabs.<wbr />remote.<wbr />use<wbr />Origin<wbr />Attributes<wbr />InRemoteType</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />tabs.<wbr />tooltips<wbr />Show<wbr />Pid</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />tabs.<wbr />tooltips<wbr />Show<wbr />Pid<wbr />And<wbr />Activeness</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />urlbar.<wbr />update2</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />urlbar.<wbr />update2.<wbr />disable<wbr />OneOffs<wbr />Horizontal<wbr />Key<wbr />Navigation</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />urlbar.<wbr />update2.<wbr />oneOffs<wbr />Refresh</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />urlbar.<wbr />update2.<wbr />restyle<wbr />Browsing<wbr />History<wbr />AsSearch</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>canvas.<wbr />create<wbr />Conic<wbr />Gradient.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>devtools.<wbr />command-button-errorcount.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>docshell.<wbr />shistory.<wbr />bfcache.<wbr />allow_<wbr />unload_<wbr />listeners</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>docshell.<wbr />shistory.<wbr />bfcache.<wbr />require_<wbr />no_<wbr />opener</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />events.<wbr />offset-in-svg-relative-to-svg-root</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />input_<wbr />events.<wbr />beforeinput.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />input_<wbr />events.<wbr />can<wbr />Suspend<wbr />InBCG.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />popup_<wbr />allowed_<wbr />events</td>
+        <td>change click dblclick auxclick mouseup pointerup notificationclick reset submit touchend contextmenu</td>
+        <td>change click dblclick auxclick mousedown mouseup pointerdown pointerup notificationclick reset submit touchend contextmenu</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />storage.<wbr />next_<wbr />gen</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />window.<wbr />content.<wbr />untrusted.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>extensions.<wbr />content_<wbr />script_<wbr />csp.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>extensions.<wbr />content_<wbr />script_<wbr />csp.<wbr />report_<wbr />only</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />formautofill.<wbr />supported<wbr />Countries</td>
+        <td>US</td>
+        <td>US,<wbr />CA</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />getAddons.<wbr />get.<wbr />url</td>
+        <td class="uri">https://services.addons.mozilla.org/api/v3/addons/search/?guid=%IDS%&amp;lang=%LOCALE%</td>
+        <td class="uri">https://services.addons.mozilla.org/api/v4/addons/search/?guid=%IDS%&amp;lang=%LOCALE%</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />getAddons.<wbr />langpacks.<wbr />url</td>
+        <td class="uri">https://services.addons.mozilla.org/api/v3/addons/language-tools/?app=firefox&amp;type=language&amp;appversion=%VERSION%</td>
+        <td class="uri">https://services.addons.mozilla.org/api/v4/addons/language-tools/?app=firefox&amp;type=language&amp;appversion=%VERSION%</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />webcompat-reporter.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />webextensions.<wbr />base-content-security-policy</td>
+        <td class="dump">script-src &#x27;self&#x27; https://* moz-extension: blob: filesystem: &#x27;unsafe-eval&#x27; &#x27;unsafe-inline&#x27;; object-src &#x27;self&#x27; https://* moz-extension: blob: filesystem:;</td>
+        <td class="dump">script-src &#x27;self&#x27; https://* http://localhost:* http://127.0.0.1:* moz-extension: blob: filesystem: &#x27;unsafe-eval&#x27; &#x27;unsafe-inline&#x27;; object-src &#x27;self&#x27; moz-extension: blob: filesystem:;</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>extensions.<wbr />webextensions.<wbr />base-content-security-policy.<wbr />v3</td>
+        <td class="undefined">undefined</td>
+        <td class="dump">script-src &#x27;self&#x27; http://localhost:* http://127.0.0.1:*; object-src &#x27;self&#x27;;</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>extensions.<wbr />webextensions.<wbr />tabhide.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>geo.<wbr />provider.<wbr />network.<wbr />compare.<wbr />url</td>
+        <td class="undefined">undefined</td>
+        <td class="uri">https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY%</td>
+      </tr>
+
+      <tr>
+        <td>geo.<wbr />provider.<wbr />network.<wbr />url</td>
+        <td class="uri">https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY%</td>
+        <td class="uri">https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>gfx.<wbr />bundled-fonts.<wbr />activate</td>
+        <td class="undefined">undefined</td>
+        <td>-1</td>
+      </tr>
+
+      <tr>
+        <td>gfx.<wbr />e10s.<wbr />font-list.<wbr />shared</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>gfx.<wbr />font_<wbr />rendering.<wbr />fallback.<wbr />async</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>gfx.<wbr />webrender.<wbr />debug.<wbr />force-picture-invalidation</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>gfx.<wbr />webrender.<wbr />software.<wbr />d3d11.<wbr />upload-mode</td>
+        <td class="undefined">undefined</td>
+        <td>2</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>gfx.<wbr />webrender.<wbr />svg-images</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>image.<wbr />avif.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>javascript.<wbr />options.<wbr />ion.<wbr />full.<wbr />threshold</td>
+        <td>100000</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>javascript.<wbr />options.<wbr />off_<wbr />thread_<wbr />parse_<wbr />global</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>layout.<wbr />css.<wbr />autofill.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />file-selector-button.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>layout.<wbr />css.<wbr />image-set.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />moz-any-is-is.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />moz-focus-outer.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />text-decoration-skip-ink.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />text-decoration-thickness.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />text-justify.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />text-underline-offset.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />text-underline-position.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />unknown-webkit-pseudo-element</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />xul-tree-pseudos.<wbr />content.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>layout.<wbr />display-list.<wbr />improve-fragmentation</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>layout.<wbr />dynamic-reflow-roots.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>media.<wbr />peerconnection.<wbr />dtls.<wbr />version.<wbr />min</td>
+        <td>770</td>
+        <td>771</td>
+      </tr>
+
+      <tr>
+        <td>media.<wbr />peerconnection.<wbr />mtransport_<wbr />process</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>media.<wbr />videocontrols.<wbr />keyboard-tab-to-all-controls</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>media.<wbr />videocontrols.<wbr />picture-in-picture.<wbr />allow-multiple</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />cache.<wbr />frecency_<wbr />array_<wbr />check_<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>network.<wbr />http.<wbr />spdy.<wbr />bug1556491</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>network.<wbr />http.<wbr />spdy.<wbr />bug1563695</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />process.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>pdfjs.<wbr />enableScripting</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>pdfjs.<wbr />viewerCssTheme</td>
+        <td class="undefined">undefined</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>permissions.<wbr />isolateBy.<wbr />privateBrowsing</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>print.<wbr />tab_<wbr />modal.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>privacy.<wbr />annotate_<wbr />channels.<wbr />strict_<wbr />list.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>privacy.<wbr />window.<wbr />name.<wbr />update.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>prompts.<wbr />contentPromptSubDialog</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>prompts.<wbr />tab_<wbr />modal.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>remote.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>remote.<wbr />force-local</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>security.<wbr />disallow_<wbr />non_<wbr />local_<wbr />systemprincipal_<wbr />in_<wbr />tests</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>security.<wbr />intermediate_<wbr />preloading_<wbr />healer.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>security.<wbr />osclientcerts.<wbr />autoload</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>security.<wbr />remote_<wbr />settings.<wbr />crlite_<wbr />filters.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>security.<wbr />ssl.<wbr />errorReporting.<wbr />automatic</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>security.<wbr />ssl.<wbr />errorReporting.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>security.<wbr />ssl.<wbr />errorReporting.<wbr />url</td>
+        <td class="uri">https://incoming.telemetry.mozilla.org/submit/sslreports/</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>services.<wbr />sync.<wbr />engine.<wbr />bookmarks.<wbr />validation.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>services.<wbr />sync.<wbr />engine.<wbr />passwords.<wbr />validation.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>svg.<wbr />transform-box.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>toolkit.<wbr />telemetry.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>webgl.<wbr />disable-fail-if-major-performance-caveat</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>widget.<wbr />remote-look-and-feel</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>widget.<wbr />wayland_<wbr />vsync.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+    </tbody>
+</table>
+</div>
+
+<style type="text/css"><!-- /* --><![CDATA[ /* */
+table.diff_firefox86_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
+table.diff_firefox86_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
+table.diff_firefox86_pref_diff thead td { background-color: #ddd; font-weight: bold; }
+table.diff_firefox86_pref_diff td.json,
+table.diff_firefox86_pref_diff td.uri,
+table.diff_firefox86_pref_diff td.dump { word-break: break-all; }
+table.diff_firefox86_pref_diff td.undefined { color: #888; font-style: italic; }
+table.diff_firefox86_pref_diff tr.sameval td:first-child { color: #444; }
+table.diff_firefox86_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
+table.diff_firefox86_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
+table.diff_firefox86_pref_diff tbody tr:hover { background-color: #eee; }
+table.diff_firefox86_pref_diff tbody tr { transition: background 0.125s ease-in-out 0s; }
+/* ]]><!-- */ --></style>
+
+  </div>
+
+  <footer class="post-footer">
+    <details id="comments">
+      <summary><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2021/02/diff-between-firefox-860-beta-6-default.html">Comments</span></summary>
+      <div id="disqus_thread"></div>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <script type="application/javascript" src="/javascript/disqus_loader.js" defer="defer" async="async"></script>
+    </details>
+  </footer>
+</article><aside class="post-related">
+  <h2>Related Posts</h2>
+  <ul class="post-list"><li class="post-item">
+    <a class="post-link" href="/2019/09/diff-between-firefox-700-beta-10-default.html">
+      <span class="post-meta">2019-09-29</span>
+      <span class="post-title">Diff between firefox 70.0 beta 10 default preference and firefox 69.0.1</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2020/10/diff-between-firefox-830-beta-3-default.html">
+      <span class="post-meta">2020-10-25</span>
+      <span class="post-title">Diff between firefox 83.0 beta 3 default preference and firefox 82.0</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2019/12/diff-between-firefox-720-beta-3-default.html">
+      <span class="post-meta">2019-12-07</span>
+      <span class="post-title">Diff between firefox 72.0 beta 3 default preference and firefox 71.0</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2019/11/diff-between-firefox-710-beta-6-default.html">
+      <span class="post-meta">2019-11-02</span>
+      <span class="post-title">Diff between firefox 71.0 beta 6 default preference and firefox 70.0.1</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2020/03/diff-between-firefox-750-beta-2-default.html">
+      <span class="post-meta">2020-03-14</span>
+      <span class="post-title">Diff between firefox 75.0 beta 2 default preference and firefox 74.0</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2020/10/diff-between-firefox-820-beta-6-default.html">
+      <span class="post-meta">2020-10-03</span>
+      <span class="post-title">Diff between firefox 82.0 beta 6 default preference and firefox 81.0.1</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2020/06/diff-between-firefox-780-beta-4-default.html">
+      <span class="post-meta">2020-06-11</span>
+      <span class="post-title">Diff between firefox 78.0 beta 4 default preference and firefox 77.0.1</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2020/05/diff-between-firefox-770-beta-6-default.html">
+      <span class="post-meta">2020-05-16</span>
+      <span class="post-title">Diff between firefox 77.0 beta 6 default preference and firefox 76.0.1</span></a>
+  </li>
+</ul>
+</aside>
+      </div>
+    </div><footer class="site-footer">
+  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
+  <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
+    <h2 class="footer-heading">cat_in_136.blog()</h2>
+    <p>
+      © 2021
+      <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
+        <a href="/about"><span itemprop="name">cat_in_136</span></a>
+      </span>;
+      Content is available under a
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license" itemprop="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">CC BY-NC-SA 4.0</a>
+      unless otherwise noted.
+    </p>
+  </div>
+</footer>
+</body>
+</html>
