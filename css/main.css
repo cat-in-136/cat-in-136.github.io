@@ -178,7 +178,9 @@ hr { border: solid thin #84898C; margin: 30px; }
 
 .post-content:lang(ja) :not(:lang(ja)) { text-align: left; }
 
-@supports (writing-mode: vertical-rl) or (-webkit-writing-mode: vertical-rl) { html.vertical-writing-recommended .post-content h1, html.vertical-writing-recommended .post-content h2, html.vertical-writing-recommended .post-content h3, html.vertical-writing-recommended .post-content h4, html.vertical-writing-recommended .post-content h5, html.vertical-writing-recommended .post-content h6 { margin: 0 40px 0 20px; }
+@supports (writing-mode: vertical-rl) or (-webkit-writing-mode: vertical-rl) { html.vertical-writing-recommended .post-content:lang(ja) { line-height: 1.75; }
+  html.vertical-writing-recommended .post-content:lang(ja) pre, html.vertical-writing-recommended .post-content:lang(ja) code { line-height: 1.5; }
+  html.vertical-writing-recommended .post-content h1, html.vertical-writing-recommended .post-content h2, html.vertical-writing-recommended .post-content h3, html.vertical-writing-recommended .post-content h4, html.vertical-writing-recommended .post-content h5, html.vertical-writing-recommended .post-content h6 { margin: 0 40px 0 20px; }
   html.vertical-writing-recommended .post-content p { margin: auto 10px; }
   html.vertical-writing-recommended .post-content .fitcontain { /* As of firefox 46, vertical-rl may conflict with object-fit. */ object-fit: unset; width: auto; height: auto; }
   html.vertical-writing-recommended .post-content blockquote, html.vertical-writing-recommended .post-content math, html.vertical-writing-recommended .post-content > table, html.vertical-writing-recommended .post-content > figure { margin: auto 1px; }

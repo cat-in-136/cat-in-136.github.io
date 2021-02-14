@@ -30,7 +30,7 @@
   <header class="post-header">
     <h1 class="post-title" itemprop="name"><a href="/2018/04/rust-error-handling-question.html" itemprop="url">rustのエラー処理と疑問符演算子</a></h1>
 
-    <div class="post-meta">Post date: <span itemprop="datePublished" content="2018-04-29T20:14:03+09:00">2018-04-29T20:14:03+09:00</span></div><div class="post-meta">Tags:
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2018-04-29T20:14:03+09:00">2018-04-29T20:14:03+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2021-02-14T12:47:58+09:00">2021-02-14T12:47:58+09:00</span></div><div class="post-meta">Tags:
       <span itemprop="keywords"><a class="tag" href="/tags/rustlang">Rustlang</a></span></div><div class="post-meta">
       Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2018-04-29-rust-error-handling-question.html" class="source-path">_posts/2018-04-29-rust-error-handling-question.html</a>
         (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2018-04-29-rust-error-handling-question.html">History</a>)
@@ -437,6 +437,39 @@ Rust は例外に対応していないので、いちいち戻り値を確認す
         <span class="p">}</span>
     <span class="p">};</span>
 <span class="p">}</span></code></pre></figure>
+
+<h3>エラー構造体の<code>From</code>などのトレイトを定義するのが面倒</h3>
+
+<aside><p>(2021/02/14加筆)</p></aside>
+
+<p>
+エラー構造体のトレイトの内容は機械的な内容を書くだけで面倒である。
+これは過去にいろいろなcrateが出てきたが、純粋にこの機械的な内容をderiveに任せるのならば、
+<a href="https://crates.io/crates/thiserror">thiserror</a>が便利である。
+</p>
+
+<figure class="highlight"><pre><code class="language-toml" data-lang="toml"><span class="nn">[dependencies]</span>
+<span class="py">thiserror</span> <span class="p">=</span> <span class="s">"1"</span></code></pre></figure>
+
+<p>
+下記のように書けば、<code>CliError</code>に対して書いていたトレイトの定義はすべてなくなる。
+</p>
+
+<figure class="highlight"><pre><code class="language-rust" data-lang="rust"><span class="k">use</span> <span class="nn">thiserror</span><span class="p">::</span><span class="n">Error</span><span class="p">;</span>
+
+<span class="nd">#[derive(Error,</span> <span class="nd">Debug)]</span>
+<span class="k">enum</span> <span class="n">CliError</span> <span class="p">{</span>
+    <span class="nd">#[error(transparent)]</span>
+    <span class="nf">Io</span><span class="p">(</span><span class="nd">#[from]</span> <span class="nn">io</span><span class="p">::</span><span class="n">Error</span><span class="p">),</span>
+    <span class="nd">#[error(</span><span class="s">"file not specified"</span><span class="nd">)]</span>
+    <span class="n">FileNotSpecified</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="c">// 以下略</span></code></pre></figure>
+
+<p>
+<a href="https://crates.io/crates/anyhow">anyhow</a>というボックス化されたErrorを扱うcrateを使っても良い。
+が、基本形を単に簡単にするという意味ではthiserrorがまさにその用途であるため、thiserrorをここで使用した。
+</p>
 
 <hr />
 
