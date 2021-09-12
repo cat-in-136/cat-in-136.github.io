@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,max-scale=10,min-scale=0.5,user-scalable=yes" />
+  <title>ぜんぜんわからない俺達は雰囲気でbtrfs使っている</title>
+
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="https://code.cdn.mozilla.net/fonts/fira.css" />
+
+  <link rel="canonical" href="https://cat-in-136.github.io/2021/09/zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru.html" />
+  <link rel="alternate" type="application/rss+xml" title="cat_in_136.blog() &raquo; Feed" href="/feed.xml" />
+  <meta property="og:url" content="https://cat-in-136.github.io/2021/09/zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru.html" />
+  <meta property="og:title" content="ぜんぜんわからない俺達は雰囲気でbtrfs使っている" /><meta property="og:description" content="雰囲気で ext2/3/4 を使ってきた人が、雰囲気で btrfs を使うためのメモ。 RAID は本稿では深く触れない。 RAID は雰囲気で使えるものではない。 発音 何かと話にあがるどう発..." /><meta property="og:type" content="article" /><meta property="og:image" content="/images/2020-09-13-Btrfs_logo.svg" /><meta property="og:site_name" content="cat_in_136.blog()" /><meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@cat_in_136" />
+  <meta name="twitter:creator" content="@cat_in_136" />
+</head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" href="/">cat_in_136.blog()</a>
+    <nav class="site-nav">
+      <a href="javascript:void(0);" class="menu-icon" title="barger button"></a>
+      <div class="trigger"><a class="page-link" href="/about">About</a><a class="page-link" href="/archive">Archive</a><a class="page-link" href="/tags">Tags</a></div>
+    </nav>
+  </div>
+</header>
+<div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name"><a href="/2021/09/zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru.html" itemprop="url">ぜんぜんわからない俺達は雰囲気でbtrfs使っている</a></h1>
+
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2021-09-13T00:07:08+09:00">2021-09-13T00:07:08+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
+      <span itemprop="keywords"><a class="tag" href="/tags/btrfs">Btrfs</a><a class="tag" href="/tags/linux">Linux</a><a class="tag" href="/tags/filesystem">Filesystem</a></span></div><div class="post-meta">
+      Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2021-09-13-zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru.md" class="source-path">_posts/2021-09-13-zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru.md</a>
+        (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2021-09-13-zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru.md">History</a>)
+    </div><div class="post-meta">
+      <a href="#comments"><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2021/09/zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru.html">↓Comments</span></a>
+      <script id="dsq-count-scr" src="https://catin136blog.disqus.com/count.js" defer="defer" async="async"></script>
+    </div>
+  </header>
+
+  <div class="post-content" itemprop="articleBody" lang="ja">
+    <p>雰囲気で ext2/3/4 を使ってきた人が、雰囲気で btrfs を使うためのメモ。
+RAID は本稿では深く触れない。 RAID は雰囲気で使えるものではない。</p>
+
+<figure>
+<img class="fitcontain" src="/images/2020-09-13-Btrfs_logo.svg" width="700" height="700" loading="lazy" />
+</figure>
+
+<h3 id="発音">発音</h3>
+
+<p>何かと話にあがるどう発音するか問題については、下記が答えで良いと思われる。</p>
+
+<blockquote>
+  <p>It’s called Butter FS or B-tree FS, but all the cool kids say Butter FS</p>
+
+  <p>— Valerie Henson, “Chunkfs: Fast file system check and repair”, 31 Jan 2008.</p>
+</blockquote>
+
+<p>クールキッズなら <strong>バター・エフ・エス</strong>  [bʌ́tə(r) - éf - es] と発音すれば良い。</p>
+
+<figure>
+<figcaption>"Butter FS" 発音部を抜き出したもの</figcaption>
+<audio controls="controls" src="data:audio/ogg;base64,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">
+</audio>
+</figure>
+
+<h3 id="とにかくささっと使うには">とにかくささっと使うには</h3>
+
+<p>ファイルを仮想ドライブとして使えばひとまず試用することができる。
+128MBのbtrfsストレージ使う方法。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>fallocate <span class="nt">-l</span> 128M butter.img
+<span class="nv">$ </span>mkfs.btrfs butter.img
+<span class="nv">$ </span><span class="nb">mkdir </span>mountpoint
+<span class="nv">$ </span><span class="nb">sudo </span>mount <span class="nt">-t</span> auto butter.img mountpoint
+<span class="nv">$ </span><span class="nb">sudo chown</span> <span class="nv">$USER</span>:<span class="nv">$USER</span> mountpoint
+</code></pre></div></div>
+
+<ul>
+  <li>128MB未満はbtrfsの仕様として対応していない。</li>
+  <li><code class="language-plaintext highlighter-rouge">fallocate</code> が使えない異常に古いファイルシステムをお使いの方は <code class="language-plaintext highlighter-rouge">dd</code>
+で所望のサイズのファイルをつくるなどしてください。</li>
+  <li>BtrfsやzfsなどのCoWファイルシステム上でこのような使い方をする場合、
+CoWによってパフォーマンスの影響が出るため <code class="language-plaintext highlighter-rouge">chattr +C butter.img</code> を実行するなどして
+仮想ドライブとして使うファイルには CoW が無効化させておくのが良い。</li>
+</ul>
+
+<h4 id="raidとかのときはブロックデバイスが必要なので">RAIDとかのときはブロックデバイスが必要なので</h4>
+
+<p>RAIDとかのときはブロックデバイスが必要なのでbrdモジュールを使いましょう。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>modprobe brd <span class="nv">rd_nr</span><span class="o">=</span>2 <span class="nv">rd_size</span><span class="o">=</span>131072
+<span class="nv">$ </span><span class="nb">sudo </span>mkfs.btrfs /dev/ram0 /dev/ram1
+<span class="nv">$ </span><span class="nb">mkdir </span>mountpoint
+<span class="nv">$ </span><span class="nb">sudo </span>mount <span class="nt">-t</span> auto /dev/ram0 mountpoint
+</code></pre></div></div>
+
+<p>使い終わったらモジュールごと消せば良い。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>modprobe <span class="nt">-r</span> brd
+</code></pre></div></div>
+
+<h3 id="遅延書き込み">遅延書き込み</h3>
+
+<p>ファイル書き込みをしても btrfs は容量を消費しないように表示される。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">dd </span><span class="nv">bs</span><span class="o">=</span>1024 <span class="nv">count</span><span class="o">=</span>1024 <span class="k">if</span><span class="o">=</span>/dev/random <span class="nv">of</span><span class="o">=</span>1MB_file
+<span class="nv">$ </span>btrfs filesystem <span class="nb">du </span>1MB_file
+     Total   Exclusive  Set shared  Filename
+     0.00B       0.00B       0.00B  1MB_file
+</code></pre></div></div>
+
+<p>この状態ではファイルの実体は書き込まれていない。
+しばらく経つと、ディスクに書き込まれるので容量を消費する。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>btrfs filesystem <span class="nb">du </span>1MB_file
+     Total   Exclusive  Set shared  Filename
+   1.00MiB     1.00MiB       0.00B  1MB_file
+</code></pre></div></div>
+
+<p>明示的にディスクに書き込み指示するには <code class="language-plaintext highlighter-rouge">sync</code> コマンドを打ちましょう。</p>
+
+<h4 id="遅延書き込み時間の設定">遅延書き込み時間の設定</h4>
+
+<p>mountオプションで <code class="language-plaintext highlighter-rouge">-o commit=180</code> のように設定することで、ディスクへの書き込み時間間隔を調整できる。</p>
+
+<blockquote>
+  <dl>
+    <dt><strong>commit=seconds</strong></dt>
+    <dd>(since: 3.12, default: 30)
+:</dd>
+    <dd>Set the interval of periodic transaction commit when data are synchronized to permanent storage. Higher interval values lead to larger amount of unwritten data, which has obvious consequences when the system crashes. The upper bound is not forced, but a warning is printed if it’s more than 300 seconds (5 minutes). Use with care.</dd>
+  </dl>
+
+  <p>— <a href="https://btrfs.wiki.kernel.org/index.php/Manpage/btrfs%285%29">Manpage/btrfs(5) - btrfs Wiki</a></p>
+</blockquote>
+
+<p>途中で変える場合は <code class="language-plaintext highlighter-rouge">remount</code> コマンドを使いましょう。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>mount <span class="nt">-o</span> remount,commit<span class="o">=</span>120 mountpoint
+</code></pre></div></div>
+
+<h4 id="遅延書き込みの弊害">遅延書き込みの弊害</h4>
+
+<ul>
+  <li>異常終了（停電・カーネルクラッシュ）すると、ファイルが消える。
+    <ul>
+      <li>実態は、ディスクに書き込む前だったというだけ。人間にはあたかも消えたように見える。</li>
+    </ul>
+  </li>
+  <li>一時的にファイルを作って消すような場合はディスク書き込みがないため速い。
+    <ul>
+      <li>コミットインターバルのタイミングで書き込みがあるので処理が遅くなる。</li>
+      <li>単純にファイルを作るだけではベンチマークにはまったくならない。</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="遅延書き込みを見てみる">遅延書き込みを見てみる</h4>
+
+<p>メタデータだけは直ちに作成され <code class="language-plaintext highlighter-rouge">hello.txt</code> という文字列がディスクに書き込みされる。
+ファイルの中身は遅れて書き込みされることがわかる。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>fallocate <span class="nt">-l</span> 128M clean.img
+<span class="nv">$ </span>mkfs.btrfs clean.img
+<span class="nv">$ </span><span class="nb">mkdir </span>mountpoint
+<span class="nv">$ </span><span class="nb">sudo </span>mount <span class="nt">-t</span> auto clean.img mountpoint
+<span class="nv">$ </span><span class="nb">sudo chown</span> <span class="nv">$USER</span>:<span class="nv">$USER</span> mountpoint
+
+<span class="nv">$ </span><span class="nb">echo </span>hello <span class="o">&gt;</span> mountpoint/hello.txt
+<span class="nv">$ </span>strings clean.img | <span class="nb">grep</span> <span class="nt">-i</span> hello | <span class="nb">sort</span> | <span class="nb">uniq
+</span>hello.txt
+
+<span class="nv">$ </span><span class="nb">sync</span>
+<span class="nv">$ </span>strings clean.img | <span class="nb">grep</span> <span class="nt">-i</span> hello | <span class="nb">sort</span> | <span class="nb">uniq
+</span>hello
+hello.txt
+</code></pre></div></div>
+
+<h4 id="遅延書き込みまとめ">遅延書き込みまとめ</h4>
+
+<ul>
+  <li>btrfs はデータは遅れて書き込まれるよ</li>
+  <li>コミットインターバルは設定で変えられるよ</li>
+  <li>コミットインターバルが来る前はディスクに書き込まれていないから、異常終了すると消えたように見えるよ。</li>
+</ul>
+
+<h3 id="copy-on-write--cow">Copy-on-Write : CoW</h3>
+
+<blockquote>
+  <p>btrfs is a modern copy on write (CoW) filesystem for Linux aimed at implementing advanced features while also focusing on fault tolerance, repair and easy administration.</p>
+
+  <p>— <a href="https://btrfs.wiki.kernel.org/index.php/Main_Page">btrfs Wiki</a></p>
+</blockquote>
+
+<ul>
+  <li>コピーしても実体はコピーされずに、参照をつくるだけでコピー時間や使用容量を削減する。その後に書き換えた際にはじめて実際にその箇所がコピーされ容量を消費する</li>
+  <li>新しいデータはディスクの空き容量に書き込んでから、新しいデータを参照するようにファイルのメタデータを変更する。元のデータはどこからも参照されなくなってはじめて削除する。</li>
+  <li>書き込み途中で死んでもファイルが消えることはないから安全！</li>
+</ul>
+
+<h4 id="コピーしても中身は共有されている">コピーしても中身は共有されている</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd </span>mountpoint
+<span class="nv">$ </span><span class="nb">dd </span><span class="nv">bs</span><span class="o">=</span>1024 <span class="nv">count</span><span class="o">=</span>1024 <span class="k">if</span><span class="o">=</span>/dev/random <span class="nv">of</span><span class="o">=</span>1MB_file
+<span class="nv">$ </span><span class="nb">cp </span>1MB_file 1MB_file_copied
+<span class="nv">$ </span><span class="nb">dd </span><span class="nv">bs</span><span class="o">=</span>1024 <span class="nv">count</span><span class="o">=</span>1024 <span class="k">if</span><span class="o">=</span>/dev/random <span class="nv">of</span><span class="o">=</span>1MB_file.2
+<span class="nv">$ </span><span class="nb">sync</span>
+<span class="nv">$ </span>btrfs filesystem <span class="nb">du</span> <span class="k">*</span>
+     Total   Exclusive  Set shared  Filename
+   1.00MiB       0.00B     1.00MiB  1MB_file
+   1.00MiB     1.00MiB       0.00B  1MB_file2
+   1.00MiB       0.00B     1.00MiB  1MB_file_copied
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">1MB_file</code> と <code class="language-plaintext highlighter-rouge">1MB_file_copied</code> は共有されていることがわかる。</p>
+
+<h4 id="明示的にコピーをしないとcowによる共有はされない">明示的にコピーをしないとCoWによる共有はされない</h4>
+
+<p>ファイルの中身をチェックして共有しているわけではないため、
+同じファイルだとしても別々の手段で取ってきたのならば共有されない。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd </span>mountpoint
+<span class="nv">$ </span>wget https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg <span class="nt">--referer</span><span class="o">=</span>https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg
+<span class="nv">$ </span>wget https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg <span class="nt">--referer</span><span class="o">=</span>https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg
+<span class="nv">$ </span><span class="nb">sha1sum </span>49568897633_1e4d1eb342_o_d.jpg<span class="k">*</span>
+a673cc4dbd99f4e18c1bba82bd818c092d7cc237  49568897633_1e4d1eb342_o_d.jpg
+a673cc4dbd99f4e18c1bba82bd818c092d7cc237  49568897633_1e4d1eb342_o_d.jpg.1
+<span class="nv">$ </span><span class="nb">sync</span>
+<span class="nv">$ </span>btrfs filesystem <span class="nb">du </span>49568897633_1e4d1eb342_o_d.jpg<span class="k">*</span>
+     Total   Exclusive  Set shared  Filename
+   2.70MiB     2.70MiB       0.00B  49568897633_1e4d1eb342_o_d.jpg
+   2.70MiB     2.70MiB       0.00B  49568897633_1e4d1eb342_o_d.jpg.1
+</code></pre></div></div>
+
+<h4 id="cowファイルシステムのcowの弊害">CoWファイルシステムのCoWの弊害</h4>
+
+<p>新しいデータはディスクの空き容量に書き込んでから、新しいデータを参照するようにファイルのメタデータを変更する。
+古いデータは参照を外すが該当領域はワイプはしないので残ったままになる。
+（空き容量として扱われるので、あとで別のデータが書かれる可能性はある。）</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>fallocate <span class="nt">-l</span> 128M clean.img
+<span class="nv">$ </span>mkfs.btrfs clean.img
+<span class="nv">$ </span><span class="nb">mkdir </span>mountpoint
+<span class="nv">$ </span><span class="nb">sudo </span>mount <span class="nt">-t</span> auto clean.img mountpoint
+<span class="nv">$ </span><span class="nb">sudo chown</span> <span class="nv">$USER</span>:<span class="nv">$USER</span> mountpoint
+
+<span class="nv">$ </span><span class="nb">echo </span>MySecretKey <span class="o">&gt;</span> mountpoint/hoge.txt
+<span class="nv">$ </span><span class="nb">sync</span>
+<span class="nv">$ </span>strings clean.img | <span class="nb">grep </span>MySecretKey | <span class="nb">sort</span> | <span class="nb">uniq
+</span>MySecretKey
+
+<span class="nv">$ </span><span class="nb">echo </span>hoge <span class="o">&gt;</span> mountpoint/hoge.txt
+<span class="nv">$ </span><span class="nb">sync</span>
+<span class="nv">$ </span>strings clean.img | <span class="nb">grep </span>MySecretKey | <span class="nb">sort</span> | <span class="nb">uniq
+</span>MySecretKey
+</code></pre></div></div>
+
+<h4 id="共有状態のファイルへの追記書き込み">共有状態のファイルへの追記書き込み</h4>
+
+<p>追記書き込みすると追記していない所は共有されたままである。
+5バイト追加であるのに関わらず4kBとなっているのは、
+leaf block単位で処理されるときのサイズに対応していると思われる。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">dd </span><span class="nv">bs</span><span class="o">=</span>1024 <span class="nv">count</span><span class="o">=</span>1024 <span class="k">if</span><span class="o">=</span>/dev/random <span class="nv">of</span><span class="o">=</span>1MB_file
+<span class="nv">$ </span><span class="nb">cp </span>1MB_file 1MB_file_copied
+<span class="nv">$ </span><span class="nb">echo </span>hoge <span class="o">&gt;&gt;</span> 1MB_file_copied
+<span class="nv">$ </span><span class="nb">sync</span>
+<span class="nv">$ </span>btrfs filesystem <span class="nb">du</span> <span class="k">*</span>
+     Total   Exclusive  Set shared  Filename
+   1.00MiB       0.00B     1.00MiB  1MB_file
+   1.00MiB     4.00KiB     1.00MiB  1MB_file_copied
+</code></pre></div></div>
+
+<h4 id="共有状態のファイルへの部分書き込み">共有状態のファイルへの部分書き込み</h4>
+
+<p>10000バイトごとにファイルの中身を上書きするとどうなるか?</p>
+
+<p>下記のようなディスク破壊用プログラムをつくった。</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">path</span> <span class="o">=</span> <span class="nn">std</span><span class="p">::</span><span class="nn">env</span><span class="p">::</span><span class="nf">args</span><span class="p">()</span><span class="nf">.nth</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">();</span>
+    <span class="k">let</span> <span class="n">size</span> <span class="o">=</span> <span class="nn">std</span><span class="p">::</span><span class="nn">fs</span><span class="p">::</span><span class="nf">metadata</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">()</span><span class="nf">.len</span><span class="p">();</span>
+
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">OpenOptions</span><span class="p">::</span><span class="nf">new</span><span class="p">()</span><span class="nf">.write</span><span class="p">(</span><span class="k">true</span><span class="p">)</span><span class="nf">.open</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">();</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="n">pos</span> <span class="o">&lt;</span> <span class="n">size</span> <span class="p">{</span>
+        <span class="n">file</span><span class="nf">.seek</span><span class="p">(</span><span class="nn">SeekFrom</span><span class="p">::</span><span class="nf">Start</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span><span class="nf">.unwrap</span><span class="p">();</span>
+        <span class="n">file</span><span class="nf">.write</span><span class="p">(</span><span class="n">b</span><span class="s">"Crash!"</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">();</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">+</span> <span class="mi">10000</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>1MBのファイルに既述処理を施すと 1024 * 1024 / 1000 + 1 = 105 箇所書き込まれる。
+105 * 4kB = 420kB 相当のところが書き換えられるのでそこが共有から外れる。</p>
+
+<p>この420kBは <code class="language-plaintext highlighter-rouge">1MB_file_copied</code> で断片化領域の容量の和でもある。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd </span>mountpoint
+<span class="nv">$ </span><span class="nb">dd </span><span class="nv">bs</span><span class="o">=</span>1024 <span class="nv">count</span><span class="o">=</span>1024 <span class="k">if</span><span class="o">=</span>/dev/random <span class="nv">of</span><span class="o">=</span>1MB_file
+<span class="nv">$ </span><span class="nb">cp </span>1MB_file 1MB_file_copied
+<span class="nv">$ </span><span class="nb">sync</span>
+<span class="nv">$ </span>vi crash.rs
+<span class="nv">$ </span>rustc crash.rs
+<span class="nv">$ </span>./crash 1MB_file_copied
+<span class="nv">$ </span>strings 1MB_file_copied | <span class="nb">grep </span>Crash | <span class="nb">wc</span> <span class="nt">-l</span>
+105
+<span class="nv">$ </span><span class="nb">sync</span>
+<span class="nv">$ </span>btrfs filesystem <span class="nb">du </span>1MB_file 1MB_file_copied
+     Total   Exclusive  Set shared  Filename
+   1.00MiB       0.00B     1.00MiB  1MB_file
+   1.00MiB   420.00KiB   604.00KiB  1MB_file_copied
+</code></pre></div></div>
+
+<h4 id="cowの無効化">CoWの無効化</h4>
+
+<p>弊害を嫌う場合は、下記のようにして無効化しましょう</p>
+
+<ul>
+  <li>ファイル単位での CoW を無効 <code class="language-plaintext highlighter-rouge">chattr +C file_nocow</code></li>
+  <li>ファイルシステム全体で CoW を無効。 “nodatacow” オプションを使ってマウント。</li>
+</ul>
+
+<h4 id="cowまとめ">CoWまとめ</h4>
+
+<ul>
+  <li>ファイルを上書きしても上書きされないよ、一旦コピーしてから空き容量に書き込まれてから参照を張り直すよ</li>
+  <li>ファイルのコピーをしても実態はコピーされないよ、共有されるよ</li>
+  <li>コピーして共有されているファイルはファイル書き込み時に、空き容量によって書き込む仕組みの結果、共有が解かれるよ</li>
+  <li>弊害として断片化があるよ</li>
+  <li>嫌ならばファイル単位、またはファイルシステム全体で無効化出来るよ</li>
+</ul>
+
+<h3 id="サブボリューム">サブボリューム</h3>
+
+<p>フォルダのように使えるがマウントも出来る。
+普通のフォルダの下にも置けちゃったりするなどかなり自由度は高い。
+使い方はなんとなくでわかる。</p>
+
+<ul>
+  <li>作る
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>btrfs subvolume create mountpoint/subvolume
+</code></pre></div>    </div>
+  </li>
+  <li>消す
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>btrfs subvolume delete mountpoint/subvolume
+</code></pre></div>    </div>
+  </li>
+  <li>一覧
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>btrfs subvolume list mountpoint
+</code></pre></div>    </div>
+  </li>
+  <li>サブボリューム単位でのマウント
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>mount <span class="nt">-t</span> btrfs <span class="nt">-o</span> <span class="nv">subvol</span><span class="o">=</span>/subvolume devicefile mountpoint
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>※複製はスナップショットを使う。</p>
+
+<h3 id="スナップショット">スナップショット</h3>
+
+<p>実態はサブボリュームのコピーである。
+スナップショットって言っているのにデフォルトはコピー可である。</p>
+
+<p>CoWのお陰でスナップショットを作る（サブボリュームのコピー）のは一瞬で終了する。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>btrfs subvolume snapshot mountpoint/subvolume mountpoint/subvolume_copied
+</code></pre></div></div>
+
+<p>普通の意味での readonly なスナップショットは、下記の通り <code class="language-plaintext highlighter-rouge">-r</code> を付ける。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>btrfs subvolume snapshot <span class="nt">-r</span> mountpoint/subvolume mountpoint/subvolume_copied
+</code></pre></div></div>
+
+<h4 id="btrfsのスナップショットの特徴">btrfsのスナップショットの特徴</h4>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">btrfs subvolume snapshot</code> はサブボリュームのスナップショットとしてのコピーを作る</li>
+  <li>スナップショットは単なるサブボリュームなので、普通に見たりコピーして取り出したりすることができる</li>
+  <li>サブボリューム配下にあるサブボリュームはスナップショットにコピーされず空になる
+    <ul>
+      <li>サブボリュームをスナップショットによるコピーの除外に使う</li>
+    </ul>
+  </li>
+  <li>既にあるサブボリュームに他のサブボリュームの内容に置き換えるのは単純な操作では不可能
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">zfs rollback hoge@fuga</code> のような復元用コマンドはない</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="スナップショットの置き場所の検討">スナップショットの置き場所の検討</h4>
+
+<p>通常サブボリュームの下にスナップショットを作る構成が自然だが、
+btrfs の仕組みだと復元作業が難しくなる。</p>
+
+<ul>
+  <li>fuga (subvolume)
+    <ul>
+      <li>files…</li>
+      <li>.snapshots/
+        <ul>
+          <li>snapshot1 (subvolume: snapshot)</li>
+          <li>snapshot2 (subvolume: snapshot)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>対象サブボリュームの外側にスナップショットを作るのがよい。</p>
+
+<ul>
+  <li>fuga (subvolume)
+    <ul>
+      <li>files…</li>
+    </ul>
+  </li>
+  <li>snapshots/ (subvolumeにしてもしなくとも、複数階層にしてもよい)
+    <ul>
+      <li>snapshot1 (subvolume: snapshot)</li>
+      <li>snapshot2 (subvolume: snapshot)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>この構成の復元方法はおおよそ下記のようになる。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo mv </span>fuga fuga_bak
+<span class="nv">$ </span><span class="nb">sudo </span>btrfs subvolume snapshot snapshots/snapshot1 fuga
+<span class="nv">$ </span><span class="nb">sudo </span>btrfs subvolume delete fuga_bak
+</code></pre></div></div>
+
+<p>これを踏まえての構成はたとえば</p>
+
+<ul>
+  <li>root (subvolume; マウント先=<code class="language-plaintext highlighter-rouge">/</code>)</li>
+  <li>home (subvolume; マウント先=<code class="language-plaintext highlighter-rouge">/home</code>)</li>
+  <li>log (subvolume; マウント先=<code class="language-plaintext highlighter-rouge">/var/log</code>)</li>
+  <li>snapshots/ (subvolume; マウント先=<code class="language-plaintext highlighter-rouge">/sys_snapshots</code> )
+    <ul>
+      <li>btrbk/
+        <ul>
+          <li>snapshots… (subvolume: snapshot)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>ここで <code class="language-plaintext highlighter-rouge">/var/log</code> を別サブボリューム log にしている。
+root スナップショットが復元されても、ログファイルが以前の状態に戻されることがないので、
+トラブルシューティングが容易になる。</p>
+
+<h4 id="スナップショットの自動実行">スナップショットの自動実行</h4>
+
+<p>まだデファクトはない。</p>
+
+<p>単なるシェルスクリプト+cron(systemd timer)運用も多い。
+そのぐらいでみんな満足しているということでもある。</p>
+
+<p>Arch LinuxのWikiで推されていたのは<code class="language-plaintext highlighter-rouge">btrbk</code>。
+<a href="https://github.com/digint/btrbk">digint/btrbk: Tool for creating snapshots and remote backups of btrfs subvolumes</a></p>
+
+<h5 id="btrbkの設定">btrbkの設定</h5>
+
+<p>スナップショットの他に別デバイスへのバックアップ(targetのところ)もできる。
+別デバイスもbtrfsの場合はサブボリュームの差分送信機能を使うのでなかなか高速（すごい！）。</p>
+
+<p>こんな感じの <code class="language-plaintext highlighter-rouge">/etc/btrbk/btrbk.conf</code> を書いておく。
+なかなか意味が難しい。（よくわからない。雰囲気で使っている）</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>transaction_log		/var/log/btrbk.log
+
+timestamp_format        long-iso
+
+snapshot_preserve_min   2d
+##snapshot_preserve      10d
+snapshot_preserve      14d 6m
+
+##target_preserve_min    18h
+##target_preserve        48h 20d 6m
+target_preserve_min    no
+target_preserve        30d *m
+
+volume /mnt/Root
+  snapshot_dir snapshots/btrbk
+  subvolume  root
+    snapshot_create  always
+    target /mnt/backup/snapshots/btrbk
+</code></pre></div></div>
+
+<h5 id="btrbkのタイマー実行">btrbkのタイマー実行</h5>
+
+<p>systemd timer で定期実行する。
+<code class="language-plaintext highlighter-rouge">btrbk.timer</code> で毎日トリガーをかけている。</p>
+
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[Unit]</span>
+<span class="py">Description</span><span class="p">=</span><span class="s">btrbk daily backup</span>
+
+<span class="nn">[Timer]</span>
+<span class="py">OnCalendar</span><span class="p">=</span><span class="s">daily</span>
+<span class="py">AccuracySec</span><span class="p">=</span><span class="s">10min</span>
+<span class="py">Persistent</span><span class="p">=</span><span class="s">true</span>
+
+<span class="nn">[Install]</span>
+<span class="py">WantedBy</span><span class="p">=</span><span class="s">multi-user.target</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">btrbk.service</code>は単に<code class="language-plaintext highlighter-rouge">btrbk run</code>を呼んでいるだけ</p>
+
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[Unit]</span>
+<span class="py">Description</span><span class="p">=</span><span class="s">btrbk backup</span>
+<span class="py">Documentation</span><span class="p">=</span><span class="s">man:btrbk(1)</span>
+
+<span class="nn">[Service]</span>
+<span class="py">Type</span><span class="p">=</span><span class="s">oneshot</span>
+<span class="py">ExecStart</span><span class="p">=</span><span class="s">/usr/sbin/btrbk run</span>
+</code></pre></div></div>
+
+<h4 id="スナップショットのまとめ">スナップショットのまとめ</h4>
+
+<ul>
+  <li>サブボリュームは雰囲気でまじでどうとでもなるよ</li>
+  <li>スナップショットは単なるサブボリュームのコピーだよ</li>
+  <li>…のためいろいろと制約がでているよ。サブボリュームの構成はよく考えてる必要があるよ。</li>
+  <li>スナップショットを取るプログラムはデファクトがまだないため混沌としているよ。</li>
+  <li><code class="language-plaintext highlighter-rouge">btrbk</code>は抜きん出ているけれども、なんとも難しいよ。でも雰囲気でなんとかなるよ。</li>
+</ul>
+
+<h3 id="スクラブ">スクラブ</h3>
+
+<p>btrfs は明示的に洗わないといけない。定期的に汚れを落としましょう。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>btrfs scrub start mountpoint
+</code></pre></div></div>
+
+<h4 id="単一ディスクだと耐障害性はやっぱりだめ">単一ディスクだと耐障害性はやっぱりだめ?</h4>
+
+<p>破壊前のディスクを作る</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>fallocate <span class="nt">-l</span> 128M clean.img
+<span class="nv">$ </span>mkfs.btrfs clean.img
+<span class="nv">$ </span><span class="nb">mkdir </span>mountpoint
+<span class="nv">$ </span><span class="nb">sudo </span>mount <span class="nt">-t</span> auto clean.img mountpoint
+<span class="nv">$ </span><span class="nb">sudo chown</span> <span class="nv">$USER</span>:<span class="nv">$USER</span> mountpoint
+<span class="nv">$ </span><span class="nb">echo </span>Hello <span class="o">&gt;</span> mountpoint/hello.txt
+<span class="nv">$ </span><span class="nb">echo </span>World <span class="o">&gt;</span> mountpoint/world.txt
+<span class="nv">$ </span><span class="nb">sudo </span>umount mountpoint
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">World</code>を<code class="language-plaintext highlighter-rouge">WORLD</code>に書き換えた破壊済みファイルを作った。
+チェックサムが合わないのでマウントができなくなった。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>xxd <span class="nt">-p</span> <span class="nt">-g</span> 0 <span class="nt">-c</span> 134217728 clean.img | <span class="nb">sed</span> <span class="s1">'s/576f726c64/574f524c44/ig'</span> | xxd <span class="nt">-p</span> <span class="nt">-r</span> <span class="o">&gt;</span> crash.img
+</code></pre></div></div>
+
+<p>いろいろ試したが、破壊手順を元に復元する方法以外では、回復できなかった。
+つまりこの破壊に対する復元をすることができなかった。</p>
+
+<h4 id="raidでミラーすると-scrub-で戦える">RAIDでミラーすると scrub で戦える</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>modprobe brd <span class="nv">rd_nr</span><span class="o">=</span>2 <span class="nv">rd_size</span><span class="o">=</span>131072
+<span class="nv">$ </span><span class="nb">sudo </span>mkfs.btrfs /dev/ram0 /dev/ram1
+<span class="nv">$ </span><span class="nb">mkdir </span>mountpoint
+<span class="nv">$ </span><span class="nb">sudo </span>mount <span class="nt">-t</span> auto /dev/ram0 mountpoint
+<span class="nv">$ </span><span class="nb">sudo chown</span> <span class="nv">$USER</span>:<span class="nv">$USER</span> mountpoint
+<span class="nv">$ </span><span class="nb">echo </span>Hello <span class="o">&gt;</span> mountpoint/hello.txt
+<span class="nv">$ </span><span class="nb">echo </span>World <span class="o">&gt;</span> mountpoint/world.txt
+<span class="nv">$ </span><span class="nb">sync</span>
+</code></pre></div></div>
+
+<p>1台目を雑に完全に破壊した。
+RAIDのお陰で読めているが、<code class="language-plaintext highlighter-rouge">/dev/ram0</code>は明らかに破壊されている</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo dd </span><span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/dev/ram0
+<span class="nv">$ </span><span class="nb">cat </span>mountpoint/hello.txt mountpoint/world.txt
+Hello
+World
+<span class="nv">$ </span><span class="nb">sudo </span>strings /dev/ram0 | <span class="nb">grep </span>Hello | <span class="nb">sort</span> | <span class="nb">uniq</span> | <span class="nb">wc</span> <span class="nt">-l</span>
+0
+</code></pre></div></div>
+
+<p>scrubしてやると回復してくれる（再現性確保のため <code class="language-plaintext highlighter-rouge">/dev/zero</code> での上書き結果を載せているが、<code class="language-plaintext highlighter-rouge">/dev/random</code> だとエラー個数が変わる）。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>btrfs scrub start mountpoint
+scrub started on mountpoint, fsid a86f9e3b-87e4-4731-a953-9a2be1b8f17b <span class="o">(</span><span class="nv">pid</span><span class="o">=</span>37388<span class="o">)</span>
+WARNING: errors detected during scrubbing, corrected
+<span class="nv">$ </span><span class="nb">sudo </span>btrfs scrub status mountpoint
+UUID:             a86f9e3b-87e4-4731-a953-9a2be1b8f17b
+Scrub started:    Sat Apr 24 18:19:07 2021
+Status:           finished
+Duration:         0:00:00
+Total to scrub:   256.00KiB
+Rate:             0.00B/s
+Error summary:    <span class="nv">csum</span><span class="o">=</span>5
+  Corrected:      5
+  Uncorrectable:  0
+  Unverified:     0
+<span class="nv">$ </span><span class="nb">sync</span>
+<span class="nv">$ </span><span class="nb">sudo </span>strings /dev/ram0 | <span class="nb">grep </span>Hello | <span class="nb">sort</span> | <span class="nb">uniq</span> | <span class="nb">wc</span> <span class="nt">-l</span>
+0
+</code></pre></div></div>
+
+<h4 id="スクラブまとめ">スクラブまとめ</h4>
+
+<ul>
+  <li>少し壊れたぐらいだと定期的な scrub で救えるかもしれない</li>
+  <li>RAID だと定期的な scrub で救えるものがある</li>
+  <li>1台だと気休め? → やはり最悪オフライン（ポータブルHDDなど）でもよいのでバックアップは重要</li>
+</ul>
+
+<h3 id="参考文献">参考文献</h3>
+
+<ul>
+  <li><a href="https://zenn.dev/satoru_takeuchi/articles/b8404632c2e02bc04dbf">brd: メモリ上に作成するブロックデバイス</a></li>
+  <li>Henson, Valerie (31 January 2008). <a href="http://mirror.linux.org.au/pub/linux.conf.au/2008/Thu/mel8-262.ogg">Chunkfs: Fast file system check and repair</a>. Melbourne, Australia. Event occurs at 18m 49s.</li>
+  <li><a href="https://wiki.archlinux.jp/index.php/Btrfs">Btrfs - ArchWiki</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <details id="comments">
+      <summary><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2021/09/zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru.html">Comments</span></summary>
+      <div id="disqus_thread"></div>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <script type="application/javascript" src="/javascript/disqus_loader.js" defer="defer" async="async"></script>
+    </details>
+  </footer>
+</article><aside class="post-related">
+  <h2>Related Posts</h2>
+  <ul class="post-list"><li class="post-item">
+    <a class="post-link" href="/2017/10/list-of-all-the-config-provided-by-configuration-mania.html">
+      <span class="post-meta">2017-10-26</span>
+      <span class="post-title">List of all the Config provided by Configuration Mania</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2018/04/rust-error-handling-question.html">
+      <span class="post-meta">2018-04-29</span>
+      <span class="post-title">rustのエラー処理と疑問符演算子</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2020/07/b1248-led-name-badge-protocol-reverse-engineering.html">
+      <span class="post-meta">2020-07-18</span>
+      <span class="post-title">B1248 LED name badge protocol reverse engineering</span><img class="post-thumb" src="/images/2020-07-18-B1248-website-121.jpg" loading="lazy" alt="thumbnail" /></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2017/08/code-reading-firefox-send.html">
+      <span class="post-meta">2017-08-12</span>
+      <span class="post-title">Code Reading: &quot;Firefox Send&quot; encryption</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2010/01/hello-world.html">
+      <span class="post-meta">2010-01-31</span>
+      <span class="post-title">Hello world</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2015/11/redmine-scheduling-poll.html">
+      <span class="post-meta">2015-11-30</span>
+      <span class="post-title">【担当者さん必見】メンバーみんなで日程調整ができる「Scheduling Poll」プラグイン登場！</span><img class="post-thumb" src="/images/201511_redmine_scheduling_polls_ticket_vote.png" loading="lazy" alt="thumbnail" /></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2020/10/gum-frequency-characteristic-depending-on-audio-parameters.html">
+      <span class="post-meta">2020-10-04</span>
+      <span class="post-title">getUserMedia() Frequency Characteristic depending on audio parameters</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2014/12/light-weight-font-android.html">
+      <span class="post-meta">2014-12-29</span>
+      <span class="post-title">Light な weight な日本語フォントを android に投入</span><img class="post-thumb" src="/images/201412_light_weight_font_screen103.png" loading="lazy" alt="thumbnail" /></a>
+  </li>
+</ul>
+</aside>
+      </div>
+    </div><footer class="site-footer">
+  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
+  <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
+    <h2 class="footer-heading">cat_in_136.blog()</h2>
+    <p>
+      © 2021
+      <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
+        <a href="/about"><span itemprop="name">cat_in_136</span></a>
+      </span>;
+      Content is available under a
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license" itemprop="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">CC BY-NC-SA 4.0</a>
+      unless otherwise noted.
+    </p>
+  </div>
+</footer>
+</body>
+</html>

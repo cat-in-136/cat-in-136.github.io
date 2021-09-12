@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator>
   <link href="https://cat-in-136.github.io/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://cat-in-136.github.io/" rel="alternate" type="text/html" />
-  <updated>2021-09-12T20:25:12+09:00</updated>
+  <updated>2021-09-13T00:08:38+09:00</updated>
   <id>https://cat-in-136.github.io/</id>
 
   
@@ -17,6 +17,631 @@
 
   
   
+  
+    <entry>
+      <title type="html">ぜんぜんわからない俺達は雰囲気でbtrfs使っている</title>
+      <link href="https://cat-in-136.github.io/2021/09/zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru.html" rel="alternate" type="text/html" title="ぜんぜんわからない俺達は雰囲気でbtrfs使っている" />
+      <published>2021-09-13T00:07:08+09:00</published>
+      <updated>2021-09-13T00:07:08+09:00</updated>
+      <id>https://cat-in-136.github.io/2021/09/zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru</id>
+      
+      
+      
+      <content type="html" xml:base="https://cat-in-136.github.io/2021/09/zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru.html">&lt;p&gt;雰囲気で ext2/3/4 を使ってきた人が、雰囲気で btrfs を使うためのメモ。
+RAID は本稿では深く触れない。 RAID は雰囲気で使えるものではない。&lt;/p&gt;
+
+&lt;figure&gt;
+&lt;img class=&quot;fitcontain&quot; src=&quot;/images/2020-09-13-Btrfs_logo.svg&quot; width=&quot;700&quot; height=&quot;700&quot; loading=&quot;lazy&quot; /&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;発音&quot;&gt;発音&lt;/h3&gt;
+
+&lt;p&gt;何かと話にあがるどう発音するか問題については、下記が答えで良いと思われる。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;It’s called Butter FS or B-tree FS, but all the cool kids say Butter FS&lt;/p&gt;
+
+  &lt;p&gt;— Valerie Henson, “Chunkfs: Fast file system check and repair”, 31 Jan 2008.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;クールキッズなら &lt;strong&gt;バター・エフ・エス&lt;/strong&gt;  [bʌ́tə(r) - éf - es] と発音すれば良い。&lt;/p&gt;
+
+&lt;figure&gt;
+&lt;figcaption&gt;&quot;Butter FS&quot; 発音部を抜き出したもの&lt;/figcaption&gt;
+&lt;audio controls=&quot;controls&quot; src=&quot;data:audio/ogg;base64,T2dnUwACAAAAAAAAAAAcj6glAAAAAFR7DAUBE09wdXNIZWFkAQE4AUSsAAAAAABPZ2dTAAAAAAAAAAAAAByPqCUBAAAAKSPv1wP///5PcHVzVGFncx8AAABsaWJvcHVzIDEuMy4xLCBsaWJvcHVzZW5jIDAuMi4xAgAAACMAAABFTkNPREVSPW9wdXNlbmMgZnJvbSBvcHVzLXRvb2xzIDAuMiQAAABFTkNPREVSX09QVElPTlM9LS1zcGVlY2ggLS1iaXRyYXRlIDgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE9nZ1MABKmZAAAAAAAAHI+oJQIAAACOzBOmKQ4PERUaExoVFxYSERMVFRAUEA0RFBYXGBQODw0NEAwMCw4KDQ4QDQwJCIGnsGaBpjqhQ1ppxqAIPDDnF1qoSlYFl/5X38AIjqr9185BHQCJJVDzWpwvgAiDPf8VyA4+J4pGal35TlrJ/Cjwigi3QPc8wpWD8Upqn/WDdm86v4uvN+fQieVACLp/6fFU0UJLB8xcbvbgJesZSQi7PEiDNGw/DtRt7bvZxHVePr/A9nnA2PK2CJQX1zt0JGmxZkA2IVCaUEZPzDgoCLrdJFytlZgkt6kfn0WsAtAwDbcGmeAIu/Rpobr4RaKWxLOgrpAcQEtMCJFACLvuFTBaYnWahLYgVMdLBLhNCLp5p6q2cn3mtaHt7FuKNWgIun4RzrARkGe51Z/yzXdztGaACLqJ8AwaF4KDdhMIjVYuvHbM9IUgCLtCNzhfTh7J3Z9vBDJ9mAmyefKkCLpQT/OtXepKNhleftIr6Qi/msclRy4pLE0tIwpb/609LppACJRoKA4NaS04aDRqSrSVsAgGbbNW5jPVG0faYUAIP1RaUkNySBpol8blvHYt4AiD9RprrSV4sDk8C2ovYLb69RRACLW3CHBwkBEwc0W/75yKhk1gXM+qsAi0730Ov0vd7qfV4561NQMhR/DPELtwCLO/xQh9j0HUR01WcwSffSGODrDcxMCACLG4gY+QEcNrzE1NfD5wZkAmP6AIPhhEy8IxFoJnT1kjaAg9xzCAhXEDyGn2Ql38gAgGMrvItAoXx1BeC3gIBiwzYH8Yjd07X6GACDzEbnqjbOgtp3wGJuSROAgGISi5zdvGBBj/sAgGECgouvSspnWAUwgGDaKkKnV2F75DCAX41S+8Sf1O0HTnfkAIBfoPnBQ+XEZOCDtIYnr6YQPwGlj2IAg6g8Vifi9S7PD51MK+CDqcY0n18SdunmF/MyVgcAg7VEok54Bx3m1SGl0IBfj/oiAAcaJRr3IIgq91KU2cbBw=&quot;&gt;
+&lt;/audio&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;とにかくささっと使うには&quot;&gt;とにかくささっと使うには&lt;/h3&gt;
+
+&lt;p&gt;ファイルを仮想ドライブとして使えばひとまず試用することができる。
+128MBのbtrfsストレージ使う方法。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;fallocate &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; 128M butter.img
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkfs.btrfs butter.img
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;mountpoint
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; auto butter.img mountpoint
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chown&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt; mountpoint
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;128MB未満はbtrfsの仕様として対応していない。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fallocate&lt;/code&gt; が使えない異常に古いファイルシステムをお使いの方は &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dd&lt;/code&gt;
+で所望のサイズのファイルをつくるなどしてください。&lt;/li&gt;
+  &lt;li&gt;BtrfsやzfsなどのCoWファイルシステム上でこのような使い方をする場合、
+CoWによってパフォーマンスの影響が出るため &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chattr +C butter.img&lt;/code&gt; を実行するなどして
+仮想ドライブとして使うファイルには CoW が無効化させておくのが良い。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;raidとかのときはブロックデバイスが必要なので&quot;&gt;RAIDとかのときはブロックデバイスが必要なので&lt;/h4&gt;
+
+&lt;p&gt;RAIDとかのときはブロックデバイスが必要なのでbrdモジュールを使いましょう。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;modprobe brd &lt;span class=&quot;nv&quot;&gt;rd_nr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2 &lt;span class=&quot;nv&quot;&gt;rd_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;131072
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mkfs.btrfs /dev/ram0 /dev/ram1
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;mountpoint
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; auto /dev/ram0 mountpoint
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;使い終わったらモジュールごと消せば良い。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;modprobe &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; brd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;遅延書き込み&quot;&gt;遅延書き込み&lt;/h3&gt;
+
+&lt;p&gt;ファイル書き込みをしても btrfs は容量を消費しないように表示される。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dd &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/random &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1MB_file
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;btrfs filesystem &lt;span class=&quot;nb&quot;&gt;du &lt;/span&gt;1MB_file
+     Total   Exclusive  Set shared  Filename
+     0.00B       0.00B       0.00B  1MB_file
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;この状態ではファイルの実体は書き込まれていない。
+しばらく経つと、ディスクに書き込まれるので容量を消費する。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;btrfs filesystem &lt;span class=&quot;nb&quot;&gt;du &lt;/span&gt;1MB_file
+     Total   Exclusive  Set shared  Filename
+   1.00MiB     1.00MiB       0.00B  1MB_file
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;明示的にディスクに書き込み指示するには &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sync&lt;/code&gt; コマンドを打ちましょう。&lt;/p&gt;
+
+&lt;h4 id=&quot;遅延書き込み時間の設定&quot;&gt;遅延書き込み時間の設定&lt;/h4&gt;
+
+&lt;p&gt;mountオプションで &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-o commit=180&lt;/code&gt; のように設定することで、ディスクへの書き込み時間間隔を調整できる。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;dl&gt;
+    &lt;dt&gt;&lt;strong&gt;commit=seconds&lt;/strong&gt;&lt;/dt&gt;
+    &lt;dd&gt;(since: 3.12, default: 30)
+:&lt;/dd&gt;
+    &lt;dd&gt;Set the interval of periodic transaction commit when data are synchronized to permanent storage. Higher interval values lead to larger amount of unwritten data, which has obvious consequences when the system crashes. The upper bound is not forced, but a warning is printed if it’s more than 300 seconds (5 minutes). Use with care.&lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;— &lt;a href=&quot;https://btrfs.wiki.kernel.org/index.php/Manpage/btrfs%285%29&quot;&gt;Manpage/btrfs(5) - btrfs Wiki&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;途中で変える場合は &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remount&lt;/code&gt; コマンドを使いましょう。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; remount,commit&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;120 mountpoint
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;遅延書き込みの弊害&quot;&gt;遅延書き込みの弊害&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;異常終了（停電・カーネルクラッシュ）すると、ファイルが消える。
+    &lt;ul&gt;
+      &lt;li&gt;実態は、ディスクに書き込む前だったというだけ。人間にはあたかも消えたように見える。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;一時的にファイルを作って消すような場合はディスク書き込みがないため速い。
+    &lt;ul&gt;
+      &lt;li&gt;コミットインターバルのタイミングで書き込みがあるので処理が遅くなる。&lt;/li&gt;
+      &lt;li&gt;単純にファイルを作るだけではベンチマークにはまったくならない。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;遅延書き込みを見てみる&quot;&gt;遅延書き込みを見てみる&lt;/h4&gt;
+
+&lt;p&gt;メタデータだけは直ちに作成され &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hello.txt&lt;/code&gt; という文字列がディスクに書き込みされる。
+ファイルの中身は遅れて書き込みされることがわかる。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;fallocate &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; 128M clean.img
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkfs.btrfs clean.img
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;mountpoint
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; auto clean.img mountpoint
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chown&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt; mountpoint
+
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;hello &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; mountpoint/hello.txt
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;strings clean.img | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; hello | &lt;span class=&quot;nb&quot;&gt;sort&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;uniq
+&lt;/span&gt;hello.txt
+
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;strings clean.img | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; hello | &lt;span class=&quot;nb&quot;&gt;sort&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;uniq
+&lt;/span&gt;hello
+hello.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;遅延書き込みまとめ&quot;&gt;遅延書き込みまとめ&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;btrfs はデータは遅れて書き込まれるよ&lt;/li&gt;
+  &lt;li&gt;コミットインターバルは設定で変えられるよ&lt;/li&gt;
+  &lt;li&gt;コミットインターバルが来る前はディスクに書き込まれていないから、異常終了すると消えたように見えるよ。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;copy-on-write--cow&quot;&gt;Copy-on-Write : CoW&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;btrfs is a modern copy on write (CoW) filesystem for Linux aimed at implementing advanced features while also focusing on fault tolerance, repair and easy administration.&lt;/p&gt;
+
+  &lt;p&gt;— &lt;a href=&quot;https://btrfs.wiki.kernel.org/index.php/Main_Page&quot;&gt;btrfs Wiki&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;コピーしても実体はコピーされずに、参照をつくるだけでコピー時間や使用容量を削減する。その後に書き換えた際にはじめて実際にその箇所がコピーされ容量を消費する&lt;/li&gt;
+  &lt;li&gt;新しいデータはディスクの空き容量に書き込んでから、新しいデータを参照するようにファイルのメタデータを変更する。元のデータはどこからも参照されなくなってはじめて削除する。&lt;/li&gt;
+  &lt;li&gt;書き込み途中で死んでもファイルが消えることはないから安全！&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;コピーしても中身は共有されている&quot;&gt;コピーしても中身は共有されている&lt;/h4&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;mountpoint
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dd &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/random &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1MB_file
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;1MB_file 1MB_file_copied
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dd &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/random &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1MB_file.2
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;btrfs filesystem &lt;span class=&quot;nb&quot;&gt;du&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+     Total   Exclusive  Set shared  Filename
+   1.00MiB       0.00B     1.00MiB  1MB_file
+   1.00MiB     1.00MiB       0.00B  1MB_file2
+   1.00MiB       0.00B     1.00MiB  1MB_file_copied
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1MB_file&lt;/code&gt; と &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1MB_file_copied&lt;/code&gt; は共有されていることがわかる。&lt;/p&gt;
+
+&lt;h4 id=&quot;明示的にコピーをしないとcowによる共有はされない&quot;&gt;明示的にコピーをしないとCoWによる共有はされない&lt;/h4&gt;
+
+&lt;p&gt;ファイルの中身をチェックして共有しているわけではないため、
+同じファイルだとしても別々の手段で取ってきたのならば共有されない。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;mountpoint
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg &lt;span class=&quot;nt&quot;&gt;--referer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg &lt;span class=&quot;nt&quot;&gt;--referer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sha1sum &lt;/span&gt;49568897633_1e4d1eb342_o_d.jpg&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+a673cc4dbd99f4e18c1bba82bd818c092d7cc237  49568897633_1e4d1eb342_o_d.jpg
+a673cc4dbd99f4e18c1bba82bd818c092d7cc237  49568897633_1e4d1eb342_o_d.jpg.1
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;btrfs filesystem &lt;span class=&quot;nb&quot;&gt;du &lt;/span&gt;49568897633_1e4d1eb342_o_d.jpg&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+     Total   Exclusive  Set shared  Filename
+   2.70MiB     2.70MiB       0.00B  49568897633_1e4d1eb342_o_d.jpg
+   2.70MiB     2.70MiB       0.00B  49568897633_1e4d1eb342_o_d.jpg.1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;cowファイルシステムのcowの弊害&quot;&gt;CoWファイルシステムのCoWの弊害&lt;/h4&gt;
+
+&lt;p&gt;新しいデータはディスクの空き容量に書き込んでから、新しいデータを参照するようにファイルのメタデータを変更する。
+古いデータは参照を外すが該当領域はワイプはしないので残ったままになる。
+（空き容量として扱われるので、あとで別のデータが書かれる可能性はある。）&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;fallocate &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; 128M clean.img
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkfs.btrfs clean.img
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;mountpoint
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; auto clean.img mountpoint
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chown&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt; mountpoint
+
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;MySecretKey &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; mountpoint/hoge.txt
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;strings clean.img | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;MySecretKey | &lt;span class=&quot;nb&quot;&gt;sort&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;uniq
+&lt;/span&gt;MySecretKey
+
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;hoge &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; mountpoint/hoge.txt
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;strings clean.img | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;MySecretKey | &lt;span class=&quot;nb&quot;&gt;sort&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;uniq
+&lt;/span&gt;MySecretKey
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;共有状態のファイルへの追記書き込み&quot;&gt;共有状態のファイルへの追記書き込み&lt;/h4&gt;
+
+&lt;p&gt;追記書き込みすると追記していない所は共有されたままである。
+5バイト追加であるのに関わらず4kBとなっているのは、
+leaf block単位で処理されるときのサイズに対応していると思われる。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dd &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/random &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1MB_file
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;1MB_file 1MB_file_copied
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;hoge &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; 1MB_file_copied
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;btrfs filesystem &lt;span class=&quot;nb&quot;&gt;du&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+     Total   Exclusive  Set shared  Filename
+   1.00MiB       0.00B     1.00MiB  1MB_file
+   1.00MiB     4.00KiB     1.00MiB  1MB_file_copied
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;共有状態のファイルへの部分書き込み&quot;&gt;共有状態のファイルへの部分書き込み&lt;/h4&gt;
+
+&lt;p&gt;10000バイトごとにファイルの中身を上書きするとどうなるか?&lt;/p&gt;
+
+&lt;p&gt;下記のようなディスク破壊用プログラムをつくった。&lt;/p&gt;
+
+&lt;div class=&quot;language-rust highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.nth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.unwrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.unwrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;mut&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;OpenOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.unwrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;mut&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.seek&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;SeekFrom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.unwrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Crash!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.unwrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;1MBのファイルに既述処理を施すと 1024 * 1024 / 1000 + 1 = 105 箇所書き込まれる。
+105 * 4kB = 420kB 相当のところが書き換えられるのでそこが共有から外れる。&lt;/p&gt;
+
+&lt;p&gt;この420kBは &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1MB_file_copied&lt;/code&gt; で断片化領域の容量の和でもある。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;mountpoint
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dd &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/random &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1MB_file
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;1MB_file 1MB_file_copied
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vi crash.rs
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rustc crash.rs
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;./crash 1MB_file_copied
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;strings 1MB_file_copied | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;Crash | &lt;span class=&quot;nb&quot;&gt;wc&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;
+105
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;btrfs filesystem &lt;span class=&quot;nb&quot;&gt;du &lt;/span&gt;1MB_file 1MB_file_copied
+     Total   Exclusive  Set shared  Filename
+   1.00MiB       0.00B     1.00MiB  1MB_file
+   1.00MiB   420.00KiB   604.00KiB  1MB_file_copied
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;cowの無効化&quot;&gt;CoWの無効化&lt;/h4&gt;
+
+&lt;p&gt;弊害を嫌う場合は、下記のようにして無効化しましょう&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;ファイル単位での CoW を無効 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chattr +C file_nocow&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;ファイルシステム全体で CoW を無効。 “nodatacow” オプションを使ってマウント。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;cowまとめ&quot;&gt;CoWまとめ&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;ファイルを上書きしても上書きされないよ、一旦コピーしてから空き容量に書き込まれてから参照を張り直すよ&lt;/li&gt;
+  &lt;li&gt;ファイルのコピーをしても実態はコピーされないよ、共有されるよ&lt;/li&gt;
+  &lt;li&gt;コピーして共有されているファイルはファイル書き込み時に、空き容量によって書き込む仕組みの結果、共有が解かれるよ&lt;/li&gt;
+  &lt;li&gt;弊害として断片化があるよ&lt;/li&gt;
+  &lt;li&gt;嫌ならばファイル単位、またはファイルシステム全体で無効化出来るよ&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;サブボリューム&quot;&gt;サブボリューム&lt;/h3&gt;
+
+&lt;p&gt;フォルダのように使えるがマウントも出来る。
+普通のフォルダの下にも置けちゃったりするなどかなり自由度は高い。
+使い方はなんとなくでわかる。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;作る
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs subvolume create mountpoint/subvolume
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;消す
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs subvolume delete mountpoint/subvolume
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;一覧
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs subvolume list mountpoint
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;サブボリューム単位でのマウント
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; btrfs &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;subvol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/subvolume devicefile mountpoint
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;※複製はスナップショットを使う。&lt;/p&gt;
+
+&lt;h3 id=&quot;スナップショット&quot;&gt;スナップショット&lt;/h3&gt;
+
+&lt;p&gt;実態はサブボリュームのコピーである。
+スナップショットって言っているのにデフォルトはコピー可である。&lt;/p&gt;
+
+&lt;p&gt;CoWのお陰でスナップショットを作る（サブボリュームのコピー）のは一瞬で終了する。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs subvolume snapshot mountpoint/subvolume mountpoint/subvolume_copied
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;普通の意味での readonly なスナップショットは、下記の通り &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-r&lt;/code&gt; を付ける。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs subvolume snapshot &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; mountpoint/subvolume mountpoint/subvolume_copied
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;btrfsのスナップショットの特徴&quot;&gt;btrfsのスナップショットの特徴&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;btrfs subvolume snapshot&lt;/code&gt; はサブボリュームのスナップショットとしてのコピーを作る&lt;/li&gt;
+  &lt;li&gt;スナップショットは単なるサブボリュームなので、普通に見たりコピーして取り出したりすることができる&lt;/li&gt;
+  &lt;li&gt;サブボリューム配下にあるサブボリュームはスナップショットにコピーされず空になる
+    &lt;ul&gt;
+      &lt;li&gt;サブボリュームをスナップショットによるコピーの除外に使う&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;既にあるサブボリュームに他のサブボリュームの内容に置き換えるのは単純な操作では不可能
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zfs rollback hoge@fuga&lt;/code&gt; のような復元用コマンドはない&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;スナップショットの置き場所の検討&quot;&gt;スナップショットの置き場所の検討&lt;/h4&gt;
+
+&lt;p&gt;通常サブボリュームの下にスナップショットを作る構成が自然だが、
+btrfs の仕組みだと復元作業が難しくなる。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;fuga (subvolume)
+    &lt;ul&gt;
+      &lt;li&gt;files…&lt;/li&gt;
+      &lt;li&gt;.snapshots/
+        &lt;ul&gt;
+          &lt;li&gt;snapshot1 (subvolume: snapshot)&lt;/li&gt;
+          &lt;li&gt;snapshot2 (subvolume: snapshot)&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;対象サブボリュームの外側にスナップショットを作るのがよい。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;fuga (subvolume)
+    &lt;ul&gt;
+      &lt;li&gt;files…&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;snapshots/ (subvolumeにしてもしなくとも、複数階層にしてもよい)
+    &lt;ul&gt;
+      &lt;li&gt;snapshot1 (subvolume: snapshot)&lt;/li&gt;
+      &lt;li&gt;snapshot2 (subvolume: snapshot)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;この構成の復元方法はおおよそ下記のようになる。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo mv &lt;/span&gt;fuga fuga_bak
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs subvolume snapshot snapshots/snapshot1 fuga
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs subvolume delete fuga_bak
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;これを踏まえての構成はたとえば&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;root (subvolume; マウント先=&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;home (subvolume; マウント先=&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/home&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;log (subvolume; マウント先=&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/var/log&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;snapshots/ (subvolume; マウント先=&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/sys_snapshots&lt;/code&gt; )
+    &lt;ul&gt;
+      &lt;li&gt;btrbk/
+        &lt;ul&gt;
+          &lt;li&gt;snapshots… (subvolume: snapshot)&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;ここで &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/var/log&lt;/code&gt; を別サブボリューム log にしている。
+root スナップショットが復元されても、ログファイルが以前の状態に戻されることがないので、
+トラブルシューティングが容易になる。&lt;/p&gt;
+
+&lt;h4 id=&quot;スナップショットの自動実行&quot;&gt;スナップショットの自動実行&lt;/h4&gt;
+
+&lt;p&gt;まだデファクトはない。&lt;/p&gt;
+
+&lt;p&gt;単なるシェルスクリプト+cron(systemd timer)運用も多い。
+そのぐらいでみんな満足しているということでもある。&lt;/p&gt;
+
+&lt;p&gt;Arch LinuxのWikiで推されていたのは&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;btrbk&lt;/code&gt;。
+&lt;a href=&quot;https://github.com/digint/btrbk&quot;&gt;digint/btrbk: Tool for creating snapshots and remote backups of btrfs subvolumes&lt;/a&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;btrbkの設定&quot;&gt;btrbkの設定&lt;/h5&gt;
+
+&lt;p&gt;スナップショットの他に別デバイスへのバックアップ(targetのところ)もできる。
+別デバイスもbtrfsの場合はサブボリュームの差分送信機能を使うのでなかなか高速（すごい！）。&lt;/p&gt;
+
+&lt;p&gt;こんな感じの &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/btrbk/btrbk.conf&lt;/code&gt; を書いておく。
+なかなか意味が難しい。（よくわからない。雰囲気で使っている）&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;transaction_log		/var/log/btrbk.log
+
+timestamp_format        long-iso
+
+snapshot_preserve_min   2d
+##snapshot_preserve      10d
+snapshot_preserve      14d 6m
+
+##target_preserve_min    18h
+##target_preserve        48h 20d 6m
+target_preserve_min    no
+target_preserve        30d *m
+
+volume /mnt/Root
+  snapshot_dir snapshots/btrbk
+  subvolume  root
+    snapshot_create  always
+    target /mnt/backup/snapshots/btrbk
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;btrbkのタイマー実行&quot;&gt;btrbkのタイマー実行&lt;/h5&gt;
+
+&lt;p&gt;systemd timer で定期実行する。
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;btrbk.timer&lt;/code&gt; で毎日トリガーをかけている。&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[Unit]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Description&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;btrbk daily backup&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;[Timer]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;OnCalendar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;daily&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;AccuracySec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;10min&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Persistent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;true&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;[Install]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;WantedBy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;multi-user.target&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;btrbk.service&lt;/code&gt;は単に&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;btrbk run&lt;/code&gt;を呼んでいるだけ&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[Unit]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Description&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;btrbk backup&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Documentation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;man:btrbk(1)&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;[Service]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;oneshot&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;ExecStart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/usr/sbin/btrbk run&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;スナップショットのまとめ&quot;&gt;スナップショットのまとめ&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;サブボリュームは雰囲気でまじでどうとでもなるよ&lt;/li&gt;
+  &lt;li&gt;スナップショットは単なるサブボリュームのコピーだよ&lt;/li&gt;
+  &lt;li&gt;…のためいろいろと制約がでているよ。サブボリュームの構成はよく考えてる必要があるよ。&lt;/li&gt;
+  &lt;li&gt;スナップショットを取るプログラムはデファクトがまだないため混沌としているよ。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;btrbk&lt;/code&gt;は抜きん出ているけれども、なんとも難しいよ。でも雰囲気でなんとかなるよ。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;スクラブ&quot;&gt;スクラブ&lt;/h3&gt;
+
+&lt;p&gt;btrfs は明示的に洗わないといけない。定期的に汚れを落としましょう。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;btrfs scrub start mountpoint
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;単一ディスクだと耐障害性はやっぱりだめ&quot;&gt;単一ディスクだと耐障害性はやっぱりだめ?&lt;/h4&gt;
+
+&lt;p&gt;破壊前のディスクを作る&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;fallocate &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; 128M clean.img
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkfs.btrfs clean.img
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;mountpoint
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; auto clean.img mountpoint
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chown&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt; mountpoint
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;Hello &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; mountpoint/hello.txt
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;World &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; mountpoint/world.txt
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;umount mountpoint
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;World&lt;/code&gt;を&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WORLD&lt;/code&gt;に書き換えた破壊済みファイルを作った。
+チェックサムが合わないのでマウントができなくなった。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;xxd &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-g&lt;/span&gt; 0 &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; 134217728 clean.img | &lt;span class=&quot;nb&quot;&gt;sed&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'s/576f726c64/574f524c44/ig'&lt;/span&gt; | xxd &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; crash.img
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;いろいろ試したが、破壊手順を元に復元する方法以外では、回復できなかった。
+つまりこの破壊に対する復元をすることができなかった。&lt;/p&gt;
+
+&lt;h4 id=&quot;raidでミラーすると-scrub-で戦える&quot;&gt;RAIDでミラーすると scrub で戦える&lt;/h4&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;modprobe brd &lt;span class=&quot;nv&quot;&gt;rd_nr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2 &lt;span class=&quot;nv&quot;&gt;rd_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;131072
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mkfs.btrfs /dev/ram0 /dev/ram1
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;mountpoint
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; auto /dev/ram0 mountpoint
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chown&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt; mountpoint
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;Hello &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; mountpoint/hello.txt
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;World &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; mountpoint/world.txt
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;1台目を雑に完全に破壊した。
+RAIDのお陰で読めているが、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/dev/ram0&lt;/code&gt;は明らかに破壊されている&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo dd &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/zero &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/ram0
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;mountpoint/hello.txt mountpoint/world.txt
+Hello
+World
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;strings /dev/ram0 | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;Hello | &lt;span class=&quot;nb&quot;&gt;sort&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;uniq&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;wc&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;
+0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;scrubしてやると回復してくれる（再現性確保のため &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/dev/zero&lt;/code&gt; での上書き結果を載せているが、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/dev/random&lt;/code&gt; だとエラー個数が変わる）。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs scrub start mountpoint
+scrub started on mountpoint, fsid a86f9e3b-87e4-4731-a953-9a2be1b8f17b &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;37388&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+WARNING: errors detected during scrubbing, corrected
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs scrub status mountpoint
+UUID:             a86f9e3b-87e4-4731-a953-9a2be1b8f17b
+Scrub started:    Sat Apr 24 18:19:07 2021
+Status:           finished
+Duration:         0:00:00
+Total to scrub:   256.00KiB
+Rate:             0.00B/s
+Error summary:    &lt;span class=&quot;nv&quot;&gt;csum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;5
+  Corrected:      5
+  Uncorrectable:  0
+  Unverified:     0
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;strings /dev/ram0 | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;Hello | &lt;span class=&quot;nb&quot;&gt;sort&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;uniq&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;wc&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;
+0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;スクラブまとめ&quot;&gt;スクラブまとめ&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;少し壊れたぐらいだと定期的な scrub で救えるかもしれない&lt;/li&gt;
+  &lt;li&gt;RAID だと定期的な scrub で救えるものがある&lt;/li&gt;
+  &lt;li&gt;1台だと気休め? → やはり最悪オフライン（ポータブルHDDなど）でもよいのでバックアップは重要&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;参考文献&quot;&gt;参考文献&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://zenn.dev/satoru_takeuchi/articles/b8404632c2e02bc04dbf&quot;&gt;brd: メモリ上に作成するブロックデバイス&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Henson, Valerie (31 January 2008). &lt;a href=&quot;http://mirror.linux.org.au/pub/linux.conf.au/2008/Thu/mel8-262.ogg&quot;&gt;Chunkfs: Fast file system check and repair&lt;/a&gt;. Melbourne, Australia. Event occurs at 18m 49s.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://wiki.archlinux.jp/index.php/Btrfs&quot;&gt;Btrfs - ArchWiki&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+      
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>cat_in_136</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="btrfs" />
+      
+        <category term="linux" />
+      
+        <category term="filesystem" />
+      
+
+      
+        <summary type="html">雰囲気で ext2/3/4 を使ってきた人が、雰囲気で btrfs を使うためのメモ。 RAID は本稿では深く触れない。 RAID は雰囲気で使えるものではない。 発音 何かと話にあがるどう発音するか問題については、下記が答えで良いと思われる。 It’s called Butter FS or B-tree FS, but all the cool kids say Butter FS — Valerie Henson, “Chunkfs: Fast file system check and repair”, 31 Jan 2008. クールキッズなら バター・エフ・エス [bʌ́tə(r) - éf - es] と発音すれば良い。 &quot;Butter FS&quot; 発音部を抜き出したもの とにかくささっと使うには ファイルを仮想ドライブとして使えばひとまず試用することができる。 128MBのbtrfsストレージ使う方法。 $ fallocate -l 128M butter.img $ mkfs.btrfs butter.img $ mkdir mountpoint $ sudo mount -t auto butter.img mountpoint $ sudo chown $USER:$USER mountpoint 128MB未満はbtrfsの仕様として対応していない。 fallocate が使えない異常に古いファイルシステムをお使いの方は dd で所望のサイズのファイルをつくるなどしてください。 BtrfsやzfsなどのCoWファイルシステム上でこのような使い方をする場合、 CoWによってパフォーマンスの影響が出るため chattr +C butter.img を実行するなどして 仮想ドライブとして使うファイルには CoW が無効化させておくのが良い。 RAIDとかのときはブロックデバイスが必要なので RAIDとかのときはブロックデバイスが必要なのでbrdモジュールを使いましょう。 $ sudo modprobe brd rd_nr=2 rd_size=131072 $ sudo mkfs.btrfs /dev/ram0 /dev/ram1 $ mkdir mountpoint $ sudo mount -t auto /dev/ram0 mountpoint 使い終わったらモジュールごと消せば良い。 $ sudo modprobe -r brd 遅延書き込み ファイル書き込みをしても btrfs は容量を消費しないように表示される。 $ dd bs=1024 count=1024 if=/dev/random of=1MB_file $ btrfs filesystem du 1MB_file Total Exclusive Set shared Filename 0.00B 0.00B 0.00B 1MB_file この状態ではファイルの実体は書き込まれていない。 しばらく経つと、ディスクに書き込まれるので容量を消費する。 $ btrfs filesystem du 1MB_file Total Exclusive Set shared Filename 1.00MiB 1.00MiB 0.00B 1MB_file 明示的にディスクに書き込み指示するには sync コマンドを打ちましょう。 遅延書き込み時間の設定 mountオプションで -o commit=180 のように設定することで、ディスクへの書き込み時間間隔を調整できる。 commit=seconds (since: 3.12, default: 30) : Set the interval of periodic transaction commit when data are synchronized to permanent storage. Higher interval values lead to larger amount of unwritten data, which has obvious consequences when the system crashes. The upper bound is not forced, but a warning is printed if it’s more than 300 seconds (5 minutes). Use with care. — Manpage/btrfs(5) - btrfs Wiki 途中で変える場合は remount コマンドを使いましょう。 $ sudo mount -o remount,commit=120 mountpoint 遅延書き込みの弊害 異常終了（停電・カーネルクラッシュ）すると、ファイルが消える。 実態は、ディスクに書き込む前だったというだけ。人間にはあたかも消えたように見える。 一時的にファイルを作って消すような場合はディスク書き込みがないため速い。 コミットインターバルのタイミングで書き込みがあるので処理が遅くなる。 単純にファイルを作るだけではベンチマークにはまったくならない。 遅延書き込みを見てみる メタデータだけは直ちに作成され hello.txt という文字列がディスクに書き込みされる。 ファイルの中身は遅れて書き込みされることがわかる。 $ fallocate -l 128M clean.img $ mkfs.btrfs clean.img $ mkdir mountpoint $ sudo mount -t auto clean.img mountpoint $ sudo chown $USER:$USER mountpoint $ echo hello &amp;gt; mountpoint/hello.txt $ strings clean.img | grep -i hello | sort | uniq hello.txt $ sync $ strings clean.img | grep -i hello | sort | uniq hello hello.txt 遅延書き込みまとめ btrfs はデータは遅れて書き込まれるよ コミットインターバルは設定で変えられるよ コミットインターバルが来る前はディスクに書き込まれていないから、異常終了すると消えたように見えるよ。 Copy-on-Write : CoW btrfs is a modern copy on write (CoW) filesystem for Linux aimed at implementing advanced features while also focusing on fault tolerance, repair and easy administration. — btrfs Wiki コピーしても実体はコピーされずに、参照をつくるだけでコピー時間や使用容量を削減する。その後に書き換えた際にはじめて実際にその箇所がコピーされ容量を消費する 新しいデータはディスクの空き容量に書き込んでから、新しいデータを参照するようにファイルのメタデータを変更する。元のデータはどこからも参照されなくなってはじめて削除する。 書き込み途中で死んでもファイルが消えることはないから安全！ コピーしても中身は共有されている $ cd mountpoint $ dd bs=1024 count=1024 if=/dev/random of=1MB_file $ cp 1MB_file 1MB_file_copied $ dd bs=1024 count=1024 if=/dev/random of=1MB_file.2 $ sync $ btrfs filesystem du * Total Exclusive Set shared Filename 1.00MiB 0.00B 1.00MiB 1MB_file 1.00MiB 1.00MiB 0.00B 1MB_file2 1.00MiB 0.00B 1.00MiB 1MB_file_copied 1MB_file と 1MB_file_copied は共有されていることがわかる。 明示的にコピーをしないとCoWによる共有はされない ファイルの中身をチェックして共有しているわけではないため、 同じファイルだとしても別々の手段で取ってきたのならば共有されない。 $ cd mountpoint $ wget https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg --referer=https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg $ wget https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg --referer=https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg $ sha1sum 49568897633_1e4d1eb342_o_d.jpg* a673cc4dbd99f4e18c1bba82bd818c092d7cc237 49568897633_1e4d1eb342_o_d.jpg a673cc4dbd99f4e18c1bba82bd818c092d7cc237 49568897633_1e4d1eb342_o_d.jpg.1 $ sync $ btrfs filesystem du 49568897633_1e4d1eb342_o_d.jpg* Total Exclusive Set shared Filename 2.70MiB 2.70MiB 0.00B 49568897633_1e4d1eb342_o_d.jpg 2.70MiB 2.70MiB 0.00B 49568897633_1e4d1eb342_o_d.jpg.1 CoWファイルシステムのCoWの弊害 新しいデータはディスクの空き容量に書き込んでから、新しいデータを参照するようにファイルのメタデータを変更する。 古いデータは参照を外すが該当領域はワイプはしないので残ったままになる。 （空き容量として扱われるので、あとで別のデータが書かれる可能性はある。） $ fallocate -l 128M clean.img $ mkfs.btrfs clean.img $ mkdir mountpoint $ sudo mount -t auto clean.img mountpoint $ sudo chown $USER:$USER mountpoint $ echo MySecretKey &amp;gt; mountpoint/hoge.txt $ sync $ strings clean.img | grep MySecretKey | sort | uniq MySecretKey $ echo hoge &amp;gt; mountpoint/hoge.txt $ sync $ strings clean.img | grep MySecretKey | sort | uniq MySecretKey 共有状態のファイルへの追記書き込み 追記書き込みすると追記していない所は共有されたままである。 5バイト追加であるのに関わらず4kBとなっているのは、 leaf block単位で処理されるときのサイズに対応していると思われる。 $ dd bs=1024 count=1024 if=/dev/random of=1MB_file $ cp 1MB_file 1MB_file_copied $ echo hoge &amp;gt;&amp;gt; 1MB_file_copied $ sync $ btrfs filesystem du * Total Exclusive Set shared Filename 1.00MiB 0.00B 1.00MiB 1MB_file 1.00MiB 4.00KiB 1.00MiB 1MB_file_copied 共有状態のファイルへの部分書き込み 10000バイトごとにファイルの中身を上書きするとどうなるか? 下記のようなディスク破壊用プログラムをつくった。 use std::fs::*; use std::io::*; fn main() { let path = std::env::args().nth(1).unwrap(); let size = std::fs::metadata(&amp;amp;path).unwrap().len(); let mut file = OpenOptions::new().write(true).open(&amp;amp;path).unwrap(); let mut pos = 0; while pos &amp;lt; size { file.seek(SeekFrom::Start(pos)).unwrap(); file.write(b&quot;Crash!&quot;).unwrap(); pos = pos + 10000; } } 1MBのファイルに既述処理を施すと 1024 * 1024 / 1000 + 1 = 105 箇所書き込まれる。 105 * 4kB = 420kB 相当のところが書き換えられるのでそこが共有から外れる。 この420kBは 1MB_file_copied で断片化領域の容量の和でもある。 $ cd mountpoint $ dd bs=1024 count=1024 if=/dev/random of=1MB_file $ cp 1MB_file 1MB_file_copied $ sync $ vi crash.rs $ rustc crash.rs $ ./crash 1MB_file_copied $ strings 1MB_file_copied | grep Crash | wc -l 105 $ sync $ btrfs filesystem du 1MB_file 1MB_file_copied Total Exclusive Set shared Filename 1.00MiB 0.00B 1.00MiB 1MB_file 1.00MiB 420.00KiB 604.00KiB 1MB_file_copied CoWの無効化 弊害を嫌う場合は、下記のようにして無効化しましょう ファイル単位での CoW を無効 chattr +C file_nocow ファイルシステム全体で CoW を無効。 “nodatacow” オプションを使ってマウント。 CoWまとめ ファイルを上書きしても上書きされないよ、一旦コピーしてから空き容量に書き込まれてから参照を張り直すよ ファイルのコピーをしても実態はコピーされないよ、共有されるよ コピーして共有されているファイルはファイル書き込み時に、空き容量によって書き込む仕組みの結果、共有が解かれるよ 弊害として断片化があるよ 嫌ならばファイル単位、またはファイルシステム全体で無効化出来るよ サブボリューム フォルダのように使えるがマウントも出来る。 普通のフォルダの下にも置けちゃったりするなどかなり自由度は高い。 使い方はなんとなくでわかる。 作る $ sudo btrfs subvolume create mountpoint/subvolume 消す $ sudo btrfs subvolume delete mountpoint/subvolume 一覧 $ sudo btrfs subvolume list mountpoint サブボリューム単位でのマウント $ sudo mount -t btrfs -o subvol=/subvolume devicefile mountpoint ※複製はスナップショットを使う。 スナップショット 実態はサブボリュームのコピーである。 スナップショットって言っているのにデフォルトはコピー可である。 CoWのお陰でスナップショットを作る（サブボリュームのコピー）のは一瞬で終了する。 $ sudo btrfs subvolume snapshot mountpoint/subvolume mountpoint/subvolume_copied 普通の意味での readonly なスナップショットは、下記の通り -r を付ける。 $ sudo btrfs subvolume snapshot -r mountpoint/subvolume mountpoint/subvolume_copied btrfsのスナップショットの特徴 btrfs subvolume snapshot はサブボリュームのスナップショットとしてのコピーを作る スナップショットは単なるサブボリュームなので、普通に見たりコピーして取り出したりすることができる サブボリューム配下にあるサブボリュームはスナップショットにコピーされず空になる サブボリュームをスナップショットによるコピーの除外に使う 既にあるサブボリュームに他のサブボリュームの内容に置き換えるのは単純な操作では不可能 zfs rollback hoge@fuga のような復元用コマンドはない スナップショットの置き場所の検討 通常サブボリュームの下にスナップショットを作る構成が自然だが、 btrfs の仕組みだと復元作業が難しくなる。 fuga (subvolume) files… .snapshots/ snapshot1 (subvolume: snapshot) snapshot2 (subvolume: snapshot) 対象サブボリュームの外側にスナップショットを作るのがよい。 fuga (subvolume) files… snapshots/ (subvolumeにしてもしなくとも、複数階層にしてもよい) snapshot1 (subvolume: snapshot) snapshot2 (subvolume: snapshot) この構成の復元方法はおおよそ下記のようになる。 $ sudo mv fuga fuga_bak $ sudo btrfs subvolume snapshot snapshots/snapshot1 fuga $ sudo btrfs subvolume delete fuga_bak これを踏まえての構成はたとえば root (subvolume; マウント先=/) home (subvolume; マウント先=/home) log (subvolume; マウント先=/var/log) snapshots/ (subvolume; マウント先=/sys_snapshots ) btrbk/ snapshots… (subvolume: snapshot) ここで /var/log を別サブボリューム log にしている。 root スナップショットが復元されても、ログファイルが以前の状態に戻されることがないので、 トラブルシューティングが容易になる。 スナップショットの自動実行 まだデファクトはない。 単なるシェルスクリプト+cron(systemd timer)運用も多い。 そのぐらいでみんな満足しているということでもある。 Arch LinuxのWikiで推されていたのはbtrbk。 digint/btrbk: Tool for creating snapshots and remote backups of btrfs subvolumes btrbkの設定 スナップショットの他に別デバイスへのバックアップ(targetのところ)もできる。 別デバイスもbtrfsの場合はサブボリュームの差分送信機能を使うのでなかなか高速（すごい！）。 こんな感じの /etc/btrbk/btrbk.conf を書いておく。 なかなか意味が難しい。（よくわからない。雰囲気で使っている） transaction_log /var/log/btrbk.log timestamp_format long-iso snapshot_preserve_min 2d ##snapshot_preserve 10d snapshot_preserve 14d 6m ##target_preserve_min 18h ##target_preserve 48h 20d 6m target_preserve_min no target_preserve 30d *m volume /mnt/Root snapshot_dir snapshots/btrbk subvolume root snapshot_create always target /mnt/backup/snapshots/btrbk btrbkのタイマー実行 systemd timer で定期実行する。 btrbk.timer で毎日トリガーをかけている。 [Unit] Description=btrbk daily backup [Timer] OnCalendar=daily AccuracySec=10min Persistent=true [Install] WantedBy=multi-user.target btrbk.serviceは単にbtrbk runを呼んでいるだけ [Unit] Description=btrbk backup Documentation=man:btrbk(1) [Service] Type=oneshot ExecStart=/usr/sbin/btrbk run スナップショットのまとめ サブボリュームは雰囲気でまじでどうとでもなるよ スナップショットは単なるサブボリュームのコピーだよ …のためいろいろと制約がでているよ。サブボリュームの構成はよく考えてる必要があるよ。 スナップショットを取るプログラムはデファクトがまだないため混沌としているよ。 btrbkは抜きん出ているけれども、なんとも難しいよ。でも雰囲気でなんとかなるよ。 スクラブ btrfs は明示的に洗わないといけない。定期的に汚れを落としましょう。 $ btrfs scrub start mountpoint 単一ディスクだと耐障害性はやっぱりだめ? 破壊前のディスクを作る $ fallocate -l 128M clean.img $ mkfs.btrfs clean.img $ mkdir mountpoint $ sudo mount -t auto clean.img mountpoint $ sudo chown $USER:$USER mountpoint $ echo Hello &amp;gt; mountpoint/hello.txt $ echo World &amp;gt; mountpoint/world.txt $ sudo umount mountpoint WorldをWORLDに書き換えた破壊済みファイルを作った。 チェックサムが合わないのでマウントができなくなった。 $ xxd -p -g 0 -c 134217728 clean.img | sed 's/576f726c64/574f524c44/ig' | xxd -p -r &amp;gt; crash.img いろいろ試したが、破壊手順を元に復元する方法以外では、回復できなかった。 つまりこの破壊に対する復元をすることができなかった。 RAIDでミラーすると scrub で戦える $ sudo modprobe brd rd_nr=2 rd_size=131072 $ sudo mkfs.btrfs /dev/ram0 /dev/ram1 $ mkdir mountpoint $ sudo mount -t auto /dev/ram0 mountpoint $ sudo chown $USER:$USER mountpoint $ echo Hello &amp;gt; mountpoint/hello.txt $ echo World &amp;gt; mountpoint/world.txt $ sync 1台目を雑に完全に破壊した。 RAIDのお陰で読めているが、/dev/ram0は明らかに破壊されている $ sudo dd if=/dev/zero of=/dev/ram0 $ cat mountpoint/hello.txt mountpoint/world.txt Hello World $ sudo strings /dev/ram0 | grep Hello | sort | uniq | wc -l 0 scrubしてやると回復してくれる（再現性確保のため /dev/zero での上書き結果を載せているが、/dev/random だとエラー個数が変わる）。 $ sudo btrfs scrub start mountpoint scrub started on mountpoint, fsid a86f9e3b-87e4-4731-a953-9a2be1b8f17b (pid=37388) WARNING: errors detected during scrubbing, corrected $ sudo btrfs scrub status mountpoint UUID: a86f9e3b-87e4-4731-a953-9a2be1b8f17b Scrub started: Sat Apr 24 18:19:07 2021 Status: finished Duration: 0:00:00 Total to scrub: 256.00KiB Rate: 0.00B/s Error summary: csum=5 Corrected: 5 Uncorrectable: 0 Unverified: 0 $ sync $ sudo strings /dev/ram0 | grep Hello | sort | uniq | wc -l 0 スクラブまとめ 少し壊れたぐらいだと定期的な scrub で救えるかもしれない RAID だと定期的な scrub で救えるものがある 1台だと気休め? → やはり最悪オフライン（ポータブルHDDなど）でもよいのでバックアップは重要 参考文献 brd: メモリ上に作成するブロックデバイス Henson, Valerie (31 January 2008). Chunkfs: Fast file system check and repair. Melbourne, Australia. Event occurs at 18m 49s. Btrfs - ArchWiki</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Diff between firefox 93.0 beta 3 default preference and firefox 92.0</title>
@@ -6745,124 +7370,6 @@ table.diff_firefox86_pref_diff tbody tr { transition: background 0.125s ease-in-
 
       
         <summary type="html">This is difference between the default preference of Firefox 86.0 beta 6 and one of 85.0.1. This diff table is generated with my small script firefox-prefjs-surveyer. Preference difference PrefFirefox 85.0.1Firefox 86.0 beta 6 app.normandy.test-prefs.bool undefined false app.normandy.test-prefs.integer undefined 0 app.normandy.test-prefs.string undefined app.releaseNotesURL https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew app.releaseNotesURL.aboutDialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog app.update.channel release beta app.update.url.details https://www.mozilla.org/%LOCALE%/firefox/notes https://www.mozilla.org/%LOCALE%/firefox/beta/notes app.update.url.manual https://www.mozilla.org/%LOCALE%/firefox/ https://www.mozilla.org/%LOCALE%/firefox/beta apz.gtk.touchpad_pinch.enabled undefined false apz.popups.enabled false true browser.contentblocking.cfr-milestone.milestones [1000, 5000, 10000, 25000, 50000, 100000, 500000] [1000, 5000, 10000, 25000, 50000, 100000, 250000, 314159, 500000, 750000, 1000000, 1250000, 1500000, 1750000, 2000000, 2250000, 2500000, 8675309] browser.contentblocking.features.strict tp,tpPrivate,cookieBehavior4,cm,fp,stp,lvl2 tp,tpPrivate,cookieBehavior5,cm,fp,stp,lvl2 browser.contentblocking.state-partitioning.mvp.ui.enabled false true browser.defaultbrowser.notificationbar false true browser.download.hide_plugins_without_extensions true undefined browser.download.show_plugins_in_list true undefined browser.engagement.ctrlTab.has-used undefined false browser.engagement.library-button.has-used undefined false browser.newtabpage.activity-stream.discoverystream.spocs-endpoint-query undefined browser.newtabpage.activity-stream.newNewtabExperience.colors undefined #0090ED,#FF4F5F,#2AC3A2,#FF7139,#A172FF,#FFA437,#FF2A8A browser.newtabpage.activity-stream.telemetry.ut.events false true browser.partnerlink.attributionURL https://topsites.services.mozilla.com/cid/amzn_2020_a1 https://topsites.services.mozilla.com/cid/ browser.partnerlink.campaign.topsites undefined amzn_2020_a1 browser.ssb.enabled false undefined browser.tabs.remote.useOriginAttributesInRemoteType undefined false browser.tabs.tooltipsShowPid false undefined browser.tabs.tooltipsShowPidAndActiveness undefined false browser.urlbar.update2 true undefined browser.urlbar.update2.disableOneOffsHorizontalKeyNavigation true undefined browser.urlbar.update2.oneOffsRefresh true undefined browser.urlbar.update2.restyleBrowsingHistoryAsSearch true undefined canvas.createConicGradient.enabled undefined false devtools.command-button-errorcount.enabled undefined true docshell.shistory.bfcache.allow_unload_listeners undefined false docshell.shistory.bfcache.require_no_opener undefined false dom.events.offset-in-svg-relative-to-svg-root undefined true dom.input_events.beforeinput.enabled false true dom.input_events.canSuspendInBCG.enabled undefined false dom.popup_allowed_events change click dblclick auxclick mouseup pointerup notificationclick reset submit touchend contextmenu change click dblclick auxclick mousedown mouseup pointerdown pointerup notificationclick reset submit touchend contextmenu dom.storage.next_gen false true dom.window.content.untrusted.enabled true false extensions.content_script_csp.enabled false undefined extensions.content_script_csp.report_only true undefined extensions.formautofill.supportedCountries US US,CA extensions.getAddons.get.url https://services.addons.mozilla.org/api/v3/addons/search/?guid=%IDS%&amp;amp;lang=%LOCALE% https://services.addons.mozilla.org/api/v4/addons/search/?guid=%IDS%&amp;amp;lang=%LOCALE% extensions.getAddons.langpacks.url https://services.addons.mozilla.org/api/v3/addons/language-tools/?app=firefox&amp;amp;type=language&amp;amp;appversion=%VERSION% https://services.addons.mozilla.org/api/v4/addons/language-tools/?app=firefox&amp;amp;type=language&amp;amp;appversion=%VERSION% extensions.webcompat-reporter.enabled false true extensions.webextensions.base-content-security-policy script-src &amp;#x27;self&amp;#x27; https://* moz-extension: blob: filesystem: &amp;#x27;unsafe-eval&amp;#x27; &amp;#x27;unsafe-inline&amp;#x27;; object-src &amp;#x27;self&amp;#x27; https://* moz-extension: blob: filesystem:; script-src &amp;#x27;self&amp;#x27; https://* http://localhost:* http://127.0.0.1:* moz-extension: blob: filesystem: &amp;#x27;unsafe-eval&amp;#x27; &amp;#x27;unsafe-inline&amp;#x27;; object-src &amp;#x27;self&amp;#x27; moz-extension: blob: filesystem:; extensions.webextensions.base-content-security-policy.v3 undefined script-src &amp;#x27;self&amp;#x27; http://localhost:* http://127.0.0.1:*; object-src &amp;#x27;self&amp;#x27;; extensions.webextensions.tabhide.enabled true undefined geo.provider.network.compare.url undefined https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY% geo.provider.network.url https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY% https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY% gfx.bundled-fonts.activate undefined -1 gfx.e10s.font-list.shared false true gfx.font_rendering.fallback.async undefined true gfx.webrender.debug.force-picture-invalidation undefined false gfx.webrender.software.d3d11.upload-mode undefined 2 gfx.webrender.svg-images undefined false image.avif.enabled false true javascript.options.ion.full.threshold 100000 undefined javascript.options.off_thread_parse_global true false layout.css.autofill.enabled undefined true layout.css.file-selector-button.enabled true undefined layout.css.image-set.enabled undefined false layout.css.moz-any-is-is.enabled true undefined layout.css.moz-focus-outer.enabled false undefined layout.css.text-decoration-skip-ink.enabled true undefined layout.css.text-decoration-thickness.enabled true undefined layout.css.text-justify.enabled true undefined layout.css.text-underline-offset.enabled true undefined layout.css.text-underline-position.enabled true undefined layout.css.unknown-webkit-pseudo-element true undefined layout.css.xul-tree-pseudos.content.enabled false undefined layout.display-list.improve-fragmentation false true layout.dynamic-reflow-roots.enabled false true media.peerconnection.dtls.version.min 770 771 media.peerconnection.mtransport_process false true media.videocontrols.keyboard-tab-to-all-controls undefined false media.videocontrols.picture-in-picture.allow-multiple false true network.cache.frecency_array_check_enabled undefined true network.http.spdy.bug1556491 true undefined network.http.spdy.bug1563695 true undefined network.process.enabled false true pdfjs.enableScripting undefined false pdfjs.viewerCssTheme undefined 0 permissions.isolateBy.privateBrowsing false true print.tab_modal.enabled false true privacy.annotate_channels.strict_list.enabled false true privacy.window.name.update.enabled false true prompts.contentPromptSubDialog undefined true prompts.tab_modal.enabled true undefined remote.enabled undefined true remote.force-local undefined true security.disallow_non_local_systemprincipal_in_tests undefined false security.intermediate_preloading_healer.enabled false true security.osclientcerts.autoload false true security.remote_settings.crlite_filters.enabled false true security.ssl.errorReporting.automatic false undefined security.ssl.errorReporting.enabled false undefined security.ssl.errorReporting.url https://incoming.telemetry.mozilla.org/submit/sslreports/ undefined services.sync.engine.bookmarks.validation.enabled undefined true services.sync.engine.passwords.validation.enabled undefined true svg.transform-box.enabled true undefined toolkit.telemetry.enabled false true webgl.disable-fail-if-major-performance-caveat false true widget.remote-look-and-feel undefined true widget.wayland_vsync.enabled false true</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Setup of Selenium + geckodriver is now well-simplified</title>
-      <link href="https://cat-in-136.github.io/2021/01/setup-of-seleniumgeckodriver-is-now-well-simplified.html" rel="alternate" type="text/html" title="Setup of Selenium + geckodriver is now well-simplified" />
-      <published>2021-01-03T15:32:47+09:00</published>
-      <updated>2021-01-03T15:32:47+09:00</updated>
-      <id>https://cat-in-136.github.io/2021/01/setup-of-seleniumgeckodriver-is-now-well-simplified</id>
-      
-      
-      
-      <content type="html" xml:base="https://cat-in-136.github.io/2021/01/setup-of-seleniumgeckodriver-is-now-well-simplified.html">&lt;p&gt;As written in &lt;a href=&quot;/2019/10/use-marionette-to-obtain-firefox-internal-information-easily.html&quot;&gt;the past post&lt;/a&gt;,
-I had been using &lt;a href=&quot;https://www.npmjs.com/package/foxr&quot;&gt;foxr&lt;/a&gt;, a thin library of the Firefox marionette remote protocol,
-to automatically control Firefox.
-However, some of automated procedure didn’t work now, so I switched to the &lt;strong&gt;standard&lt;/strong&gt;-way setup of
-&lt;a href=&quot;https://www.selenium.dev/documentation/en/webdriver/&quot;&gt;Selenium WebDriver&lt;/a&gt; with
-&lt;a href=&quot;https://github.com/mozilla/geckodriver&quot;&gt;geckodriver&lt;/a&gt;. I found its setup had become much simpler.&lt;/p&gt;
-
-&lt;h2 id=&quot;tldr&quot;&gt;TL;DR&lt;/h2&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm i geckodriver selenium-webdriver
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Builder&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;selenium-webdriver&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;firefox&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;selenium-webdriver/firefox&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;geckodriver&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;firefox&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;headless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;//.setBinary(executablePath);&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Builder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;forBrowser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;firefox&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setFirefoxOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;no-need-to-download-geckodriver-manually&quot;&gt;No need to download geckodriver manually&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.npmjs.com/package/geckodriver&quot;&gt;A NPM package geckodriver&lt;/a&gt; is a downloader
-for https://github.com/mozilla/geckodriver/releases.&lt;/p&gt;
-
-&lt;p&gt;When you install this package, it will start downloading geckodriver as follows:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;% npm i geckodriver --save
-
-&amp;gt; geckodriver@1.21.1 postinstall /tmp/a/node_modules/geckodriver
-&amp;gt; node index.js
-
-Downloading geckodriver... Extracting... Complete.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;geckodriver is available at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;node_modules/.bin/geckodriver&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;node_modules/geckodriver/geckodriver&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;no-need-to-add-geckodriver-to-the-system-path-manually&quot;&gt;No need to add geckodriver to the system PATH manually&lt;/h2&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;require('geckodriver')&lt;/code&gt; adds the directory where geckodriver is located to the system PATH.&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;assert&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;assert&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;geckodriver&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;assert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;equal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;delimiter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;includes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resolve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;node_modules/geckodriver&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Instead of manually downloading the geckodriver file and configuring the system PATH,
-you can simply add this library to the package.json &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dependencies&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;just-only-use-selenium-webdriverfirefox&quot;&gt;Just only use selenium-webdriver/firefox&lt;/h2&gt;
-
-&lt;p&gt;Hence, if you simply add &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;require('geckodriver')&lt;/code&gt;, it will work fine!&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Builder&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;selenium-webdriver&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;firefox&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;selenium-webdriver/firefox&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;geckodriver&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;firefox&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;headless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;//.setBinary(executablePath);&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Builder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;forBrowser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;firefox&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setFirefoxOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content>
-      
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name></name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="firefox" />
-      
-        <category term="mozilla" />
-      
-        <category term="webdriver" />
-      
-
-      
-        <summary type="html">As written in the past post, I had been using foxr, a thin library of the Firefox marionette remote protocol, to automatically control Firefox. However, some of automated procedure didn’t work now, so I switched to the standard-way setup of Selenium WebDriver with geckodriver. I found its setup had become much simpler. TL;DR npm i geckodriver selenium-webdriver const { Builder } = require('selenium-webdriver'); const firefox = require('selenium-webdriver/firefox'); require('geckodriver'); const options = new firefox.Options() .headless(); //.setBinary(executablePath); const driver = await new Builder() .forBrowser('firefox') .setFirefoxOptions(options) .build(); No need to download geckodriver manually A NPM package geckodriver is a downloader for https://github.com/mozilla/geckodriver/releases. When you install this package, it will start downloading geckodriver as follows: % npm i geckodriver --save &amp;gt; geckodriver@1.21.1 postinstall /tmp/a/node_modules/geckodriver &amp;gt; node index.js Downloading geckodriver... Extracting... Complete. geckodriver is available at node_modules/.bin/geckodriver and node_modules/geckodriver/geckodriver. No need to add geckodriver to the system PATH manually require('geckodriver') adds the directory where geckodriver is located to the system PATH. const assert = require('assert'); const path = require('path'); require('geckodriver'); assert.equal(process.env.PATH.split(path.delimiter) .includes(path.resolve('node_modules/geckodriver')), true); Instead of manually downloading the geckodriver file and configuring the system PATH, you can simply add this library to the package.json dependencies. Just only use selenium-webdriver/firefox Hence, if you simply add require('geckodriver'), it will work fine! const { Builder } = require('selenium-webdriver'); const firefox = require('selenium-webdriver/firefox'); require('geckodriver'); const options = new firefox.Options() .headless(); //.setBinary(executablePath); const driver = await new Builder() .forBrowser('firefox') .setFirefoxOptions(options) .build();</summary>
       
 
       
