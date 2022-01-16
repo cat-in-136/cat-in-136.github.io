@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator>
   <link href="https://cat-in-136.github.io/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://cat-in-136.github.io/" rel="alternate" type="text/html" />
-  <updated>2021-12-13T00:26:10+09:00</updated>
+  <updated>2022-01-16T11:24:08+09:00</updated>
   <id>https://cat-in-136.github.io/</id>
 
   
@@ -17,6 +17,262 @@
 
   
   
+  
+    <entry>
+      <title type="html">Note: Directory Layout of library for unit testing with PlatformIO</title>
+      <link href="https://cat-in-136.github.io/2022/01/directory-layout-of-library-for-unit-testing-with-platformio.html" rel="alternate" type="text/html" title="Note: Directory Layout of library for unit testing with PlatformIO" />
+      <published>2022-01-16T11:16:27+09:00</published>
+      <updated>2022-01-16T11:16:27+09:00</updated>
+      <id>https://cat-in-136.github.io/2022/01/directory-layout-of-library-for-unit-testing-with-platformio</id>
+      
+      
+      
+      <content type="html" xml:base="https://cat-in-136.github.io/2022/01/directory-layout-of-library-for-unit-testing-with-platformio.html">&lt;p&gt;C/C++ source files shall be placed in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;src/&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;include/&lt;/code&gt;.
+PlatformIO Unit Testing Engine does &lt;em&gt;not&lt;/em&gt; build source code from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;src/&lt;/code&gt; by default.
+To test library test code in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;src/&lt;/code&gt;,
+instruct PlatformIO to build files in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;src/&lt;/code&gt;
+using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test_build_project_src&lt;/code&gt; option in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;platformio.ini&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;directory-layout&quot;&gt;Directory Layout&lt;/h3&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.
+├── library.json
+├── platformio.ini
+├── src
+│   ├── HelloWorld.cpp
+│   └── HelloWorld.h
+└── test
+    └── test_main.cpp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;library-manifest-libraryjson&quot;&gt;Library Manifest library.json&lt;/h3&gt;
+
+&lt;p&gt;Create the manifest file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;library.json&lt;/code&gt; as usual.&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;HelloWorld&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;version&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1.0.0&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;description&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;A &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Hello world&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; program is a computer program that outputs &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Hello World&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; (or some variant) on a display device&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;keywords&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;planet, happiness, people&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;repository&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;git&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;url&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;https://git.example.com/john-smith/hello-world.git&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;authors&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;John Smith&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;email&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;me@john-smith.example.com&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;url&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;https://john-smith.example.com/contact&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;license&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;MIT&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;homepage&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;https://helloworld.example.com/&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;frameworks&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;*&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;platforms&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;*&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;platformio&quot;&gt;platform.io&lt;/h3&gt;
+
+&lt;p&gt;As described above, you need specify &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test_build_project_src&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;yes&lt;/code&gt;.
+To test on PC native by default, create &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;native&lt;/code&gt; environment and set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;default_envs&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;native&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[platformio]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;default_envs&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;native&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;[env]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;monitor_flags&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;--echo&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;monitor_filters&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;time, send_on_enter, default&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;test_build_project_src&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;[env:native]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;platform&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;native&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# create any other environment as you like...
+&lt;/span&gt;
+&lt;span class=&quot;nn&quot;&gt;[env:m5stack-atom]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;platform&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;espressif32&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;board&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;m5stack-atom&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;framework&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;arduino&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;monitor_speed&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;115200&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;[env:sparkfun_promicro16]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;platform&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;atmelavr&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;board&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;sparkfun_promicro16&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;framework&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;arduino&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;codes&quot;&gt;Codes&lt;/h3&gt;
+
+&lt;p&gt;In this example, we simply declare a function
+that returns a string “Hello, world.”&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// src/HelloWorld.h&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#ifndef _HELLO_WORLD_H_
+#define _HELLO_WORLD_H_
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//#pragma once&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;HelloWorld&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;cp&quot;&gt;#endif
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// src/HelloWorld.cpp&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#include &quot;HelloWorld.h&quot;
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;HelloWorld&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Hello, World.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;test-codes&quot;&gt;Test codes&lt;/h3&gt;
+
+&lt;p&gt;Write the test case as a function like the following:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;HelloWorld.h&amp;gt;
+#include &amp;lt;unity.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;cstring&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test_hello_world&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;TEST_ASSERT_EQUAL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strcmp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Hello, World.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HelloWorld&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()));&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Register this function with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RUN_TEST()&lt;/code&gt; surrounded &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UNITY_BEGIN()&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UNITY_END()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//#include &amp;lt;unity.h&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;UNITY_BEGIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;RUN_TEST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_hello_world&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// RUN_TEST(test_another_one);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;UNITY_END&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The entry point is different between arduino and native.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setup()&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;loop()&lt;/code&gt; are required for arduino, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main()&lt;/code&gt; for native.&lt;/p&gt;
+
+&lt;p&gt;To run it in the same source code, you need to switch entry point functions
+using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#ifdef ARDUINO&lt;/code&gt; as shown below:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;HelloWorld.h&amp;gt;
+#include &amp;lt;unity.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;cstring&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#ifdef ARDUINO
+#include &amp;lt;Arduino.h&amp;gt;
+#endif
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test_hello_world&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;TEST_ASSERT_EQUAL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strcmp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Hello, World.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HelloWorld&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()));&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;cp&quot;&gt;#ifdef ARDUINO
+&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// add 2-sec wait for the board w/o software resetting via&lt;/span&gt;
+               &lt;span class=&quot;c1&quot;&gt;// Serial.DTR/RTS&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#else
+&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#endif
+&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;UNITY_BEGIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;RUN_TEST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_hello_world&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;UNITY_END&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;cp&quot;&gt;#ifndef ARDUINO
+&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#endif
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;cp&quot;&gt;#ifdef ARDUINO
+&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#endif
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;run-test&quot;&gt;Run test&lt;/h3&gt;
+
+&lt;p&gt;Just run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pio test&lt;/code&gt; (or run the test task on the your favorite tool).&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ pio -c vim test
+Verbose mode can be enabled via `-v, --verbose` option
+Collected 1 items
+
+Processing * in native environment
+--------------------------------------------------------------------------------
+Building...
+Testing...
+test/test_main.cpp:22:test_hello_world	[PASSED]
+
+-----------------------
+1 Tests 0 Failures 0 Ignored
+OK
+========================== [PASSED] Took 0.64 seconds ==========================
+
+Test    Environment    Status    Duration
+------  -------------  --------  ------------
+*       native         PASSED    00:00:00.642
+========================= 1 succeeded in 00:00:00.642 =========================
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Same way for testing on a board, but it takes longer time.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ pio -c vim test -e m5stack-atom
+Verbose mode can be enabled via `-v, --verbose` option
+Collected 1 items
+
+Processing * in m5stack-atom environment
+--------------------------------------------------------------------------------
+Building...
+Uploading...
+Testing...
+If you don't see any output for the first 10 secs, please reset board (press reset button)
+
+test/test_main.cpp:22:test_hello_world	[PASSED]
+-----------------------
+1 Tests 0 Failures 0 Ignored
+========================== [PASSED] Took 8.13 seconds ==========================
+
+Test    Environment    Status    Duration
+------  -------------  --------  ------------
+*       m5stack-atom   PASSED    00:00:08.127
+========================= 1 succeeded in 00:00:08.127 =========================
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://fum1h1ro.github.io/2021/01/26/m5paper-test/&quot;&gt;PlatformIO でユニットテストが書きたい | мята&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.platformio.org/en/latest/librarymanager/creating.html&quot;&gt;Creating Library — PlatformIO latest documentation&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.platformio.org/en/latest/plus/unit-testing.html&quot;&gt;Unit Testing — PlatformIO latest documentation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+      
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>cat_in_136</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="PlatformIO" />
+      
+
+      
+        <summary type="html">C/C++ source files shall be placed in src/ or include/. PlatformIO Unit Testing Engine does not build source code from src/ by default. To test library test code in src/, instruct PlatformIO to build files in src/ using test_build_project_src option in platformio.ini. Directory Layout . ├── library.json ├── platformio.ini ├── src │   ├── HelloWorld.cpp │   └── HelloWorld.h └── test └── test_main.cpp Library Manifest library.json Create the manifest file library.json as usual. { &quot;name&quot;: &quot;HelloWorld&quot;, &quot;version&quot;: &quot;1.0.0&quot;, &quot;description&quot;: &quot;A \&quot;Hello world\&quot; program is a computer program that outputs \&quot;Hello World\&quot; (or some variant) on a display device&quot;, &quot;keywords&quot;: &quot;planet, happiness, people&quot;, &quot;repository&quot;: { &quot;type&quot;: &quot;git&quot;, &quot;url&quot;: &quot;https://git.example.com/john-smith/hello-world.git&quot; }, &quot;authors&quot;: [ { &quot;name&quot;: &quot;John Smith&quot;, &quot;email&quot;: &quot;me@john-smith.example.com&quot;, &quot;url&quot;: &quot;https://john-smith.example.com/contact&quot; } ], &quot;license&quot;: &quot;MIT&quot;, &quot;homepage&quot;: &quot;https://helloworld.example.com/&quot;, &quot;frameworks&quot;: &quot;*&quot;, &quot;platforms&quot;: &quot;*&quot; } platform.io As described above, you need specify test_build_project_src to yes. To test on PC native by default, create native environment and set default_envs to native. [platformio] default_envs = native [env] monitor_flags = --echo monitor_filters = time, send_on_enter, default test_build_project_src = yes [env:native] platform = native # create any other environment as you like... [env:m5stack-atom] platform = espressif32 board = m5stack-atom framework = arduino monitor_speed = 115200 [env:sparkfun_promicro16] platform = atmelavr board = sparkfun_promicro16 framework = arduino Codes In this example, we simply declare a function that returns a string “Hello, world.” // src/HelloWorld.h #ifndef _HELLO_WORLD_H_ #define _HELLO_WORLD_H_ //#pragma once const char* HelloWorld(void); #endif // src/HelloWorld.cpp #include &quot;HelloWorld.h&quot; const char* HelloWorld(void) { return &quot;Hello, World.&quot;; } Test codes Write the test case as a function like the following: #include &amp;lt;HelloWorld.h&amp;gt; #include &amp;lt;unity.h&amp;gt; #include &amp;lt;cstring&amp;gt; void test_hello_world() { TEST_ASSERT_EQUAL(0, strcmp(&quot;Hello, World.&quot;, HelloWorld())); } Register this function with RUN_TEST() surrounded UNITY_BEGIN() and UNITY_END(). //#include &amp;lt;unity.h&amp;gt; UNITY_BEGIN(); RUN_TEST(test_hello_world); // RUN_TEST(test_another_one); UNITY_END(); The entry point is different between arduino and native. setup() and loop() are required for arduino, main() for native. To run it in the same source code, you need to switch entry point functions using #ifdef ARDUINO as shown below: #include &amp;lt;HelloWorld.h&amp;gt; #include &amp;lt;unity.h&amp;gt; #include &amp;lt;cstring&amp;gt; #ifdef ARDUINO #include &amp;lt;Arduino.h&amp;gt; #endif void test_hello_world() { TEST_ASSERT_EQUAL(0, strcmp(&quot;Hello, World.&quot;, HelloWorld())); } #ifdef ARDUINO void setup() { delay(2000); // add 2-sec wait for the board w/o software resetting via // Serial.DTR/RTS #else int main(int argc, char *argv[]) { #endif UNITY_BEGIN(); RUN_TEST(test_hello_world); UNITY_END(); #ifndef ARDUINO return 0; #endif } #ifdef ARDUINO void loop() {} #endif Run test Just run pio test (or run the test task on the your favorite tool). $ pio -c vim test Verbose mode can be enabled via `-v, --verbose` option Collected 1 items Processing * in native environment -------------------------------------------------------------------------------- Building... Testing... test/test_main.cpp:22:test_hello_world [PASSED] ----------------------- 1 Tests 0 Failures 0 Ignored OK ========================== [PASSED] Took 0.64 seconds ========================== Test Environment Status Duration ------ ------------- -------- ------------ * native PASSED 00:00:00.642 ========================= 1 succeeded in 00:00:00.642 ========================= Same way for testing on a board, but it takes longer time. $ pio -c vim test -e m5stack-atom Verbose mode can be enabled via `-v, --verbose` option Collected 1 items Processing * in m5stack-atom environment -------------------------------------------------------------------------------- Building... Uploading... Testing... If you don't see any output for the first 10 secs, please reset board (press reset button) test/test_main.cpp:22:test_hello_world [PASSED] ----------------------- 1 Tests 0 Failures 0 Ignored ========================== [PASSED] Took 8.13 seconds ========================== Test Environment Status Duration ------ ------------- -------- ------------ * m5stack-atom PASSED 00:00:08.127 ========================= 1 succeeded in 00:00:08.127 ========================= References PlatformIO でユニットテストが書きたい | мята Creating Library — PlatformIO latest documentation Unit Testing — PlatformIO latest documentation</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Diff between firefox 96.0 beta 3 default preference and firefox 95.0</title>
@@ -7139,274 +7395,6 @@ table.diff_firefox89_pref_diff tbody tr { transition: background 0.125s ease-in-
 
       
         <summary type="html">This is difference between the default preference of Firefox 89.0 beta 6 and one of 88.0. This diff table is generated with my small script firefox-prefjs-surveyer. Preference difference PrefFirefox 88.0Firefox 89.0 beta 6 app.feedback.baseURL https://input.mozilla.org/%LOCALE%/feedback/%APP%/%VERSION%/ https://ideas.mozilla.org/ app.normandy.test-prefs.bool undefined false app.normandy.test-prefs.integer undefined 0 app.normandy.test-prefs.string undefined app.releaseNotesURL https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew app.releaseNotesURL.aboutDialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog app.update.channel release beta app.update.url.details https://www.mozilla.org/%LOCALE%/firefox/notes https://www.mozilla.org/%LOCALE%/firefox/beta/notes app.update.url.manual https://www.mozilla.org/%LOCALE%/firefox/ https://www.mozilla.org/%LOCALE%/firefox/beta apz.gtk.touchpad_pinch.three_fingers.enabled undefined false apz.mac.enable_double_tap_zoom_touchpad_gesture false true apz.overscroll.damping undefined 1.1 apz.overscroll.max_velocity undefined 10.0 apz.overscroll.spring_stiffness undefined 200.0 apz.overscroll.test_async_scroll_offset.enabled undefined false apz.windows.check_for_pan_gesture_conversion undefined true browser.aboutwelcome.design undefined browser.aboutwelcome.skipFocus false true browser.cache.offline.enable true false browser.compactmode.show undefined false browser.contentblocking.features.strict tp,tpPrivate,cookieBehavior5,cm,fp,stp,lvl2 tp,tpPrivate,cookieBehavior5,cookieBehaviorPBM5,cm,fp,stp,lvl2 browser.contentblocking.report.vpn_platforms win win,mac,linux browser.contentblocking.report.vpn_regions us,ca,nz,sg,my,gb us,ca,nz,sg,my,gb,de,fr browser.ctrlTab.recentlyUsedOrder true undefined browser.ctrlTab.sortByRecentlyUsed undefined false browser.defaultbrowser.notificationbar false undefined browser.defaultbrowser.notificationbar.checkcount 0 undefined browser.defaultbrowser.notificationbar.checklimit 10000 undefined browser.menu.showViewImageInfo undefined false browser.newtabpage.activity-stream.feeds.section.highlights true false browser.newtabpage.activity-stream.improvesearch.handoffToAwesomebar false true browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.searchEngines google,amazon browser.newtabpage.activity-stream.logowordmark.alwaysVisible false true browser.newtabpage.activity-stream.newNewtabExperience.enabled false true browser.newtabpage.activity-stream.telemetry.ut.events false true browser.opaqueResponseBlocking undefined false browser.proton.contextmenus.enabled undefined true browser.proton.doorhangers.enabled undefined true browser.proton.enabled false true browser.proton.modals.enabled undefined true browser.proton.places-tooltip.enabled undefined false browser.startup.upgradeDialog.enabled undefined true browser.tabs.extraDragSpace false undefined browser.tabs.secondaryTextUnsupportedLocales undefined ar,bn,bo,ckb,fa,gu,he,hi,ja,km,kn,ko,lo,mr,my,ne,pa,si,ta,te,th,ur,zh browser.theme.dark-toolbar-theme undefined false browser.urlbar.suggest.calculator undefined false captivedetect.canonicalContent success &amp;lt;meta http-equiv=&amp;quot;refresh&amp;quot; content=&amp;quot;0;url=https://support.mozilla.org/kb/captive-portal&amp;quot;/&amp;gt; captivedetect.canonicalURL http://detectportal.firefox.com/success.txt http://detectportal.firefox.com/canonical.html devtools.target-switching.server.enabled undefined false doh-rollout.provider-steering.enabled false true dom.enable_event_timing false true dom.forms.datetime-local undefined false dom.forms.datetime-local.widget undefined false dom.image-lazy-loading.root-margin.bottom 300.0 600.0 dom.image-lazy-loading.root-margin.left 300.0 600.0 dom.image-lazy-loading.root-margin.right 300.0 600.0 dom.image-lazy-loading.root-margin.top 300.0 600.0 dom.input_events.strict_input_vsync_alignment undefined false dom.security.enforceIPCBasedPrincipalVetting undefined true dom.security.https_only_mode_https_first undefined false dom.security.https_only_mode_https_first_pbm undefined false dom.storage.next_gen false true dom.w3c_pointer_events.implicit_capture false true dom.window.content.untrusted.enabled true false extensions.pocket.showHome undefined true extensions.screenshots.upload-disabled false undefined extensions.webcompat-reporter.enabled false true geo.provider.network.compare.url undefined https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY% geo.provider.network.url https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY% https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY% gfx.color_management.native_srgb undefined false gfx.e10s.font-list.shared false true gfx.webrender.fallback.basic true false gfx.webrender.fallback.software false true gfx.webrender.program-binary-disk undefined false gfx.webrender.software.unaccelerated-widget.allow false true gfx.webrender.software.unaccelerated-widget.force false undefined image.honor-orientation-metadata true undefined image.honor_orientation_metadata.natural_size true undefined image.mem.shared.unmap.force-enabled undefined false image.mem.shared.unmap.min_expiration_ms undefined 60000 image.mem.shared.unmap.min_threshold_kb undefined 100 intl.l10n.pseudo undefined javascript.options.experimental.top_level_await undefined true javascript.options.inlining_bytecode_max_length undefined 130 javascript.options.large_arraybuffers false true javascript.options.wasm_gc false undefined javascript.options.wasm_multi_value true undefined javascript.options.wasm_reftypes true undefined javascript.options.wasm_simd false true javascript.options.wasm_simd_wormhole undefined false layout.css.aspect-ratio.enabled false true layout.css.bloom-filter-attribute-names.enabled undefined true layout.css.font-metrics-overrides.enabled undefined true layout.css.forced-colors.enabled false true layout.css.image-orientation.initial-from-image true undefined layout.css.moz-outline-radius.enabled undefined false layout.css.page-size.enabled undefined false layout.css.prefers-color-scheme-no-preference.enabled false undefined layout.css.size-adjust.enabled undefined false layout.css.width-and-height-map-to-aspect-ratio.enabled true undefined layout.dynamic-reflow-roots.enabled false true layout.use-plugin-fallback undefined false media.peerconnection.mtransport_process false true network.cache.frecency_array_check_enabled false true network.cookie.cookieBehavior.pbmode undefined 5 network.data.max-uri-length-mobile 2097152 undefined network.http.http3.enabled false true network.jar.record_failure_reason false true network.process.enabled false true network.trr.bootstrapAddress undefined nglayout.initialpaint.delay undefined 5 nglayout.initialpaint.delay_in_oopif undefined 5 pdfjs.enablePrintAutoRotate false true privacy.annotate_channels.strict_list.enabled false true privacy.webrtc.deviceGracePeriodTimeoutMs 50000 3600000 prompts.contentPromptSubDialog false true prompts.windowPromptSubDialog false true security.disallow_non_local_systemprincipal_in_tests undefined false security.intermediate_preloading_healer.enabled false true security.osclientcerts.autoload false true security.remote_settings.crlite_filters.enabled false true security.tls.enable_delegated_credentials false true services.sync.engine.bookmarks.validation.enabled undefined true services.sync.engine.passwords.validation.enabled undefined true services.sync.prefs.sync.browser.ctrlTab.recentlyUsedOrder true undefined services.sync.prefs.sync.browser.ctrlTab.sortByRecentlyUsed undefined true services.sync.prefs.sync.browser.menu.showViewImageInfo undefined true signon.management.page.showPasswordSyncNotification true undefined signon.recipes.remoteRecipes.enabled undefined true signon.recipes.remoteRecipesEnabled true undefined signon.relatedRealms.enabled undefined false toolkit.telemetry.ecosystemtelemetry.enabled false undefined toolkit.telemetry.enabled false true ui.textHighlightBackground undefined #ef0fff ui.textHighlightForeground undefined #ffffff ui.textSelectBackgroundAttention undefined #38d878 ui.textSelectBackgroundDisabled undefined #b0b0b0 widget.content.allow-gtk-dark-theme.accent undefined true widget.content.allow-gtk-dark-theme.scrollbar undefined false widget.content.allow-gtk-dark-theme.scrollbar_active undefined true widget.content.allow-gtk-dark-theme.selection undefined true widget.non-native-theme.enabled false true widget.non-native-theme.scrollbar.active-always-themed undefined true widget.remote-look-and-feel true undefined widget.wayland-smooth-rendering false 1</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Clutter+GJS で時計を作ってみた</title>
-      <link href="https://cat-in-136.github.io/2021/04/clutter-gjs-dj-clock.html" rel="alternate" type="text/html" title="Clutter+GJS で時計を作ってみた" />
-      <published>2021-04-19T23:54:57+09:00</published>
-      <updated>2021-04-19T23:54:57+09:00</updated>
-      <id>https://cat-in-136.github.io/2021/04/clutter-gjs-dj-clock</id>
-      
-      
-      
-      <content type="html" xml:base="https://cat-in-136.github.io/2021/04/clutter-gjs-dj-clock.html">&lt;p&gt;
-Gnome Shell (やそれからフォークされた Cinnamon など) の、アプレットなどの目に見える部品の多くは JavaScript で作られている。
-これは &lt;a href=&quot;https://gitlab.gnome.org/GNOME/gjs/blob/master/doc/Home.md&quot;&gt;GJS&lt;/a&gt; なる Gnome の JavaScript バインディングをつかって書かれている。
-JavaScript から &lt;a href=&quot;https://wiki.gnome.org/Projects/Clutter&quot;&gt;Clutter&lt;/a&gt;を叩いている。
-Clutter を介した描画処理自体は OpenGL を使って描画されるので高速に処理されることになっている。
-&lt;/p&gt;
-
-&lt;p&gt;
-しかし、実際に触ったことはなかったので、お試しで時計をつくることで触ってみた。
-&lt;/p&gt;
-
-&lt;h3&gt;時計仕様&lt;/h3&gt;
-
-&lt;p&gt;
-時計は、現在時刻と、引数で指定した時刻の差分をリアルタイム表示することとした。
-また Clutter の OpenGL 描画を活かすために引数で指定した時刻の差分が60秒以下の場合は赤く点滅するようにした。
-&lt;/p&gt;
-
-&lt;p&gt;
-これをつくる経緯としては、とあるライブのDJセットにて、現在時刻、ストップウォッチ（開始からの時間）、カウントダウン（終了までの残り時間）
-の3段表示のデジタルクロックを見かけたことである。
-そして、これは普通にDJとか関係なく便利そうだと思ったことにある。
-その動画は今は見つからなくなってしまったが、HTML上で再現するとおおよそ下記のようになる：
-&lt;/p&gt;
-
-&lt;figure&gt;
-&lt;div&gt;
-&lt;div id=&quot;dj_clock_demo&quot;&gt;
-  &lt;div id=&quot;dj_clock_demo_dark&quot;&gt;88:88:88.88&lt;br /&gt;88:88:88.88&lt;br /&gt;88:88:88.88&lt;/div&gt;
-  &lt;div id=&quot;dj_clock_demo_light&quot;&gt;01:23:45.78&lt;br /&gt;00:00:00.00&lt;br /&gt;02:00:00.00&lt;/div&gt;
-&lt;/div&gt;
-&lt;style type=&quot;text/css&quot;&gt;&lt;!-- /* --&gt;&lt;![CDATA[ /* */
-@font-face {
-  /* https://www.keshikan.net/fonts.html */
-  font-family: &quot;DSEG7Modern-Regular&quot;;
-  src: url(&quot;/images/2021-04-19-DSEG7Modern-Regular.woff2&quot;) format(&quot;woff2&quot;);
-}
-
-#dj_clock_demo {
-  position: relative;
-  height: 4.5em;
-
-  font-family: &quot;DSEG7Modern-Regular&quot;;
-  font-size: xx-large;
-  border: solid 5px #fff;
-  padding: 0.25em;
-  background: #000;
-}
-#dj_clock_demo &gt; div {
-  position: absolute;
-  top: 0.25em;
-  width: 100%;
-  text-align: center;
-}
-
-#dj_clock_demo_dark {
-  user-select: none;
-  color: #333;
-}
-#dj_clock_demo_light {
-  color: #eef;
-  text-shadow: 0 0 5px #00f, 0 0 5px #00f, 0 0 5px #00f, 0 0 5px #00f;
-}
-
-/* ]]&gt;&lt;!-- */ --&gt;&lt;/style&gt;
-&lt;script type=&quot;application/javascript&quot;&gt;&lt;!-- /* --&gt;&lt;![CDATA[ *///
-window.addEventListener(&quot;DOMContentLoaded&quot;, function() {
-  &quot;use strict&quot;;
-  const startDate = Date.now();
-  const endDate = startDate + 2 * 60 * 60 * 1000;
-  const elem = document.getElementById(&quot;dj_clock_demo_light&quot;);
-  const updateClock = function () {
-    const str = [];
-    const now = Date.now();
-    const nowDate = new Date(now);
-
-    str.push(
-      nowDate.getHours().toString().padStart(2, &quot;0&quot;) +
-      &quot;:&quot; +
-      nowDate.getMinutes().toString().padStart(2, &quot;0&quot;) +
-      &quot;:&quot; +
-      nowDate.getSeconds().toString().padStart(2, &quot;0&quot;) +
-      &quot;.&quot; +
-      ((nowDate.getMilliseconds() / 10) | 0).toString().padStart(2, &quot;0&quot;)
-    );
-
-    for (const origin of [startDate, endDate]) {
-      const diff = Math.abs(now - origin);
-
-      const centseconds = ((Math.abs(diff) / 10) | 0)% 100;
-      const seconds = ((Math.abs(diff) / 1000) | 0) % 60;
-      const minutes = ((Math.abs(diff) / 60000) | 0) % 60;
-      const hours = ((Math.abs(diff) / 3600000) | 0) % 24;
-
-      str.push(
-        hours.toString().padStart(2, &quot;0&quot;) +
-        &quot;:&quot; +
-        minutes.toString().padStart(2, &quot;0&quot;) +
-        &quot;:&quot; +
-        seconds.toString().padStart(2, &quot;0&quot;) +
-        &quot;.&quot; +
-        centseconds.toString().padStart(2, &quot;0&quot;)
-      );
-    }
-    elem.innerHTML = str.join(&quot;&lt;br /&gt;&quot;);
-
-    window.requestAnimationFrame(updateClock);
-  };
-  updateClock();
-}, false);
-/* ]]&gt;&lt;!-- */ --&gt;&lt;/script&gt;
-&lt;/div&gt;
-&lt;figcaption&gt;デジタルクロックの再現図&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;h3&gt;成果物&lt;/h3&gt;
-
-&lt;p&gt;
-&lt;a href=&quot;https://gist.github.com/cat-in-136/64759185fc206fa4c8cdf49ec4de361e&quot;&gt;https://gist.github.com/cat-in-136/64759185fc206fa4c8cdf49ec4de361e&lt;/a&gt;
-&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;gjs&lt;/code&gt;をインタプリタとして実行する。shebang (&lt;code&gt;#!&lt;/code&gt;)も指定しているので実行権限を付与して実行しても良い。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ gjs path/to/djclock.js&lt;/code&gt;&lt;/pre&gt;
-
-&lt;figure&gt;
-  &lt;video controls=&quot;controls&quot;&gt;
-    &lt;source src=&quot;/images/2021-04-19-clutter-gjs-dj-clock-screencapture.mp4&quot; type=&quot;video/mp4&quot; /&gt;
-    &lt;p&gt;
-      &lt;img src=&quot;/images/2021-04-19-clutter-gjs-dj-clock-screenshot.png&quot; width=&quot;256&quot; height=&quot;72&quot; loading=&quot;lazy&quot; /&gt;
-    &lt;/p&gt;
-  &lt;/video&gt;
-  &lt;figcaption&gt;djclock screen capture&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;h3&gt;メモ&lt;/h3&gt;
-
-&lt;p&gt;
-&lt;code&gt;Clutter.Stage&lt;/code&gt;がメインウィンドウである。
-&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;stage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Clutter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Stage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;djclock&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;layout_manager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Clutter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;BoxLayout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;user_resizable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;x_expand&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;y_expand&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;background_color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Clutter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;from_string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;#000&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;set_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;256&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;TIMES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;destroy&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Clutter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;main_quit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;
-Clutter自体は簡素な部品と簡素なレイアウトマネージャがあるため、簡単な配置はこれで十分である。
-ボタンなど高級な部品は提供されていないので、そういうのが必要なときは何らかの方法で頑張る必要があるが、
-今回はテキストを表示するだけであるのでこれで十分である。
-&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;box&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Clutter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;layout_manager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Clutter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;BoxLayout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;orientation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Clutter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Orientation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;VERTICAL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;spacing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}),&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;x_expand&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;add_child&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;time_current&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Clutter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;x_expand&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Clutter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;from_string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;#fff&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;add_child&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;time_current&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;
-点滅アニメーションは予めアニメーションを登録して、それを&lt;code&gt;Clutter.Text&lt;/code&gt;にセットすればよい。
-点滅処理自体はClutter自身が面倒を見る。ここはCSS Animation的な思想に近い。
-&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pt_60sec_before&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Clutter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;PropertyTransition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;property_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;pt_60sec_before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;set_from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Clutter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;from_string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;#000&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;pt_60sec_before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;set_from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Clutter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;from_string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;#800&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;pt_60sec_before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;set_progress_mode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Clutter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;AnimationMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;LINEAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;tg_60sec_before&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Clutter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;TransitionGroup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;tg_60sec_before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;set_duration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;tg_60sec_before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;set_repeat_count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;tg_60sec_before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;add_transition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pt_60sec_before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;TG_NAME_60SEC_BEFORE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;60sec-before&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// ...snip...&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;times_dj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;remove_all_transitions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;times_dj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;add_transition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;TG_NAME_30SEC_BEFORE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;tg_30sec_before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;
-その他はClutterに関係ない純粋なJavaScriptの知識で解せる内容ではあるが、
-SpiderMonkey由来ということもあり普通にモダンなJavaScriptがかけるというのはいいことだ。
-2011年のGnome Shell登場時はまだ使えない文法も多かったはずで、かなり面倒くさい書き方をしていたのではないかと想像する。
-&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;diff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)?&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;days&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)?&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;days&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; `&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hours&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;padStart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-  &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;minutes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;padStart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-  &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;padStart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-  &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;microseconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;padStart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;times_dj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;set_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;
-あとClutterの情報は日本語はもちろん英語も資料はすくない。
-Gnome Shellの拡張に関する文献とClutterのAPIを参考するのが一番近道だ。
-&lt;a href=&quot;https://fut-nis.hatenadiary.jp/&quot;&gt;ふとしのブログ&lt;/a&gt;にいくつか記事があって参考になるが、
-ソースコードが古いので手を加える必要がある。
-&lt;/p&gt;
-
-&lt;h3&gt;参考文献&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://wiki.gnome.org/Attic/GnomeShell/Extensions/StepByStepTutorial&quot;&gt;Attic/GnomeShell/Extensions/StepByStepTutorial - GNOME Wiki!&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://developer.gnome.org/clutter/stable/index.html&quot;&gt;Clutter Reference Manual: Clutter Reference Manual&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://fut-nis.hatenadiary.jp/entry/20121008/1349660492&quot;&gt;ClutterLayout を使ってみる - ふとしのブログ&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://gihyo.jp/admin/serial/01/ubuntu-recipe/0492&quot;&gt;第492回　GNOME Shellの拡張機能を作ってみよう：Ubuntu Weekly Recipe｜gihyo.jp … 技術評論社&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.keshikan.net/fonts.html&quot;&gt;7セグ・14セグフォント 「DSEG」&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content>
-      
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>cat_in_136</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="clutter" />
-      
-        <category term="gjs" />
-      
-
-      
-        <summary type="html">Gnome Shell (やそれからフォークされた Cinnamon など) の、アプレットなどの目に見える部品の多くは JavaScript で作られている。 これは GJS なる Gnome の JavaScript バインディングをつかって書かれている。 JavaScript から Clutterを叩いている。 Clutter を介した描画処理自体は OpenGL を使って描画されるので高速に処理されることになっている。 しかし、実際に触ったことはなかったので、お試しで時計をつくることで触ってみた。 時計仕様 時計は、現在時刻と、引数で指定した時刻の差分をリアルタイム表示することとした。 また Clutter の OpenGL 描画を活かすために引数で指定した時刻の差分が60秒以下の場合は赤く点滅するようにした。 これをつくる経緯としては、とあるライブのDJセットにて、現在時刻、ストップウォッチ（開始からの時間）、カウントダウン（終了までの残り時間） の3段表示のデジタルクロックを見かけたことである。 そして、これは普通にDJとか関係なく便利そうだと思ったことにある。 その動画は今は見つからなくなってしまったが、HTML上で再現するとおおよそ下記のようになる： 88:88:88.8888:88:88.8888:88:88.88 01:23:45.7800:00:00.0002:00:00.00 デジタルクロックの再現図 成果物 https://gist.github.com/cat-in-136/64759185fc206fa4c8cdf49ec4de361e gjsをインタプリタとして実行する。shebang (#!)も指定しているので実行権限を付与して実行しても良い。 $ gjs path/to/djclock.js djclock screen capture メモ Clutter.Stageがメインウィンドウである。 const stage = new Clutter.Stage({ title: &quot;djclock&quot;, layout_manager: new Clutter.BoxLayout(), user_resizable: true, x_expand: true, y_expand: true, background_color: Clutter.Color.from_string(&quot;#000&quot;)[1], }); stage.set_size(256, (1+TIMES.length)*24); stage.connect(&quot;destroy&quot;, () =&amp;gt; Clutter.main_quit()); Clutter自体は簡素な部品と簡素なレイアウトマネージャがあるため、簡単な配置はこれで十分である。 ボタンなど高級な部品は提供されていないので、そういうのが必要なときは何らかの方法で頑張る必要があるが、 今回はテキストを表示するだけであるのでこれで十分である。 const box = new Clutter.Box({ layout_manager: new Clutter.BoxLayout({ orientation: Clutter.Orientation.VERTICAL, spacing: 2, }), x_expand: true, }); stage.add_child(box); const time_current = new Clutter.Text({ x_expand: true, text: '...', color: Clutter.Color.from_string(&quot;#fff&quot;)[1], }); box.add_child(time_current); 点滅アニメーションは予めアニメーションを登録して、それをClutter.Textにセットすればよい。 点滅処理自体はClutter自身が面倒を見る。ここはCSS Animation的な思想に近い。 const pt_60sec_before = new Clutter.PropertyTransition({ property_name: 'background-color' }); pt_60sec_before.set_from(Clutter.Color.from_string(&quot;#000&quot;)[1]); pt_60sec_before.set_from(Clutter.Color.from_string(&quot;#800&quot;)[1]); pt_60sec_before.set_progress_mode(Clutter.AnimationMode.LINEAR); const tg_60sec_before = new Clutter.TransitionGroup(); tg_60sec_before.set_duration(1000); tg_60sec_before.set_repeat_count(-1); tg_60sec_before.add_transition(pt_60sec_before); const TG_NAME_60SEC_BEFORE = &quot;60sec-before&quot;; // ...snip... times_dj[i].remove_all_transitions(); times_dj[i].add_transition(TG_NAME_30SEC_BEFORE, tg_30sec_before); その他はClutterに関係ない純粋なJavaScriptの知識で解せる内容ではあるが、 SpiderMonkey由来ということもあり普通にモダンなJavaScriptがかけるというのはいいことだ。 2011年のGnome Shell登場時はまだ使えない文法も多かったはずで、かなり面倒くさい書き方をしていたのではないかと想像する。 const text = [ (diff &amp;lt; 0)? &quot;-&quot; : &quot;+&quot;, (days != 0)? `${days} ` : &quot;&quot;, `${hours}`.padStart(2, &quot;0&quot;), &quot;:&quot;, `${minutes}`.padStart(2, &quot;0&quot;), &quot;:&quot;, `${seconds}`.padStart(2, &quot;0&quot;), &quot;.&quot;, `${microseconds}`.padStart(6, &quot;0&quot;), ].join(&quot;&quot;); times_dj[i].set_text(text); あとClutterの情報は日本語はもちろん英語も資料はすくない。 Gnome Shellの拡張に関する文献とClutterのAPIを参考するのが一番近道だ。 ふとしのブログにいくつか記事があって参考になるが、 ソースコードが古いので手を加える必要がある。 参考文献 Attic/GnomeShell/Extensions/StepByStepTutorial - GNOME Wiki! Clutter Reference Manual: Clutter Reference Manual ClutterLayout を使ってみる - ふとしのブログ 第492回　GNOME Shellの拡張機能を作ってみよう：Ubuntu Weekly Recipe｜gihyo.jp … 技術評論社 7セグ・14セグフォント 「DSEG」</summary>
       
 
       

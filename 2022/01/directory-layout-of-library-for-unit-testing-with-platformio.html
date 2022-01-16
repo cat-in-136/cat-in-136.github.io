@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,max-scale=10,min-scale=0.5,user-scalable=yes" />
+  <title>Note: Directory Layout of library for unit testing with PlatformIO</title>
+
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="https://code.cdn.mozilla.net/fonts/fira.css" />
+
+  <link rel="canonical" href="https://cat-in-136.github.io/2022/01/directory-layout-of-library-for-unit-testing-with-platformio.html" />
+  <link rel="alternate" type="application/rss+xml" title="cat_in_136.blog() &raquo; Feed" href="/feed.xml" />
+  <meta property="og:url" content="https://cat-in-136.github.io/2022/01/directory-layout-of-library-for-unit-testing-with-platformio.html" />
+  <meta property="og:title" content="Note: Directory Layout of library for unit testing with PlatformIO" /><meta property="og:description" content="C/C++ source files shall be placed in src/ or include/. PlatformIO Unit Testing Engine does not b..." /><meta property="og:type" content="article" /><meta property="og:site_name" content="cat_in_136.blog()" /><meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@cat_in_136" />
+  <meta name="twitter:creator" content="@cat_in_136" />
+</head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" href="/">cat_in_136.blog()</a>
+    <nav class="site-nav">
+      <a href="javascript:void(0);" class="menu-icon" title="barger button"></a>
+      <div class="trigger"><a class="page-link" href="/about">About</a><a class="page-link" href="/archive">Archive</a><a class="page-link" href="/tags">Tags</a></div>
+    </nav>
+  </div>
+</header>
+<div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name"><a href="/2022/01/directory-layout-of-library-for-unit-testing-with-platformio.html" itemprop="url">Note: Directory Layout of library for unit testing with PlatformIO</a></h1>
+
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2022-01-16T11:16:27+09:00">2022-01-16T11:16:27+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
+      <span itemprop="keywords"><a class="tag" href="/tags/platformio">Platformio</a></span></div><div class="post-meta">
+      Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2022-01-16-directory-layout-of-library-for-unit-testing-with-platformio.md" class="source-path">_posts/2022-01-16-directory-layout-of-library-for-unit-testing-with-platformio.md</a>
+        (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2022-01-16-directory-layout-of-library-for-unit-testing-with-platformio.md">History</a>)
+    </div><div class="post-meta">
+      <a href="#comments"><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2022/01/directory-layout-of-library-for-unit-testing-with-platformio.html">↓Comments</span></a>
+      <script id="dsq-count-scr" src="https://catin136blog.disqus.com/count.js" defer="defer" async="async"></script>
+    </div>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>C/C++ source files shall be placed in <code class="language-plaintext highlighter-rouge">src/</code> or <code class="language-plaintext highlighter-rouge">include/</code>.
+PlatformIO Unit Testing Engine does <em>not</em> build source code from <code class="language-plaintext highlighter-rouge">src/</code> by default.
+To test library test code in <code class="language-plaintext highlighter-rouge">src/</code>,
+instruct PlatformIO to build files in <code class="language-plaintext highlighter-rouge">src/</code>
+using <code class="language-plaintext highlighter-rouge">test_build_project_src</code> option in <code class="language-plaintext highlighter-rouge">platformio.ini</code>.</p>
+
+<h3 id="directory-layout">Directory Layout</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
+├── library.json
+├── platformio.ini
+├── src
+│   ├── HelloWorld.cpp
+│   └── HelloWorld.h
+└── test
+    └── test_main.cpp
+</code></pre></div></div>
+
+<h3 id="library-manifest-libraryjson">Library Manifest library.json</h3>
+
+<p>Create the manifest file <code class="language-plaintext highlighter-rouge">library.json</code> as usual.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HelloWorld"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A </span><span class="se">\"</span><span class="s2">Hello world</span><span class="se">\"</span><span class="s2"> program is a computer program that outputs </span><span class="se">\"</span><span class="s2">Hello World</span><span class="se">\"</span><span class="s2"> (or some variant) on a display device"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"keywords"</span><span class="p">:</span><span class="w"> </span><span class="s2">"planet, happiness, people"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"repository"</span><span class="p">:</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"git"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://git.example.com/john-smith/hello-world.git"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"authors"</span><span class="p">:</span><span class="w">
+  </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Smith"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"me@john-smith.example.com"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://john-smith.example.com/contact"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"license"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MIT"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"homepage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://helloworld.example.com/"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"frameworks"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"platforms"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="platformio">platform.io</h3>
+
+<p>As described above, you need specify <code class="language-plaintext highlighter-rouge">test_build_project_src</code> to <code class="language-plaintext highlighter-rouge">yes</code>.
+To test on PC native by default, create <code class="language-plaintext highlighter-rouge">native</code> environment and set <code class="language-plaintext highlighter-rouge">default_envs</code> to <code class="language-plaintext highlighter-rouge">native</code>.</p>
+
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[platformio]</span>
+<span class="py">default_envs</span> <span class="p">=</span> <span class="s">native</span>
+
+<span class="nn">[env]</span>
+<span class="py">monitor_flags</span> <span class="p">=</span> <span class="s">--echo</span>
+<span class="py">monitor_filters</span> <span class="p">=</span> <span class="s">time, send_on_enter, default</span>
+<span class="py">test_build_project_src</span> <span class="p">=</span> <span class="s">yes</span>
+
+<span class="nn">[env:native]</span>
+<span class="py">platform</span> <span class="p">=</span> <span class="s">native</span>
+
+<span class="c"># create any other environment as you like...
+</span>
+<span class="nn">[env:m5stack-atom]</span>
+<span class="py">platform</span> <span class="p">=</span> <span class="s">espressif32</span>
+<span class="py">board</span> <span class="p">=</span> <span class="s">m5stack-atom</span>
+<span class="py">framework</span> <span class="p">=</span> <span class="s">arduino</span>
+<span class="py">monitor_speed</span> <span class="p">=</span> <span class="s">115200</span>
+
+<span class="nn">[env:sparkfun_promicro16]</span>
+<span class="py">platform</span> <span class="p">=</span> <span class="s">atmelavr</span>
+<span class="py">board</span> <span class="p">=</span> <span class="s">sparkfun_promicro16</span>
+<span class="py">framework</span> <span class="p">=</span> <span class="s">arduino</span>
+</code></pre></div></div>
+
+<h3 id="codes">Codes</h3>
+
+<p>In this example, we simply declare a function
+that returns a string “Hello, world.”</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// src/HelloWorld.h</span>
+<span class="cp">#ifndef _HELLO_WORLD_H_
+#define _HELLO_WORLD_H_
+</span><span class="c1">//#pragma once</span>
+
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="nf">HelloWorld</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="cp">#endif
+</span></code></pre></div></div>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// src/HelloWorld.cpp</span>
+<span class="cp">#include "HelloWorld.h"
+</span>
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="nf">HelloWorld</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="s">"Hello, World."</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="test-codes">Test codes</h3>
+
+<p>Write the test case as a function like the following:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;HelloWorld.h&gt;
+#include &lt;unity.h&gt;
+</span>
+<span class="cp">#include &lt;cstring&gt;
+</span>
+<span class="kt">void</span> <span class="nf">test_hello_world</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">TEST_ASSERT_EQUAL</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">strcmp</span><span class="p">(</span><span class="s">"Hello, World."</span><span class="p">,</span> <span class="n">HelloWorld</span><span class="p">()));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Register this function with <code class="language-plaintext highlighter-rouge">RUN_TEST()</code> surrounded <code class="language-plaintext highlighter-rouge">UNITY_BEGIN()</code> and <code class="language-plaintext highlighter-rouge">UNITY_END()</code>.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//#include &lt;unity.h&gt;</span>
+<span class="n">UNITY_BEGIN</span><span class="p">();</span>
+<span class="n">RUN_TEST</span><span class="p">(</span><span class="n">test_hello_world</span><span class="p">);</span>
+<span class="c1">// RUN_TEST(test_another_one);</span>
+<span class="n">UNITY_END</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>The entry point is different between arduino and native.
+<code class="language-plaintext highlighter-rouge">setup()</code> and <code class="language-plaintext highlighter-rouge">loop()</code> are required for arduino, <code class="language-plaintext highlighter-rouge">main()</code> for native.</p>
+
+<p>To run it in the same source code, you need to switch entry point functions
+using <code class="language-plaintext highlighter-rouge">#ifdef ARDUINO</code> as shown below:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;HelloWorld.h&gt;
+#include &lt;unity.h&gt;
+</span>
+<span class="cp">#include &lt;cstring&gt;
+</span>
+<span class="cp">#ifdef ARDUINO
+#include &lt;Arduino.h&gt;
+#endif
+</span>
+<span class="kt">void</span> <span class="nf">test_hello_world</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">TEST_ASSERT_EQUAL</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">strcmp</span><span class="p">(</span><span class="s">"Hello, World."</span><span class="p">,</span> <span class="n">HelloWorld</span><span class="p">()));</span>
+<span class="p">}</span>
+
+<span class="cp">#ifdef ARDUINO
+</span><span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span> <span class="c1">// add 2-sec wait for the board w/o software resetting via</span>
+               <span class="c1">// Serial.DTR/RTS</span>
+<span class="cp">#else
+</span><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+<span class="cp">#endif
+</span>  <span class="n">UNITY_BEGIN</span><span class="p">();</span>
+  <span class="n">RUN_TEST</span><span class="p">(</span><span class="n">test_hello_world</span><span class="p">);</span>
+  <span class="n">UNITY_END</span><span class="p">();</span>
+
+<span class="cp">#ifndef ARDUINO
+</span>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="cp">#endif
+</span><span class="p">}</span>
+
+<span class="cp">#ifdef ARDUINO
+</span><span class="kt">void</span> <span class="n">loop</span><span class="p">()</span> <span class="p">{}</span>
+<span class="cp">#endif
+</span></code></pre></div></div>
+
+<h3 id="run-test">Run test</h3>
+
+<p>Just run <code class="language-plaintext highlighter-rouge">pio test</code> (or run the test task on the your favorite tool).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pio -c vim test
+Verbose mode can be enabled via `-v, --verbose` option
+Collected 1 items
+
+Processing * in native environment
+--------------------------------------------------------------------------------
+Building...
+Testing...
+test/test_main.cpp:22:test_hello_world	[PASSED]
+
+-----------------------
+1 Tests 0 Failures 0 Ignored
+OK
+========================== [PASSED] Took 0.64 seconds ==========================
+
+Test    Environment    Status    Duration
+------  -------------  --------  ------------
+*       native         PASSED    00:00:00.642
+========================= 1 succeeded in 00:00:00.642 =========================
+</code></pre></div></div>
+
+<p>Same way for testing on a board, but it takes longer time.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pio -c vim test -e m5stack-atom
+Verbose mode can be enabled via `-v, --verbose` option
+Collected 1 items
+
+Processing * in m5stack-atom environment
+--------------------------------------------------------------------------------
+Building...
+Uploading...
+Testing...
+If you don't see any output for the first 10 secs, please reset board (press reset button)
+
+test/test_main.cpp:22:test_hello_world	[PASSED]
+-----------------------
+1 Tests 0 Failures 0 Ignored
+========================== [PASSED] Took 8.13 seconds ==========================
+
+Test    Environment    Status    Duration
+------  -------------  --------  ------------
+*       m5stack-atom   PASSED    00:00:08.127
+========================= 1 succeeded in 00:00:08.127 =========================
+</code></pre></div></div>
+
+<h3 id="references">References</h3>
+
+<ul>
+  <li><a href="https://fum1h1ro.github.io/2021/01/26/m5paper-test/">PlatformIO でユニットテストが書きたい | мята</a></li>
+  <li><a href="https://docs.platformio.org/en/latest/librarymanager/creating.html">Creating Library — PlatformIO latest documentation</a></li>
+  <li><a href="https://docs.platformio.org/en/latest/plus/unit-testing.html">Unit Testing — PlatformIO latest documentation</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <details id="comments">
+      <summary><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2022/01/directory-layout-of-library-for-unit-testing-with-platformio.html">Comments</span></summary>
+      <div id="disqus_thread"></div>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <script type="application/javascript" src="/javascript/disqus_loader.js" defer="defer" async="async"></script>
+    </details>
+  </footer>
+</article><aside class="post-related">
+  <h2>Related Posts</h2>
+  <ul class="post-list"><li class="post-item">
+    <a class="post-link" href="/2017/10/list-of-all-the-config-provided-by-configuration-mania.html">
+      <span class="post-meta">2017-10-26</span>
+      <span class="post-title">List of all the Config provided by Configuration Mania</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2018/04/rust-error-handling-question.html">
+      <span class="post-meta">2018-04-29</span>
+      <span class="post-title">rustのエラー処理と疑問符演算子</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2015/05/declaration-of-a-parameter-as-array-with-static-keyword-in-c-language.html">
+      <span class="post-meta">2015-05-01</span>
+      <span class="post-title">C言語での static キーワード付き配列パラメータ宣言</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2020/05/port-glsl-sandbox-effect-to-gstreamer-glshader.html">
+      <span class="post-meta">2020-05-03</span>
+      <span class="post-title">Porting GLSL Sandbox effect to GStreamer glshader element</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2010/03/pitfall-of-unicode-in-mingw32.html">
+      <span class="post-meta">2010-03-17</span>
+      <span class="post-title">Pitfall of &quot;Unicode in Mingw32&quot;</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2014/09/pqi-air-card-udp-yo.html">
+      <span class="post-meta">2014-09-21</span>
+      <span class="post-title">PQI Air Card から UDP で Yo と答えさせてデバイス検出する試み</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2017/08/code-reading-firefox-send.html">
+      <span class="post-meta">2017-08-12</span>
+      <span class="post-title">Code Reading: &quot;Firefox Send&quot; encryption</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2019/10/use-marionette-to-obtain-firefox-internal-information-easily.html">
+      <span class="post-meta">2019-10-20</span>
+      <span class="post-title">Use Marionette to obtain Firefox internal information easily</span></a>
+  </li>
+</ul>
+</aside>
+      </div>
+    </div><footer class="site-footer">
+  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
+  <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
+    <h2 class="footer-heading">cat_in_136.blog()</h2>
+    <p>
+      © 2022
+      <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
+        <a href="/about"><span itemprop="name">cat_in_136</span></a>
+      </span>;
+      Content is available under a
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license" itemprop="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">CC BY-NC-SA 4.0</a>
+      unless otherwise noted.
+    </p>
+  </div>
+</footer>
+</body>
+</html>
