@@ -134,7 +134,7 @@ that returns a string “Hello, world.”</p>
 </span></code></pre></div></div>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// src/HelloWorld.cpp</span>
-<span class="cp">#include "HelloWorld.h"
+<span class="cp">#include</span> <span class="cpf">"HelloWorld.h"</span><span class="cp">
 </span>
 <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="nf">HelloWorld</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="s">"Hello, World."</span><span class="p">;</span>
@@ -145,10 +145,10 @@ that returns a string “Hello, world.”</p>
 
 <p>Write the test case as a function like the following:</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;HelloWorld.h&gt;
-#include &lt;unity.h&gt;
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;HelloWorld.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;unity.h&gt;</span><span class="cp">
 </span>
-<span class="cp">#include &lt;cstring&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;cstring&gt;</span><span class="cp">
 </span>
 <span class="kt">void</span> <span class="nf">test_hello_world</span><span class="p">()</span> <span class="p">{</span>
   <span class="n">TEST_ASSERT_EQUAL</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">strcmp</span><span class="p">(</span><span class="s">"Hello, World."</span><span class="p">,</span> <span class="n">HelloWorld</span><span class="p">()));</span>
@@ -170,13 +170,13 @@ that returns a string “Hello, world.”</p>
 <p>To run it in the same source code, you need to switch entry point functions
 using <code class="language-plaintext highlighter-rouge">#ifdef ARDUINO</code> as shown below:</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;HelloWorld.h&gt;
-#include &lt;unity.h&gt;
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;HelloWorld.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;unity.h&gt;</span><span class="cp">
 </span>
-<span class="cp">#include &lt;cstring&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;cstring&gt;</span><span class="cp">
 </span>
 <span class="cp">#ifdef ARDUINO
-#include &lt;Arduino.h&gt;
+#include</span> <span class="cpf">&lt;Arduino.h&gt;</span><span class="cp">
 #endif
 </span>
 <span class="kt">void</span> <span class="nf">test_hello_world</span><span class="p">()</span> <span class="p">{</span>

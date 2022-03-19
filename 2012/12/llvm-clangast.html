@@ -74,8 +74,8 @@
 <p>最も安直な構文のなぞり方は、下記のように
 <code>clang_visitChildren()</code> で各要素ごとにウォークスルーする。</p>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;stdio.h&gt;
-#include &lt;clang-c/Index.h&gt;
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;clang-c/Index.h&gt;</span><span class="cp">
 </span>
 <span class="n">CXChildVisitResult</span> <span class="nf">visitChildrenCallback</span><span class="p">(</span><span class="n">CXCursor</span> <span class="n">cursor</span><span class="p">,</span> <span class="n">CXCursor</span> <span class="n">parent</span><span class="p">,</span> <span class="n">CXClientData</span> <span class="n">client_data</span><span class="p">)</span>
 <span class="p">{</span>
@@ -123,10 +123,10 @@
 
 <p>XML 出力には libxml2 使って</p>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;clang-c/Index.h&gt;
-#include &lt;libxml/encoding.h&gt;
-#include &lt;libxml/xmlwriter.h&gt;
-#include &lt;stdio.h&gt;
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;clang-c/Index.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;libxml/encoding.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;libxml/xmlwriter.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
 </span>
 <span class="n">xmlChar</span> <span class="o">*</span><span class="nf">getLocationAsString</span><span class="p">(</span><span class="n">CXCursor</span> <span class="n">cursor</span><span class="p">)</span>
 <span class="p">{</span>

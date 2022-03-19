@@ -51,7 +51,7 @@
 
 <p>単にシリアル出力するだけならばプログラム（スケッチ）はこんな程度のを書けば良い。</p>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;rxduino.h&gt;
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;rxduino.h&gt;</span><span class="cp">
 </span>
 <span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
     <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">38400</span><span class="p">,</span> <span class="n">SCI_USB0</span><span class="p">);</span>

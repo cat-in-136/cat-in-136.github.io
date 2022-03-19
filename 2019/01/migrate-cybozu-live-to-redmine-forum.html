@@ -77,11 +77,11 @@
 
 <div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>path/to/redmine
 <span class="gp">$</span><span class="w"> </span><span class="nv">DATABASE_URL</span><span class="o">=</span><span class="s1">'mysql2://user:mysecretpassword@localhost/redmine?reconnect=true'</span><span class="se">\</span>
-  <span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8 <span class="nv">RACK_ENV</span><span class="o">=</span>production <span class="nv">RAILS_ENV</span><span class="o">=</span>production <span class="se">\</span>
-  <span class="nv">RAILS_SERVE_STATIC_FILES</span><span class="o">=</span>enabled <span class="nv">SECRET_KEY_BASE</span><span class="o">=</span>xxxxxxxx <span class="se">\</span>
-  <span class="nv">MISC_CONFIG</span><span class="o">=</span>miscconf.yaml <span class="nv">ATTACH_CACHE_DIR</span><span class="o">=</span>./ATTACH_CACHE_DIR <span class="se">\</span>
-  bundle <span class="nb">exec </span>rails r replace-from-cybozu-to-redmine.rb
-</code></pre></div></div>
+<span class="go">  LANG=en_US.UTF-8 RACK_ENV=production RAILS_ENV=production \
+  RAILS_SERVE_STATIC_FILES=enabled SECRET_KEY_BASE=xxxxxxxx \
+  MISC_CONFIG=miscconf.yaml ATTACH_CACHE_DIR=./ATTACH_CACHE_DIR \
+  bundle exec rails r replace-from-cybozu-to-redmine.rb
+</span></code></pre></div></div>
 
 <p>注：後述の <a href="https://www.redmine.org/issues/26030">#26030</a> のパッチを当てていない場合、この変換スクリプトで変換後のフォーラムでは不具合が起こるので、事前に当該パッチを当てておく（か将来出る redmine 4.1+ を使う）ようにすること。</p>
 
@@ -130,9 +130,9 @@
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
 <span class="na">users</span><span class="pi">:</span>
-  <span class="s">1:2</span> <span class="pi">:</span> <span class="s">jsmith</span>
-  <span class="s">1:3</span> <span class="pi">:</span> <span class="s">dlopper</span>
-  <span class="c1"># "Member ID": "redmine login name"</span>
+  <span class="s">1:2</span> <span class="err">:</span> <span class="s">jsmith</span>
+  <span class="s">1:3</span> <span class="err">:</span> <span class="s">dlopper</span>
+  <span class="s"># "Member ID"</span><span class="err">:</span> <span class="s2">"</span><span class="s">redmine</span><span class="nv"> </span><span class="s">login</span><span class="nv"> </span><span class="s">name"</span>
 </code></pre></div></div>
 
 <p>なお、Member IDはAPIのアクセスの他に「プロフィールの詳細」を開いてURLを確認することでも得られる。

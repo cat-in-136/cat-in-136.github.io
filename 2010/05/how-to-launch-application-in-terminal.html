@@ -77,8 +77,8 @@
 <li>On my environment, following code does not work (segmentation fault at calling <code>g_app_info_create_from_commandline()</code>). GTK seems to be required.</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;glib.h&gt;
-#include &lt;gio/gio.h&gt;
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;glib.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;gio/gio.h&gt;</span><span class="cp">
 </span><span class="c1">//#include &lt;gtk/gtk.h&gt;// !! HERE is required!</span>
 
 <span class="k">static</span> <span class="k">const</span> <span class="n">gchar</span> <span class="o">*</span><span class="n">SCRIPT_PATH</span> <span class="o">=</span> <span class="s">"/path/to/shellscript.sh"</span><span class="p">;</span>

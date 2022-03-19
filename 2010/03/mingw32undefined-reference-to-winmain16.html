@@ -42,8 +42,8 @@
 
   <div class="post-content" itemprop="articleBody" lang="ja">
     <p>Unicode有効（<code>-DUNICODE -D_UNICODE</code>）時に下記のコードをmingw32-gccでビルドしようとすると"WinMain"が未定義ですという旨のリンクエラーが出てしまう。</p>
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;windows.h&gt;
-#include &lt;tchar.h&gt;
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;windows.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;tchar.h&gt;</span><span class="cp">
 </span>
 <span class="kt">int</span> <span class="n">WINAPI</span> <span class="nf">_tWinMain</span><span class="p">(</span><span class="n">HINSTANCE</span> <span class="n">hInstance</span><span class="p">,</span> <span class="n">HINSTANCE</span> <span class="n">hPrevInstance</span><span class="p">,</span> <span class="n">LPTSTR</span> <span class="n">lpCmdLine</span><span class="p">,</span> <span class="kt">int</span> <span class="n">nCmdShow</span><span class="p">)</span>
 <span class="p">{</span>

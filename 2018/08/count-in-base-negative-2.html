@@ -263,7 +263,7 @@
 
 <figure class="highlight"><pre><code class="language-rust" data-lang="rust"><span class="k">fn</span> <span class="nf">mbin_positive_max</span><span class="p">(</span><span class="n">l</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="mi">0</span><span class="o">..</span><span class="n">l</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">0</span><span class="o">..</span><span class="n">l</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
             <span class="n">val</span> <span class="o">=</span> <span class="n">val</span> <span class="o">+</span> <span class="nf">pow2u32</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">;</span>
         <span class="p">}</span>
@@ -273,7 +273,7 @@
 
 <span class="k">fn</span> <span class="nf">mbin_negative_min</span><span class="p">(</span><span class="n">l</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
     <span class="k">let</span> <span class="k">mut</span> <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="mi">0</span><span class="o">..</span><span class="n">l</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">0</span><span class="o">..</span><span class="n">l</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">{</span>
             <span class="n">val</span> <span class="o">=</span> <span class="n">val</span> <span class="o">-</span> <span class="nf">pow2u32</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">;</span>
         <span class="p">}</span>
