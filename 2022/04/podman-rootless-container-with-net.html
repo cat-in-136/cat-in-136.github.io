@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,max-scale=10,min-scale=0.5,user-scalable=yes" />
+  <title>Podman ルートレスコンテナでのネットワークのメモ</title>
+
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="https://code.cdn.mozilla.net/fonts/fira.css" />
+
+  <link rel="canonical" href="https://cat-in-136.github.io/2022/04/podman-rootless-container-with-net.html" />
+  <link rel="alternate" type="application/rss+xml" title="cat_in_136.blog() &raquo; Feed" href="/feed.xml" />
+  <meta property="og:url" content="https://cat-in-136.github.io/2022/04/podman-rootless-container-with-net.html" />
+  <meta property="og:title" content="Podman ルートレスコンテナでのネットワークのメモ" /><meta property="og:description" content="従来の docker では、コンテナに IP アドレスが 172.xxx.xxx.xxx のように割り当てられていた。 このアドレスは下記で取得可能。 docker inspect -f &#39;{{..." /><meta property="og:type" content="article" /><meta property="og:site_name" content="cat_in_136.blog()" /><meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@cat_in_136" />
+  <meta name="twitter:creator" content="@cat_in_136" />
+</head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" href="/">cat_in_136.blog()</a>
+    <nav class="site-nav">
+      <a href="javascript:void(0);" class="menu-icon" title="barger button"></a>
+      <div class="trigger"><a class="page-link" href="/about">About</a><a class="page-link" href="/archive">Archive</a><a class="page-link" href="/tags">Tags</a></div>
+    </nav>
+  </div>
+</header>
+<div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name"><a href="/2022/04/podman-rootless-container-with-net.html" itemprop="url">Podman ルートレスコンテナでのネットワークのメモ</a></h1>
+
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2022-04-02T23:43:36+09:00">2022-04-02T23:43:36+09:00</span></div><div class="post-meta">Tags:
+      <span itemprop="keywords"><a class="tag" href="/tags/podman">Podman</a><a class="tag" href="/tags/linux">Linux</a><a class="tag" href="/tags/%E3%83%81%E3%83%A9%E3%82%B7%E3%81%AE%E8%A3%8F">チラシの裏</a></span></div><div class="post-meta">
+      Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2022-04-02-podman-rootless-container-with-net.md" class="source-path">_posts/2022-04-02-podman-rootless-container-with-net.md</a>
+        (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2022-04-02-podman-rootless-container-with-net.md">History</a>)
+    </div><div class="post-meta">
+      <a href="#comments"><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2022/04/podman-rootless-container-with-net.html">↓Comments</span></a>
+      <script id="dsq-count-scr" src="https://catin136blog.disqus.com/count.js" defer="defer" async="async"></script>
+    </div>
+  </header>
+
+  <div class="post-content" itemprop="articleBody" lang="ja">
+    <p>従来の docker では、コンテナに IP アドレスが <code class="language-plaintext highlighter-rouge">172.xxx.xxx.xxx</code> のように割り当てられていた。
+このアドレスは下記で取得可能。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker inspect <span class="nt">-f</span> <span class="s1">'{{ .NetworkSettings.IPAddress }}'</span> コンテナID
+</code></pre></div></div>
+
+<p>コンテナ内でポートを開いた時、とくに何もせずとも <code class="language-plaintext highlighter-rouge">172.xxx.xxx.xxx</code> のポート5432をアクセスすればよい。</p>
+
+<p>しかしルートレスコンテナの場合、IPアドレスが付与されない。</p>
+
+<p>通信するには、明示的に<code class="language-plaintext highlighter-rouge">-p</code>オプションを使ってコンテナのポートをホストに公開するのが簡単である。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman run <span class="nt">--name</span><span class="o">=</span>pg <span class="nt">--rm</span> <span class="nt">-it</span> <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>mysecretpassword <span class="se">\</span>
+  <span class="nt">-p</span> 5432:5432 <span class="se">\</span>
+  docker.io/library/postgres:alpine
+</code></pre></div></div>
+
+<p>このときホスト側から <code class="language-plaintext highlighter-rouge">127.0.0.1:5432</code> にアクセスしてコンテナ内のサーバにアクセスができる。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>psql <span class="nt">-h</span> 127.0.0.1 <span class="nt">-U</span> postgres <span class="nt">-p</span> 5432 postgres
+</code></pre></div></div>
+
+<p>コンテナどおしで通信する場合は、単一ポッドに入れる方法と、ポートマッピングを駆使する方法がある。
+簡単なのは通信する必要があるコンテナを単一ポッドに入れてしまう方法だ。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman run <span class="nt">--name</span><span class="o">=</span>pg <span class="nt">--rm</span> <span class="nt">-it</span> <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>mysecretpassword <span class="se">\</span>
+  <span class="nt">--pod</span> new:mypod <span class="se">\</span>
+  docker.io/library/postgres:alpine
+</code></pre></div></div>
+
+<p>同様に</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman run <span class="nt">--name</span><span class="o">=</span>psql <span class="nt">--rm</span> <span class="nt">-it</span> <span class="se">\</span>
+  <span class="nt">--pod</span> mypod <span class="se">\</span>
+  docker.io/library/postgres:alpine <span class="se">\</span>
+  psql <span class="nt">-h</span> pg <span class="nt">-U</span> postgres
+</code></pre></div></div>
+
+<p>こうすると同一のポッド<code class="language-plaintext highlighter-rouge">mypod</code>内にある２つのコンテナは自然にアクセスできる。
+この例では、片方のコンテナから 127.0.0.1 の 5432 ポートを叩くと自然にもう片方のコンテナのサーバにアクセスできる。</p>
+
+<p>さらに、ポートをホストに公開するには、一旦<code class="language-plaintext highlighter-rouge">podman pod create</code>を実行して、ここで<code class="language-plaintext highlighter-rouge">-p</code>オプションを使ってコンテナのポートをホストに公開する必要がある。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman pod create mypod <span class="nt">-p</span> 5432:5432
+podman run <span class="nt">--name</span><span class="o">=</span>pg <span class="nt">--rm</span> <span class="nt">-it</span>
+  <span class="nt">-e</span> <span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>mysecretpassword <span class="se">\</span>
+  <span class="nt">--pod</span> mypod <span class="se">\</span>
+  docker.io/library/postgres:alpine
+</code></pre></div></div>
+
+<h2 id="参考文献">参考文献</h2>
+
+<ul>
+  <li>Brent Baude, “<a href="https://www.redhat.com/sysadmin/container-networking-podman">Configuring container networking with Podman | Enable Sysadmin</a>”, Enable Sysadmin, Redhat, Oct 28, 2019</li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <details id="comments">
+      <summary><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2022/04/podman-rootless-container-with-net.html">Comments</span></summary>
+      <div id="disqus_thread"></div>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <script type="application/javascript" src="/javascript/disqus_loader.js" defer="defer" async="async"></script>
+    </details>
+  </footer>
+</article><aside class="post-related">
+  <h2>Related Posts</h2>
+  <ul class="post-list"><li class="post-item">
+    <a class="post-link" href="/2010/07/rpmbuild-setting-for-multi-core-cpu.html">
+      <span class="post-meta">2010-07-25</span>
+      <span class="post-title">[Updated] rpmbuild setting for multi core CPU</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2021/09/zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru.html">
+      <span class="post-meta">2021-09-13</span>
+      <span class="post-title">ぜんぜんわからない俺達は雰囲気でbtrfs使っている</span><img class="post-thumb" src="/images/2020-09-13-Btrfs_logo.svg" loading="lazy" alt="thumbnail" /></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2022/01/directory-layout-of-library-for-unit-testing-with-platformio.html">
+      <span class="post-meta">2022-01-16</span>
+      <span class="post-title">Note: Directory Layout of library for unit testing with PlatformIO</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2010/05/oopp-setting-on-configuration-mania.html">
+      <span class="post-meta">2010-05-04</span>
+      <span class="post-title">OOPP Setting on Configuration Mania</span><img class="post-thumb" src="/images/oop-setting-screenshot1.png" loading="lazy" alt="thumbnail" /></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2017/10/list-of-all-the-config-provided-by-configuration-mania.html">
+      <span class="post-meta">2017-10-26</span>
+      <span class="post-title">List of all the Config provided by Configuration Mania</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2011/02/tip-how-to-convert-from-gnu-arch-to.html">
+      <span class="post-meta">2011-02-05</span>
+      <span class="post-title">Tip: How to convert from GNU-Arch to Mercurial repository</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2010/03/webgl-options-on-configuration-mania.html">
+      <span class="post-meta">2010-03-13</span>
+      <span class="post-title">WebGL options on Configuration Mania</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2010/10/mozilla-add-on-validation-system-says.html">
+      <span class="post-meta">2010-10-03</span>
+      <span class="post-title">Mozilla Add-on validation system says HTTP setting is generally not allowed.</span></a>
+  </li>
+</ul>
+</aside>
+      </div>
+    </div><footer class="site-footer">
+  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
+  <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
+    <h2 class="footer-heading">cat_in_136.blog()</h2>
+    <p>
+      © 2022
+      <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
+        <a href="/about"><span itemprop="name">cat_in_136</span></a>
+      </span>;
+      Content is available under a
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license" itemprop="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">CC BY-NC-SA 4.0</a>
+      unless otherwise noted.
+    </p>
+  </div>
+</footer>
+</body>
+</html>
