@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator>
   <link href="https://cat-in-136.github.io/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://cat-in-136.github.io/" rel="alternate" type="text/html" />
-  <updated>2022-04-17T07:50:11+09:00</updated>
+  <updated>2022-05-08T00:16:05+09:00</updated>
   <id>https://cat-in-136.github.io/</id>
 
   
@@ -17,6 +17,414 @@
 
   
   
+  
+    <entry>
+      <title type="html">Note: M5Paper Power Supply/Management</title>
+      <link href="https://cat-in-136.github.io/2022/05/note-m5paper-power-supply-management.html" rel="alternate" type="text/html" title="Note: M5Paper Power Supply/Management" />
+      <published>2022-05-08T00:11:23+09:00</published>
+      <updated>2022-05-08T00:11:23+09:00</updated>
+      <id>https://cat-in-136.github.io/2022/05/note-m5paper-power-supply-management</id>
+      
+      
+      
+      <content type="html" xml:base="https://cat-in-136.github.io/2022/05/note-m5paper-power-supply-management.html">&lt;p&gt;This post describes a summary of the following conditions for the power supply/management of M5Paper.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Powered by USB Type-C or not&lt;/li&gt;
+  &lt;li&gt;“Shutdown” or “DeepSleep”&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The following figure is an excerpt from the outline diagram on the back of the M5Paper that relates to the power supply.&lt;/p&gt;
+
+&lt;figure&gt;
+&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;646.08&quot; height=&quot;457.19&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
+  &lt;g id=&quot;m5paper-power-diagram-base&quot;&gt;
+    &lt;g transform=&quot;translate(-76.138 -139.86)&quot; fill=&quot;none&quot;&gt;
+      &lt;rect x=&quot;101.53&quot; y=&quot;171.63&quot; width=&quot;11.25&quot; height=&quot;4.388&quot; rx=&quot;1.5704&quot; ry=&quot;1.5704&quot; stroke=&quot;#000&quot; stroke-width=&quot;.35278&quot; /&gt;
+      &lt;text x=&quot;107.0668&quot; y=&quot;175.01181&quot; font-family=&quot;sans-serif&quot; font-size=&quot;3.5278px&quot; letter-spacing=&quot;0px&quot; stroke=&quot;#000000&quot; stroke-width=&quot;.26458px&quot; text-align=&quot;center&quot; text-anchor=&quot;middle&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:125%&quot;&gt;
+        &lt;tspan x=&quot;107.0668&quot; y=&quot;175.01181&quot; fill=&quot;#000000&quot; font-size=&quot;3.5278px&quot; stroke=&quot;none&quot; stroke-width=&quot;.26458px&quot; text-align=&quot;center&quot; text-anchor=&quot;middle&quot;&gt;MOS&lt;/tspan&gt;
+      &lt;/text&gt;
+    &lt;/g&gt;
+    &lt;g transform=&quot;translate(-72.424 -137.74)&quot;&gt;
+      &lt;rect x=&quot;103.26&quot; y=&quot;157.37&quot; width=&quot;9.0747&quot; height=&quot;8.7066&quot; rx=&quot;1.9333&quot; ry=&quot;1.9333&quot; fill=&quot;#aade87&quot; /&gt;
+      &lt;text x=&quot;107.81548&quot; y=&quot;161.00313&quot; fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;3.175px&quot; letter-spacing=&quot;0px&quot; stroke-width=&quot;.26458px&quot; text-anchor=&quot;middle&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:110%&quot;&gt;
+        &lt;tspan x=&quot;107.81548&quot; y=&quot;161.00313&quot; text-align=&quot;center&quot;&gt;BM&lt;/tspan&gt;
+        &lt;tspan x=&quot;107.81548&quot; y=&quot;164.49562&quot; text-align=&quot;center&quot;&gt;8563&lt;/tspan&gt;
+      &lt;/text&gt;
+    &lt;/g&gt;
+    &lt;g transform=&quot;translate(-76.138 -137.22)&quot;&gt;
+      &lt;rect x=&quot;77.314&quot; y=&quot;163.71&quot; width=&quot;18.454&quot; height=&quot;4.9492&quot; rx=&quot;1.5704&quot; ry=&quot;1.5704&quot; fill=&quot;none&quot; stroke=&quot;#800000&quot; stroke-width=&quot;.35278&quot; /&gt;
+      &lt;text x=&quot;86.380272&quot; y=&quot;167.34073&quot; fill=&quot;none&quot; font-family=&quot;sans-serif&quot; font-size=&quot;3.5278px&quot; letter-spacing=&quot;0px&quot; stroke=&quot;#000000&quot; stroke-width=&quot;.26458px&quot; text-align=&quot;center&quot; text-anchor=&quot;middle&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:125%&quot;&gt;
+        &lt;tspan x=&quot;86.380272&quot; y=&quot;167.34073&quot; fill=&quot;#000000&quot; font-size=&quot;3.5278px&quot; stroke=&quot;none&quot; stroke-width=&quot;.26458px&quot; text-align=&quot;center&quot; text-anchor=&quot;middle&quot;&gt;BATTERY&lt;/tspan&gt;
+      &lt;/text&gt;
+      &lt;rect x=&quot;96.31&quot; y=&quot;164.98&quot; width=&quot;.77051&quot; height=&quot;2.4051&quot; fill=&quot;#800000&quot; /&gt;
+    &lt;/g&gt;
+    &lt;g transform=&quot;translate(-76.138 -139.86)&quot;&gt;
+      &lt;g transform=&quot;matrix(.39104 0 0 .39104 106.03 142.32)&quot; fill=&quot;#e7352c&quot;&gt;
+        &lt;path d=&quot;m6.93 15.65a1.48 1.48 0 1 1-1.48-1.48 1.48 1.48 0 0 1 1.48 1.48&quot; /&gt;
+        &lt;path d=&quot;m19.84 14.11a15.34 15.34 0 0 0-13-13 9.73 9.73 0 0 0-2.15 1.55v1.43a12.18 12.18 0 0 1 12.17 12.16h1.43a10.25 10.25 0 0 0 1.55-2.14&quot; /&gt;
+        &lt;path d=&quot;m21 9.62a9.62 9.62 0 0 0-9.67-9.62c-0.34 0-0.67 0-1 0.05l-0.22 0.64a16.55 16.55 0 0 1 10.14 10.13l0.64-0.23c0-0.32 0.06-0.64 0.06-1&quot; /&gt;
+        &lt;path d=&quot;m11.44 21a11.44 11.44 0 0 1-11.44-11.39 11.36 11.36 0 0 1 3.35-8.09l0.65 0.61a10.56 10.56 0 0 0 0 15 10.56 10.56 0 0 0 15 0l0.61 0.61a11.35 11.35 0 0 1-8.17 3.26&quot; /&gt;
+        &lt;path d=&quot;m11.31 16.91a6.65 6.65 0 0 0-2.61-5.91 6.51 6.51 0 0 0-3.35-1.36 0.61 0.61 0 0 1-0.53-0.64 0.59 0.59 0 0 1 0.65-0.54 7.85 7.85 0 0 1 7 8.58 6.85 6.85 0 0 1-0.26 1.35l1.74 0.49a9.66 9.66 0 0 0 1.5-0.57 10.64 10.64 0 0 0 0.19-2.05 11 11 0 0 0-9.33-10.86 4.84 4.84 0 0 0-1.75 0 3.81 3.81 0 0 0-1.89 1.17 3.74 3.74 0 0 0 1.67 6 8.66 8.66 0 0 0 0.94 0.17 3.51 3.51 0 0 1 2.92 3.46 3.47 3.47 0 0 1-0.56 1.89l1.2 0.77a8.91 8.91 0 0 0 1.8 0.3 6.58 6.58 0 0 0 0.66-2.3&quot; /&gt;
+      &lt;/g&gt;
+      &lt;rect x=&quot;104.39&quot; y=&quot;141.04&quot; width=&quot;11.485&quot; height=&quot;10.77&quot; rx=&quot;1.5704&quot; ry=&quot;1.5704&quot; fill=&quot;none&quot; stroke=&quot;#e7352c&quot; stroke-width=&quot;.35278&quot; /&gt;
+    &lt;/g&gt;
+    &lt;text x=&quot;40.758881&quot; y=&quot;3.0064886&quot; fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;2.8222px&quot; letter-spacing=&quot;0px&quot; stroke-width=&quot;.26458px&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:110%&quot;&gt;
+      &lt;tspan x=&quot;40.758881&quot; y=&quot;3.0064886&quot; font-weight=&quot;bold&quot;&gt;ESP32&lt;/tspan&gt;
+      &lt;tspan x=&quot;40.758881&quot; y=&quot;6.1109271&quot;&gt;D0WDQ6-V3&lt;/tspan&gt;
+      &lt;tspan x=&quot;40.758881&quot; y=&quot;9.215374&quot;&gt;16M-FLASH&lt;/tspan&gt;
+      &lt;tspan x=&quot;40.758881&quot; y=&quot;12.319813&quot;&gt;8M-PSRAM&lt;/tspan&gt;
+    &lt;/text&gt;
+    &lt;text x=&quot;4.9717717&quot; y=&quot;34.719135&quot; fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;2.8222px&quot; letter-spacing=&quot;0px&quot; stroke-width=&quot;.26458px&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:110%&quot;&gt;
+      &lt;tspan x=&quot;4.9717717&quot; y=&quot;34.719135&quot; font-weight=&quot;bold&quot;&gt;Li-Po&lt;/tspan&gt;
+      &lt;tspan x=&quot;4.9717717&quot; y=&quot;37.823582&quot;&gt;1150mAh&lt;/tspan&gt;
+      &lt;tspan x=&quot;4.9717717&quot; y=&quot;40.928013&quot;&gt;4.35V&lt;/tspan&gt;
+    &lt;/text&gt;
+    &lt;path d=&quot;m1.838 2.906a9.5202 9.5202 0 0 1 10.892 3.261 9.5202 9.5202 0 0 1 0 11.37 9.5202 9.5202 0 0 1-10.892 3.261&quot; fill=&quot;none&quot; stroke=&quot;#000&quot; stroke-width=&quot;.70556&quot; /&gt;
+    &lt;path transform=&quot;scale(.26458)&quot; d=&quot;m33.557 39.594a0.37503 0.37503 0 0 0-0.33008 0.60156c0.58103 0.80954 0.99299 1.6979 1.2363 2.6191h-12.146v4.002h12.15c-0.24136 0.91118-0.65301 1.7861-1.2344 2.5762a0.37503 0.37503 0 0 0 0.42969 0.57617l13.109-4.8203a0.37503 0.37503 0 0 0 0-0.70117l-13.109-4.8281a0.37503 0.37503 0 0 0-0.10547-0.025391z&quot; color=&quot;#000000&quot; stroke-width=&quot;3.7795&quot; style=&quot;&quot; /&gt;
+    &lt;g transform=&quot;translate(-73.492 -139.86)&quot;&gt;
+      &lt;rect x=&quot;114.94&quot; y=&quot;163.27&quot; width=&quot;9.0747&quot; height=&quot;8.7066&quot; rx=&quot;1.9333&quot; ry=&quot;1.9333&quot; fill=&quot;#faa&quot; /&gt;
+      &lt;text x=&quot;119.4726&quot; y=&quot;166.91499&quot; fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;3.175px&quot; letter-spacing=&quot;0px&quot; stroke-width=&quot;.26458px&quot; text-anchor=&quot;middle&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:110%&quot;&gt;
+        &lt;tspan x=&quot;119.4726&quot; y=&quot;166.91499&quot; text-align=&quot;center&quot;&gt;SY&lt;/tspan&gt;
+        &lt;tspan x=&quot;119.4726&quot; y=&quot;170.40749&quot; text-align=&quot;center&quot;&gt;7088&lt;/tspan&gt;
+      &lt;/text&gt;
+    &lt;/g&gt;
+    &lt;g transform=&quot;translate(-60.583 -139.86)&quot;&gt;
+      &lt;rect x=&quot;114.94&quot; y=&quot;163.27&quot; width=&quot;9.0747&quot; height=&quot;8.7066&quot; rx=&quot;4.3533&quot; ry=&quot;4.3533&quot; fill=&quot;none&quot; stroke=&quot;#800000&quot; stroke-width=&quot;.35278&quot; /&gt;
+      &lt;text x=&quot;119.4726&quot; y=&quot;166.91499&quot; fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;3.175px&quot; letter-spacing=&quot;0px&quot; stroke-width=&quot;.26458px&quot; text-anchor=&quot;middle&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:110%&quot;&gt;
+        &lt;tspan x=&quot;119.4726&quot; y=&quot;166.91499&quot; font-weight=&quot;bold&quot; text-align=&quot;center&quot;&gt;5V&lt;/tspan&gt;
+        &lt;tspan x=&quot;119.4726&quot; y=&quot;170.40749&quot; text-align=&quot;center&quot;&gt;BUS&lt;/tspan&gt;
+      &lt;/text&gt;
+    &lt;/g&gt;
+    &lt;g transform=&quot;translate(-58.837 -121.7)&quot;&gt;
+      &lt;g transform=&quot;translate(-2.8307,-2.4278)&quot;&gt;
+        &lt;rect x=&quot;77.314&quot; y=&quot;163.71&quot; width=&quot;18.454&quot; height=&quot;4.9492&quot; rx=&quot;1.5704&quot; ry=&quot;1.5704&quot; fill=&quot;#faa&quot; /&gt;
+        &lt;text x=&quot;86.551369&quot; y=&quot;167.34073&quot; fill=&quot;none&quot; font-family=&quot;sans-serif&quot; font-size=&quot;3.5278px&quot; letter-spacing=&quot;0px&quot; stroke=&quot;#000000&quot; stroke-width=&quot;.26458px&quot; text-align=&quot;center&quot; text-anchor=&quot;middle&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:125%&quot;&gt;
+          &lt;tspan x=&quot;86.551369&quot; y=&quot;167.34073&quot; fill=&quot;#000000&quot; font-size=&quot;3.5278px&quot; stroke=&quot;none&quot; stroke-width=&quot;.26458px&quot; text-align=&quot;center&quot; text-anchor=&quot;middle&quot;&gt;SLM6635&lt;/tspan&gt;
+        &lt;/text&gt;
+      &lt;/g&gt;
+    &lt;/g&gt;
+    &lt;g transform=&quot;translate(-73.3 -152.3)&quot; fill=&quot;none&quot;&gt;
+      &lt;text x=&quot;119.39691&quot; y=&quot;190.77817&quot; font-family=&quot;sans-serif&quot; font-size=&quot;2.8222px&quot; letter-spacing=&quot;0px&quot; stroke=&quot;#000000&quot; stroke-width=&quot;.26458px&quot; text-align=&quot;center&quot; text-anchor=&quot;middle&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:110%&quot;&gt;
+        &lt;tspan x=&quot;119.39691&quot; y=&quot;190.77817&quot; fill=&quot;#000000&quot; font-size=&quot;2.8222px&quot; stroke=&quot;none&quot; stroke-width=&quot;.26458px&quot; text-align=&quot;center&quot; text-anchor=&quot;middle&quot;&gt;USB-C&lt;/tspan&gt;
+      &lt;/text&gt;
+      &lt;path d=&quot;m124.02 188v2.8722c0 0.74432-0.59921 1.3435-1.3435 1.3435h-6.4034c-0.74431 0-1.3435-0.59921-1.3435-1.3435v-2.8722&quot; stroke=&quot;#000&quot; stroke-width=&quot;.70556&quot; /&gt;
+      &lt;path d=&quot;m122.72 192.16v4.3243h-6.4971v-4.3243&quot; stroke=&quot;#000&quot; stroke-width=&quot;.70556&quot; /&gt;
+    &lt;/g&gt;
+    &lt;g font-family=&quot;sans-serif&quot; font-size=&quot;2.8222px&quot; letter-spacing=&quot;0px&quot; word-spacing=&quot;0px&quot;&gt;
+      &lt;text x=&quot;28.430695&quot; y=&quot;15.621563&quot; text-align=&quot;end&quot; text-anchor=&quot;end&quot; style=&quot;line-height:110%&quot;&gt;
+        &lt;tspan x=&quot;28.430695&quot; y=&quot;15.621563&quot;&gt;G2&lt;/tspan&gt;
+      &lt;/text&gt;
+      &lt;text x=&quot;35.79467&quot; y=&quot;15.621563&quot; fill=&quot;#000000&quot; style=&quot;line-height:110%&quot;&gt;
+        &lt;tspan x=&quot;35.79467&quot; y=&quot;15.621563&quot;&gt;SDA21&lt;/tspan&gt;
+        &lt;tspan x=&quot;35.79467&quot; y=&quot;18.726002&quot;&gt;SCL22&lt;/tspan&gt;
+      &lt;/text&gt;
+      &lt;text x=&quot;15.902069&quot; y=&quot;14.953419&quot; fill=&quot;#000000&quot; stroke-width=&quot;.26458px&quot; style=&quot;line-height:110%&quot;&gt;
+        &lt;tspan x=&quot;15.902069&quot; y=&quot;14.953419&quot; font-weight=&quot;bold&quot;&gt;PWR&lt;/tspan&gt;
+        &lt;tspan x=&quot;15.902069&quot; y=&quot;18.057858&quot;&gt;G38&lt;/tspan&gt;
+      &lt;/text&gt;
+    &lt;/g&gt;
+    &lt;path d=&quot;m28.666 11.947-0.07422 12.645 0.35156 2e-3 0.07617-12.645z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
+    &lt;path d=&quot;m28.939 24.551-0.34375 0.08398 1.7227 7.1758 0.34375-0.08203z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
+    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
+      &lt;path d=&quot;m30.747 31.009-0.14351 1.2236-0.68341-1.0251c0.28724 0.12102 0.62097 0.0398 0.82692-0.19853z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
+      &lt;path d=&quot;m30.746 30.977a0.033076 0.033076 0 0 0-0.02344 0.0098c-0.19682 0.22777-0.51515 0.30681-0.78906 0.19141a0.033076 0.033076 0 0 0-0.04102 0.04883l0.6836 1.0234a0.033076 0.033076 0 0 0 0.06055-0.01367l0.14258-1.2246a0.033076 0.033076 0 0 0-0.0332-0.03516zm-0.03516 0.07031-0.13086 1.0938-0.60938-0.91797c0.2628 0.0824 0.54051 0.01755 0.74023-0.17578z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
+    &lt;/g&gt;
+    &lt;path d=&quot;m34.598 11.936-0.35156 0.02734 0.60742 7.6777 0.35156-0.0293z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
+    &lt;path d=&quot;m33.312 28.262-1.5 3.4375 0.32422 0.14062 1.5-3.4375z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
+    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
+      &lt;path d=&quot;m32.638 31.317-0.85217 0.88979 0.07272-1.2299c0.15622 0.26972 0.47146 0.4061 0.77945 0.3401z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
+      &lt;path d=&quot;m31.85 30.945a0.033076 0.033076 0 0 0-0.02344 0.0293l-0.07422 1.2305a0.033076 0.033076 0 0 0 0.05664 0.02539l0.85352-0.89062a0.033076 0.033076 0 0 0-0.03125-0.05469c-0.29434 0.06307-0.59517-0.06702-0.74414-0.32422a0.033076 0.033076 0 0 0-0.03711-0.01563zm0.03906 0.07422c0.15968 0.22416 0.42161 0.338 0.69726 0.30469l-0.76172 0.79492z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
+    &lt;/g&gt;
+    &lt;path d=&quot;m19.191 30.836-0.08398 0.3418 6.4219 1.5996 0.08594-0.3418z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
+    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
+      &lt;path d=&quot;m25.016 32.028 1.0193 0.6921-1.2248 0.1331c0.23994-0.19895 0.32192-0.5325 0.20555-0.8252z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
+      &lt;path d=&quot;m25.035 32a0.033076 0.033076 0 0 0-0.04883 0.04102c0.11121 0.27973 0.03154 0.59739-0.19727 0.78711a0.033076 0.033076 0 0 0 0.02539 0.05859l1.2246-0.13281a0.033076 0.033076 0 0 0 0.01563-0.06055zm-0.0039 0.07813 0.91211 0.61914-1.0957 0.11914c0.19403-0.19465 0.26204-0.47234 0.18359-0.73828z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
+    &lt;/g&gt;
+    &lt;path d=&quot;m13.721 31.316-0.24219 0.25586 8.6465 8.1406 0.24023-0.25586z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
+    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
+      &lt;path d=&quot;m13.801 32.221-0.55036-1.1023 1.1334 0.48314c-0.3066 0.05613-0.54128 0.30693-0.58299 0.61914z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
+      &lt;path d=&quot;m13.264 31.088a0.033076 0.033076 0 0 0-0.04297 0.04492l0.55078 1.1035a0.033076 0.033076 0 0 0 0.0625-0.01172c0.03986-0.29837 0.26427-0.53632 0.55664-0.58984a0.033076 0.033076 0 0 0 0.0059-0.06445zm0.05859 0.0957 1.0117 0.43359c-0.26378 0.07544-0.4602 0.28266-0.52148 0.55274z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
+    &lt;/g&gt;
+    &lt;path d=&quot;m42.906 40.391-8.8203 0.73047 0.0293 0.35156 8.8203-0.73047z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
+    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
+      &lt;path d=&quot;m34.812 41.666-1.1875-0.32844 1.1173-0.51908c-0.16341 0.26542-0.13403 0.60764 0.0701 0.84752z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
+      &lt;path d=&quot;m34.729 40.789-1.1172 0.51758a0.033076 0.033076 0 0 0 0.0059 0.0625l1.1855 0.32812a0.033076 0.033076 0 0 0 0.03516-0.05273c-0.19508-0.22925-0.22223-0.55549-0.06641-0.80859a0.033076 0.033076 0 0 0-0.04297-0.04687zm-0.0078 0.07617c-0.1211 0.24646-0.09887 0.53123 0.06055 0.75781l-1.0625-0.29297z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
+    &lt;/g&gt;
+    &lt;path d=&quot;m35.943 35.773-0.13281 0.32617 5.75 2.334 0.13281-0.32617z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
+    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
+      &lt;path d=&quot;m36.346 36.587-0.91145-0.82896 1.2314 0.041c-0.2656 0.16312-0.39381 0.48176-0.3199 0.78795z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
+      &lt;path d=&quot;m35.436 35.725a0.033076 0.033076 0 0 0-0.02344 0.05859l0.91211 0.82812a0.033076 0.033076 0 0 0 0.05469-0.03125c-0.07064-0.29262 0.05141-0.5964 0.30469-0.75195a0.033076 0.033076 0 0 0-0.01563-0.0625zm0.08789 0.07031 1.1016 0.03516c-0.21993 0.16497-0.32482 0.43071-0.28516 0.70508z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
+    &lt;/g&gt;
+    &lt;path d=&quot;m13.42 16.557-0.24609 0.25391 15.471 15.084 0.24609-0.25195z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
+    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
+      &lt;path d=&quot;m28.579 30.989 0.53105 1.1117-1.1248-0.50284c0.30753-0.05077 0.54655-0.29743 0.5937-0.60887z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
+      &lt;path d=&quot;m28.574 30.957a0.033076 0.033076 0 0 0-0.02734 0.02734c-0.04506 0.29763-0.27315 0.53166-0.56641 0.58008a0.033076 0.033076 0 0 0-0.0078 0.06445l1.123 0.50195a0.033076 0.033076 0 0 0 0.04492-0.04492l-0.53125-1.1113a0.033076 0.033076 0 0 0-0.03516-0.01758zm-0.0078 0.08398 0.47461 0.99219-1.0059-0.44922c0.26528-0.07031 0.46476-0.2742 0.53125-0.54297z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
+    &lt;/g&gt;
+    &lt;path d=&quot;m41.381 29.479-5.6113 2.3242 0.13477 0.32617 5.6113-2.3242z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
+    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
+      &lt;path d=&quot;m40.657 29.508 1.231-0.04972-0.90556 0.83539c0.07459-0.30263-0.05785-0.61955-0.32547-0.78567z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
+      &lt;path d=&quot;m41.887 29.424-1.2305 0.05078a0.033076 0.033076 0 0 0-0.01563 0.06055c0.25576 0.15876 0.38168 0.46141 0.31055 0.75a0.033076 0.033076 0 0 0 0.05469 0.0332l0.9043-0.83594a0.033076 0.033076 0 0 0-0.02344-0.05859zm-0.08594 0.07031-0.81055 0.74805c0.04047-0.27168-0.07027-0.53576-0.29102-0.70312z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
+    &lt;/g&gt;
+    &lt;path d=&quot;m50.523 27.586v0.35352h3.834v-0.35352z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
+    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
+      &lt;path d=&quot;m53.678 27.335 1.1563 0.42521-1.1563 0.42521c0.18473-0.25105 0.18366-0.59452 0-0.85041z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
+      &lt;path d=&quot;m53.689 27.305a0.033076 0.033076 0 0 0-0.03906 0.05078c0.17552 0.24456 0.17616 0.57115 0 0.81055a0.033076 0.033076 0 0 0 0.03906 0.05078l1.1562-0.42578a0.033076 0.033076 0 0 0 0-0.06055zm0.01563 0.07617 1.0352 0.38086-1.0352 0.37891c0.14115-0.23573 0.14033-0.52072 0-0.75977z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
+    &lt;/g&gt;
+  &lt;/g&gt;
+  &lt;!--
+  &lt;g fill=&quot;none&quot; stroke=&quot;#f00&quot; stroke-width=&quot;1.35278&quot; stroke-dasharray=&quot;2&quot;&gt;
+    &lt;path d=&quot;m28.843 11.949-0.07504 12.644&quot;/&gt;
+    &lt;path d=&quot;m28.768 24.593 1.7229 7.1761&quot;/&gt;
+    &lt;path d=&quot;m33.474 28.333-1.4994 3.4364&quot;/&gt;
+    &lt;path d=&quot;m19.15 31.007 6.4228 1.5999&quot;/&gt;
+    &lt;path d=&quot;m22.245 39.585-8.6458-8.141&quot;/&gt;
+    &lt;path d=&quot;m42.921 40.567-8.8204 0.72959&quot;/&gt;
+    &lt;path d=&quot;m41.627 38.271-5.7498-2.3344&quot;/&gt;
+    &lt;path d=&quot;m13.297 16.684 15.471 15.085&quot;/&gt;
+    &lt;path d=&quot;m35.837 31.966 5.6111-2.3245&quot;/&gt;
+    &lt;path d=&quot;m50.523 27.762h3.8344&quot;/&gt;
+    &lt;animate attributeName=&quot;stroke-dashoffset&quot; values=&quot;0;-8&quot; dur=&quot;1s&quot; repeatCount=&quot;indefinite&quot;/&gt;
+  &lt;/g&gt;
+  --&gt;
+&lt;/svg&gt;
+&lt;figcaption&gt;M5Paper Power Supply Outline Diagram&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;The following conditions must be achieved to keep the power ON:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Powered by USB Type-C;&lt;/li&gt;
+  &lt;li&gt;Alarm IRQ from RTC (BM8563);&lt;/li&gt;
+  &lt;li&gt;GPIO2 (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;M5EPD_MAIN_PWR_PIN&lt;/code&gt;) set to HIGH; or&lt;/li&gt;
+  &lt;li&gt;Power button (GPIO38, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;M5EPD_KEY_PUSH_PIN&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Shutdown is achieved by setting all the above conditions to &lt;em&gt;false&lt;/em&gt;.
+It indicates as long as M5Paper is connected and powered by USB Type-C, always it cannot shutdown.&lt;/p&gt;
+
+&lt;p&gt;Then how is the shutdown process of sample programs such as &lt;a href=&quot;https://github.com/m5stack/M5Paper_FactoryTest&quot;&gt;FactoryTest&lt;/a&gt; handled?
+The process is as follows:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Shutdown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// **snip**&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;M5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;disableEPDPower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// digitalWrite(M5EPD_EPD_PWR_EN_PIN, 0);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;M5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;disableEXTPower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// digitalWrite(M5EPD_EXT_PWR_EN_PIN, 0);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;M5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;disableMainPower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// digitalWrite(M5EPD_MAIN_PWR_PIN, 1);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;esp_deep_sleep_start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If USB Type-C is connected, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;M5.disableMainPower()&lt;/code&gt; (setting GPIO2 to OFF) does not turn off its power and
+go to the next line and then deep sleep, not a &lt;em&gt;genuine&lt;/em&gt; shutdown.
+If not, it shutdown immediately after &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;M5.disableMainPower()&lt;/code&gt; (setting GPIO2 to OFF) and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;esp_deep_sleep_start()&lt;/code&gt; does not executed.&lt;/p&gt;
+
+&lt;h3 id=&quot;case-shutdown--connected-and-powered-by-usb-type-c&quot;&gt;Case: Shutdown / Connected and Powered by USB Type-C&lt;/h3&gt;
+
+&lt;p&gt;As long as M5Paper is connected and powered by USB Type-C, always one condition “Powered by USB Type-C” is &lt;em&gt;true&lt;/em&gt; and it cannot shutdown.&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;323.04&quot; height=&quot;228.595&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
+    &lt;use href=&quot;#m5paper-power-diagram-base&quot; /&gt;
+    &lt;g fill=&quot;none&quot; stroke=&quot;#f00&quot; stroke-width=&quot;1.35278&quot; stroke-dasharray=&quot;2&quot;&gt;
+      &lt;path d=&quot;m28.843 11.949-0.07504 12.644&quot; /&gt;
+      &lt;path d=&quot;m28.768 24.593 1.7229 7.1761&quot; /&gt;
+      &lt;path d=&quot;m22.245 39.585-8.6458-8.141&quot; /&gt;
+      &lt;path d=&quot;m42.921 40.567-8.8204 0.72959&quot; /&gt;
+      &lt;path d=&quot;m41.627 38.271-5.7498-2.3344&quot; /&gt;
+      &lt;path d=&quot;m35.837 31.966 5.6111-2.3245&quot; /&gt;
+      &lt;path d=&quot;m50.523 27.762h3.8344&quot; /&gt;
+      &lt;animate attributeName=&quot;stroke-dashoffset&quot; values=&quot;0;-8&quot; dur=&quot;1s&quot; repeatCount=&quot;indefinite&quot; /&gt;
+    &lt;/g&gt;
+  &lt;/svg&gt;
+  &lt;figcaption&gt;Powered by USB Type-C&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;After &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;M5.disableMainPower()&lt;/code&gt; executed (setting GPIO2 to OFF), the MOS output is still HIGH and the power is still ON.&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;323.04&quot; height=&quot;228.595&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
+    &lt;use href=&quot;#m5paper-power-diagram-base&quot; /&gt;
+    &lt;g fill=&quot;none&quot; stroke=&quot;#f00&quot; stroke-width=&quot;1.35278&quot; stroke-dasharray=&quot;2&quot;&gt;
+      &lt;path d=&quot;m22.245 39.585-8.6458-8.141&quot; /&gt;
+      &lt;path d=&quot;m42.921 40.567-8.8204 0.72959&quot; /&gt;
+      &lt;path d=&quot;m41.627 38.271-5.7498-2.3344&quot; /&gt;
+      &lt;path d=&quot;m35.837 31.966 5.6111-2.3245&quot; /&gt;
+      &lt;path d=&quot;m50.523 27.762h3.8344&quot; /&gt;
+      &lt;animate attributeName=&quot;stroke-dashoffset&quot; values=&quot;0;-8&quot; dur=&quot;1s&quot; repeatCount=&quot;indefinite&quot; /&gt;
+    &lt;/g&gt;
+  &lt;/svg&gt;
+  &lt;figcaption&gt;Powered by USB Type-C, After main power disabled&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;After that, if the USB Type-C cable unplugged further, the power goes off. Because the MOS output gets LOW.&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;323.04&quot; height=&quot;228.595&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
+    &lt;use href=&quot;#m5paper-power-diagram-base&quot; /&gt;
+  &lt;/svg&gt;
+  &lt;figcaption&gt;Powered by USB Type-C, After main power disabled and then USB Type-C unplugged&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;At this time, it is re-booted by pressing the PWR button, interrupt by the RTC Alarm, or plugging USB Type-C.&lt;/p&gt;
+
+&lt;h3 id=&quot;case-shutdown--usb-type-c-unpuggled&quot;&gt;Case: Shutdown / USB Type-C Unpuggled&lt;/h3&gt;
+
+&lt;p&gt;Other hand, if the USB Type-C cable is unplugged without calling &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;M5.disableMainPower()&lt;/code&gt;, the GPIO2 output remains HIGH.
+Therefore, the power remains ON and is supplied from the LiPo battery.&lt;/p&gt;
+
+&lt;p&gt;It is the same condition as just after booting without the USB Type-C power supply.&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;323.04&quot; height=&quot;228.595&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
+    &lt;use href=&quot;#m5paper-power-diagram-base&quot; /&gt;
+    &lt;g fill=&quot;none&quot; stroke=&quot;#f00&quot; stroke-width=&quot;1.35278&quot; stroke-dasharray=&quot;2&quot;&gt;
+      &lt;path d=&quot;m28.843 11.949-0.07504 12.644&quot; /&gt;
+      &lt;path d=&quot;m28.768 24.593 1.7229 7.1761&quot; /&gt;
+      &lt;path d=&quot;m19.15 31.007 6.4228 1.5999&quot; /&gt;
+      &lt;path d=&quot;m35.837 31.966 5.6111-2.3245&quot; /&gt;
+      &lt;path d=&quot;m50.523 27.762h3.8344&quot; /&gt;
+      &lt;animate attributeName=&quot;stroke-dashoffset&quot; values=&quot;0;-8&quot; dur=&quot;1s&quot; repeatCount=&quot;indefinite&quot; /&gt;
+    &lt;/g&gt;
+  &lt;/svg&gt;
+  &lt;figcaption&gt;After USB Type-C unplugged&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;After &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;M5.disableMainPower()&lt;/code&gt; executed (setting GPIO2 to OFF), the MOS output and the power go off.&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;323.04&quot; height=&quot;228.595&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
+    &lt;use href=&quot;#m5paper-power-diagram-base&quot; /&gt;
+  &lt;/svg&gt;
+  &lt;figcaption&gt;After USB Type-C unplugged and set GPIO2 to OFF&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;At this time, it is re-booted by pressing the PWR button, interrupt by the RTC Alarm, or plugging USB Type-C.&lt;/p&gt;
+
+&lt;h3 id=&quot;case-deep-sleep--connected-and-powered-by-usb-type-c&quot;&gt;Case: Deep sleep / Connected and Powered by USB Type-C&lt;/h3&gt;
+
+&lt;p&gt;The ESP32 immediately stops operating when it goes to deep sleep.
+The output of GPIO2 goes LOW. Because GPIOs do not keep their state in deep sleep to conserve power.&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;323.04&quot; height=&quot;228.595&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
+    &lt;use href=&quot;#m5paper-power-diagram-base&quot; /&gt;
+    &lt;g fill=&quot;none&quot; stroke=&quot;#f00&quot; stroke-width=&quot;1.35278&quot; stroke-dasharray=&quot;2&quot;&gt;
+      &lt;path d=&quot;m22.245 39.585-8.6458-8.141&quot; /&gt;
+      &lt;path d=&quot;m42.921 40.567-8.8204 0.72959&quot; /&gt;
+      &lt;path d=&quot;m41.627 38.271-5.7498-2.3344&quot; /&gt;
+      &lt;path d=&quot;m35.837 31.966 5.6111-2.3245&quot; /&gt;
+      &lt;path d=&quot;m50.523 27.762h3.8344&quot; /&gt;
+      &lt;animate attributeName=&quot;stroke-dashoffset&quot; values=&quot;0;-8&quot; dur=&quot;1s&quot; repeatCount=&quot;indefinite&quot; /&gt;
+    &lt;/g&gt;
+  &lt;/svg&gt;
+  &lt;figcaption&gt;Deep sleep, powered by USB Type-C&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Pressing the PWR button etc… does not wake up or restart from the deep sleep status.
+Because the MOS output remains HIGH and unchanged.&lt;/p&gt;
+
+&lt;p&gt;The ESP32 remains powered by USB Type-C, so the ULP coprocessor works.
+ESP32 wake-up functions such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;esp_sleep_enable_timer_wakeup()&lt;/code&gt; or ULP coprocessor program can be used.&lt;/p&gt;
+
+&lt;h3 id=&quot;case-deep-sleep--usb-type-c-unpuggled&quot;&gt;Case: Deep sleep / USB Type-C Unpuggled&lt;/h3&gt;
+
+&lt;p&gt;The ESP32 immediately stops operating when it goes to deep sleep.
+The output of GPIO2 goes LOW. Because GPIOs do not keep their state in deep sleep to conserve power.&lt;/p&gt;
+
+&lt;p&gt;When USB Type-C Unpuggled, such a process causes MOS output to OFF and a transition to a state equivalent to a &lt;em&gt;genuine&lt;/em&gt; shutdown.&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;323.04&quot; height=&quot;228.595&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
+    &lt;use href=&quot;#m5paper-power-diagram-base&quot; /&gt;
+  &lt;/svg&gt;
+  &lt;figcaption&gt;After Deep sleep and USB Type-C unplugged&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;The ESP32 is not powered, so the ULP coprocessor does not work.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;esp_sleep_enable_timer_wakeup()&lt;/code&gt; or ULP coprocessor program cannot be used for wake-up.&lt;/p&gt;
+
+&lt;p&gt;At this time, it is re-booted by pressing the PWR button, interrupt by the RTC Alarm, or plugging USB Type-C.&lt;/p&gt;
+
+&lt;p&gt;It is possible to change this behaviour to add following to lines before going to deep sleep.&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gpio_hold_en&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gpio_num_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;M5EPD_MAIN_PWR_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gpio_deep_sleep_hold_en&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// ...snip...&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;esp_deep_sleep_start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In this case, it keeps the GPIO2 even during deep sleep.&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;323.04&quot; height=&quot;228.595&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
+    &lt;use href=&quot;#m5paper-power-diagram-base&quot; /&gt;
+    &lt;g fill=&quot;none&quot; stroke=&quot;#f00&quot; stroke-width=&quot;1.35278&quot; stroke-dasharray=&quot;2&quot;&gt;
+      &lt;path d=&quot;m28.843 11.949-0.07504 12.644&quot; /&gt;
+      &lt;path d=&quot;m28.768 24.593 1.7229 7.1761&quot; /&gt;
+      &lt;path d=&quot;m19.15 31.007 6.4228 1.5999&quot; /&gt;
+      &lt;path d=&quot;m35.837 31.966 5.6111-2.3245&quot; /&gt;
+      &lt;path d=&quot;m50.523 27.762h3.8344&quot; /&gt;
+      &lt;animate attributeName=&quot;stroke-dashoffset&quot; values=&quot;0;-8&quot; dur=&quot;1s&quot; repeatCount=&quot;indefinite&quot; /&gt;
+    &lt;/g&gt;
+  &lt;/svg&gt;
+  &lt;figcaption&gt;Deep sleep with keeping GPIO2 to HIGH, powered by USB Type-C&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;In this case, pressing the PWR button etc… does not wake up or restart from the deep sleep status.
+Because GPIO2 keeps HIGH and the MOS output remains HIGH and unchanged.&lt;/p&gt;
+
+&lt;p&gt;The ESP32 remains powered by the LiPo battery, so the ULP coprocessor works.
+ESP32 wake-up functions such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;esp_sleep_enable_timer_wakeup()&lt;/code&gt; or ULP coprocessor program can be used.&lt;/p&gt;
+
+&lt;h3 id=&quot;note-rtc-alarm-issue&quot;&gt;Note: RTC Alarm issue&lt;/h3&gt;
+
+&lt;p&gt;When writing a program to reboot using RTC (BM8563) Alarm, be aware of the following bugs!&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://github.com/m5stack/M5EPD/issues/26&lt;/li&gt;
+  &lt;li&gt;https://github.com/m5stack/M5-CoreInk/pull/3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.m5stack.com/en/core/m5paper&quot;&gt;M5Paper&lt;/a&gt;, M5Stack&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://community.m5stack.com/topic/2892/m5paper-shutdown-deep-sleep-wakeup&quot;&gt;M5Paper Shutdown() / Deep Sleep / Wakeup | M5Stack Community&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://lang-ship.com/blog/work/m5stack-coreink-m5paper/&quot;&gt;M5Stack CoreInk、M5Paperのバッテリーについて | Lang-ship&lt;/a&gt; (Japanese)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.belling.com.cn/media/file_object/bel_product/BM8563/datasheet/BM8563_V1.1_cn.pdf&quot;&gt;Low-Cost, µP Supervisory Circuits - BM8563&lt;/a&gt;, BM8563 Datasheet, Shanghai Belling (Chinese)&lt;/li&gt;
+&lt;/ul&gt;</content>
+      
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>cat_in_136</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="m5paper" />
+      
+        <category term="embedded" />
+      
+
+      
+        <summary type="html">This post describes a summary of the following conditions for the power supply/management of M5Paper. Powered by USB Type-C or not “Shutdown” or “DeepSleep” The following figure is an excerpt from the outline diagram on the back of the M5Paper that relates to the power supply. MOS BM 8563 BATTERY ESP32 D0WDQ6-V3 16M-FLASH 8M-PSRAM Li-Po 1150mAh 4.35V SY 7088 5V BUS SLM6635 USB-C G2 SDA21 SCL22 PWR G38 M5Paper Power Supply Outline Diagram The following conditions must be achieved to keep the power ON: Powered by USB Type-C; Alarm IRQ from RTC (BM8563); GPIO2 (M5EPD_MAIN_PWR_PIN) set to HIGH; or Power button (GPIO38, M5EPD_KEY_PUSH_PIN) Shutdown is achieved by setting all the above conditions to false. It indicates as long as M5Paper is connected and powered by USB Type-C, always it cannot shutdown. Then how is the shutdown process of sample programs such as FactoryTest handled? The process is as follows: void Shutdown() { // **snip** M5.disableEPDPower(); // digitalWrite(M5EPD_EPD_PWR_EN_PIN, 0); M5.disableEXTPower(); // digitalWrite(M5EPD_EXT_PWR_EN_PIN, 0); M5.disableMainPower(); // digitalWrite(M5EPD_MAIN_PWR_PIN, 1); esp_deep_sleep_start(); while(1); } If USB Type-C is connected, M5.disableMainPower() (setting GPIO2 to OFF) does not turn off its power and go to the next line and then deep sleep, not a genuine shutdown. If not, it shutdown immediately after M5.disableMainPower() (setting GPIO2 to OFF) and esp_deep_sleep_start() does not executed. Case: Shutdown / Connected and Powered by USB Type-C As long as M5Paper is connected and powered by USB Type-C, always one condition “Powered by USB Type-C” is true and it cannot shutdown. Powered by USB Type-C After M5.disableMainPower() executed (setting GPIO2 to OFF), the MOS output is still HIGH and the power is still ON. Powered by USB Type-C, After main power disabled After that, if the USB Type-C cable unplugged further, the power goes off. Because the MOS output gets LOW. Powered by USB Type-C, After main power disabled and then USB Type-C unplugged At this time, it is re-booted by pressing the PWR button, interrupt by the RTC Alarm, or plugging USB Type-C. Case: Shutdown / USB Type-C Unpuggled Other hand, if the USB Type-C cable is unplugged without calling M5.disableMainPower(), the GPIO2 output remains HIGH. Therefore, the power remains ON and is supplied from the LiPo battery. It is the same condition as just after booting without the USB Type-C power supply. After USB Type-C unplugged After M5.disableMainPower() executed (setting GPIO2 to OFF), the MOS output and the power go off. After USB Type-C unplugged and set GPIO2 to OFF At this time, it is re-booted by pressing the PWR button, interrupt by the RTC Alarm, or plugging USB Type-C. Case: Deep sleep / Connected and Powered by USB Type-C The ESP32 immediately stops operating when it goes to deep sleep. The output of GPIO2 goes LOW. Because GPIOs do not keep their state in deep sleep to conserve power. Deep sleep, powered by USB Type-C Pressing the PWR button etc… does not wake up or restart from the deep sleep status. Because the MOS output remains HIGH and unchanged. The ESP32 remains powered by USB Type-C, so the ULP coprocessor works. ESP32 wake-up functions such as esp_sleep_enable_timer_wakeup() or ULP coprocessor program can be used. Case: Deep sleep / USB Type-C Unpuggled The ESP32 immediately stops operating when it goes to deep sleep. The output of GPIO2 goes LOW. Because GPIOs do not keep their state in deep sleep to conserve power. When USB Type-C Unpuggled, such a process causes MOS output to OFF and a transition to a state equivalent to a genuine shutdown. After Deep sleep and USB Type-C unplugged The ESP32 is not powered, so the ULP coprocessor does not work. esp_sleep_enable_timer_wakeup() or ULP coprocessor program cannot be used for wake-up. At this time, it is re-booted by pressing the PWR button, interrupt by the RTC Alarm, or plugging USB Type-C. It is possible to change this behaviour to add following to lines before going to deep sleep. gpio_hold_en((gpio_num_t) M5EPD_MAIN_PWR_PIN); gpio_deep_sleep_hold_en(); // ...snip... esp_deep_sleep_start(); In this case, it keeps the GPIO2 even during deep sleep. Deep sleep with keeping GPIO2 to HIGH, powered by USB Type-C In this case, pressing the PWR button etc… does not wake up or restart from the deep sleep status. Because GPIO2 keeps HIGH and the MOS output remains HIGH and unchanged. The ESP32 remains powered by the LiPo battery, so the ULP coprocessor works. ESP32 wake-up functions such as esp_sleep_enable_timer_wakeup() or ULP coprocessor program can be used. Note: RTC Alarm issue When writing a program to reboot using RTC (BM8563) Alarm, be aware of the following bugs! https://github.com/m5stack/M5EPD/issues/26 https://github.com/m5stack/M5-CoreInk/pull/3 References M5Paper, M5Stack M5Paper Shutdown() / Deep Sleep / Wakeup | M5Stack Community M5Stack CoreInk、M5Paperのバッテリーについて | Lang-ship (Japanese) Low-Cost, µP Supervisory Circuits - BM8563, BM8563 Datasheet, Shanghai Belling (Chinese)</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Diff between firefox 100.0 beta 6 default preference and firefox 99.0.1</title>
@@ -891,7 +1299,7 @@ table.diff_firefox100_pref_diff tbody tr { transition: background 0.125s ease-in
       <content type="html" xml:base="https://cat-in-136.github.io/2022/04/podman-rootless-container-with-net.html">&lt;p&gt;従来の docker では、コンテナに IP アドレスが &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;172.xxx.xxx.xxx&lt;/code&gt; のように割り当てられていた。
 このアドレスは下記で取得可能。&lt;/p&gt;
 
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker inspect &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'{{ .NetworkSettings.IPAddress }}'&lt;/span&gt; コンテナID
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker inspect &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;{{ .NetworkSettings.IPAddress }}&apos;&lt;/span&gt; コンテナID
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;コンテナ内でポートを開いた時、とくに何もせずとも &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;172.xxx.xxx.xxx&lt;/code&gt; のポート5432をアクセスすればよい。&lt;/p&gt;
@@ -970,7 +1378,7 @@ podman run &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt;&lt;span class=&q
       
 
       
-        <summary type="html">従来の docker では、コンテナに IP アドレスが 172.xxx.xxx.xxx のように割り当てられていた。 このアドレスは下記で取得可能。 docker inspect -f '{{ .NetworkSettings.IPAddress }}' コンテナID コンテナ内でポートを開いた時、とくに何もせずとも 172.xxx.xxx.xxx のポート5432をアクセスすればよい。 しかしルートレスコンテナの場合、IPアドレスが付与されない。 通信するには、明示的に-pオプションを使ってコンテナのポートをホストに公開するのが簡単である。 podman run --name=pg --rm -it \ -e POSTGRES_PASSWORD=mysecretpassword \ -p 5432:5432 \ docker.io/library/postgres:alpine このときホスト側から 127.0.0.1:5432 にアクセスしてコンテナ内のサーバにアクセスができる。 psql -h 127.0.0.1 -U postgres -p 5432 postgres コンテナどおしで通信する場合は、単一ポッドに入れる方法と、ポートマッピングを駆使する方法がある。 簡単なのは通信する必要があるコンテナを単一ポッドに入れてしまう方法だ。 podman run --name=pg --rm -it \ -e POSTGRES_PASSWORD=mysecretpassword \ --pod new:mypod \ docker.io/library/postgres:alpine 同様に podman run --name=psql --rm -it \ --pod mypod \ docker.io/library/postgres:alpine \ psql -h pg -U postgres こうすると同一のポッドmypod内にある２つのコンテナは自然にアクセスできる。 この例では、片方のコンテナから 127.0.0.1 の 5432 ポートを叩くと自然にもう片方のコンテナのサーバにアクセスできる。 さらに、ポートをホストに公開するには、一旦podman pod createを実行して、ここで-pオプションを使ってコンテナのポートをホストに公開する必要がある。 podman pod create mypod -p 5432:5432 podman run --name=pg --rm -it -e POSTGRES_PASSWORD=mysecretpassword \ --pod mypod \ docker.io/library/postgres:alpine 参考文献 Brent Baude, “Configuring container networking with Podman | Enable Sysadmin”, Enable Sysadmin, Redhat, Oct 28, 2019</summary>
+        <summary type="html">従来の docker では、コンテナに IP アドレスが 172.xxx.xxx.xxx のように割り当てられていた。 このアドレスは下記で取得可能。 docker inspect -f &apos;{{ .NetworkSettings.IPAddress }}&apos; コンテナID コンテナ内でポートを開いた時、とくに何もせずとも 172.xxx.xxx.xxx のポート5432をアクセスすればよい。 しかしルートレスコンテナの場合、IPアドレスが付与されない。 通信するには、明示的に-pオプションを使ってコンテナのポートをホストに公開するのが簡単である。 podman run --name=pg --rm -it \ -e POSTGRES_PASSWORD=mysecretpassword \ -p 5432:5432 \ docker.io/library/postgres:alpine このときホスト側から 127.0.0.1:5432 にアクセスしてコンテナ内のサーバにアクセスができる。 psql -h 127.0.0.1 -U postgres -p 5432 postgres コンテナどおしで通信する場合は、単一ポッドに入れる方法と、ポートマッピングを駆使する方法がある。 簡単なのは通信する必要があるコンテナを単一ポッドに入れてしまう方法だ。 podman run --name=pg --rm -it \ -e POSTGRES_PASSWORD=mysecretpassword \ --pod new:mypod \ docker.io/library/postgres:alpine 同様に podman run --name=psql --rm -it \ --pod mypod \ docker.io/library/postgres:alpine \ psql -h pg -U postgres こうすると同一のポッドmypod内にある２つのコンテナは自然にアクセスできる。 この例では、片方のコンテナから 127.0.0.1 の 5432 ポートを叩くと自然にもう片方のコンテナのサーバにアクセスできる。 さらに、ポートをホストに公開するには、一旦podman pod createを実行して、ここで-pオプションを使ってコンテナのポートをホストに公開する必要がある。 podman pod create mypod -p 5432:5432 podman run --name=pg --rm -it -e POSTGRES_PASSWORD=mysecretpassword \ --pod mypod \ docker.io/library/postgres:alpine 参考文献 Brent Baude, “Configuring container networking with Podman | Enable Sysadmin”, Enable Sysadmin, Redhat, Oct 28, 2019</summary>
       
 
       
@@ -3714,7 +4122,7 @@ Processing * in m5stack-atom environment
 Building...
 Uploading...
 Testing...
-If you don't see any output for the first 10 secs, please reset board (press reset button)
+If you don&apos;t see any output for the first 10 secs, please reset board (press reset button)
 
 test/test_main.cpp:22:test_hello_world	[PASSED]
 -----------------------
@@ -3753,9 +4161,11 @@ Test    Environment    Status    Duration
       
         <category term="platformio" />
       
+        <category term="embedded" />
+      
 
       
-        <summary type="html">C/C++ source files shall be placed in src/ or include/. PlatformIO Unit Testing Engine does not build source code from src/ by default. To test library test code in src/, instruct PlatformIO to build files in src/ using test_build_project_src option in platformio.ini. Directory Layout . ├── library.json ├── platformio.ini ├── src │   ├── HelloWorld.cpp │   └── HelloWorld.h └── test └── test_main.cpp Library Manifest library.json Create the manifest file library.json as usual. { &quot;name&quot;: &quot;HelloWorld&quot;, &quot;version&quot;: &quot;1.0.0&quot;, &quot;description&quot;: &quot;A \&quot;Hello world\&quot; program is a computer program that outputs \&quot;Hello World\&quot; (or some variant) on a display device&quot;, &quot;keywords&quot;: &quot;planet, happiness, people&quot;, &quot;repository&quot;: { &quot;type&quot;: &quot;git&quot;, &quot;url&quot;: &quot;https://git.example.com/john-smith/hello-world.git&quot; }, &quot;authors&quot;: [ { &quot;name&quot;: &quot;John Smith&quot;, &quot;email&quot;: &quot;me@john-smith.example.com&quot;, &quot;url&quot;: &quot;https://john-smith.example.com/contact&quot; } ], &quot;license&quot;: &quot;MIT&quot;, &quot;homepage&quot;: &quot;https://helloworld.example.com/&quot;, &quot;frameworks&quot;: &quot;*&quot;, &quot;platforms&quot;: &quot;*&quot; } platform.io As described above, you need specify test_build_project_src to yes. To test on PC native by default, create native environment and set default_envs to native. [platformio] default_envs = native [env] monitor_flags = --echo monitor_filters = time, send_on_enter, default test_build_project_src = yes [env:native] platform = native # create any other environment as you like... [env:m5stack-atom] platform = espressif32 board = m5stack-atom framework = arduino monitor_speed = 115200 [env:sparkfun_promicro16] platform = atmelavr board = sparkfun_promicro16 framework = arduino Codes In this example, we simply declare a function that returns a string “Hello, world.” // src/HelloWorld.h #ifndef _HELLO_WORLD_H_ #define _HELLO_WORLD_H_ //#pragma once const char* HelloWorld(void); #endif // src/HelloWorld.cpp #include &quot;HelloWorld.h&quot; const char* HelloWorld(void) { return &quot;Hello, World.&quot;; } Test codes Write the test case as a function like the following: #include &amp;lt;HelloWorld.h&amp;gt; #include &amp;lt;unity.h&amp;gt; #include &amp;lt;cstring&amp;gt; void test_hello_world() { TEST_ASSERT_EQUAL(0, strcmp(&quot;Hello, World.&quot;, HelloWorld())); } Register this function with RUN_TEST() surrounded UNITY_BEGIN() and UNITY_END(). //#include &amp;lt;unity.h&amp;gt; UNITY_BEGIN(); RUN_TEST(test_hello_world); // RUN_TEST(test_another_one); UNITY_END(); The entry point is different between arduino and native. setup() and loop() are required for arduino, main() for native. To run it in the same source code, you need to switch entry point functions using #ifdef ARDUINO as shown below: #include &amp;lt;HelloWorld.h&amp;gt; #include &amp;lt;unity.h&amp;gt; #include &amp;lt;cstring&amp;gt; #ifdef ARDUINO #include &amp;lt;Arduino.h&amp;gt; #endif void test_hello_world() { TEST_ASSERT_EQUAL(0, strcmp(&quot;Hello, World.&quot;, HelloWorld())); } #ifdef ARDUINO void setup() { delay(2000); // add 2-sec wait for the board w/o software resetting via // Serial.DTR/RTS #else int main(int argc, char *argv[]) { #endif UNITY_BEGIN(); RUN_TEST(test_hello_world); UNITY_END(); #ifndef ARDUINO return 0; #endif } #ifdef ARDUINO void loop() {} #endif Run test Just run pio test (or run the test task on the your favorite tool). $ pio -c vim test Verbose mode can be enabled via `-v, --verbose` option Collected 1 items Processing * in native environment -------------------------------------------------------------------------------- Building... Testing... test/test_main.cpp:22:test_hello_world [PASSED] ----------------------- 1 Tests 0 Failures 0 Ignored OK ========================== [PASSED] Took 0.64 seconds ========================== Test Environment Status Duration ------ ------------- -------- ------------ * native PASSED 00:00:00.642 ========================= 1 succeeded in 00:00:00.642 ========================= Same way for testing on a board, but it takes longer time. $ pio -c vim test -e m5stack-atom Verbose mode can be enabled via `-v, --verbose` option Collected 1 items Processing * in m5stack-atom environment -------------------------------------------------------------------------------- Building... Uploading... Testing... If you don't see any output for the first 10 secs, please reset board (press reset button) test/test_main.cpp:22:test_hello_world [PASSED] ----------------------- 1 Tests 0 Failures 0 Ignored ========================== [PASSED] Took 8.13 seconds ========================== Test Environment Status Duration ------ ------------- -------- ------------ * m5stack-atom PASSED 00:00:08.127 ========================= 1 succeeded in 00:00:08.127 ========================= References PlatformIO でユニットテストが書きたい | мята Creating Library — PlatformIO latest documentation Unit Testing — PlatformIO latest documentation</summary>
+        <summary type="html">C/C++ source files shall be placed in src/ or include/. PlatformIO Unit Testing Engine does not build source code from src/ by default. To test library test code in src/, instruct PlatformIO to build files in src/ using test_build_project_src option in platformio.ini. Directory Layout . ├── library.json ├── platformio.ini ├── src │   ├── HelloWorld.cpp │   └── HelloWorld.h └── test └── test_main.cpp Library Manifest library.json Create the manifest file library.json as usual. { &quot;name&quot;: &quot;HelloWorld&quot;, &quot;version&quot;: &quot;1.0.0&quot;, &quot;description&quot;: &quot;A \&quot;Hello world\&quot; program is a computer program that outputs \&quot;Hello World\&quot; (or some variant) on a display device&quot;, &quot;keywords&quot;: &quot;planet, happiness, people&quot;, &quot;repository&quot;: { &quot;type&quot;: &quot;git&quot;, &quot;url&quot;: &quot;https://git.example.com/john-smith/hello-world.git&quot; }, &quot;authors&quot;: [ { &quot;name&quot;: &quot;John Smith&quot;, &quot;email&quot;: &quot;me@john-smith.example.com&quot;, &quot;url&quot;: &quot;https://john-smith.example.com/contact&quot; } ], &quot;license&quot;: &quot;MIT&quot;, &quot;homepage&quot;: &quot;https://helloworld.example.com/&quot;, &quot;frameworks&quot;: &quot;*&quot;, &quot;platforms&quot;: &quot;*&quot; } platform.io As described above, you need specify test_build_project_src to yes. To test on PC native by default, create native environment and set default_envs to native. [platformio] default_envs = native [env] monitor_flags = --echo monitor_filters = time, send_on_enter, default test_build_project_src = yes [env:native] platform = native # create any other environment as you like... [env:m5stack-atom] platform = espressif32 board = m5stack-atom framework = arduino monitor_speed = 115200 [env:sparkfun_promicro16] platform = atmelavr board = sparkfun_promicro16 framework = arduino Codes In this example, we simply declare a function that returns a string “Hello, world.” // src/HelloWorld.h #ifndef _HELLO_WORLD_H_ #define _HELLO_WORLD_H_ //#pragma once const char* HelloWorld(void); #endif // src/HelloWorld.cpp #include &quot;HelloWorld.h&quot; const char* HelloWorld(void) { return &quot;Hello, World.&quot;; } Test codes Write the test case as a function like the following: #include &amp;lt;HelloWorld.h&amp;gt; #include &amp;lt;unity.h&amp;gt; #include &amp;lt;cstring&amp;gt; void test_hello_world() { TEST_ASSERT_EQUAL(0, strcmp(&quot;Hello, World.&quot;, HelloWorld())); } Register this function with RUN_TEST() surrounded UNITY_BEGIN() and UNITY_END(). //#include &amp;lt;unity.h&amp;gt; UNITY_BEGIN(); RUN_TEST(test_hello_world); // RUN_TEST(test_another_one); UNITY_END(); The entry point is different between arduino and native. setup() and loop() are required for arduino, main() for native. To run it in the same source code, you need to switch entry point functions using #ifdef ARDUINO as shown below: #include &amp;lt;HelloWorld.h&amp;gt; #include &amp;lt;unity.h&amp;gt; #include &amp;lt;cstring&amp;gt; #ifdef ARDUINO #include &amp;lt;Arduino.h&amp;gt; #endif void test_hello_world() { TEST_ASSERT_EQUAL(0, strcmp(&quot;Hello, World.&quot;, HelloWorld())); } #ifdef ARDUINO void setup() { delay(2000); // add 2-sec wait for the board w/o software resetting via // Serial.DTR/RTS #else int main(int argc, char *argv[]) { #endif UNITY_BEGIN(); RUN_TEST(test_hello_world); UNITY_END(); #ifndef ARDUINO return 0; #endif } #ifdef ARDUINO void loop() {} #endif Run test Just run pio test (or run the test task on the your favorite tool). $ pio -c vim test Verbose mode can be enabled via `-v, --verbose` option Collected 1 items Processing * in native environment -------------------------------------------------------------------------------- Building... Testing... test/test_main.cpp:22:test_hello_world [PASSED] ----------------------- 1 Tests 0 Failures 0 Ignored OK ========================== [PASSED] Took 0.64 seconds ========================== Test Environment Status Duration ------ ------------- -------- ------------ * native PASSED 00:00:00.642 ========================= 1 succeeded in 00:00:00.642 ========================= Same way for testing on a board, but it takes longer time. $ pio -c vim test -e m5stack-atom Verbose mode can be enabled via `-v, --verbose` option Collected 1 items Processing * in m5stack-atom environment -------------------------------------------------------------------------------- Building... Uploading... Testing... If you don&apos;t see any output for the first 10 secs, please reset board (press reset button) test/test_main.cpp:22:test_hello_world [PASSED] ----------------------- 1 Tests 0 Failures 0 Ignored ========================== [PASSED] Took 8.13 seconds ========================== Test Environment Status Duration ------ ------------- -------- ------------ * m5stack-atom PASSED 00:00:08.127 ========================= 1 succeeded in 00:00:08.127 ========================= References PlatformIO でユニットテストが書きたい | мята Creating Library — PlatformIO latest documentation Unit Testing — PlatformIO latest documentation</summary>
       
 
       
@@ -6207,631 +6617,6 @@ table.diff_firefox94_pref_diff tbody tr { transition: background 0.125s ease-in-
 
       
         <summary type="html">This is difference between the default preference of Firefox 94.0 beta 6 and one of 93.0. This diff table is generated with my small script firefox-prefjs-surveyer. Preference difference PrefFirefox 93.0Firefox 94.0 beta 6 app.normandy.test-prefs.bool undefined false app.normandy.test-prefs.integer undefined 0 app.normandy.test-prefs.string undefined app.releaseNotesURL https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew app.releaseNotesURL.aboutDialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog app.update.channel release beta app.update.url.details https://www.mozilla.org/%LOCALE%/firefox/notes https://www.mozilla.org/%LOCALE%/firefox/beta/notes app.update.url.manual https://www.mozilla.org/%LOCALE%/firefox/ https://www.mozilla.org/%LOCALE%/firefox/beta apz.nonwr.activate_all_scroll_frames false undefined apz.nonwr.activate_all_scroll_frames_when_fission false undefined browser.cache.offline.enable true false browser.contentblocking.features.strict tp,tpPrivate,cookieBehavior5,cookieBehaviorPBM5,cm,fp,stp,lvl2,rp tp,tpPrivate,cookieBehavior5,cookieBehaviorPBM5,cm,fp,stp,lvl2,rp,ocsp browser.download.enable_spam_prevention undefined false browser.newtabpage.activity-stream.customizationMenu.enabled false undefined browser.newtabpage.activity-stream.discoverystream.compactLayout.enabled undefined false browser.newtabpage.activity-stream.discoverystream.lastCardMessage.enabled undefined false browser.newtabpage.activity-stream.discoverystream.loadMore.enabled undefined false browser.newtabpage.activity-stream.discoverystream.newFooterSection.enabled undefined false browser.newtabpage.activity-stream.discoverystream.saveToPocketCard.enabled undefined false browser.newtabpage.activity-stream.newNewtabExperience.enabled true undefined browser.newtabpage.activity-stream.telemetry.ut.events false true browser.privatebrowsing.infoBody undefined browser.privatebrowsing.infoEnabled true undefined browser.privatebrowsing.infoIcon undefined browser.privatebrowsing.infoLinkText undefined browser.privatebrowsing.infoLinkUrl undefined browser.privatebrowsing.infoTitle undefined browser.privatebrowsing.infoTitleEnabled true undefined browser.privatebrowsing.promoEnabled true undefined browser.privatebrowsing.promoLinkText undefined browser.privatebrowsing.promoLinkUrl undefined browser.privatebrowsing.promoTitle undefined browser.privatebrowsing.promoTitleEnabled true undefined browser.sessionstore.dom_form_limit undefined 2097152 browser.sessionstore.dom_form_max_limit undefined 52428800 browser.sessionstore.warnOnQuit false undefined browser.startup.couldRestoreSession.count undefined 0 browser.tabs.warnOnClose true false browser.warnOnQuitShortcut undefined true devtools.every-frame-target.enabled undefined false dom.forms.enterkeyhint false true dom.image-lazy-loading.root-margin.bottom 300.0 800.0 dom.image-lazy-loading.root-margin.left 300.0 800.0 dom.image-lazy-loading.root-margin.right 300.0 800.0 dom.image-lazy-loading.root-margin.top 300.0 800.0 dom.ipc.processCount.webIsolated 1 4 dom.shadowdom.delegatesFocus.enabled undefined true dom.window.content.untrusted.enabled true false dom.window.sidebar.enabled true false editor.hr_element.allow_to_delete_from_following_line false true extensions.webcompat-reporter.enabled false true fission.highValue.coop.expiration undefined 2592000 fission.webContentIsolationStrategy undefined 1 geo.provider.network.url https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY% https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY% gfx.layerscope.enabled false undefined gfx.layerscope.port 23456 undefined gfx.logging.painted-pixel-count.enabled false undefined gfx.webrender.batched-texture-uploads undefined false gfx.webrender.blob-tile-size undefined 256 gfx.webrender.debug.batched-texture-uploads false undefined gfx.webrender.debug.draw-calls-for-texture-copy false undefined gfx.webrender.draw-calls-for-texture-copy undefined false gfx.webrender.enable-multithreading true undefined gfx.webrender.multithreading undefined true gfx.webrender.pbo-uploads undefined true javascript.options.wasm_simd_wormhole undefined false layers.acceleration.draw-fps.print-histogram false undefined layers.acceleration.draw-fps.write-to-file false undefined layers.bench.enabled false undefined layers.bufferrotation.enabled true undefined layers.componentalpha.enabled true undefined layers.compositing-tiles.height 1024 undefined layers.compositing-tiles.width 1024 undefined layers.draw-bigimage-borders false undefined layers.draw-borders false undefined layers.draw-layer-info false undefined layers.draw-tile-borders false undefined layers.dump false undefined layers.dump-client-layers false undefined layers.dump-host-layers false undefined layers.dump-texture false undefined layers.effect.contrast 0.0 undefined layers.effect.grayscale false undefined layers.effect.invert false undefined layers.flash-borders false undefined layers.geometry.basic.enabled true undefined layers.geometry.d3d11.enabled true undefined layers.geometry.opengl.enabled true undefined layers.low-precision-opacity 1.0 undefined layers.max-active -1 undefined layers.orientation.sync.timeout 0 undefined layers.single-tile.enabled true undefined layers.tile-initial-pool-size 50 undefined layers.tile-pool-clear-timeout 5000 undefined layers.tile-pool-shrink-timeout 50 undefined layers.tile-pool-unused-size 10 undefined layers.tiles.edge-padding false undefined layers.tiles.fade-in.duration-ms 250 undefined layers.tiles.fade-in.enabled false undefined layers.tiles.retain-back-buffer true undefined layers.transaction.warning-ms 200 undefined layers.uniformity-info false undefined layers.use-image-offscreen-surfaces true undefined layout.animated-image-layers.enabled false undefined layout.css.autofill.background undefined true layout.css.font-visibility.level 3 undefined layout.css.font-visibility.private undefined 3 layout.css.font-visibility.resistFingerprinting undefined 1 layout.css.font-visibility.standard undefined 3 layout.css.font-visibility.trackingprotection undefined 3 layout.css.grid-item-baxis-measurement.enabled undefined false layout.css.scroll-linked-animations.enabled undefined false layout.css.trig.enabled undefined false layout.dynamic-reflow-roots.enabled false true layout.paint_rects_separately true undefined layout.smaller-painted-layers false undefined media.decoder.skip_when_video_too_slow_ms undefined 2500 media.peerconnection.mtransport_process false true network.cache.bug1708673 undefined false network.cache.frecency_array_check_enabled false true network.disable-localhost-when-offline undefined false network.dns.http3_echconfig.enabled undefined false network.http.altsvc.oe true false network.http.clear_bogus_content_encoding undefined false network.http.early_data_disable_on_error undefined true network.http.early_data_max_error undefined 5 network.http.referer.disallowCrossSiteRelaxingDefault false true network.jar.record_failure_reason false true network.process.enabled false true network.proxy.testing_localhost_is_secure_when_hijacked undefined false network.send_ODA_to_content_directly false true network.ssl_tokens_cache_enabled false true network.trr.strict_native_fallback undefined false privacy.annotate_channels.strict_list.enabled false true privacy.clearsitedata.cache.enabled undefined false privacy.partition.network_state.ocsp_cache undefined false privacy.partition.network_state.ocsp_cache.pbmode undefined true security.disallow_non_local_systemprincipal_in_tests undefined false security.disallow_privileged_data_subdocuments_loads false true security.intermediate_preloading_healer.enabled false true security.remote_settings.crlite_filters.enabled false true services.sync.engine.bookmarks.validation.enabled undefined true services.sync.engine.passwords.validation.enabled undefined true services.sync.prefs.sync.browser.sessionstore.warnOnQuit true undefined signon.usernameOnlyForm.enabled false true toolkit.aboutProcesses.profileDuration undefined 5 toolkit.aboutProcesses.showProfilerIcons undefined false toolkit.sqlitejsm.loglevel undefined Error toolkit.telemetry.enabled false true widget.non-native-theme.always-high-contrast undefined false widget.wayland-smooth-rendering 1 undefined widget.wayland.async-clipboard.enabled false true widget.wayland.multi-buffer-software-backend.enabled true undefined</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">ぜんぜんわからない俺達は雰囲気でbtrfs使っている</title>
-      <link href="https://cat-in-136.github.io/2021/09/zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru.html" rel="alternate" type="text/html" title="ぜんぜんわからない俺達は雰囲気でbtrfs使っている" />
-      <published>2021-09-13T00:07:08+09:00</published>
-      <updated>2021-09-13T00:07:08+09:00</updated>
-      <id>https://cat-in-136.github.io/2021/09/zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru</id>
-      
-      
-      
-      <content type="html" xml:base="https://cat-in-136.github.io/2021/09/zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru.html">&lt;p&gt;雰囲気で ext2/3/4 を使ってきた人が、雰囲気で btrfs を使うためのメモ。
-RAID は本稿では深く触れない。 RAID は雰囲気で使えるものではない。&lt;/p&gt;
-
-&lt;figure&gt;
-&lt;img class=&quot;fitcontain&quot; src=&quot;/images/2020-09-13-Btrfs_logo.svg&quot; width=&quot;700&quot; height=&quot;700&quot; loading=&quot;lazy&quot; /&gt;
-&lt;/figure&gt;
-
-&lt;h3 id=&quot;発音&quot;&gt;発音&lt;/h3&gt;
-
-&lt;p&gt;何かと話にあがるどう発音するか問題については、下記が答えで良いと思われる。&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;It’s called Butter FS or B-tree FS, but all the cool kids say Butter FS&lt;/p&gt;
-
-  &lt;p&gt;— Valerie Henson, “Chunkfs: Fast file system check and repair”, 31 Jan 2008.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;クールキッズなら &lt;strong&gt;バター・エフ・エス&lt;/strong&gt;  [bʌ́tə(r) - éf - es] と発音すれば良い。&lt;/p&gt;
-
-&lt;figure&gt;
-&lt;figcaption&gt;&quot;Butter FS&quot; 発音部を抜き出したもの&lt;/figcaption&gt;
-&lt;audio controls=&quot;controls&quot; src=&quot;data:audio/ogg;base64,T2dnUwACAAAAAAAAAAAcj6glAAAAAFR7DAUBE09wdXNIZWFkAQE4AUSsAAAAAABPZ2dTAAAAAAAAAAAAAByPqCUBAAAAKSPv1wP///5PcHVzVGFncx8AAABsaWJvcHVzIDEuMy4xLCBsaWJvcHVzZW5jIDAuMi4xAgAAACMAAABFTkNPREVSPW9wdXNlbmMgZnJvbSBvcHVzLXRvb2xzIDAuMiQAAABFTkNPREVSX09QVElPTlM9LS1zcGVlY2ggLS1iaXRyYXRlIDgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE9nZ1MABKmZAAAAAAAAHI+oJQIAAACOzBOmKQ4PERUaExoVFxYSERMVFRAUEA0RFBYXGBQODw0NEAwMCw4KDQ4QDQwJCIGnsGaBpjqhQ1ppxqAIPDDnF1qoSlYFl/5X38AIjqr9185BHQCJJVDzWpwvgAiDPf8VyA4+J4pGal35TlrJ/Cjwigi3QPc8wpWD8Upqn/WDdm86v4uvN+fQieVACLp/6fFU0UJLB8xcbvbgJesZSQi7PEiDNGw/DtRt7bvZxHVePr/A9nnA2PK2CJQX1zt0JGmxZkA2IVCaUEZPzDgoCLrdJFytlZgkt6kfn0WsAtAwDbcGmeAIu/Rpobr4RaKWxLOgrpAcQEtMCJFACLvuFTBaYnWahLYgVMdLBLhNCLp5p6q2cn3mtaHt7FuKNWgIun4RzrARkGe51Z/yzXdztGaACLqJ8AwaF4KDdhMIjVYuvHbM9IUgCLtCNzhfTh7J3Z9vBDJ9mAmyefKkCLpQT/OtXepKNhleftIr6Qi/msclRy4pLE0tIwpb/609LppACJRoKA4NaS04aDRqSrSVsAgGbbNW5jPVG0faYUAIP1RaUkNySBpol8blvHYt4AiD9RprrSV4sDk8C2ovYLb69RRACLW3CHBwkBEwc0W/75yKhk1gXM+qsAi0730Ov0vd7qfV4561NQMhR/DPELtwCLO/xQh9j0HUR01WcwSffSGODrDcxMCACLG4gY+QEcNrzE1NfD5wZkAmP6AIPhhEy8IxFoJnT1kjaAg9xzCAhXEDyGn2Ql38gAgGMrvItAoXx1BeC3gIBiwzYH8Yjd07X6GACDzEbnqjbOgtp3wGJuSROAgGISi5zdvGBBj/sAgGECgouvSspnWAUwgGDaKkKnV2F75DCAX41S+8Sf1O0HTnfkAIBfoPnBQ+XEZOCDtIYnr6YQPwGlj2IAg6g8Vifi9S7PD51MK+CDqcY0n18SdunmF/MyVgcAg7VEok54Bx3m1SGl0IBfj/oiAAcaJRr3IIgq91KU2cbBw=&quot;&gt;
-&lt;/audio&gt;
-&lt;/figure&gt;
-
-&lt;h3 id=&quot;とにかくささっと使うには&quot;&gt;とにかくささっと使うには&lt;/h3&gt;
-
-&lt;p&gt;ファイルを仮想ドライブとして使えばひとまず試用することができる。
-128MBのbtrfsストレージ使う方法。&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;fallocate &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; 128M butter.img
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkfs.btrfs butter.img
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;mountpoint
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; auto butter.img mountpoint
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chown&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt; mountpoint
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;128MB未満はbtrfsの仕様として対応していない。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fallocate&lt;/code&gt; が使えない異常に古いファイルシステムをお使いの方は &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dd&lt;/code&gt;
-で所望のサイズのファイルをつくるなどしてください。&lt;/li&gt;
-  &lt;li&gt;BtrfsやzfsなどのCoWファイルシステム上でこのような使い方をする場合、
-CoWによってパフォーマンスの影響が出るため &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chattr +C butter.img&lt;/code&gt; を実行するなどして
-仮想ドライブとして使うファイルには CoW が無効化させておくのが良い。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;raidとかのときはブロックデバイスが必要なので&quot;&gt;RAIDとかのときはブロックデバイスが必要なので&lt;/h4&gt;
-
-&lt;p&gt;RAIDとかのときはブロックデバイスが必要なのでbrdモジュールを使いましょう。&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;modprobe brd &lt;span class=&quot;nv&quot;&gt;rd_nr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2 &lt;span class=&quot;nv&quot;&gt;rd_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;131072
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mkfs.btrfs /dev/ram0 /dev/ram1
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;mountpoint
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; auto /dev/ram0 mountpoint
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;使い終わったらモジュールごと消せば良い。&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;modprobe &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; brd
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;遅延書き込み&quot;&gt;遅延書き込み&lt;/h3&gt;
-
-&lt;p&gt;ファイル書き込みをしても btrfs は容量を消費しないように表示される。&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dd &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/random &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1MB_file
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;btrfs filesystem &lt;span class=&quot;nb&quot;&gt;du &lt;/span&gt;1MB_file
-     Total   Exclusive  Set shared  Filename
-     0.00B       0.00B       0.00B  1MB_file
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;この状態ではファイルの実体は書き込まれていない。
-しばらく経つと、ディスクに書き込まれるので容量を消費する。&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;btrfs filesystem &lt;span class=&quot;nb&quot;&gt;du &lt;/span&gt;1MB_file
-     Total   Exclusive  Set shared  Filename
-   1.00MiB     1.00MiB       0.00B  1MB_file
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;明示的にディスクに書き込み指示するには &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sync&lt;/code&gt; コマンドを打ちましょう。&lt;/p&gt;
-
-&lt;h4 id=&quot;遅延書き込み時間の設定&quot;&gt;遅延書き込み時間の設定&lt;/h4&gt;
-
-&lt;p&gt;mountオプションで &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-o commit=180&lt;/code&gt; のように設定することで、ディスクへの書き込み時間間隔を調整できる。&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;dl&gt;
-    &lt;dt&gt;&lt;strong&gt;commit=seconds&lt;/strong&gt;&lt;/dt&gt;
-    &lt;dd&gt;(since: 3.12, default: 30)
-:&lt;/dd&gt;
-    &lt;dd&gt;Set the interval of periodic transaction commit when data are synchronized to permanent storage. Higher interval values lead to larger amount of unwritten data, which has obvious consequences when the system crashes. The upper bound is not forced, but a warning is printed if it’s more than 300 seconds (5 minutes). Use with care.&lt;/dd&gt;
-  &lt;/dl&gt;
-
-  &lt;p&gt;— &lt;a href=&quot;https://btrfs.wiki.kernel.org/index.php/Manpage/btrfs%285%29&quot;&gt;Manpage/btrfs(5) - btrfs Wiki&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;途中で変える場合は &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remount&lt;/code&gt; コマンドを使いましょう。&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; remount,commit&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;120 mountpoint
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;遅延書き込みの弊害&quot;&gt;遅延書き込みの弊害&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;異常終了（停電・カーネルクラッシュ）すると、ファイルが消える。
-    &lt;ul&gt;
-      &lt;li&gt;実態は、ディスクに書き込む前だったというだけ。人間にはあたかも消えたように見える。&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;一時的にファイルを作って消すような場合はディスク書き込みがないため速い。
-    &lt;ul&gt;
-      &lt;li&gt;コミットインターバルのタイミングで書き込みがあるので処理が遅くなる。&lt;/li&gt;
-      &lt;li&gt;単純にファイルを作るだけではベンチマークにはまったくならない。&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;遅延書き込みを見てみる&quot;&gt;遅延書き込みを見てみる&lt;/h4&gt;
-
-&lt;p&gt;メタデータだけは直ちに作成され &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hello.txt&lt;/code&gt; という文字列がディスクに書き込みされる。
-ファイルの中身は遅れて書き込みされることがわかる。&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;fallocate &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; 128M clean.img
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkfs.btrfs clean.img
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;mountpoint
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; auto clean.img mountpoint
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chown&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt; mountpoint
-
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;hello &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; mountpoint/hello.txt
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;strings clean.img | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; hello | &lt;span class=&quot;nb&quot;&gt;sort&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;uniq
-&lt;/span&gt;hello.txt
-
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;strings clean.img | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; hello | &lt;span class=&quot;nb&quot;&gt;sort&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;uniq
-&lt;/span&gt;hello
-hello.txt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;遅延書き込みまとめ&quot;&gt;遅延書き込みまとめ&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;btrfs はデータは遅れて書き込まれるよ&lt;/li&gt;
-  &lt;li&gt;コミットインターバルは設定で変えられるよ&lt;/li&gt;
-  &lt;li&gt;コミットインターバルが来る前はディスクに書き込まれていないから、異常終了すると消えたように見えるよ。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;copy-on-write--cow&quot;&gt;Copy-on-Write : CoW&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;btrfs is a modern copy on write (CoW) filesystem for Linux aimed at implementing advanced features while also focusing on fault tolerance, repair and easy administration.&lt;/p&gt;
-
-  &lt;p&gt;— &lt;a href=&quot;https://btrfs.wiki.kernel.org/index.php/Main_Page&quot;&gt;btrfs Wiki&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;コピーしても実体はコピーされずに、参照をつくるだけでコピー時間や使用容量を削減する。その後に書き換えた際にはじめて実際にその箇所がコピーされ容量を消費する&lt;/li&gt;
-  &lt;li&gt;新しいデータはディスクの空き容量に書き込んでから、新しいデータを参照するようにファイルのメタデータを変更する。元のデータはどこからも参照されなくなってはじめて削除する。&lt;/li&gt;
-  &lt;li&gt;書き込み途中で死んでもファイルが消えることはないから安全！&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;コピーしても中身は共有されている&quot;&gt;コピーしても中身は共有されている&lt;/h4&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;mountpoint
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dd &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/random &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1MB_file
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;1MB_file 1MB_file_copied
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dd &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/random &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1MB_file.2
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;btrfs filesystem &lt;span class=&quot;nb&quot;&gt;du&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
-     Total   Exclusive  Set shared  Filename
-   1.00MiB       0.00B     1.00MiB  1MB_file
-   1.00MiB     1.00MiB       0.00B  1MB_file2
-   1.00MiB       0.00B     1.00MiB  1MB_file_copied
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1MB_file&lt;/code&gt; と &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1MB_file_copied&lt;/code&gt; は共有されていることがわかる。&lt;/p&gt;
-
-&lt;h4 id=&quot;明示的にコピーをしないとcowによる共有はされない&quot;&gt;明示的にコピーをしないとCoWによる共有はされない&lt;/h4&gt;
-
-&lt;p&gt;ファイルの中身をチェックして共有しているわけではないため、
-同じファイルだとしても別々の手段で取ってきたのならば共有されない。&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;mountpoint
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg &lt;span class=&quot;nt&quot;&gt;--referer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg &lt;span class=&quot;nt&quot;&gt;--referer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sha1sum &lt;/span&gt;49568897633_1e4d1eb342_o_d.jpg&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
-a673cc4dbd99f4e18c1bba82bd818c092d7cc237  49568897633_1e4d1eb342_o_d.jpg
-a673cc4dbd99f4e18c1bba82bd818c092d7cc237  49568897633_1e4d1eb342_o_d.jpg.1
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;btrfs filesystem &lt;span class=&quot;nb&quot;&gt;du &lt;/span&gt;49568897633_1e4d1eb342_o_d.jpg&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
-     Total   Exclusive  Set shared  Filename
-   2.70MiB     2.70MiB       0.00B  49568897633_1e4d1eb342_o_d.jpg
-   2.70MiB     2.70MiB       0.00B  49568897633_1e4d1eb342_o_d.jpg.1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;cowファイルシステムのcowの弊害&quot;&gt;CoWファイルシステムのCoWの弊害&lt;/h4&gt;
-
-&lt;p&gt;新しいデータはディスクの空き容量に書き込んでから、新しいデータを参照するようにファイルのメタデータを変更する。
-古いデータは参照を外すが該当領域はワイプはしないので残ったままになる。
-（空き容量として扱われるので、あとで別のデータが書かれる可能性はある。）&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;fallocate &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; 128M clean.img
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkfs.btrfs clean.img
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;mountpoint
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; auto clean.img mountpoint
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chown&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt; mountpoint
-
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;MySecretKey &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; mountpoint/hoge.txt
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;strings clean.img | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;MySecretKey | &lt;span class=&quot;nb&quot;&gt;sort&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;uniq
-&lt;/span&gt;MySecretKey
-
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;hoge &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; mountpoint/hoge.txt
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;strings clean.img | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;MySecretKey | &lt;span class=&quot;nb&quot;&gt;sort&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;uniq
-&lt;/span&gt;MySecretKey
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;共有状態のファイルへの追記書き込み&quot;&gt;共有状態のファイルへの追記書き込み&lt;/h4&gt;
-
-&lt;p&gt;追記書き込みすると追記していない所は共有されたままである。
-5バイト追加であるのに関わらず4kBとなっているのは、
-leaf block単位で処理されるときのサイズに対応していると思われる。&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dd &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/random &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1MB_file
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;1MB_file 1MB_file_copied
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;hoge &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; 1MB_file_copied
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;btrfs filesystem &lt;span class=&quot;nb&quot;&gt;du&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
-     Total   Exclusive  Set shared  Filename
-   1.00MiB       0.00B     1.00MiB  1MB_file
-   1.00MiB     4.00KiB     1.00MiB  1MB_file_copied
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;共有状態のファイルへの部分書き込み&quot;&gt;共有状態のファイルへの部分書き込み&lt;/h4&gt;
-
-&lt;p&gt;10000バイトごとにファイルの中身を上書きするとどうなるか?&lt;/p&gt;
-
-&lt;p&gt;下記のようなディスク破壊用プログラムをつくった。&lt;/p&gt;
-
-&lt;div class=&quot;language-rust highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.nth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.unwrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.unwrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;mut&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;OpenOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.unwrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;mut&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.seek&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;SeekFrom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.unwrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;b&quot;Crash!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.unwrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;1MBのファイルに既述処理を施すと 1024 * 1024 / 1000 + 1 = 105 箇所書き込まれる。
-105 * 4kB = 420kB 相当のところが書き換えられるのでそこが共有から外れる。&lt;/p&gt;
-
-&lt;p&gt;この420kBは &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1MB_file_copied&lt;/code&gt; で断片化領域の容量の和でもある。&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;mountpoint
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dd &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/random &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1MB_file
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;1MB_file 1MB_file_copied
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vi crash.rs
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rustc crash.rs
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;./crash 1MB_file_copied
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;strings 1MB_file_copied | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;Crash | &lt;span class=&quot;nb&quot;&gt;wc&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;
-105
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;btrfs filesystem &lt;span class=&quot;nb&quot;&gt;du &lt;/span&gt;1MB_file 1MB_file_copied
-     Total   Exclusive  Set shared  Filename
-   1.00MiB       0.00B     1.00MiB  1MB_file
-   1.00MiB   420.00KiB   604.00KiB  1MB_file_copied
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;cowの無効化&quot;&gt;CoWの無効化&lt;/h4&gt;
-
-&lt;p&gt;弊害を嫌う場合は、下記のようにして無効化しましょう&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;ファイル単位での CoW を無効 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chattr +C file_nocow&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;ファイルシステム全体で CoW を無効。 “nodatacow” オプションを使ってマウント。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;cowまとめ&quot;&gt;CoWまとめ&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;ファイルを上書きしても上書きされないよ、一旦コピーしてから空き容量に書き込まれてから参照を張り直すよ&lt;/li&gt;
-  &lt;li&gt;ファイルのコピーをしても実態はコピーされないよ、共有されるよ&lt;/li&gt;
-  &lt;li&gt;コピーして共有されているファイルはファイル書き込み時に、空き容量によって書き込む仕組みの結果、共有が解かれるよ&lt;/li&gt;
-  &lt;li&gt;弊害として断片化があるよ&lt;/li&gt;
-  &lt;li&gt;嫌ならばファイル単位、またはファイルシステム全体で無効化出来るよ&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;サブボリューム&quot;&gt;サブボリューム&lt;/h3&gt;
-
-&lt;p&gt;フォルダのように使えるがマウントも出来る。
-普通のフォルダの下にも置けちゃったりするなどかなり自由度は高い。
-使い方はなんとなくでわかる。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;作る
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs subvolume create mountpoint/subvolume
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;消す
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs subvolume delete mountpoint/subvolume
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;一覧
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs subvolume list mountpoint
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;サブボリューム単位でのマウント
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; btrfs &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;subvol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/subvolume devicefile mountpoint
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;※複製はスナップショットを使う。&lt;/p&gt;
-
-&lt;h3 id=&quot;スナップショット&quot;&gt;スナップショット&lt;/h3&gt;
-
-&lt;p&gt;実態はサブボリュームのコピーである。
-スナップショットって言っているのにデフォルトはコピー可である。&lt;/p&gt;
-
-&lt;p&gt;CoWのお陰でスナップショットを作る（サブボリュームのコピー）のは一瞬で終了する。&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs subvolume snapshot mountpoint/subvolume mountpoint/subvolume_copied
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;普通の意味での readonly なスナップショットは、下記の通り &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-r&lt;/code&gt; を付ける。&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs subvolume snapshot &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; mountpoint/subvolume mountpoint/subvolume_copied
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;btrfsのスナップショットの特徴&quot;&gt;btrfsのスナップショットの特徴&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;btrfs subvolume snapshot&lt;/code&gt; はサブボリュームのスナップショットとしてのコピーを作る&lt;/li&gt;
-  &lt;li&gt;スナップショットは単なるサブボリュームなので、普通に見たりコピーして取り出したりすることができる&lt;/li&gt;
-  &lt;li&gt;サブボリューム配下にあるサブボリュームはスナップショットにコピーされず空になる
-    &lt;ul&gt;
-      &lt;li&gt;サブボリュームをスナップショットによるコピーの除外に使う&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;既にあるサブボリュームに他のサブボリュームの内容に置き換えるのは単純な操作では不可能
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zfs rollback hoge@fuga&lt;/code&gt; のような復元用コマンドはない&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;スナップショットの置き場所の検討&quot;&gt;スナップショットの置き場所の検討&lt;/h4&gt;
-
-&lt;p&gt;通常サブボリュームの下にスナップショットを作る構成が自然だが、
-btrfs の仕組みだと復元作業が難しくなる。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;fuga (subvolume)
-    &lt;ul&gt;
-      &lt;li&gt;files…&lt;/li&gt;
-      &lt;li&gt;.snapshots/
-        &lt;ul&gt;
-          &lt;li&gt;snapshot1 (subvolume: snapshot)&lt;/li&gt;
-          &lt;li&gt;snapshot2 (subvolume: snapshot)&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;対象サブボリュームの外側にスナップショットを作るのがよい。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;fuga (subvolume)
-    &lt;ul&gt;
-      &lt;li&gt;files…&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;snapshots/ (subvolumeにしてもしなくとも、複数階層にしてもよい)
-    &lt;ul&gt;
-      &lt;li&gt;snapshot1 (subvolume: snapshot)&lt;/li&gt;
-      &lt;li&gt;snapshot2 (subvolume: snapshot)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;この構成の復元方法はおおよそ下記のようになる。&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo mv &lt;/span&gt;fuga fuga_bak
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs subvolume snapshot snapshots/snapshot1 fuga
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs subvolume delete fuga_bak
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;これを踏まえての構成はたとえば&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;root (subvolume; マウント先=&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/&lt;/code&gt;)&lt;/li&gt;
-  &lt;li&gt;home (subvolume; マウント先=&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/home&lt;/code&gt;)&lt;/li&gt;
-  &lt;li&gt;log (subvolume; マウント先=&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/var/log&lt;/code&gt;)&lt;/li&gt;
-  &lt;li&gt;snapshots/ (subvolume; マウント先=&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/sys_snapshots&lt;/code&gt; )
-    &lt;ul&gt;
-      &lt;li&gt;btrbk/
-        &lt;ul&gt;
-          &lt;li&gt;snapshots… (subvolume: snapshot)&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;ここで &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/var/log&lt;/code&gt; を別サブボリューム log にしている。
-root スナップショットが復元されても、ログファイルが以前の状態に戻されることがないので、
-トラブルシューティングが容易になる。&lt;/p&gt;
-
-&lt;h4 id=&quot;スナップショットの自動実行&quot;&gt;スナップショットの自動実行&lt;/h4&gt;
-
-&lt;p&gt;まだデファクトはない。&lt;/p&gt;
-
-&lt;p&gt;単なるシェルスクリプト+cron(systemd timer)運用も多い。
-そのぐらいでみんな満足しているということでもある。&lt;/p&gt;
-
-&lt;p&gt;Arch LinuxのWikiで推されていたのは&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;btrbk&lt;/code&gt;。
-&lt;a href=&quot;https://github.com/digint/btrbk&quot;&gt;digint/btrbk: Tool for creating snapshots and remote backups of btrfs subvolumes&lt;/a&gt;&lt;/p&gt;
-
-&lt;h5 id=&quot;btrbkの設定&quot;&gt;btrbkの設定&lt;/h5&gt;
-
-&lt;p&gt;スナップショットの他に別デバイスへのバックアップ(targetのところ)もできる。
-別デバイスもbtrfsの場合はサブボリュームの差分送信機能を使うのでなかなか高速（すごい！）。&lt;/p&gt;
-
-&lt;p&gt;こんな感じの &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/btrbk/btrbk.conf&lt;/code&gt; を書いておく。
-なかなか意味が難しい。（よくわからない。雰囲気で使っている）&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;transaction_log		/var/log/btrbk.log
-
-timestamp_format        long-iso
-
-snapshot_preserve_min   2d
-##snapshot_preserve      10d
-snapshot_preserve      14d 6m
-
-##target_preserve_min    18h
-##target_preserve        48h 20d 6m
-target_preserve_min    no
-target_preserve        30d *m
-
-volume /mnt/Root
-  snapshot_dir snapshots/btrbk
-  subvolume  root
-    snapshot_create  always
-    target /mnt/backup/snapshots/btrbk
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h5 id=&quot;btrbkのタイマー実行&quot;&gt;btrbkのタイマー実行&lt;/h5&gt;
-
-&lt;p&gt;systemd timer で定期実行する。
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;btrbk.timer&lt;/code&gt; で毎日トリガーをかけている。&lt;/p&gt;
-
-&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[Unit]&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;Description&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;btrbk daily backup&lt;/span&gt;
-
-&lt;span class=&quot;nn&quot;&gt;[Timer]&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;OnCalendar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;daily&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;AccuracySec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;10min&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;Persistent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;true&lt;/span&gt;
-
-&lt;span class=&quot;nn&quot;&gt;[Install]&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;WantedBy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;multi-user.target&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;btrbk.service&lt;/code&gt;は単に&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;btrbk run&lt;/code&gt;を呼んでいるだけ&lt;/p&gt;
-
-&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[Unit]&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;Description&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;btrbk backup&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;Documentation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;man:btrbk(1)&lt;/span&gt;
-
-&lt;span class=&quot;nn&quot;&gt;[Service]&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;oneshot&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;ExecStart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/usr/sbin/btrbk run&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;スナップショットのまとめ&quot;&gt;スナップショットのまとめ&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;サブボリュームは雰囲気でまじでどうとでもなるよ&lt;/li&gt;
-  &lt;li&gt;スナップショットは単なるサブボリュームのコピーだよ&lt;/li&gt;
-  &lt;li&gt;…のためいろいろと制約がでているよ。サブボリュームの構成はよく考えてる必要があるよ。&lt;/li&gt;
-  &lt;li&gt;スナップショットを取るプログラムはデファクトがまだないため混沌としているよ。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;btrbk&lt;/code&gt;は抜きん出ているけれども、なんとも難しいよ。でも雰囲気でなんとかなるよ。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;スクラブ&quot;&gt;スクラブ&lt;/h3&gt;
-
-&lt;p&gt;btrfs は明示的に洗わないといけない。定期的に汚れを落としましょう。&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;btrfs scrub start mountpoint
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;単一ディスクだと耐障害性はやっぱりだめ&quot;&gt;単一ディスクだと耐障害性はやっぱりだめ?&lt;/h4&gt;
-
-&lt;p&gt;破壊前のディスクを作る&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;fallocate &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; 128M clean.img
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkfs.btrfs clean.img
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;mountpoint
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; auto clean.img mountpoint
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chown&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt; mountpoint
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;Hello &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; mountpoint/hello.txt
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;World &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; mountpoint/world.txt
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;umount mountpoint
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;World&lt;/code&gt;を&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WORLD&lt;/code&gt;に書き換えた破壊済みファイルを作った。
-チェックサムが合わないのでマウントができなくなった。&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;xxd &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-g&lt;/span&gt; 0 &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; 134217728 clean.img | &lt;span class=&quot;nb&quot;&gt;sed&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'s/576f726c64/574f524c44/ig'&lt;/span&gt; | xxd &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; crash.img
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;いろいろ試したが、破壊手順を元に復元する方法以外では、回復できなかった。
-つまりこの破壊に対する復元をすることができなかった。&lt;/p&gt;
-
-&lt;h4 id=&quot;raidでミラーすると-scrub-で戦える&quot;&gt;RAIDでミラーすると scrub で戦える&lt;/h4&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;modprobe brd &lt;span class=&quot;nv&quot;&gt;rd_nr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2 &lt;span class=&quot;nv&quot;&gt;rd_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;131072
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mkfs.btrfs /dev/ram0 /dev/ram1
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;mountpoint
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; auto /dev/ram0 mountpoint
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chown&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt; mountpoint
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;Hello &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; mountpoint/hello.txt
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;World &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; mountpoint/world.txt
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;1台目を雑に完全に破壊した。
-RAIDのお陰で読めているが、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/dev/ram0&lt;/code&gt;は明らかに破壊されている&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo dd &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/zero &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/ram0
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;mountpoint/hello.txt mountpoint/world.txt
-Hello
-World
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;strings /dev/ram0 | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;Hello | &lt;span class=&quot;nb&quot;&gt;sort&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;uniq&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;wc&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;
-0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;scrubしてやると回復してくれる（再現性確保のため &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/dev/zero&lt;/code&gt; での上書き結果を載せているが、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/dev/random&lt;/code&gt; だとエラー個数が変わる）。&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs scrub start mountpoint
-scrub started on mountpoint, fsid a86f9e3b-87e4-4731-a953-9a2be1b8f17b &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;37388&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-WARNING: errors detected during scrubbing, corrected
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;btrfs scrub status mountpoint
-UUID:             a86f9e3b-87e4-4731-a953-9a2be1b8f17b
-Scrub started:    Sat Apr 24 18:19:07 2021
-Status:           finished
-Duration:         0:00:00
-Total to scrub:   256.00KiB
-Rate:             0.00B/s
-Error summary:    &lt;span class=&quot;nv&quot;&gt;csum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;5
-  Corrected:      5
-  Uncorrectable:  0
-  Unverified:     0
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;strings /dev/ram0 | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;Hello | &lt;span class=&quot;nb&quot;&gt;sort&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;uniq&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;wc&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;
-0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;スクラブまとめ&quot;&gt;スクラブまとめ&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;少し壊れたぐらいだと定期的な scrub で救えるかもしれない&lt;/li&gt;
-  &lt;li&gt;RAID だと定期的な scrub で救えるものがある&lt;/li&gt;
-  &lt;li&gt;1台だと気休め? → やはり最悪オフライン（ポータブルHDDなど）でもよいのでバックアップは重要&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;参考文献&quot;&gt;参考文献&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://zenn.dev/satoru_takeuchi/articles/b8404632c2e02bc04dbf&quot;&gt;brd: メモリ上に作成するブロックデバイス&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Henson, Valerie (31 January 2008). &lt;a href=&quot;http://mirror.linux.org.au/pub/linux.conf.au/2008/Thu/mel8-262.ogg&quot;&gt;Chunkfs: Fast file system check and repair&lt;/a&gt;. Melbourne, Australia. Event occurs at 18m 49s.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://wiki.archlinux.jp/index.php/Btrfs&quot;&gt;Btrfs - ArchWiki&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content>
-      
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>cat_in_136</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="btrfs" />
-      
-        <category term="linux" />
-      
-        <category term="filesystem" />
-      
-
-      
-        <summary type="html">雰囲気で ext2/3/4 を使ってきた人が、雰囲気で btrfs を使うためのメモ。 RAID は本稿では深く触れない。 RAID は雰囲気で使えるものではない。 発音 何かと話にあがるどう発音するか問題については、下記が答えで良いと思われる。 It’s called Butter FS or B-tree FS, but all the cool kids say Butter FS — Valerie Henson, “Chunkfs: Fast file system check and repair”, 31 Jan 2008. クールキッズなら バター・エフ・エス [bʌ́tə(r) - éf - es] と発音すれば良い。 &quot;Butter FS&quot; 発音部を抜き出したもの とにかくささっと使うには ファイルを仮想ドライブとして使えばひとまず試用することができる。 128MBのbtrfsストレージ使う方法。 $ fallocate -l 128M butter.img $ mkfs.btrfs butter.img $ mkdir mountpoint $ sudo mount -t auto butter.img mountpoint $ sudo chown $USER:$USER mountpoint 128MB未満はbtrfsの仕様として対応していない。 fallocate が使えない異常に古いファイルシステムをお使いの方は dd で所望のサイズのファイルをつくるなどしてください。 BtrfsやzfsなどのCoWファイルシステム上でこのような使い方をする場合、 CoWによってパフォーマンスの影響が出るため chattr +C butter.img を実行するなどして 仮想ドライブとして使うファイルには CoW が無効化させておくのが良い。 RAIDとかのときはブロックデバイスが必要なので RAIDとかのときはブロックデバイスが必要なのでbrdモジュールを使いましょう。 $ sudo modprobe brd rd_nr=2 rd_size=131072 $ sudo mkfs.btrfs /dev/ram0 /dev/ram1 $ mkdir mountpoint $ sudo mount -t auto /dev/ram0 mountpoint 使い終わったらモジュールごと消せば良い。 $ sudo modprobe -r brd 遅延書き込み ファイル書き込みをしても btrfs は容量を消費しないように表示される。 $ dd bs=1024 count=1024 if=/dev/random of=1MB_file $ btrfs filesystem du 1MB_file Total Exclusive Set shared Filename 0.00B 0.00B 0.00B 1MB_file この状態ではファイルの実体は書き込まれていない。 しばらく経つと、ディスクに書き込まれるので容量を消費する。 $ btrfs filesystem du 1MB_file Total Exclusive Set shared Filename 1.00MiB 1.00MiB 0.00B 1MB_file 明示的にディスクに書き込み指示するには sync コマンドを打ちましょう。 遅延書き込み時間の設定 mountオプションで -o commit=180 のように設定することで、ディスクへの書き込み時間間隔を調整できる。 commit=seconds (since: 3.12, default: 30) : Set the interval of periodic transaction commit when data are synchronized to permanent storage. Higher interval values lead to larger amount of unwritten data, which has obvious consequences when the system crashes. The upper bound is not forced, but a warning is printed if it’s more than 300 seconds (5 minutes). Use with care. — Manpage/btrfs(5) - btrfs Wiki 途中で変える場合は remount コマンドを使いましょう。 $ sudo mount -o remount,commit=120 mountpoint 遅延書き込みの弊害 異常終了（停電・カーネルクラッシュ）すると、ファイルが消える。 実態は、ディスクに書き込む前だったというだけ。人間にはあたかも消えたように見える。 一時的にファイルを作って消すような場合はディスク書き込みがないため速い。 コミットインターバルのタイミングで書き込みがあるので処理が遅くなる。 単純にファイルを作るだけではベンチマークにはまったくならない。 遅延書き込みを見てみる メタデータだけは直ちに作成され hello.txt という文字列がディスクに書き込みされる。 ファイルの中身は遅れて書き込みされることがわかる。 $ fallocate -l 128M clean.img $ mkfs.btrfs clean.img $ mkdir mountpoint $ sudo mount -t auto clean.img mountpoint $ sudo chown $USER:$USER mountpoint $ echo hello &amp;gt; mountpoint/hello.txt $ strings clean.img | grep -i hello | sort | uniq hello.txt $ sync $ strings clean.img | grep -i hello | sort | uniq hello hello.txt 遅延書き込みまとめ btrfs はデータは遅れて書き込まれるよ コミットインターバルは設定で変えられるよ コミットインターバルが来る前はディスクに書き込まれていないから、異常終了すると消えたように見えるよ。 Copy-on-Write : CoW btrfs is a modern copy on write (CoW) filesystem for Linux aimed at implementing advanced features while also focusing on fault tolerance, repair and easy administration. — btrfs Wiki コピーしても実体はコピーされずに、参照をつくるだけでコピー時間や使用容量を削減する。その後に書き換えた際にはじめて実際にその箇所がコピーされ容量を消費する 新しいデータはディスクの空き容量に書き込んでから、新しいデータを参照するようにファイルのメタデータを変更する。元のデータはどこからも参照されなくなってはじめて削除する。 書き込み途中で死んでもファイルが消えることはないから安全！ コピーしても中身は共有されている $ cd mountpoint $ dd bs=1024 count=1024 if=/dev/random of=1MB_file $ cp 1MB_file 1MB_file_copied $ dd bs=1024 count=1024 if=/dev/random of=1MB_file.2 $ sync $ btrfs filesystem du * Total Exclusive Set shared Filename 1.00MiB 0.00B 1.00MiB 1MB_file 1.00MiB 1.00MiB 0.00B 1MB_file2 1.00MiB 0.00B 1.00MiB 1MB_file_copied 1MB_file と 1MB_file_copied は共有されていることがわかる。 明示的にコピーをしないとCoWによる共有はされない ファイルの中身をチェックして共有しているわけではないため、 同じファイルだとしても別々の手段で取ってきたのならば共有されない。 $ cd mountpoint $ wget https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg --referer=https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg $ wget https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg --referer=https://live.staticflickr.com/65535/49568897633_1e4d1eb342_o_d.jpg $ sha1sum 49568897633_1e4d1eb342_o_d.jpg* a673cc4dbd99f4e18c1bba82bd818c092d7cc237 49568897633_1e4d1eb342_o_d.jpg a673cc4dbd99f4e18c1bba82bd818c092d7cc237 49568897633_1e4d1eb342_o_d.jpg.1 $ sync $ btrfs filesystem du 49568897633_1e4d1eb342_o_d.jpg* Total Exclusive Set shared Filename 2.70MiB 2.70MiB 0.00B 49568897633_1e4d1eb342_o_d.jpg 2.70MiB 2.70MiB 0.00B 49568897633_1e4d1eb342_o_d.jpg.1 CoWファイルシステムのCoWの弊害 新しいデータはディスクの空き容量に書き込んでから、新しいデータを参照するようにファイルのメタデータを変更する。 古いデータは参照を外すが該当領域はワイプはしないので残ったままになる。 （空き容量として扱われるので、あとで別のデータが書かれる可能性はある。） $ fallocate -l 128M clean.img $ mkfs.btrfs clean.img $ mkdir mountpoint $ sudo mount -t auto clean.img mountpoint $ sudo chown $USER:$USER mountpoint $ echo MySecretKey &amp;gt; mountpoint/hoge.txt $ sync $ strings clean.img | grep MySecretKey | sort | uniq MySecretKey $ echo hoge &amp;gt; mountpoint/hoge.txt $ sync $ strings clean.img | grep MySecretKey | sort | uniq MySecretKey 共有状態のファイルへの追記書き込み 追記書き込みすると追記していない所は共有されたままである。 5バイト追加であるのに関わらず4kBとなっているのは、 leaf block単位で処理されるときのサイズに対応していると思われる。 $ dd bs=1024 count=1024 if=/dev/random of=1MB_file $ cp 1MB_file 1MB_file_copied $ echo hoge &amp;gt;&amp;gt; 1MB_file_copied $ sync $ btrfs filesystem du * Total Exclusive Set shared Filename 1.00MiB 0.00B 1.00MiB 1MB_file 1.00MiB 4.00KiB 1.00MiB 1MB_file_copied 共有状態のファイルへの部分書き込み 10000バイトごとにファイルの中身を上書きするとどうなるか? 下記のようなディスク破壊用プログラムをつくった。 use std::fs::*; use std::io::*; fn main() { let path = std::env::args().nth(1).unwrap(); let size = std::fs::metadata(&amp;amp;path).unwrap().len(); let mut file = OpenOptions::new().write(true).open(&amp;amp;path).unwrap(); let mut pos = 0; while pos &amp;lt; size { file.seek(SeekFrom::Start(pos)).unwrap(); file.write(b&quot;Crash!&quot;).unwrap(); pos = pos + 10000; } } 1MBのファイルに既述処理を施すと 1024 * 1024 / 1000 + 1 = 105 箇所書き込まれる。 105 * 4kB = 420kB 相当のところが書き換えられるのでそこが共有から外れる。 この420kBは 1MB_file_copied で断片化領域の容量の和でもある。 $ cd mountpoint $ dd bs=1024 count=1024 if=/dev/random of=1MB_file $ cp 1MB_file 1MB_file_copied $ sync $ vi crash.rs $ rustc crash.rs $ ./crash 1MB_file_copied $ strings 1MB_file_copied | grep Crash | wc -l 105 $ sync $ btrfs filesystem du 1MB_file 1MB_file_copied Total Exclusive Set shared Filename 1.00MiB 0.00B 1.00MiB 1MB_file 1.00MiB 420.00KiB 604.00KiB 1MB_file_copied CoWの無効化 弊害を嫌う場合は、下記のようにして無効化しましょう ファイル単位での CoW を無効 chattr +C file_nocow ファイルシステム全体で CoW を無効。 “nodatacow” オプションを使ってマウント。 CoWまとめ ファイルを上書きしても上書きされないよ、一旦コピーしてから空き容量に書き込まれてから参照を張り直すよ ファイルのコピーをしても実態はコピーされないよ、共有されるよ コピーして共有されているファイルはファイル書き込み時に、空き容量によって書き込む仕組みの結果、共有が解かれるよ 弊害として断片化があるよ 嫌ならばファイル単位、またはファイルシステム全体で無効化出来るよ サブボリューム フォルダのように使えるがマウントも出来る。 普通のフォルダの下にも置けちゃったりするなどかなり自由度は高い。 使い方はなんとなくでわかる。 作る $ sudo btrfs subvolume create mountpoint/subvolume 消す $ sudo btrfs subvolume delete mountpoint/subvolume 一覧 $ sudo btrfs subvolume list mountpoint サブボリューム単位でのマウント $ sudo mount -t btrfs -o subvol=/subvolume devicefile mountpoint ※複製はスナップショットを使う。 スナップショット 実態はサブボリュームのコピーである。 スナップショットって言っているのにデフォルトはコピー可である。 CoWのお陰でスナップショットを作る（サブボリュームのコピー）のは一瞬で終了する。 $ sudo btrfs subvolume snapshot mountpoint/subvolume mountpoint/subvolume_copied 普通の意味での readonly なスナップショットは、下記の通り -r を付ける。 $ sudo btrfs subvolume snapshot -r mountpoint/subvolume mountpoint/subvolume_copied btrfsのスナップショットの特徴 btrfs subvolume snapshot はサブボリュームのスナップショットとしてのコピーを作る スナップショットは単なるサブボリュームなので、普通に見たりコピーして取り出したりすることができる サブボリューム配下にあるサブボリュームはスナップショットにコピーされず空になる サブボリュームをスナップショットによるコピーの除外に使う 既にあるサブボリュームに他のサブボリュームの内容に置き換えるのは単純な操作では不可能 zfs rollback hoge@fuga のような復元用コマンドはない スナップショットの置き場所の検討 通常サブボリュームの下にスナップショットを作る構成が自然だが、 btrfs の仕組みだと復元作業が難しくなる。 fuga (subvolume) files… .snapshots/ snapshot1 (subvolume: snapshot) snapshot2 (subvolume: snapshot) 対象サブボリュームの外側にスナップショットを作るのがよい。 fuga (subvolume) files… snapshots/ (subvolumeにしてもしなくとも、複数階層にしてもよい) snapshot1 (subvolume: snapshot) snapshot2 (subvolume: snapshot) この構成の復元方法はおおよそ下記のようになる。 $ sudo mv fuga fuga_bak $ sudo btrfs subvolume snapshot snapshots/snapshot1 fuga $ sudo btrfs subvolume delete fuga_bak これを踏まえての構成はたとえば root (subvolume; マウント先=/) home (subvolume; マウント先=/home) log (subvolume; マウント先=/var/log) snapshots/ (subvolume; マウント先=/sys_snapshots ) btrbk/ snapshots… (subvolume: snapshot) ここで /var/log を別サブボリューム log にしている。 root スナップショットが復元されても、ログファイルが以前の状態に戻されることがないので、 トラブルシューティングが容易になる。 スナップショットの自動実行 まだデファクトはない。 単なるシェルスクリプト+cron(systemd timer)運用も多い。 そのぐらいでみんな満足しているということでもある。 Arch LinuxのWikiで推されていたのはbtrbk。 digint/btrbk: Tool for creating snapshots and remote backups of btrfs subvolumes btrbkの設定 スナップショットの他に別デバイスへのバックアップ(targetのところ)もできる。 別デバイスもbtrfsの場合はサブボリュームの差分送信機能を使うのでなかなか高速（すごい！）。 こんな感じの /etc/btrbk/btrbk.conf を書いておく。 なかなか意味が難しい。（よくわからない。雰囲気で使っている） transaction_log /var/log/btrbk.log timestamp_format long-iso snapshot_preserve_min 2d ##snapshot_preserve 10d snapshot_preserve 14d 6m ##target_preserve_min 18h ##target_preserve 48h 20d 6m target_preserve_min no target_preserve 30d *m volume /mnt/Root snapshot_dir snapshots/btrbk subvolume root snapshot_create always target /mnt/backup/snapshots/btrbk btrbkのタイマー実行 systemd timer で定期実行する。 btrbk.timer で毎日トリガーをかけている。 [Unit] Description=btrbk daily backup [Timer] OnCalendar=daily AccuracySec=10min Persistent=true [Install] WantedBy=multi-user.target btrbk.serviceは単にbtrbk runを呼んでいるだけ [Unit] Description=btrbk backup Documentation=man:btrbk(1) [Service] Type=oneshot ExecStart=/usr/sbin/btrbk run スナップショットのまとめ サブボリュームは雰囲気でまじでどうとでもなるよ スナップショットは単なるサブボリュームのコピーだよ …のためいろいろと制約がでているよ。サブボリュームの構成はよく考えてる必要があるよ。 スナップショットを取るプログラムはデファクトがまだないため混沌としているよ。 btrbkは抜きん出ているけれども、なんとも難しいよ。でも雰囲気でなんとかなるよ。 スクラブ btrfs は明示的に洗わないといけない。定期的に汚れを落としましょう。 $ btrfs scrub start mountpoint 単一ディスクだと耐障害性はやっぱりだめ? 破壊前のディスクを作る $ fallocate -l 128M clean.img $ mkfs.btrfs clean.img $ mkdir mountpoint $ sudo mount -t auto clean.img mountpoint $ sudo chown $USER:$USER mountpoint $ echo Hello &amp;gt; mountpoint/hello.txt $ echo World &amp;gt; mountpoint/world.txt $ sudo umount mountpoint WorldをWORLDに書き換えた破壊済みファイルを作った。 チェックサムが合わないのでマウントができなくなった。 $ xxd -p -g 0 -c 134217728 clean.img | sed 's/576f726c64/574f524c44/ig' | xxd -p -r &amp;gt; crash.img いろいろ試したが、破壊手順を元に復元する方法以外では、回復できなかった。 つまりこの破壊に対する復元をすることができなかった。 RAIDでミラーすると scrub で戦える $ sudo modprobe brd rd_nr=2 rd_size=131072 $ sudo mkfs.btrfs /dev/ram0 /dev/ram1 $ mkdir mountpoint $ sudo mount -t auto /dev/ram0 mountpoint $ sudo chown $USER:$USER mountpoint $ echo Hello &amp;gt; mountpoint/hello.txt $ echo World &amp;gt; mountpoint/world.txt $ sync 1台目を雑に完全に破壊した。 RAIDのお陰で読めているが、/dev/ram0は明らかに破壊されている $ sudo dd if=/dev/zero of=/dev/ram0 $ cat mountpoint/hello.txt mountpoint/world.txt Hello World $ sudo strings /dev/ram0 | grep Hello | sort | uniq | wc -l 0 scrubしてやると回復してくれる（再現性確保のため /dev/zero での上書き結果を載せているが、/dev/random だとエラー個数が変わる）。 $ sudo btrfs scrub start mountpoint scrub started on mountpoint, fsid a86f9e3b-87e4-4731-a953-9a2be1b8f17b (pid=37388) WARNING: errors detected during scrubbing, corrected $ sudo btrfs scrub status mountpoint UUID: a86f9e3b-87e4-4731-a953-9a2be1b8f17b Scrub started: Sat Apr 24 18:19:07 2021 Status: finished Duration: 0:00:00 Total to scrub: 256.00KiB Rate: 0.00B/s Error summary: csum=5 Corrected: 5 Uncorrectable: 0 Unverified: 0 $ sync $ sudo strings /dev/ram0 | grep Hello | sort | uniq | wc -l 0 スクラブまとめ 少し壊れたぐらいだと定期的な scrub で救えるかもしれない RAID だと定期的な scrub で救えるものがある 1台だと気休め? → やはり最悪オフライン（ポータブルHDDなど）でもよいのでバックアップは重要 参考文献 brd: メモリ上に作成するブロックデバイス Henson, Valerie (31 January 2008). Chunkfs: Fast file system check and repair. Melbourne, Australia. Event occurs at 18m 49s. Btrfs - ArchWiki</summary>
       
 
       
