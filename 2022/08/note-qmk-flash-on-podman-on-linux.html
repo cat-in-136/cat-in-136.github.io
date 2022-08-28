@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,max-scale=10,min-scale=0.5,user-scalable=yes" />
+  <title>Linux上のpodman上でqmk flashすることに関するメモ</title>
+
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="https://code.cdn.mozilla.net/fonts/fira.css" />
+
+  <link rel="canonical" href="https://cat-in-136.github.io/2022/08/note-qmk-flash-on-podman-on-linux.html" />
+  <link rel="alternate" type="application/rss+xml" title="cat_in_136.blog() &raquo; Feed" href="/feed.xml" />
+  <meta property="og:url" content="https://cat-in-136.github.io/2022/08/note-qmk-flash-on-podman-on-linux.html" />
+  <meta property="og:title" content="Linux上のpodman上でqmk flashすることに関するメモ" /><meta property="og:description" content="いわゆる自作キーボードにおける pro micro へファームウェアをflashする（焼く）のを Linux 上の podman コンテナ内でなんとかするための試みに関するメモ 今どきはキーマッ..." /><meta property="og:type" content="article" /><meta property="og:site_name" content="cat_in_136.blog()" /><meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@cat_in_136" />
+  <meta name="twitter:creator" content="@cat_in_136" />
+</head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" href="/">cat_in_136.blog()</a>
+    <nav class="site-nav">
+      <a href="javascript:void(0);" class="menu-icon" title="barger button"></a>
+      <div class="trigger"><a class="page-link" href="/about">About</a><a class="page-link" href="/archive">Archive</a><a class="page-link" href="/tags">Tags</a></div>
+    </nav>
+  </div>
+</header>
+<div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name"><a href="/2022/08/note-qmk-flash-on-podman-on-linux.html" itemprop="url">Linux上のpodman上でqmk flashすることに関するメモ</a></h1>
+
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2022-08-28T15:21:33+09:00">2022-08-28T15:21:33+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
+      <span itemprop="keywords"><a class="tag" href="/tags/qmk">Qmk</a><a class="tag" href="/tags/podman">Podman</a><a class="tag" href="/tags/linux">Linux</a><a class="tag" href="/tags/%E8%87%AA%E4%BD%9C%E3%82%AD%E3%83%BC%E3%83%9C%E3%83%BC%E3%83%89">自作キーボード</a></span></div><div class="post-meta">
+      Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2022-08-29-note-qmk-flash-on-podman-on-linux.md" class="source-path">_posts/2022-08-29-note-qmk-flash-on-podman-on-linux.md</a>
+        (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2022-08-29-note-qmk-flash-on-podman-on-linux.md">History</a>)
+    </div><div class="post-meta">
+      <a href="#comments"><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2022/08/note-qmk-flash-on-podman-on-linux.html">↓Comments</span></a>
+      <script id="dsq-count-scr" src="https://catin136blog.disqus.com/count.js" defer="defer" async="async"></script>
+    </div>
+  </header>
+
+  <div class="post-content" itemprop="articleBody" lang="ja">
+    <p>いわゆる自作キーボードにおける pro micro へファームウェアをflashする（焼く）のを Linux 上の podman コンテナ内でなんとかするための試みに関するメモ</p>
+
+<p>今どきはキーマップぐらいの変更ならば Google Chrome/Chromium つかって <a href="https://remap-keys.app">Remap</a> でflashするのが圧倒的に楽ではある。QMK をカスタムすること、あるいは何らかの宗教上の理由などで Google Chrome/Chromium を使えないときには CLI で焼く必要がある</p>
+
+<p>本稿で紹介する方法は、USBデバイスの設定である udev と QMK のファームウェア以外はコンテナ上で動かすことで、ホスト環境への影響をなくすとともにセットアップをかんたんにしている</p>
+
+<p>なお、podman で確認したが docker ユーザの場合は docker に読み替えても実行できるはずだ</p>
+
+<h3 id="udev">udev</h3>
+
+<p>USB接続した pro micro を linux PC に認識させる必要がある。 <code class="language-plaintext highlighter-rouge">/etc/udev/rules.d/</code> に udev のルールをインストールする</p>
+
+<p>ルールは <a href="https://github.com/qmk/qmk_firmware">qmk/qmk_firmware</a> の中にあって、下記から落とすのが良い</p>
+
+<p><a href="https://github.com/qmk/qmk_firmware/tree/master/util/udev/50-qmk.rules">https://github.com/qmk/qmk_firmware/tree/master/util/udev/50-qmk.rules</a></p>
+
+<p>ところで、キーボードによっては USB Vendor ID , Product ID を書き換えているものがある。その場合は、そのキーボード用にルールをつくる必要がある</p>
+
+<p>たとえば、 meishi2 keyboard ( <a href="https://github.com/Biacco42/meishi2">biacco42/meishi2</a> ) の場合は、 Vendor ID を<code class="language-plaintext highlighter-rouge">bc42</code> Product ID を <code class="language-plaintext highlighter-rouge">0003</code> としていたため、そのルールを書く必要がある。具体的には、下記のルールを <code class="language-plaintext highlighter-rouge">50-qmk.rules</code> に追記するか、別のルールファイルとして作った上で <code class="language-plaintext highlighter-rouge">/etc/udev/rules.d/</code> に置くこと</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## meishi2
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="bc42", ATTRS{idProduct}=="0003", TAG+="uaccess"
+</code></pre></div></div>
+
+<p>作業が終わったら下記コマンドで udev のルールを反映させる（再起動不要）</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>udevadm control <span class="nt">--reload-rules</span>
+</code></pre></div></div>
+
+<h3 id="qmk_firmware">qmk_firmware</h3>
+
+<p><a href="https://github.com/qmk/qmk_firmware">qmk/qmk_firmware</a> を入手する</p>
+
+<p>この作業は必須ではないが、結局ソースコードをいじったりするのが  Remap などを使わずにビルドする主目的であるから、 <code class="language-plaintext highlighter-rouge">git clone</code> する(そこそこサイズが大きいので気になる人は partial clone などをしたほうが良いかもしれない)</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>git clone <span class="nt">--recurse-submodules</span> https://github.com/qmk/qmk_firmware.git
+</code></pre></div></div>
+
+<p>なお後述の qmk_cli の docker イメージをあたらしいものに更新したら、 qmk_firmware も <code class="language-plaintext highlighter-rouge">git pull</code> して新しくしたほうがよいだろう。逆もしかり</p>
+
+<h3 id="qmkのインストールなどが必要だが">qmkのインストールなどが必要だが、、、</h3>
+
+<p>python pip で qmk のインストールなどが必要だが、いろいろとインストールが面倒なので、コンテナを使うこととする</p>
+
+<p>QMK 謹製のイメージが docker hub にあがっているのでそれを使う</p>
+
+<h3 id="qmk_cli-イメージを使ってビルド">qmk_cli イメージを使ってビルド</h3>
+
+<p>QMK 謹製のイメージとして <a href="https://hub.docker.com/r/qmkfm/qmk_cli">qmkfm/qmk_cli</a> がある。これには、QMK のビルドとキーボードにflashする一連の作業に必要なものがほとんど入っている</p>
+
+<p>結論から言うと、下記のように実行すればよい（当然 <code class="language-plaintext highlighter-rouge">podman pull</code> は初回のみで良い）。<code class="language-plaintext highlighter-rouge">-kb</code> にはキーボードの名前、<code class="language-plaintext highlighter-rouge">-km</code> にはキーマップの名前を書く</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>podman pull qmkfm/qmk_cli
+<span class="gp">$</span><span class="w"> </span>podman run <span class="nt">--rm</span> <span class="nt">-it</span> <span class="nt">-v</span> <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/qmk_firmware:/qmk_firmware:z qmkfm/qmk_cli <span class="se">\</span>
+<span class="go">  /bin/bash -c \
+  "qmk setup &amp;&amp; qmk compile -kb biacco42/meishi2 -km default"
+</span></code></pre></div></div>
+
+<p>多くの和文のブログ記事などでは make コマンドでビルドを行っているが、QMK のユーザマニュアルには <code class="language-plaintext highlighter-rouge">qmk</code> コマンドのほうが書かれているのでこちらを採用した</p>
+
+<p>qmk_firmware のところで <a href="https://github.com/qmk/qmk_firmware.git">qmk/qmk_firmware</a> の入手が必須ではないといったが、これを省いた場合は <code>-v `pwd`/qmk_firmware:/qmk_firmware:z</code> を削除すること。このとき、コンテナ内の <code class="language-plaintext highlighter-rouge">/qmk_firmware</code> に <a href="https://github.com/qmk/qmk_firmware.git">qmk/qmk_firmware</a> がダウンロードされる</p>
+
+<p>上の例ではホスト側にある <code class="language-plaintext highlighter-rouge">qmk_firmware</code> ディレクトリをコンテナ内のボリュームとして割り当てている。この場合でも <code class="language-plaintext highlighter-rouge">qmk setup</code> は必要ではあるが、このときは <a href="https://github.com/qmk/qmk_firmware.git">qmk/qmk_firmware</a> がダウンロードされずに、いまある <code class="language-plaintext highlighter-rouge">/qmk_firmware</code> が使われる</p>
+
+<p>注意点</p>
+
+<ul>
+  <li>SELinux を有効にしていることを想定しているため <code>-v `pwd`/qmk_firmware:/qmk_firmware:z</code> のように末尾に <code class="language-plaintext highlighter-rouge">:z</code> をつけている。SELinux 有効環境下で <code class="language-plaintext highlighter-rouge">:z</code> を付けないとコンテナ内から <code class="language-plaintext highlighter-rouge">qmk_firmware</code> ディレクトリにアクセスするときに権限エラー (permission denied) となる</li>
+</ul>
+
+<p>なお既述のとおり qmk_firmware を <code class="language-plaintext highlighter-rouge">git pull</code> して新しくしたら、 qmk_cli の docker イメージもあたらしいものに更新したほうがよいだろう。逆もしかり</p>
+
+<h3 id="qmk_cli-イメージを使ってflash">qmk_cli イメージを使ってflash</h3>
+
+<p>下記のように実行すればよい。<code class="language-plaintext highlighter-rouge">-kb</code> にはキーボードの名前、<code class="language-plaintext highlighter-rouge">-km</code> にはキーマップの名前を書く</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>setsebool <span class="nt">-P</span> container_use_devices 1
+<span class="gp">$</span><span class="w"> </span>podman run <span class="nt">--rm</span> <span class="nt">-it</span> <span class="nt">-v</span> <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/qmk_firmware:/qmk_firmware:z <span class="nt">-v</span> /dev:/dev:rw qmkfm/qmk_cli <span class="se">\</span>
+<span class="go">  /bin/bash -c \
+  "qmk setup &amp;&amp; qmk flash -kb biacco42/meishi2 -km default"
+…（出力中略）…
+Linking: .build/biacco42_meishi2_default.elf                                                        [OK]
+Creating load file for flashing: .build/biacco42_meishi2_default.hex                                [OK]
+Copying biacco42_meishi2_default.hex to qmk_firmware folder                                         [OK]
+Checking file size of biacco42_meishi2_default.hex                                                  [OK]
+ * The firmware size is fine - 20726/28672 (72%, 7946 bytes free)
+Waiting for USB serial port - reset your controller now (Ctrl+C to cancel)..............................
+</span></code></pre></div></div>
+
+<p>この <code class="language-plaintext highlighter-rouge">Waiting for USB serial port - reset your controller now (Ctrl+C to cancel)</code> が出たところで、書いてあるとおり pro micro をリセットする。すなわち pro micro の RST を GND に短絡させる。通常はキーボード側にリセットボタンがあるはずなので、それを押す</p>
+
+<p>リセットする（リセットボタンを押す）と <code class="language-plaintext highlighter-rouge">/dev/ttyACM0</code> といった pro micro のデバイスファイルが linux PC 上に生えたのを qmk コマンドが検知して先に進み、ファームウェアが flash されてコマンドの実行が終わる</p>
+
+<p>注意点</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">-v /dev:/dev:rw</code> を指定して <code class="language-plaintext highlighter-rouge">/dev/</code> 以下をコンテナ内に見せている。<code class="language-plaintext highlighter-rouge">--device /dev/ttyACM0</code> のような指定でも良いはずであるが、デバイスファイルがリセット時に変わったりしたりするため <code class="language-plaintext highlighter-rouge">/dev/</code> をそのまま見せている。もし、これを指定し忘れるとデバイスファイルが見つからないため <code class="language-plaintext highlighter-rouge">Waiting for USB serial port - reset your controller now (Ctrl+C to cancel)........</code> のメッセージが出たまま先に進まないという現象になる</li>
+  <li><code class="language-plaintext highlighter-rouge">sudo setsebool -P container_use_devices 1</code> は初回一回のみでよいが、SELinux 環境下では必須で、これがないとコンテナ内からデバイスをアクセスする権限がないため権限エラーとなる。未設定時のエラーメッセージは OCI permission denied であるが、SELinux のエラーログを見れば <code class="language-plaintext highlighter-rouge">container_use_devices</code> を設定することが書いているので、それをもとに従えばよい</li>
+</ul>
+
+<h3 id="keymap-json-ファイルからflashするには">keymap JSON ファイルからflashするには</h3>
+
+<p>簡易的な手段として、<a href="https://config.qmk.fm/">QMK Configurator</a>などからエクスポートするなどして得たキーマップのJSONファイルからファームウェアをビルドしてflashすることもできる。qmk_cli はこの JSON ファイルに対応しているから、<code class="language-plaintext highlighter-rouge">qmk_firmware</code> の中に JSON ファイルを置いた上で <code class="language-plaintext highlighter-rouge">qmk flash</code> を実行すれば良い</p>
+
+<p>例えばカスタムしたキーマップを <code class="language-plaintext highlighter-rouge">qmk_firmware/biacco42_meishi2_layout_mine.json</code> に置いたら、下記のように実行すれば良い。JSON ファイルにキーボード情報が書かれているので <code class="language-plaintext highlighter-rouge">-kb</code> オプションは不要である</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>podman run <span class="nt">--rm</span> <span class="nt">-it</span> <span class="nt">-v</span> <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/qmk_firmware:/qmk_firmware:z <span class="nt">-v</span> /dev:/dev:rw qmkfm/qmk_cli <span class="se">\</span>
+<span class="go">  /bin/bash -c \
+  "qmk setup &amp;&amp; qmk flash biacco42_meishi2_layout_mine.json"
+</span></code></pre></div></div>
+
+<h3 id="参考文献">参考文献</h3>
+
+<ul>
+  <li><a href="https://github.com/qmk/qmk_firmware/blob/master/docs/ja/faq_build.md">qmk_firmware/faq_build.md at master · qmk/qmk_firmware</a></li>
+  <li><a href="https://github.com/qmk/qmk_firmware/blob/master/docs/cli_commands.md">qmk_firmware/cli_commands.md at master · qmk/qmk_firmware</a></li>
+  <li><a href="https://docs.qmk.fm/#/newbs_building_firmware">Building Your First Firmware</a></li>
+  <li><a href="https://docs.qmk.fm/#/newbs_flashing">Flashing Firmware</a></li>
+</ul>
+
+  </div>
+
+  <footer class="post-footer">
+    <details id="comments">
+      <summary><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2022/08/note-qmk-flash-on-podman-on-linux.html">Comments</span></summary>
+      <div id="disqus_thread"></div>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <script type="application/javascript" src="/javascript/disqus_loader.js" defer="defer" async="async"></script>
+    </details>
+  </footer>
+</article><aside class="post-related">
+  <h2>Related Posts</h2>
+  <ul class="post-list"><li class="post-item">
+    <a class="post-link" href="/2017/10/list-of-all-the-config-provided-by-configuration-mania.html">
+      <span class="post-meta">2017-10-26</span>
+      <span class="post-title">List of all the Config provided by Configuration Mania</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2022/01/directory-layout-of-library-for-unit-testing-with-platformio.html">
+      <span class="post-meta">2022-01-16</span>
+      <span class="post-title">Note: Directory Layout of library for unit testing with PlatformIO</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2021/09/zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru.html">
+      <span class="post-meta">2021-09-13</span>
+      <span class="post-title">ぜんぜんわからない俺達は雰囲気でbtrfs使っている</span><img class="post-thumb" src="/images/2020-09-13-Btrfs_logo.svg" loading="lazy" alt="thumbnail" /></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2022/04/podman-rootless-container-with-net.html">
+      <span class="post-meta">2022-04-02</span>
+      <span class="post-title">Podman ルートレスコンテナでのネットワークのメモ</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2019/10/use-marionette-to-obtain-firefox-internal-information-easily.html">
+      <span class="post-meta">2019-10-20</span>
+      <span class="post-title">Use Marionette to obtain Firefox internal information easily</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2014/09/pqi-air-card-udp-yo.html">
+      <span class="post-meta">2014-09-21</span>
+      <span class="post-title">PQI Air Card から UDP で Yo と答えさせてデバイス検出する試み</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2011/05/angry-birds-web-ver-hacks-modify-level.html">
+      <span class="post-meta">2011-05-20</span>
+      <span class="post-title">Angry Birds (Web ver.) Hacks: Modify the Level Data!</span><img class="post-thumb" src="/images/VerySimpleLevelExample.png" loading="lazy" alt="thumbnail" /></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2020/07/b1248-led-name-badge-protocol-reverse-engineering.html">
+      <span class="post-meta">2020-07-18</span>
+      <span class="post-title">B1248 LED name badge protocol reverse engineering</span><img class="post-thumb" src="/images/2020-07-18-B1248-website-121.jpg" loading="lazy" alt="thumbnail" /></a>
+  </li>
+</ul>
+</aside>
+      </div>
+    </div><footer class="site-footer">
+  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
+  <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
+    <h2 class="footer-heading">cat_in_136.blog()</h2>
+    <p>
+      © 2022
+      <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
+        <a href="/about"><span itemprop="name">cat_in_136</span></a>
+      </span>;
+      Content is available under a
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license" itemprop="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">CC BY-NC-SA 4.0</a>
+      unless otherwise noted.
+    </p>
+  </div>
+</footer>
+</body>
+</html>
