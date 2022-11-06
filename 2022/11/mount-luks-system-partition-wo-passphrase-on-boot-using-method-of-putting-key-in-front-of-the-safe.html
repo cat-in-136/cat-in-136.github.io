@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,max-scale=10,min-scale=0.5,user-scalable=yes" />
+  <title>起動時にパスフレーズなしでLUKS暗号化システムパーティションをマウントする方法、金庫の前に鍵を置く方式</title>
+
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="https://code.cdn.mozilla.net/fonts/fira.css" />
+
+  <link rel="canonical" href="https://cat-in-136.github.io/2022/11/mount-luks-system-partition-wo-passphrase-on-boot-using-method-of-putting-key-in-front-of-the-safe.html" />
+  <link rel="alternate" type="application/rss+xml" title="cat_in_136.blog() &raquo; Feed" href="/feed.xml" />
+  <meta property="og:url" content="https://cat-in-136.github.io/2022/11/mount-luks-system-partition-wo-passphrase-on-boot-using-method-of-putting-key-in-front-of-the-safe.html" />
+  <meta property="og:title" content="起動時にパスフレーズなしでLUKS暗号化システムパーティションをマウントする方法、金庫の前に鍵を置く方式" /><meta property="og:description" content="ずっとわからなかった、 Fedora Linux における LUKS パーティションを起動時にパスフレーズ入力を省く方法がやっとわかった。 もちろんパスフレーズを入力しないということはパスフレー..." /><meta property="og:type" content="article" /><meta property="og:site_name" content="cat_in_136.blog()" /><meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@cat_in_136" />
+  <meta name="twitter:creator" content="@cat_in_136" />
+</head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" href="/">cat_in_136.blog()</a>
+    <nav class="site-nav">
+      <a href="javascript:void(0);" class="menu-icon" title="barger button"></a>
+      <div class="trigger"><a class="page-link" href="/about">About</a><a class="page-link" href="/archive">Archive</a><a class="page-link" href="/tags">Tags</a></div>
+    </nav>
+  </div>
+</header>
+<div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name"><a href="/2022/11/mount-luks-system-partition-wo-passphrase-on-boot-using-method-of-putting-key-in-front-of-the-safe.html" itemprop="url">起動時にパスフレーズなしでLUKS暗号化システムパーティションをマウントする方法、金庫の前に鍵を置く方式</a></h1>
+
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2022-11-07T00:55:37+09:00">2022-11-07T00:55:37+09:00</span></div><div class="post-meta">Tags:
+      <span itemprop="keywords"><a class="tag" href="/tags/luks">Luks</a><a class="tag" href="/tags/linux">Linux</a><a class="tag" href="/tags/dracut">Dracut</a></span></div><div class="post-meta">
+      Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2022-11-07-mount-luks-system-partition-wo-passphrase-on-boot-using-method-of-putting-key-in-front-of-the-safe.md" class="source-path">_posts/2022-11-07-mount-luks-system-partition-wo-passphrase-on-boot-using-method-of-putting-key-in-front-of-the-safe.md</a>
+        (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2022-11-07-mount-luks-system-partition-wo-passphrase-on-boot-using-method-of-putting-key-in-front-of-the-safe.md">History</a>)
+    </div><div class="post-meta">
+      <a href="#comments"><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2022/11/mount-luks-system-partition-wo-passphrase-on-boot-using-method-of-putting-key-in-front-of-the-safe.html">↓Comments</span></a>
+      <script id="dsq-count-scr" src="https://catin136blog.disqus.com/count.js" defer="defer" async="async"></script>
+    </div>
+  </header>
+
+  <div class="post-content" itemprop="articleBody" lang="ja">
+    <p>ずっとわからなかった、 Fedora Linux における LUKS パーティションを起動時にパスフレーズ入力を省く方法がやっとわかった。</p>
+
+<p>もちろんパスフレーズを入力しないということはパスフレーズ相当の代物であるキーファイルを非暗号化領域に置くことだから、金庫の前に鍵を置ようなセキュリティ強度となる。
+SSD/HDD廃棄時にキーファイルの置いてある箇所のみ念入りに抹消すればいいぐらいのメリットになる。</p>
+
+<h2 id="ブートじゃないときでパスフレーズなしでluks暗号化システムパーティションをマウントする方法">ブートじゃないときで、パスフレーズなしでLUKS暗号化システムパーティションをマウントする方法</h2>
+
+<p>パスフレーズがわりのキーファイルをつくる。キーファイルはなんでもいいのだが、乱数から作ったものが一般に好ましい。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span><span class="nb">dd </span><span class="nv">bs</span><span class="o">=</span>1024 <span class="nv">count</span><span class="o">=</span>1 <span class="k">if</span><span class="o">=</span>/dev/urandom <span class="nv">of</span><span class="o">=</span>/etc/keyfile-xxxxx <span class="nv">iflag</span><span class="o">=</span>fullblock
+<span class="gp">#</span><span class="w"> </span><span class="nb">chmod </span>0400 /etc/keyfile-xxxxx
+</code></pre></div></div>
+
+<p>このキーファイルを LUKS パーティションに紐付ける。なお既存のパスフレーズの入力が必要となる。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>cryptsetup luksAddKey /dev/sdx1 /etc/keyfile-xxxxx
+<span class="go">
+Enter your old/existing passphrase here. Expected output:
+Key slot 0 unlocked.
+Command successful.
+</span></code></pre></div></div>
+
+<p>キーファイルとLUKSパーティションの紐付けをsystemdに教える仕組みを用意しなければならない。
+これには <code class="language-plaintext highlighter-rouge">/etc/crypttab</code> というファイルを使う。</p>
+
+<p>もし <code class="language-plaintext highlighter-rouge">/etc/crypttab</code> がない場合は、ファイルを作って適切な権限を付与する。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span><span class="nb">touch</span> /etc/crypttab
+<span class="gp">#</span><span class="w"> </span><span class="nb">chown </span>root:root /etc/crypttab
+<span class="gp">#</span><span class="w"> </span><span class="nb">chmod </span>0744 /etc/crypttab
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">/etc/crypttab</code> には例えば下記のように書く。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VolumeLabel   UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx /etc/keyfile-xxxxx    luks,timeout=10s
+</code></pre></div></div>
+
+<p>すなわち、ボリュームラベル・暗号化デバイス・キーファイル・オプションのの順番に書いた行を足す。</p>
+
+<p>こうすると mount するときに systemd は、この <code class="language-plaintext highlighter-rouge">/etc/crypttab</code> を参照し、マウントしようとしているデバイス（のUUID）に紐付けられたキーファイルを探し、このキーファイルを使って LUKS パーティションを復号化する。</p>
+
+<h2 id="ブート時に不足しているもの">ブート時に不足しているもの</h2>
+
+<p>しかしこれはシステムパーティション、すなわちマウント先がルート ( <code class="language-plaintext highlighter-rouge">/</code> ) の場合はうまく行かない。</p>
+
+<ul>
+  <li>ブートプロセスでは、ルート ( <code class="language-plaintext highlighter-rouge">/</code> ) をマウントする前に initramfs イメージをマウントして動作している</li>
+  <li>initramfs に追加設定しない限り、前節で言及したファイルは initramfs に含まれない</li>
+</ul>
+
+<p>したがって、一連の設定に必要なファイルを initramfs に追加する必要がある。</p>
+
+<p>initramfs の実体は、 <code class="language-plaintext highlighter-rouge">/boot/initramfs-5.xx.xx-xxx.fc36.x86_64.img</code> といった名前のイメージファイルである（<code class="language-plaintext highlighter-rouge">5.xx.xx-xxx.fc36.x86_64</code> はカーネルリリース名。 <code class="language-plaintext highlighter-rouge">uname -r</code> に対応する）。
+この中身の一覧は <code class="language-plaintext highlighter-rouge">lsinitrd</code> コマンドで見れる。<code class="language-plaintext highlighter-rouge">/etc/crypttab</code> はあるがキーファイルは存在しない。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>lsinitrd | <span class="nb">grep </span>crypttab
+<span class="go">-rw-r--r--   1 root     root          120 Sep 26 23:47 etc/crypttab
+</span><span class="gp">#</span><span class="w"> </span>lsinitrd | <span class="nb">grep </span>keyfile-xxxx
+<span class="gp">#</span><span class="w">
+</span></code></pre></div></div>
+
+<p>方針としてはキーファイルをブート時に参照できるようにする、 initramfs に含めてしまうということを考える</p>
+
+<h2 id="起動時にパスフレーズなしでluks暗号化システムパーティションをマウントする方法金庫の前に鍵を置く方式">起動時にパスフレーズなしでLUKS暗号化システムパーティションをマウントする方法、金庫の前に鍵を置く方式</h2>
+
+<p>パスフレーズがわりのキーファイルをつくってキーファイルを LUKS パーティションに紐付ける。
+これは起動後の通常の場合と同じ方法</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span><span class="nb">dd </span><span class="nv">bs</span><span class="o">=</span>1024 <span class="nv">count</span><span class="o">=</span>1 <span class="k">if</span><span class="o">=</span>/dev/urandom <span class="nv">of</span><span class="o">=</span>/boot/keyfile-xxxxx <span class="nv">iflag</span><span class="o">=</span>fullblock
+<span class="gp">#</span><span class="w"> </span><span class="nb">chmod </span>0400 /boot/keyfile-xxxxx
+<span class="gp">#</span><span class="w"> </span>cryptsetup luksAddKey /dev/sdx1 /boot/keyfile-xxxxx
+</code></pre></div></div>
+
+<p>そして <code class="language-plaintext highlighter-rouge">/etc/crypttab</code> には例えば下記のように書く。ボリュームラベルbootと暗号化デバイス（のUUID）とキーファイルを紐付ける。
+これも起動後の通常の場合と同じ</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>boot   UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx /boot/keyfile-xxxxx    luks,timeout=10s
+</code></pre></div></div>
+
+<p>initramfs イメージファイルは dracut で作られる。 dracut にキーファイルも initramfs に含めるようにする。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>vim /etc/dracut.conf.d/copy-keyfile.conf
+<span class="gp">#</span><span class="w"> </span><span class="nb">cat</span> /etc/dracut.conf.d/copy-keyfile.conf
+<span class="go">install_items+=/boot/keyfile-xxxx
+</span></code></pre></div></div>
+
+<p>あとは dracut で initramfs を作り直せば良い…のだが、この段階で <strong>現在の initramfs をバックアップしておく</strong> こと。initramfs の復元生成は非常にむずかしいからバックアップをしておいて、万が一の失敗時には rescue モードや Live DVD かで入って、 boot パーティションに置いてある initramfs のファイルを差し戻すだけで起動可能な状態に戻せるようにしておくと楽である。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span><span class="nb">cp</span> <span class="nt">-p</span> /boot/initramfs-5.xx.xx-xxx.fc36.x86_64.img /boot/initramfs-5.xx.xx-xxx.fc36.x86_64.img.ORIG
+</code></pre></div></div>
+
+<p>もちろん boot パーティションまるごとディスクイメージファイルを作るなどの回避策でも良い。</p>
+
+<p>initramfs イメージファイルを更新生成するには下記のように実行する。時間がかかるので待つこと。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>dracut <span class="nt">-f</span>
+</code></pre></div></div>
+
+<p>処理が終わったら initramfs イメージファイルのなかにキーファイルが格納されていることを確認する。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>lsinitrd | <span class="nb">grep </span>boot/keyfile
+<span class="go">-r--------   1 root     root         1024 Oct 30  2022 boot/keyfile-xxxx
+</span></code></pre></div></div>
+
+<p>これにて終わり。次回起動移行はパスフレーズを入力する必要はない。</p>
+
+<h2 id="補足">補足</h2>
+
+<blockquote>
+  <p>金庫の前に鍵を置ようなセキュリティ強度となる。</p>
+</blockquote>
+
+<p>と冒頭で書いたが initramfs イメージファイルの中身に格納されるので、金庫の扉に鍵を貼り付けておくぐらいのイメージに近い。
+initramfs は GZip 圧縮された CPIO アーカイブファイルであるから極めて簡単に initramfs の中のファイルを抽出可能である（他の形式も選択可能ではあるが同様に取り出しは用意）</p>
+
+<h2 id="参考文献">参考文献</h2>
+
+<ul>
+  <li><a href="https://unix.stackexchange.com/questions/666770/automatic-luks-unlock-using-keyfile-on-boot-partition#answer-666772">centos - Automatic LUKS unlock using keyfile on boot partition - Unix &amp; Linux Stack Exchange</a> (pauldoo’s answer)</li>
+  <li><a href="https://wiki.archlinux.org/title/Dm-crypt/Device_encryption">dm-crypt/Device encryption - ArchWiki</a></li>
+  <li><a href="https://github.com/dracutdevs/dracut/blob/master/man/dracut.usage.asc">dracut/dracut.usage.asc at master · dracutdevs/dracut</a> (dracut user manual)</li>
+</ul>
+
+  </div>
+
+  <footer class="post-footer">
+    <details id="comments">
+      <summary><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2022/11/mount-luks-system-partition-wo-passphrase-on-boot-using-method-of-putting-key-in-front-of-the-safe.html">Comments</span></summary>
+      <div id="disqus_thread"></div>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <script type="application/javascript" src="/javascript/disqus_loader.js" defer="defer" async="async"></script>
+    </details>
+  </footer>
+</article><aside class="post-related">
+  <h2>Related Posts</h2>
+  <ul class="post-list"><li class="post-item">
+    <a class="post-link" href="/2021/09/zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru.html">
+      <span class="post-meta">2021-09-13</span>
+      <span class="post-title">ぜんぜんわからない俺達は雰囲気でbtrfs使っている</span><img class="post-thumb" src="/images/2020-09-13-Btrfs_logo.svg" loading="lazy" alt="thumbnail" /></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2010/04/componentsutilsreporterror-is-easy-to.html">
+      <span class="post-meta">2010-04-15</span>
+      <span class="post-title">Components.utils.reportError() is easy to use for debugging</span><img class="post-thumb" src="/images/componentsutilsreporterror-screenshot1.png" loading="lazy" alt="thumbnail" /></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2014/06/lukstruecrypt.html">
+      <span class="post-meta">2014-06-29</span>
+      <span class="post-title">LUKSを(TrueCryptみたいに)仮想ドライブファイルで運用するには</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2022/08/note-qmk-flash-on-podman-on-linux.html">
+      <span class="post-meta">2022-08-28</span>
+      <span class="post-title">Linux上のpodman上でqmk flashすることに関するメモ</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2017/10/list-of-all-the-config-provided-by-configuration-mania.html">
+      <span class="post-meta">2017-10-26</span>
+      <span class="post-title">List of all the Config provided by Configuration Mania</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2020/05/noted-apply-pitch-filter-to-live-microphone.html">
+      <span class="post-meta">2020-05-05</span>
+      <span class="post-title">Noted: Apply pitch filter to live microphone on linux</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2012/09/gr-sakura-linux-comusb.html">
+      <span class="post-meta">2012-09-23</span>
+      <span class="post-title">（チラシの裏）GR-SAKURA を linux で繋いで仮想COM(USB)通信時のおぼえがき</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2017/08/code-reading-firefox-send.html">
+      <span class="post-meta">2017-08-12</span>
+      <span class="post-title">Code Reading: &quot;Firefox Send&quot; encryption</span></a>
+  </li>
+</ul>
+</aside>
+      </div>
+    </div><footer class="site-footer">
+  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
+  <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
+    <h2 class="footer-heading">cat_in_136.blog()</h2>
+    <p>
+      © 2022
+      <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
+        <a href="/about"><span itemprop="name">cat_in_136</span></a>
+      </span>;
+      Content is available under a
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license" itemprop="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">CC BY-NC-SA 4.0</a>
+      unless otherwise noted.
+    </p>
+  </div>
+</footer>
+</body>
+</html>

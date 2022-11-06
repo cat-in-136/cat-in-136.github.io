@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator>
   <link href="https://cat-in-136.github.io/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://cat-in-136.github.io/" rel="alternate" type="text/html" />
-  <updated>2022-10-24T00:04:48+09:00</updated>
+  <updated>2022-11-07T00:59:01+09:00</updated>
   <id>https://cat-in-136.github.io/</id>
 
   
@@ -17,6 +17,169 @@
 
   
   
+  
+    <entry>
+      <title type="html">起動時にパスフレーズなしでLUKS暗号化システムパーティションをマウントする方法、金庫の前に鍵を置く方式</title>
+      <link href="https://cat-in-136.github.io/2022/11/mount-luks-system-partition-wo-passphrase-on-boot-using-method-of-putting-key-in-front-of-the-safe.html" rel="alternate" type="text/html" title="起動時にパスフレーズなしでLUKS暗号化システムパーティションをマウントする方法、金庫の前に鍵を置く方式" />
+      <published>2022-11-07T00:55:37+09:00</published>
+      <updated>2022-11-07T00:55:37+09:00</updated>
+      <id>https://cat-in-136.github.io/2022/11/mount-luks-system-partition-wo-passphrase-on-boot-using-method-of-putting-key-in-front-of-the-safe</id>
+      
+      
+      
+      <content type="html" xml:base="https://cat-in-136.github.io/2022/11/mount-luks-system-partition-wo-passphrase-on-boot-using-method-of-putting-key-in-front-of-the-safe.html">&lt;p&gt;ずっとわからなかった、 Fedora Linux における LUKS パーティションを起動時にパスフレーズ入力を省く方法がやっとわかった。&lt;/p&gt;
+
+&lt;p&gt;もちろんパスフレーズを入力しないということはパスフレーズ相当の代物であるキーファイルを非暗号化領域に置くことだから、金庫の前に鍵を置ようなセキュリティ強度となる。
+SSD/HDD廃棄時にキーファイルの置いてある箇所のみ念入りに抹消すればいいぐらいのメリットになる。&lt;/p&gt;
+
+&lt;h2 id=&quot;ブートじゃないときでパスフレーズなしでluks暗号化システムパーティションをマウントする方法&quot;&gt;ブートじゃないときで、パスフレーズなしでLUKS暗号化システムパーティションをマウントする方法&lt;/h2&gt;
+
+&lt;p&gt;パスフレーズがわりのキーファイルをつくる。キーファイルはなんでもいいのだが、乱数から作ったものが一般に好ましい。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dd &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/urandom &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/etc/keyfile-xxxxx &lt;span class=&quot;nv&quot;&gt;iflag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;fullblock
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;0400 /etc/keyfile-xxxxx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;このキーファイルを LUKS パーティションに紐付ける。なお既存のパスフレーズの入力が必要となる。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;cryptsetup luksAddKey /dev/sdx1 /etc/keyfile-xxxxx
+&lt;span class=&quot;go&quot;&gt;
+Enter your old/existing passphrase here. Expected output:
+Key slot 0 unlocked.
+Command successful.
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;キーファイルとLUKSパーティションの紐付けをsystemdに教える仕組みを用意しなければならない。
+これには &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/crypttab&lt;/code&gt; というファイルを使う。&lt;/p&gt;
+
+&lt;p&gt;もし &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/crypttab&lt;/code&gt; がない場合は、ファイルを作って適切な権限を付与する。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;touch&lt;/span&gt; /etc/crypttab
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chown &lt;/span&gt;root:root /etc/crypttab
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;0744 /etc/crypttab
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/crypttab&lt;/code&gt; には例えば下記のように書く。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;VolumeLabel   UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx /etc/keyfile-xxxxx    luks,timeout=10s
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;すなわち、ボリュームラベル・暗号化デバイス・キーファイル・オプションのの順番に書いた行を足す。&lt;/p&gt;
+
+&lt;p&gt;こうすると mount するときに systemd は、この &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/crypttab&lt;/code&gt; を参照し、マウントしようとしているデバイス（のUUID）に紐付けられたキーファイルを探し、このキーファイルを使って LUKS パーティションを復号化する。&lt;/p&gt;
+
+&lt;h2 id=&quot;ブート時に不足しているもの&quot;&gt;ブート時に不足しているもの&lt;/h2&gt;
+
+&lt;p&gt;しかしこれはシステムパーティション、すなわちマウント先がルート ( &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/&lt;/code&gt; ) の場合はうまく行かない。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;ブートプロセスでは、ルート ( &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/&lt;/code&gt; ) をマウントする前に initramfs イメージをマウントして動作している&lt;/li&gt;
+  &lt;li&gt;initramfs に追加設定しない限り、前節で言及したファイルは initramfs に含まれない&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;したがって、一連の設定に必要なファイルを initramfs に追加する必要がある。&lt;/p&gt;
+
+&lt;p&gt;initramfs の実体は、 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/boot/initramfs-5.xx.xx-xxx.fc36.x86_64.img&lt;/code&gt; といった名前のイメージファイルである（&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;5.xx.xx-xxx.fc36.x86_64&lt;/code&gt; はカーネルリリース名。 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uname -r&lt;/code&gt; に対応する）。
+この中身の一覧は &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lsinitrd&lt;/code&gt; コマンドで見れる。&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/crypttab&lt;/code&gt; はあるがキーファイルは存在しない。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;lsinitrd | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;crypttab
+&lt;span class=&quot;go&quot;&gt;-rw-r--r--   1 root     root          120 Sep 26 23:47 etc/crypttab
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;lsinitrd | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;keyfile-xxxx
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;方針としてはキーファイルをブート時に参照できるようにする、 initramfs に含めてしまうということを考える&lt;/p&gt;
+
+&lt;h2 id=&quot;起動時にパスフレーズなしでluks暗号化システムパーティションをマウントする方法金庫の前に鍵を置く方式&quot;&gt;起動時にパスフレーズなしでLUKS暗号化システムパーティションをマウントする方法、金庫の前に鍵を置く方式&lt;/h2&gt;
+
+&lt;p&gt;パスフレーズがわりのキーファイルをつくってキーファイルを LUKS パーティションに紐付ける。
+これは起動後の通常の場合と同じ方法&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dd &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024 &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/urandom &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/boot/keyfile-xxxxx &lt;span class=&quot;nv&quot;&gt;iflag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;fullblock
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;0400 /boot/keyfile-xxxxx
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;cryptsetup luksAddKey /dev/sdx1 /boot/keyfile-xxxxx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;そして &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/crypttab&lt;/code&gt; には例えば下記のように書く。ボリュームラベルbootと暗号化デバイス（のUUID）とキーファイルを紐付ける。
+これも起動後の通常の場合と同じ&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boot   UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx /boot/keyfile-xxxxx    luks,timeout=10s
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;initramfs イメージファイルは dracut で作られる。 dracut にキーファイルも initramfs に含めるようにする。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;vim /etc/dracut.conf.d/copy-keyfile.conf
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /etc/dracut.conf.d/copy-keyfile.conf
+&lt;span class=&quot;go&quot;&gt;install_items+=/boot/keyfile-xxxx
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;あとは dracut で initramfs を作り直せば良い…のだが、この段階で &lt;strong&gt;現在の initramfs をバックアップしておく&lt;/strong&gt; こと。initramfs の復元生成は非常にむずかしいからバックアップをしておいて、万が一の失敗時には rescue モードや Live DVD かで入って、 boot パーティションに置いてある initramfs のファイルを差し戻すだけで起動可能な状態に戻せるようにしておくと楽である。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cp&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; /boot/initramfs-5.xx.xx-xxx.fc36.x86_64.img /boot/initramfs-5.xx.xx-xxx.fc36.x86_64.img.ORIG
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;もちろん boot パーティションまるごとディスクイメージファイルを作るなどの回避策でも良い。&lt;/p&gt;
+
+&lt;p&gt;initramfs イメージファイルを更新生成するには下記のように実行する。時間がかかるので待つこと。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;dracut &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;処理が終わったら initramfs イメージファイルのなかにキーファイルが格納されていることを確認する。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;lsinitrd | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;boot/keyfile
+&lt;span class=&quot;go&quot;&gt;-r--------   1 root     root         1024 Oct 30  2022 boot/keyfile-xxxx
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;これにて終わり。次回起動移行はパスフレーズを入力する必要はない。&lt;/p&gt;
+
+&lt;h2 id=&quot;補足&quot;&gt;補足&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;金庫の前に鍵を置ようなセキュリティ強度となる。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;と冒頭で書いたが initramfs イメージファイルの中身に格納されるので、金庫の扉に鍵を貼り付けておくぐらいのイメージに近い。
+initramfs は GZip 圧縮された CPIO アーカイブファイルであるから極めて簡単に initramfs の中のファイルを抽出可能である（他の形式も選択可能ではあるが同様に取り出しは用意）&lt;/p&gt;
+
+&lt;h2 id=&quot;参考文献&quot;&gt;参考文献&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://unix.stackexchange.com/questions/666770/automatic-luks-unlock-using-keyfile-on-boot-partition#answer-666772&quot;&gt;centos - Automatic LUKS unlock using keyfile on boot partition - Unix &amp;amp; Linux Stack Exchange&lt;/a&gt; (pauldoo’s answer)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://wiki.archlinux.org/title/Dm-crypt/Device_encryption&quot;&gt;dm-crypt/Device encryption - ArchWiki&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/dracutdevs/dracut/blob/master/man/dracut.usage.asc&quot;&gt;dracut/dracut.usage.asc at master · dracutdevs/dracut&lt;/a&gt; (dracut user manual)&lt;/li&gt;
+&lt;/ul&gt;</content>
+      
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name></name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="luks" />
+      
+        <category term="linux" />
+      
+        <category term="dracut" />
+      
+
+      
+        <summary type="html">ずっとわからなかった、 Fedora Linux における LUKS パーティションを起動時にパスフレーズ入力を省く方法がやっとわかった。 もちろんパスフレーズを入力しないということはパスフレーズ相当の代物であるキーファイルを非暗号化領域に置くことだから、金庫の前に鍵を置ようなセキュリティ強度となる。 SSD/HDD廃棄時にキーファイルの置いてある箇所のみ念入りに抹消すればいいぐらいのメリットになる。 ブートじゃないときで、パスフレーズなしでLUKS暗号化システムパーティションをマウントする方法 パスフレーズがわりのキーファイルをつくる。キーファイルはなんでもいいのだが、乱数から作ったものが一般に好ましい。 # dd bs=1024 count=1 if=/dev/urandom of=/etc/keyfile-xxxxx iflag=fullblock # chmod 0400 /etc/keyfile-xxxxx このキーファイルを LUKS パーティションに紐付ける。なお既存のパスフレーズの入力が必要となる。 # cryptsetup luksAddKey /dev/sdx1 /etc/keyfile-xxxxx Enter your old/existing passphrase here. Expected output: Key slot 0 unlocked. Command successful. キーファイルとLUKSパーティションの紐付けをsystemdに教える仕組みを用意しなければならない。 これには /etc/crypttab というファイルを使う。 もし /etc/crypttab がない場合は、ファイルを作って適切な権限を付与する。 # touch /etc/crypttab # chown root:root /etc/crypttab # chmod 0744 /etc/crypttab /etc/crypttab には例えば下記のように書く。 VolumeLabel UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx /etc/keyfile-xxxxx luks,timeout=10s すなわち、ボリュームラベル・暗号化デバイス・キーファイル・オプションのの順番に書いた行を足す。 こうすると mount するときに systemd は、この /etc/crypttab を参照し、マウントしようとしているデバイス（のUUID）に紐付けられたキーファイルを探し、このキーファイルを使って LUKS パーティションを復号化する。 ブート時に不足しているもの しかしこれはシステムパーティション、すなわちマウント先がルート ( / ) の場合はうまく行かない。 ブートプロセスでは、ルート ( / ) をマウントする前に initramfs イメージをマウントして動作している initramfs に追加設定しない限り、前節で言及したファイルは initramfs に含まれない したがって、一連の設定に必要なファイルを initramfs に追加する必要がある。 initramfs の実体は、 /boot/initramfs-5.xx.xx-xxx.fc36.x86_64.img といった名前のイメージファイルである（5.xx.xx-xxx.fc36.x86_64 はカーネルリリース名。 uname -r に対応する）。 この中身の一覧は lsinitrd コマンドで見れる。/etc/crypttab はあるがキーファイルは存在しない。 # lsinitrd | grep crypttab -rw-r--r-- 1 root root 120 Sep 26 23:47 etc/crypttab # lsinitrd | grep keyfile-xxxx # 方針としてはキーファイルをブート時に参照できるようにする、 initramfs に含めてしまうということを考える 起動時にパスフレーズなしでLUKS暗号化システムパーティションをマウントする方法、金庫の前に鍵を置く方式 パスフレーズがわりのキーファイルをつくってキーファイルを LUKS パーティションに紐付ける。 これは起動後の通常の場合と同じ方法 # dd bs=1024 count=1 if=/dev/urandom of=/boot/keyfile-xxxxx iflag=fullblock # chmod 0400 /boot/keyfile-xxxxx # cryptsetup luksAddKey /dev/sdx1 /boot/keyfile-xxxxx そして /etc/crypttab には例えば下記のように書く。ボリュームラベルbootと暗号化デバイス（のUUID）とキーファイルを紐付ける。 これも起動後の通常の場合と同じ boot UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx /boot/keyfile-xxxxx luks,timeout=10s initramfs イメージファイルは dracut で作られる。 dracut にキーファイルも initramfs に含めるようにする。 # vim /etc/dracut.conf.d/copy-keyfile.conf # cat /etc/dracut.conf.d/copy-keyfile.conf install_items+=/boot/keyfile-xxxx あとは dracut で initramfs を作り直せば良い…のだが、この段階で 現在の initramfs をバックアップしておく こと。initramfs の復元生成は非常にむずかしいからバックアップをしておいて、万が一の失敗時には rescue モードや Live DVD かで入って、 boot パーティションに置いてある initramfs のファイルを差し戻すだけで起動可能な状態に戻せるようにしておくと楽である。 # cp -p /boot/initramfs-5.xx.xx-xxx.fc36.x86_64.img /boot/initramfs-5.xx.xx-xxx.fc36.x86_64.img.ORIG もちろん boot パーティションまるごとディスクイメージファイルを作るなどの回避策でも良い。 initramfs イメージファイルを更新生成するには下記のように実行する。時間がかかるので待つこと。 # dracut -f 処理が終わったら initramfs イメージファイルのなかにキーファイルが格納されていることを確認する。 # lsinitrd | grep boot/keyfile -r-------- 1 root root 1024 Oct 30 2022 boot/keyfile-xxxx これにて終わり。次回起動移行はパスフレーズを入力する必要はない。 補足 金庫の前に鍵を置ようなセキュリティ強度となる。 と冒頭で書いたが initramfs イメージファイルの中身に格納されるので、金庫の扉に鍵を貼り付けておくぐらいのイメージに近い。 initramfs は GZip 圧縮された CPIO アーカイブファイルであるから極めて簡単に initramfs の中のファイルを抽出可能である（他の形式も選択可能ではあるが同様に取り出しは用意） 参考文献 centos - Automatic LUKS unlock using keyfile on boot partition - Unix &amp;amp; Linux Stack Exchange (pauldoo’s answer) dm-crypt/Device encryption - ArchWiki dracut/dracut.usage.asc at master · dracutdevs/dracut (dracut user manual)</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Diff between firefox 107.0 beta 3 default preference and firefox 106.0.1</title>
@@ -6264,867 +6427,6 @@ ESP32 wake-up functions such as &lt;code class=&quot;language-plaintext highligh
 
       
         <summary type="html">This post describes a summary of the following conditions for the power supply/management of M5Paper. Powered by USB Type-C or not “Shutdown” or “DeepSleep” The following figure is an excerpt from the outline diagram on the back of the M5Paper that relates to the power supply. MOS BM 8563 BATTERY ESP32 D0WDQ6-V3 16M-FLASH 8M-PSRAM Li-Po 1150mAh 4.35V SY 7088 5V BUS SLM6635 USB-C G2 SDA21 SCL22 PWR G38 M5Paper Power Supply Outline Diagram The following conditions must be achieved to keep the power ON: Powered by USB Type-C; Alarm IRQ from RTC (BM8563); GPIO2 (M5EPD_MAIN_PWR_PIN) set to HIGH; or Power button (GPIO38, M5EPD_KEY_PUSH_PIN) Shutdown is achieved by setting all the above conditions to false. It indicates as long as M5Paper is connected and powered by USB Type-C, always it cannot shutdown. Then how is the shutdown process of sample programs such as FactoryTest handled? The process is as follows: void Shutdown() { // **snip** M5.disableEPDPower(); // digitalWrite(M5EPD_EPD_PWR_EN_PIN, 0); M5.disableEXTPower(); // digitalWrite(M5EPD_EXT_PWR_EN_PIN, 0); M5.disableMainPower(); // digitalWrite(M5EPD_MAIN_PWR_PIN, 1); esp_deep_sleep_start(); while(1); } If USB Type-C is connected, M5.disableMainPower() (setting GPIO2 to OFF) does not turn off its power and go to the next line and then deep sleep, not a genuine shutdown. If not, it shutdown immediately after M5.disableMainPower() (setting GPIO2 to OFF) and esp_deep_sleep_start() does not executed. Case: Shutdown / Connected and Powered by USB Type-C As long as M5Paper is connected and powered by USB Type-C, always one condition “Powered by USB Type-C” is true and it cannot shutdown. Powered by USB Type-C After M5.disableMainPower() executed (setting GPIO2 to OFF), the MOS output is still HIGH and the power is still ON. Powered by USB Type-C, After main power disabled After that, if the USB Type-C cable unplugged further, the power goes off. Because the MOS output gets LOW. Powered by USB Type-C, After main power disabled and then USB Type-C unplugged At this time, it is re-booted by pressing the PWR button, interrupt by the RTC Alarm, or plugging USB Type-C. Case: Shutdown / USB Type-C Unpuggled Other hand, if the USB Type-C cable is unplugged without calling M5.disableMainPower(), the GPIO2 output remains HIGH. Therefore, the power remains ON and is supplied from the LiPo battery. It is the same condition as just after booting without the USB Type-C power supply. After USB Type-C unplugged After M5.disableMainPower() executed (setting GPIO2 to OFF), the MOS output and the power go off. After USB Type-C unplugged and set GPIO2 to OFF At this time, it is re-booted by pressing the PWR button, interrupt by the RTC Alarm, or plugging USB Type-C. Case: Deep sleep / Connected and Powered by USB Type-C The ESP32 immediately stops operating when it goes to deep sleep. The output of GPIO2 goes LOW. Because GPIOs do not keep their state in deep sleep to conserve power. Deep sleep, powered by USB Type-C Pressing the PWR button etc… does not wake up or restart from the deep sleep status. Because the MOS output remains HIGH and unchanged. The ESP32 remains powered by USB Type-C, so the ULP coprocessor works. ESP32 wake-up functions such as esp_sleep_enable_timer_wakeup() or ULP coprocessor program can be used. Case: Deep sleep / USB Type-C Unpuggled The ESP32 immediately stops operating when it goes to deep sleep. The output of GPIO2 goes LOW. Because GPIOs do not keep their state in deep sleep to conserve power. When USB Type-C Unpuggled, such a process causes MOS output to OFF and a transition to a state equivalent to a genuine shutdown. After Deep sleep and USB Type-C unplugged The ESP32 is not powered, so the ULP coprocessor does not work. esp_sleep_enable_timer_wakeup() or ULP coprocessor program cannot be used for wake-up. At this time, it is re-booted by pressing the PWR button, interrupt by the RTC Alarm, or plugging USB Type-C. It is possible to change this behaviour to add following to lines before going to deep sleep. gpio_hold_en((gpio_num_t) M5EPD_MAIN_PWR_PIN); gpio_deep_sleep_hold_en(); // ...snip... esp_deep_sleep_start(); In this case, it keeps the GPIO2 even during deep sleep. Deep sleep with keeping GPIO2 to HIGH, powered by USB Type-C In this case, pressing the PWR button etc… does not wake up or restart from the deep sleep status. Because GPIO2 keeps HIGH and the MOS output remains HIGH and unchanged. The ESP32 remains powered by the LiPo battery, so the ULP coprocessor works. ESP32 wake-up functions such as esp_sleep_enable_timer_wakeup() or ULP coprocessor program can be used. Note: RTC Alarm issue When writing a program to reboot using RTC (BM8563) Alarm, be aware of the following bugs! https://github.com/m5stack/M5EPD/issues/26 https://github.com/m5stack/M5-CoreInk/pull/3 References M5Paper, M5Stack M5Paper Shutdown() / Deep Sleep / Wakeup | M5Stack Community M5Stack CoreInk、M5Paperのバッテリーについて | Lang-ship (Japanese) Low-Cost, µP Supervisory Circuits - BM8563, BM8563 Datasheet, Shanghai Belling (Chinese)</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Diff between firefox 100.0 beta 6 default preference and firefox 99.0.1</title>
-      <link href="https://cat-in-136.github.io/2022/04/diff-between-firefox-1000-beta-6-default.html" rel="alternate" type="text/html" title="Diff between firefox 100.0 beta 6 default preference and firefox 99.0.1" />
-      <published>2022-04-17T07:43:41+09:00</published>
-      <updated>2022-04-17T07:43:41+09:00</updated>
-      <id>https://cat-in-136.github.io/2022/04/diff-between-firefox-1000-beta-6-default</id>
-      
-      
-      
-      <content type="html" xml:base="https://cat-in-136.github.io/2022/04/diff-between-firefox-1000-beta-6-default.html">&lt;p&gt;
-This is difference between the default preference of Firefox 100.0 beta 6 and one of 99.0.1.
-This diff table is generated with my small script &lt;a href=&quot;https://github.com/cat-in-136/firefox-prefjs-surveyer&quot;&gt;firefox-prefjs-surveyer&lt;/a&gt;.
-&lt;/p&gt;
-
-&lt;div&gt;
-&lt;table class=&quot;diff_firefox100_pref_diff&quot;&gt;
-&lt;caption&gt;Preference difference&lt;/caption&gt;
-&lt;thead&gt;
-&lt;tr&gt;&lt;td&gt;Pref&lt;/td&gt;&lt;td&gt;Firefox 99.0.1&lt;/td&gt;&lt;td&gt;Firefox 100.0 beta 6&lt;/td&gt;&lt;/tr&gt;
-&lt;/thead&gt;
-    &lt;tbody&gt;
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;bool&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;integer&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;string&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;releaseNotesURL&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;releaseNotesURL.&lt;wbr /&gt;aboutDialog&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;channel&lt;/td&gt;
-        &lt;td&gt;release&lt;/td&gt;
-        &lt;td&gt;beta&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;url.&lt;wbr /&gt;details&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/notes&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/beta/notes&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;url.&lt;wbr /&gt;manual&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;cache.&lt;wbr /&gt;offline.&lt;wbr /&gt;enable&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;contentblocking.&lt;wbr /&gt;features.&lt;wbr /&gt;strict&lt;/td&gt;
-        &lt;td&gt;tp,&lt;wbr /&gt;tpPrivate,&lt;wbr /&gt;cookieBehavior5,&lt;wbr /&gt;cookieBehaviorPBM5,&lt;wbr /&gt;cm,&lt;wbr /&gt;fp,&lt;wbr /&gt;stp,&lt;wbr /&gt;lvl2,&lt;wbr /&gt;rp,&lt;wbr /&gt;ocsp&lt;/td&gt;
-        &lt;td&gt;tp,&lt;wbr /&gt;tpPrivate,&lt;wbr /&gt;cookieBehavior5,&lt;wbr /&gt;cookieBehaviorPBM5,&lt;wbr /&gt;cm,&lt;wbr /&gt;fp,&lt;wbr /&gt;stp,&lt;wbr /&gt;lvl2,&lt;wbr /&gt;rp,&lt;wbr /&gt;rpTop,&lt;wbr /&gt;ocsp&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;contentblocking.&lt;wbr /&gt;report.&lt;wbr /&gt;vpn_&lt;wbr /&gt;regions&lt;/td&gt;
-        &lt;td&gt;at,&lt;wbr /&gt;be,&lt;wbr /&gt;ca,&lt;wbr /&gt;ch,&lt;wbr /&gt;de,&lt;wbr /&gt;fr,&lt;wbr /&gt;ie,&lt;wbr /&gt;it,&lt;wbr /&gt;my,&lt;wbr /&gt;nl,&lt;wbr /&gt;nz,&lt;wbr /&gt;sg,&lt;wbr /&gt;es,&lt;wbr /&gt;gb,&lt;wbr /&gt;us&lt;/td&gt;
-        &lt;td&gt;as,&lt;wbr /&gt;at,&lt;wbr /&gt;be,&lt;wbr /&gt;ca,&lt;wbr /&gt;ch,&lt;wbr /&gt;de,&lt;wbr /&gt;es,&lt;wbr /&gt;fi,&lt;wbr /&gt;fr,&lt;wbr /&gt;gb,&lt;wbr /&gt;gg,&lt;wbr /&gt;ie,&lt;wbr /&gt;im,&lt;wbr /&gt;io,&lt;wbr /&gt;it,&lt;wbr /&gt;je,&lt;wbr /&gt;mp,&lt;wbr /&gt;my,&lt;wbr /&gt;nl,&lt;wbr /&gt;nz,&lt;wbr /&gt;pr,&lt;wbr /&gt;se,&lt;wbr /&gt;sg,&lt;wbr /&gt;uk,&lt;wbr /&gt;um,&lt;wbr /&gt;us,&lt;wbr /&gt;vg,&lt;wbr /&gt;vi&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;contentblocking.&lt;wbr /&gt;state-partitioning.&lt;wbr /&gt;mvp.&lt;wbr /&gt;ui.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;history.&lt;wbr /&gt;wireframeAreaThreshold&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;50&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;ut.&lt;wbr /&gt;events&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;promo.&lt;wbr /&gt;focus.&lt;wbr /&gt;disallowed_&lt;wbr /&gt;regions&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;cn&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;promo.&lt;wbr /&gt;focus.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;sessionstore.&lt;wbr /&gt;max_&lt;wbr /&gt;write_&lt;wbr /&gt;failures&lt;/td&gt;
-        &lt;td&gt;5&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;soft_&lt;wbr /&gt;reload.&lt;wbr /&gt;only_&lt;wbr /&gt;force_&lt;wbr /&gt;validate_&lt;wbr /&gt;top_&lt;wbr /&gt;level_&lt;wbr /&gt;document&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;startup.&lt;wbr /&gt;upgradeDialog.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;devtools.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;devtools.&lt;wbr /&gt;theme.&lt;wbr /&gt;show-auto-theme-info&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;IntersectionObserver.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;IntersectionObserver&lt;wbr /&gt;Explicit&lt;wbr /&gt;DocumentRoot.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;events.&lt;wbr /&gt;asyncClipboard&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;image-lazy-loading.&lt;wbr /&gt;root-margin.&lt;wbr /&gt;bottom&lt;/td&gt;
-        &lt;td&gt;300.&lt;wbr /&gt;0&lt;/td&gt;
-        &lt;td&gt;100.&lt;wbr /&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;image-lazy-loading.&lt;wbr /&gt;root-margin.&lt;wbr /&gt;bottom.&lt;wbr /&gt;percentage&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;image-lazy-loading.&lt;wbr /&gt;root-margin.&lt;wbr /&gt;left&lt;/td&gt;
-        &lt;td&gt;300.&lt;wbr /&gt;0&lt;/td&gt;
-        &lt;td&gt;100.&lt;wbr /&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;image-lazy-loading.&lt;wbr /&gt;root-margin.&lt;wbr /&gt;left.&lt;wbr /&gt;percentage&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;image-lazy-loading.&lt;wbr /&gt;root-margin.&lt;wbr /&gt;right&lt;/td&gt;
-        &lt;td&gt;300.&lt;wbr /&gt;0&lt;/td&gt;
-        &lt;td&gt;100.&lt;wbr /&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;image-lazy-loading.&lt;wbr /&gt;root-margin.&lt;wbr /&gt;right.&lt;wbr /&gt;percentage&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;image-lazy-loading.&lt;wbr /&gt;root-margin.&lt;wbr /&gt;top&lt;/td&gt;
-        &lt;td&gt;300.&lt;wbr /&gt;0&lt;/td&gt;
-        &lt;td&gt;100.&lt;wbr /&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;image-lazy-loading.&lt;wbr /&gt;root-margin.&lt;wbr /&gt;top.&lt;wbr /&gt;percentage&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;ipc.&lt;wbr /&gt;processCount.&lt;wbr /&gt;webLargeAllocation&lt;/td&gt;
-        &lt;td&gt;10&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;largeAllocation.&lt;wbr /&gt;forceEnable&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;largeAllocationHeader.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;origin-trials.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;origin-trials.&lt;wbr /&gt;test-key.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;streams.&lt;wbr /&gt;pipeTo.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;streams.&lt;wbr /&gt;readable_&lt;wbr /&gt;stream_&lt;wbr /&gt;default_&lt;wbr /&gt;controller.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;streams.&lt;wbr /&gt;readable_&lt;wbr /&gt;stream_&lt;wbr /&gt;default_&lt;wbr /&gt;reader.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;streams.&lt;wbr /&gt;writable_&lt;wbr /&gt;streams.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;webmidi.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;window.&lt;wbr /&gt;content.&lt;wbr /&gt;untrusted.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;window.&lt;wbr /&gt;sidebar.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;editor.&lt;wbr /&gt;initialize_&lt;wbr /&gt;element_&lt;wbr /&gt;before_&lt;wbr /&gt;connect&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;extensions.&lt;wbr /&gt;InstallTrigger.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;extensions.&lt;wbr /&gt;InstallTriggerImpl.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;extensions.&lt;wbr /&gt;formautofill.&lt;wbr /&gt;creditCards.&lt;wbr /&gt;heuristics.&lt;wbr /&gt;confidenceThreshold&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;0.&lt;wbr /&gt;5&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;extensions.&lt;wbr /&gt;formautofill.&lt;wbr /&gt;creditCards.&lt;wbr /&gt;heuristics.&lt;wbr /&gt;mode&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;extensions.&lt;wbr /&gt;formautofill.&lt;wbr /&gt;creditCards.&lt;wbr /&gt;supportedCountries&lt;/td&gt;
-        &lt;td&gt;US,&lt;wbr /&gt;CA,&lt;wbr /&gt;UK,&lt;wbr /&gt;FR,&lt;wbr /&gt;DE&lt;/td&gt;
-        &lt;td&gt;US,&lt;wbr /&gt;CA,&lt;wbr /&gt;GB,&lt;wbr /&gt;FR,&lt;wbr /&gt;DE&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;extensions.&lt;wbr /&gt;webcompat-reporter.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;general.&lt;wbr /&gt;useragent.&lt;wbr /&gt;forceVersion100&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;general.&lt;wbr /&gt;useragent.&lt;wbr /&gt;handled&lt;wbr /&gt;Version&lt;wbr /&gt;Experiment&lt;wbr /&gt;Enrollment&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;geo.&lt;wbr /&gt;provider.&lt;wbr /&gt;network.&lt;wbr /&gt;url&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY%&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;gfx.&lt;wbr /&gt;webgpu.&lt;wbr /&gt;force-enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;intl.&lt;wbr /&gt;multilingual.&lt;wbr /&gt;aboutWelcome.&lt;wbr /&gt;languageMismatchEnabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;intl.&lt;wbr /&gt;multilingual.&lt;wbr /&gt;liveReload&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;wasm_&lt;wbr /&gt;exceptions&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;wasm_&lt;wbr /&gt;simd_&lt;wbr /&gt;wormhole&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;container-queries.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;content-visibility.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;grid-item-baxis-measurement.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;moz-locale-dir.&lt;wbr /&gt;content.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;moz-lwtheme.&lt;wbr /&gt;content.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;overflow-moz-hidden-unscrollable.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;dynamic-reflow-roots.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;selectanchor&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;mathml.&lt;wbr /&gt;xlink.&lt;wbr /&gt;disabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;ffmpeg.&lt;wbr /&gt;customized-buffer-allocation&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;forcestereo.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;gmp-manager.&lt;wbr /&gt;checkContentSignature&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;peerconnection.&lt;wbr /&gt;mtransport_&lt;wbr /&gt;process&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;rdd-process.&lt;wbr /&gt;max-crashes&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;2&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;webrtc.&lt;wbr /&gt;platformencoder.&lt;wbr /&gt;sw_&lt;wbr /&gt;mft&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;cache.&lt;wbr /&gt;frecency_&lt;wbr /&gt;array_&lt;wbr /&gt;check_&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;cookie.&lt;wbr /&gt;noPersistentStorage&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;cookie.&lt;wbr /&gt;sameSite.&lt;wbr /&gt;laxByDefault&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;cookie.&lt;wbr /&gt;sameSite.&lt;wbr /&gt;noneRequiresSecure&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;cookie.&lt;wbr /&gt;sameSite.&lt;wbr /&gt;schemeful&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;dns.&lt;wbr /&gt;port_&lt;wbr /&gt;prefixed_&lt;wbr /&gt;qname_&lt;wbr /&gt;https_&lt;wbr /&gt;rr&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;allow-push&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;chunk-size&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;16000&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;coalesce-hostnames&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;default-concurrent&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;100&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;default-hpack-buffer&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;65536&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;enable-hpack-dump&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;enabled.&lt;wbr /&gt;deps&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;enforce-tls-profile&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;persistent-settings&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;ping-threshold&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;58&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;ping-timeout&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;8&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;pull-allowance&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;12582912&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;push-allowance&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;131072&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;send-buffer-size&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;131072&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;timeout&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;170&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;websockets&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;referer.&lt;wbr /&gt;disallow&lt;wbr /&gt;CrossSite&lt;wbr /&gt;Relaxing&lt;wbr /&gt;Default&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;referer.&lt;wbr /&gt;disallow&lt;wbr /&gt;CrossSite&lt;wbr /&gt;Relaxing&lt;wbr /&gt;Default.&lt;wbr /&gt;pbmode.&lt;wbr /&gt;top_&lt;wbr /&gt;navigation&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;referer.&lt;wbr /&gt;disallow&lt;wbr /&gt;CrossSite&lt;wbr /&gt;Relaxing&lt;wbr /&gt;Default.&lt;wbr /&gt;top_&lt;wbr /&gt;navigation&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;allow-push&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;chunk-size&lt;/td&gt;
-        &lt;td&gt;16000&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;coalesce-hostnames&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;default-concurrent&lt;/td&gt;
-        &lt;td&gt;100&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;default-hpack-buffer&lt;/td&gt;
-        &lt;td&gt;65536&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;enable-hpack-dump&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;enabled.&lt;wbr /&gt;deps&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;enabled.&lt;wbr /&gt;http2&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;enforce-tls-profile&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;persistent-settings&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;ping-threshold&lt;/td&gt;
-        &lt;td&gt;58&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;ping-timeout&lt;/td&gt;
-        &lt;td&gt;8&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;pull-allowance&lt;/td&gt;
-        &lt;td&gt;12582912&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;push-allowance&lt;/td&gt;
-        &lt;td&gt;131072&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;send-buffer-size&lt;/td&gt;
-        &lt;td&gt;131072&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;timeout&lt;/td&gt;
-        &lt;td&gt;170&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;spdy.&lt;wbr /&gt;websockets&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;jar.&lt;wbr /&gt;record_&lt;wbr /&gt;failure_&lt;wbr /&gt;reason&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;predictor.&lt;wbr /&gt;enable-prefetch&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;process.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;privacy.&lt;wbr /&gt;annotate_&lt;wbr /&gt;channels.&lt;wbr /&gt;strict_&lt;wbr /&gt;list.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;disallow_&lt;wbr /&gt;non_&lt;wbr /&gt;local_&lt;wbr /&gt;systemprincipal_&lt;wbr /&gt;in_&lt;wbr /&gt;tests&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;intermediate_&lt;wbr /&gt;preloading_&lt;wbr /&gt;healer.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;onecrl.&lt;wbr /&gt;maximum_&lt;wbr /&gt;staleness_&lt;wbr /&gt;in_&lt;wbr /&gt;seconds&lt;/td&gt;
-        &lt;td&gt;108000&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;pki.&lt;wbr /&gt;crlite_&lt;wbr /&gt;mode&lt;/td&gt;
-        &lt;td&gt;1&lt;/td&gt;
-        &lt;td&gt;3&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;remote_&lt;wbr /&gt;settings.&lt;wbr /&gt;crlite_&lt;wbr /&gt;filters.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;secure_&lt;wbr /&gt;connection_&lt;wbr /&gt;icon_&lt;wbr /&gt;color_&lt;wbr /&gt;gray&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;engine.&lt;wbr /&gt;bookmarks.&lt;wbr /&gt;validation.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;engine.&lt;wbr /&gt;passwords.&lt;wbr /&gt;validation.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;widget.&lt;wbr /&gt;gtk.&lt;wbr /&gt;overlay-scrollbars.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-    &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;style type=&quot;text/css&quot;&gt;&lt;!-- /* --&gt;&lt;![CDATA[ /* */
-table.diff_firefox100_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
-table.diff_firefox100_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
-table.diff_firefox100_pref_diff thead td { background-color: #ddd; font-weight: bold; }
-table.diff_firefox100_pref_diff td.json,
-table.diff_firefox100_pref_diff td.uri,
-table.diff_firefox100_pref_diff td.dump { word-break: break-all; }
-table.diff_firefox100_pref_diff td.undefined { color: #888; font-style: italic; }
-table.diff_firefox100_pref_diff tr.sameval td:first-child { color: #444; }
-table.diff_firefox100_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
-table.diff_firefox100_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
-table.diff_firefox100_pref_diff tbody tr:hover { background-color: #eee; }
-table.diff_firefox100_pref_diff tbody tr { transition: background 0.125s ease-in-out 0s; }
-/* ]]&gt;&lt;!-- */ --&gt;&lt;/style&gt;</content>
-      
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>cat_in_136</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="pref diff" />
-      
-        <category term="mozilla" />
-      
-
-      
-        <summary type="html">This is difference between the default preference of Firefox 100.0 beta 6 and one of 99.0.1. This diff table is generated with my small script firefox-prefjs-surveyer. Preference difference PrefFirefox 99.0.1Firefox 100.0 beta 6 app.normandy.test-prefs.bool undefined false app.normandy.test-prefs.integer undefined 0 app.normandy.test-prefs.string undefined app.releaseNotesURL https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew app.releaseNotesURL.aboutDialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog app.update.channel release beta app.update.url.details https://www.mozilla.org/%LOCALE%/firefox/notes https://www.mozilla.org/%LOCALE%/firefox/beta/notes app.update.url.manual https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update browser.cache.offline.enable true false browser.contentblocking.features.strict tp,tpPrivate,cookieBehavior5,cookieBehaviorPBM5,cm,fp,stp,lvl2,rp,ocsp tp,tpPrivate,cookieBehavior5,cookieBehaviorPBM5,cm,fp,stp,lvl2,rp,rpTop,ocsp browser.contentblocking.report.vpn_regions at,be,ca,ch,de,fr,ie,it,my,nl,nz,sg,es,gb,us as,at,be,ca,ch,de,es,fi,fr,gb,gg,ie,im,io,it,je,mp,my,nl,nz,pr,se,sg,uk,um,us,vg,vi browser.contentblocking.state-partitioning.mvp.ui.enabled true undefined browser.history.wireframeAreaThreshold undefined 50 browser.newtabpage.activity-stream.telemetry.ut.events false true browser.promo.focus.disallowed_regions undefined cn browser.promo.focus.enabled undefined true browser.sessionstore.max_write_failures 5 undefined browser.soft_reload.only_force_validate_top_level_document false true browser.startup.upgradeDialog.enabled false true devtools.enabled true undefined devtools.theme.show-auto-theme-info true undefined dom.IntersectionObserver.enabled true undefined dom.IntersectionObserverExplicitDocumentRoot.enabled true undefined dom.events.asyncClipboard true undefined dom.image-lazy-loading.root-margin.bottom 300.0 100.0 dom.image-lazy-loading.root-margin.bottom.percentage false true dom.image-lazy-loading.root-margin.left 300.0 100.0 dom.image-lazy-loading.root-margin.left.percentage false true dom.image-lazy-loading.root-margin.right 300.0 100.0 dom.image-lazy-loading.root-margin.right.percentage false true dom.image-lazy-loading.root-margin.top 300.0 100.0 dom.image-lazy-loading.root-margin.top.percentage false true dom.ipc.processCount.webLargeAllocation 10 undefined dom.largeAllocation.forceEnable false undefined dom.largeAllocationHeader.enabled true undefined dom.origin-trials.enabled undefined false dom.origin-trials.test-key.enabled undefined false dom.streams.pipeTo.enabled false true dom.streams.readable_stream_default_controller.enabled false true dom.streams.readable_stream_default_reader.enabled false true dom.streams.writable_streams.enabled false true dom.webmidi.enabled false true dom.window.content.untrusted.enabled true false dom.window.sidebar.enabled true false editor.initialize_element_before_connect undefined true extensions.InstallTrigger.enabled undefined true extensions.InstallTriggerImpl.enabled undefined true extensions.formautofill.creditCards.heuristics.confidenceThreshold undefined 0.5 extensions.formautofill.creditCards.heuristics.mode undefined 0 extensions.formautofill.creditCards.supportedCountries US,CA,UK,FR,DE US,CA,GB,FR,DE extensions.webcompat-reporter.enabled false true general.useragent.forceVersion100 false undefined general.useragent.handledVersionExperimentEnrollment false undefined geo.provider.network.url https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY% https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY% gfx.webgpu.force-enabled undefined false intl.multilingual.aboutWelcome.languageMismatchEnabled false true intl.multilingual.liveReload false true javascript.options.wasm_exceptions undefined true javascript.options.wasm_simd_wormhole undefined false layout.css.container-queries.enabled undefined false layout.css.content-visibility.enabled undefined false layout.css.grid-item-baxis-measurement.enabled false true layout.css.moz-locale-dir.content.enabled false undefined layout.css.moz-lwtheme.content.enabled false undefined layout.css.overflow-moz-hidden-unscrollable.enabled undefined true layout.dynamic-reflow-roots.enabled false true layout.selectanchor undefined false mathml.xlink.disabled true undefined media.ffmpeg.customized-buffer-allocation false true media.forcestereo.enabled false true media.gmp-manager.checkContentSignature undefined true media.peerconnection.mtransport_process false true media.rdd-process.max-crashes undefined 2 media.webrtc.platformencoder.sw_mft undefined true network.cache.frecency_array_check_enabled false true network.cookie.noPersistentStorage undefined false network.cookie.sameSite.laxByDefault false true network.cookie.sameSite.noneRequiresSecure false true network.cookie.sameSite.schemeful false true network.dns.port_prefixed_qname_https_rr undefined false network.http.http2.allow-push undefined true network.http.http2.chunk-size undefined 16000 network.http.http2.coalesce-hostnames undefined true network.http.http2.default-concurrent undefined 100 network.http.http2.default-hpack-buffer undefined 65536 network.http.http2.enable-hpack-dump undefined false network.http.http2.enabled undefined true network.http.http2.enabled.deps undefined true network.http.http2.enforce-tls-profile undefined true network.http.http2.persistent-settings undefined false network.http.http2.ping-threshold undefined 58 network.http.http2.ping-timeout undefined 8 network.http.http2.pull-allowance undefined 12582912 network.http.http2.push-allowance undefined 131072 network.http.http2.send-buffer-size undefined 131072 network.http.http2.timeout undefined 170 network.http.http2.websockets undefined true network.http.referer.disallowCrossSiteRelaxingDefault false true network.http.referer.disallowCrossSiteRelaxingDefault.pbmode.top_navigation undefined true network.http.referer.disallowCrossSiteRelaxingDefault.top_navigation undefined false network.http.spdy.allow-push true undefined network.http.spdy.chunk-size 16000 undefined network.http.spdy.coalesce-hostnames true undefined network.http.spdy.default-concurrent 100 undefined network.http.spdy.default-hpack-buffer 65536 undefined network.http.spdy.enable-hpack-dump false undefined network.http.spdy.enabled true undefined network.http.spdy.enabled.deps true undefined network.http.spdy.enabled.http2 true undefined network.http.spdy.enforce-tls-profile true undefined network.http.spdy.persistent-settings false undefined network.http.spdy.ping-threshold 58 undefined network.http.spdy.ping-timeout 8 undefined network.http.spdy.pull-allowance 12582912 undefined network.http.spdy.push-allowance 131072 undefined network.http.spdy.send-buffer-size 131072 undefined network.http.spdy.timeout 170 undefined network.http.spdy.websockets true undefined network.jar.record_failure_reason false true network.predictor.enable-prefetch false true network.process.enabled false true privacy.annotate_channels.strict_list.enabled false true security.disallow_non_local_systemprincipal_in_tests undefined false security.intermediate_preloading_healer.enabled false true security.onecrl.maximum_staleness_in_seconds 108000 undefined security.pki.crlite_mode 1 3 security.remote_settings.crlite_filters.enabled false true security.secure_connection_icon_color_gray true undefined services.sync.engine.bookmarks.validation.enabled undefined true services.sync.engine.passwords.validation.enabled undefined true toolkit.telemetry.enabled false true widget.gtk.overlay-scrollbars.enabled false true</summary>
       
 
       
