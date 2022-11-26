@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator>
   <link href="https://cat-in-136.github.io/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://cat-in-136.github.io/" rel="alternate" type="text/html" />
-  <updated>2022-11-26T15:03:49+09:00</updated>
+  <updated>2022-11-26T15:13:03+09:00</updated>
   <id>https://cat-in-136.github.io/</id>
 
   
@@ -17,6 +17,789 @@
 
   
   
+  
+    <entry>
+      <title type="html">Diff between firefox 108.0 beta 6 default preference and firefox 107.0</title>
+      <link href="https://cat-in-136.github.io/2022/11/diff-between-firefox-1080-beta-6-default.html" rel="alternate" type="text/html" title="Diff between firefox 108.0 beta 6 default preference and firefox 107.0" />
+      <published>2022-11-26T15:11:35+09:00</published>
+      <updated>2022-11-26T15:11:35+09:00</updated>
+      <id>https://cat-in-136.github.io/2022/11/diff-between-firefox-1080-beta-6-default</id>
+      
+      
+      
+      <content type="html" xml:base="https://cat-in-136.github.io/2022/11/diff-between-firefox-1080-beta-6-default.html">&lt;p&gt;
+This is difference between the default preference of Firefox 108.0 beta 6 and one of 107.0.
+This diff table is generated with my small script &lt;a href=&quot;https://github.com/cat-in-136/firefox-prefjs-surveyer&quot;&gt;firefox-prefjs-surveyer&lt;/a&gt;.
+&lt;/p&gt;
+
+&lt;div&gt;
+&lt;table class=&quot;diff_firefox108_pref_diff&quot;&gt;
+&lt;caption&gt;Preference difference&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;&lt;td&gt;Pref&lt;/td&gt;&lt;td&gt;Firefox 107.0&lt;/td&gt;&lt;td&gt;Firefox 108.0 beta 6&lt;/td&gt;&lt;/tr&gt;
+&lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;bool&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;integer&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;string&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;releaseNotesURL&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;releaseNotesURL.&lt;wbr /&gt;aboutDialog&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;channel&lt;/td&gt;
+        &lt;td&gt;release&lt;/td&gt;
+        &lt;td&gt;beta&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;url.&lt;wbr /&gt;details&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/notes&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/beta/notes&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;url.&lt;wbr /&gt;manual&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;apz.&lt;wbr /&gt;scrollend-event.&lt;wbr /&gt;content.&lt;wbr /&gt;delay_&lt;wbr /&gt;ms&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;100&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;cache.&lt;wbr /&gt;offline.&lt;wbr /&gt;enable&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;cache.&lt;wbr /&gt;shutdown_&lt;wbr /&gt;io_&lt;wbr /&gt;time_&lt;wbr /&gt;between_&lt;wbr /&gt;cancellations_&lt;wbr /&gt;ms&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;5&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;brave.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;canary.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;chrome-beta.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;chrome-dev.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;chrome.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;chromium-360se.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;chromium-edge-beta.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;chromium-edge.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;chromium.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;edge.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;firefox.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;ie.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;opera.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;safari.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;discovery&lt;wbr /&gt;stream.&lt;wbr /&gt;spoc&lt;wbr /&gt;Topsites&lt;wbr /&gt;AdTypes&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;discovery&lt;wbr /&gt;stream.&lt;wbr /&gt;spoc&lt;wbr /&gt;Topsites&lt;wbr /&gt;ZoneIds&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;ut.&lt;wbr /&gt;events&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;pdfjs.&lt;wbr /&gt;feature-tour&lt;/td&gt;
+        &lt;td class=&quot;json&quot;&gt;{&amp;quot;message&amp;quot;:&amp;quot;PDF_JS_FEATURE_TOUR&amp;quot;,&amp;quot;screen&amp;quot;:&amp;quot;&amp;quot;,&amp;quot;complete&amp;quot;:false}&lt;/td&gt;
+        &lt;td class=&quot;json&quot;&gt;{&amp;quot;screen&amp;quot;:&amp;quot;FEATURE_CALLOUT_1&amp;quot;,&amp;quot;complete&amp;quot;:false}&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;quickactions.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;quickactions.&lt;wbr /&gt;showInZeroPrefix&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;quickactions.&lt;wbr /&gt;showPrefs&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;shortcuts.&lt;wbr /&gt;quickactions&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;showSearchTerms&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;showSearchTerms.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;showSearchTerms.&lt;wbr /&gt;featureGate&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;suggest.&lt;wbr /&gt;quickactions&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;suggest.&lt;wbr /&gt;weather&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;weather.&lt;wbr /&gt;featureGate&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;clipboard.&lt;wbr /&gt;plainTextOnly&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;cookiebanners.&lt;wbr /&gt;bannerClicking.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;cookiebanners.&lt;wbr /&gt;ui.&lt;wbr /&gt;desktop.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;devtools.&lt;wbr /&gt;styleeditor.&lt;wbr /&gt;atRulesSidebarWidth&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;238&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;devtools.&lt;wbr /&gt;styleeditor.&lt;wbr /&gt;mediaSidebarWidth&lt;/td&gt;
+        &lt;td&gt;238&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;devtools.&lt;wbr /&gt;styleeditor.&lt;wbr /&gt;showAtRulesSidebar&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;devtools.&lt;wbr /&gt;styleeditor.&lt;wbr /&gt;showMediaSidebar&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;docshell.&lt;wbr /&gt;shistory.&lt;wbr /&gt;bfcache.&lt;wbr /&gt;ship_&lt;wbr /&gt;allow_&lt;wbr /&gt;beforeunload_&lt;wbr /&gt;listeners&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;document.&lt;wbr /&gt;edit_&lt;wbr /&gt;command.&lt;wbr /&gt;contentReadOnly.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;document.&lt;wbr /&gt;edit_&lt;wbr /&gt;command.&lt;wbr /&gt;insertBrOnReturn.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;events.&lt;wbr /&gt;dataTransfer.&lt;wbr /&gt;mozFile.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;fs.&lt;wbr /&gt;main_&lt;wbr /&gt;thread_&lt;wbr /&gt;writable_&lt;wbr /&gt;file_&lt;wbr /&gt;stream&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;importMaps.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;input_&lt;wbr /&gt;event_&lt;wbr /&gt;queue.&lt;wbr /&gt;duration.&lt;wbr /&gt;max&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;8&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;input_&lt;wbr /&gt;events.&lt;wbr /&gt;strict_&lt;wbr /&gt;input_&lt;wbr /&gt;vsync_&lt;wbr /&gt;alignment&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;mozCurrentTransform.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;origin-trials.&lt;wbr /&gt;offscreen-canvas.&lt;wbr /&gt;state&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;picture_&lt;wbr /&gt;source_&lt;wbr /&gt;dimension_&lt;wbr /&gt;attributes.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;security.&lt;wbr /&gt;credentialmanagement.&lt;wbr /&gt;identity.&lt;wbr /&gt;select_&lt;wbr /&gt;first_&lt;wbr /&gt;in_&lt;wbr /&gt;ui_&lt;wbr /&gt;lists&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;sitepermsaddon-provider.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;sitepermsaddon-provider.&lt;wbr /&gt;separated&lt;wbr /&gt;Blocklisted&lt;wbr /&gt;Domains&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;shopee.&lt;wbr /&gt;co.&lt;wbr /&gt;th&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;webidl.&lt;wbr /&gt;crosscontext_&lt;wbr /&gt;hasinstance.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;webmidi.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;editor.&lt;wbr /&gt;word_&lt;wbr /&gt;select.&lt;wbr /&gt;delete_&lt;wbr /&gt;space_&lt;wbr /&gt;after_&lt;wbr /&gt;doubleclick_&lt;wbr /&gt;selection&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;extensions.&lt;wbr /&gt;InstallTrigger.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;extensions.&lt;wbr /&gt;manifestV3.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;extensions.&lt;wbr /&gt;open&lt;wbr /&gt;Popup&lt;wbr /&gt;Without&lt;wbr /&gt;UserGesture.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;extensions.&lt;wbr /&gt;webcompat-reporter.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;geo.&lt;wbr /&gt;provider.&lt;wbr /&gt;network.&lt;wbr /&gt;url&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY%&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;gfx.&lt;wbr /&gt;canvas.&lt;wbr /&gt;accelerated.&lt;wbr /&gt;gpu-path-size&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;4&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;gfx.&lt;wbr /&gt;color_&lt;wbr /&gt;management.&lt;wbr /&gt;enablev4&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;gfx.&lt;wbr /&gt;display.&lt;wbr /&gt;max-frame-rate&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;gfx.&lt;wbr /&gt;offscreencanvas.&lt;wbr /&gt;domain-allowlist&lt;/td&gt;
+        &lt;td&gt;*.&lt;wbr /&gt;zoom.&lt;wbr /&gt;us,&lt;wbr /&gt;zoom.&lt;wbr /&gt;us&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;gfx.&lt;wbr /&gt;offscreencanvas.&lt;wbr /&gt;domain-enabled&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;html5.&lt;wbr /&gt;inert.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;input_&lt;wbr /&gt;event_&lt;wbr /&gt;queue.&lt;wbr /&gt;count_&lt;wbr /&gt;for_&lt;wbr /&gt;prediction&lt;/td&gt;
+        &lt;td&gt;9&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;input_&lt;wbr /&gt;event_&lt;wbr /&gt;queue.&lt;wbr /&gt;default_&lt;wbr /&gt;duration_&lt;wbr /&gt;per_&lt;wbr /&gt;event&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;input_&lt;wbr /&gt;event_&lt;wbr /&gt;queue.&lt;wbr /&gt;duration.&lt;wbr /&gt;max&lt;/td&gt;
+        &lt;td&gt;8&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;input_&lt;wbr /&gt;event_&lt;wbr /&gt;queue.&lt;wbr /&gt;duration.&lt;wbr /&gt;min&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;experimental.&lt;wbr /&gt;class_&lt;wbr /&gt;static_&lt;wbr /&gt;blocks&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;experimental.&lt;wbr /&gt;ergonomic_&lt;wbr /&gt;brand_&lt;wbr /&gt;checks&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;experimental.&lt;wbr /&gt;private_&lt;wbr /&gt;fields&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;experimental.&lt;wbr /&gt;private_&lt;wbr /&gt;methods&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;experimental.&lt;wbr /&gt;top_&lt;wbr /&gt;level_&lt;wbr /&gt;await&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;font-variant-emoji.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;round.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;trig.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;dynamic-reflow-roots.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;media.&lt;wbr /&gt;seamless-looping-video&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;media.&lt;wbr /&gt;utility-process.&lt;wbr /&gt;max-crashes&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;2&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;media.&lt;wbr /&gt;webrtc.&lt;wbr /&gt;platformencoder.&lt;wbr /&gt;sw_&lt;wbr /&gt;mft&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;cache.&lt;wbr /&gt;frecency_&lt;wbr /&gt;array_&lt;wbr /&gt;check_&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;cookie.&lt;wbr /&gt;sameSite.&lt;wbr /&gt;laxByDefault&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;cookie.&lt;wbr /&gt;sameSite.&lt;wbr /&gt;noneRequiresSecure&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;jar.&lt;wbr /&gt;record_&lt;wbr /&gt;failure_&lt;wbr /&gt;reason&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;predictor.&lt;wbr /&gt;enable-prefetch&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;url.&lt;wbr /&gt;strip-data-url-whitespace&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;nimbus.&lt;wbr /&gt;qa.&lt;wbr /&gt;pref-1&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;default&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;nimbus.&lt;wbr /&gt;qa.&lt;wbr /&gt;pref-2&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;default&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;privacy.&lt;wbr /&gt;annotate_&lt;wbr /&gt;channels.&lt;wbr /&gt;strict_&lt;wbr /&gt;list.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;block_&lt;wbr /&gt;fileuri_&lt;wbr /&gt;script_&lt;wbr /&gt;with_&lt;wbr /&gt;wrong_&lt;wbr /&gt;mime&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;csp.&lt;wbr /&gt;script-src-attr-elem.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;csp.&lt;wbr /&gt;style-src-attr-elem.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;csp.&lt;wbr /&gt;unsafe-hashes.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;disallow_&lt;wbr /&gt;non_&lt;wbr /&gt;local_&lt;wbr /&gt;systemprincipal_&lt;wbr /&gt;in_&lt;wbr /&gt;tests&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;remote_&lt;wbr /&gt;settings.&lt;wbr /&gt;crlite_&lt;wbr /&gt;filters.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;sandbox.&lt;wbr /&gt;gpu.&lt;wbr /&gt;level&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;engine.&lt;wbr /&gt;bookmarks.&lt;wbr /&gt;validation.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;engine.&lt;wbr /&gt;passwords.&lt;wbr /&gt;validation.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;toolkit.&lt;wbr /&gt;background_&lt;wbr /&gt;tasks.&lt;wbr /&gt;remove_&lt;wbr /&gt;directory.&lt;wbr /&gt;testing.&lt;wbr /&gt;sleep_&lt;wbr /&gt;ms&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;dap.&lt;wbr /&gt;logLevel&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;Warn&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;dap_&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;dap_&lt;wbr /&gt;helper&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://helper1.dap.cloudflareresearch.com/v01&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;dap_&lt;wbr /&gt;helper_&lt;wbr /&gt;owner&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;Cloudflare&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;dap_&lt;wbr /&gt;leader&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://interop-00.api.divviup.org&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;dap_&lt;wbr /&gt;leader_&lt;wbr /&gt;owner&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;ISRG&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;webchannel.&lt;wbr /&gt;allowObject.&lt;wbr /&gt;urlWhitelist&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://content.cdn.mozilla.net https://support.mozilla.org https://install.mozilla.org&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://content.cdn.mozilla.net https://install.mozilla.org&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;webgl.&lt;wbr /&gt;out-of-process.&lt;wbr /&gt;async-present&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;xul.&lt;wbr /&gt;panel-animations.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+    &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;style type=&quot;text/css&quot;&gt;&lt;!-- /* --&gt;&lt;![CDATA[ /* */
+table.diff_firefox108_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
+table.diff_firefox108_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
+table.diff_firefox108_pref_diff thead td { background-color: #ddd; font-weight: bold; }
+table.diff_firefox108_pref_diff td.json,
+table.diff_firefox108_pref_diff td.uri,
+table.diff_firefox108_pref_diff td.dump { word-break: break-all; }
+table.diff_firefox108_pref_diff td.undefined { color: #888; font-style: italic; }
+table.diff_firefox108_pref_diff tr.sameval td:first-child { color: #444; }
+table.diff_firefox108_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
+table.diff_firefox108_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
+table.diff_firefox108_pref_diff tbody tr:hover { background-color: #eee; }
+table.diff_firefox108_pref_diff tbody tr { transition: background 0.125s ease-in-out 0s; }
+/* ]]&gt;&lt;!-- */ --&gt;&lt;/style&gt;</content>
+      
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>cat_in_136</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="pref diff" />
+      
+        <category term="mozilla" />
+      
+
+      
+        <summary type="html">This is difference between the default preference of Firefox 108.0 beta 6 and one of 107.0. This diff table is generated with my small script firefox-prefjs-surveyer. Preference difference PrefFirefox 107.0Firefox 108.0 beta 6 app.normandy.test-prefs.bool undefined false app.normandy.test-prefs.integer undefined 0 app.normandy.test-prefs.string undefined app.releaseNotesURL https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew app.releaseNotesURL.aboutDialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog app.update.channel release beta app.update.url.details https://www.mozilla.org/%LOCALE%/firefox/notes https://www.mozilla.org/%LOCALE%/firefox/beta/notes app.update.url.manual https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update apz.scrollend-event.content.delay_ms undefined 100 browser.cache.offline.enable true false browser.cache.shutdown_io_time_between_cancellations_ms undefined 5 browser.migrate.brave.enabled undefined true browser.migrate.canary.enabled undefined true browser.migrate.chrome-beta.enabled undefined true browser.migrate.chrome-dev.enabled undefined true browser.migrate.chrome.enabled undefined true browser.migrate.chromium-360se.enabled undefined true browser.migrate.chromium-edge-beta.enabled undefined true browser.migrate.chromium-edge.enabled undefined true browser.migrate.chromium.enabled undefined true browser.migrate.edge.enabled undefined true browser.migrate.firefox.enabled undefined true browser.migrate.ie.enabled undefined true browser.migrate.opera.enabled undefined false browser.migrate.safari.enabled undefined true browser.newtabpage.activity-stream.discoverystream.spocTopsitesAdTypes undefined browser.newtabpage.activity-stream.discoverystream.spocTopsitesZoneIds undefined browser.newtabpage.activity-stream.telemetry.ut.events false true browser.pdfjs.feature-tour {&amp;quot;message&amp;quot;:&amp;quot;PDF_JS_FEATURE_TOUR&amp;quot;,&amp;quot;screen&amp;quot;:&amp;quot;&amp;quot;,&amp;quot;complete&amp;quot;:false} {&amp;quot;screen&amp;quot;:&amp;quot;FEATURE_CALLOUT_1&amp;quot;,&amp;quot;complete&amp;quot;:false} browser.urlbar.quickactions.enabled undefined true browser.urlbar.quickactions.showInZeroPrefix undefined true browser.urlbar.quickactions.showPrefs undefined true browser.urlbar.shortcuts.quickactions undefined true browser.urlbar.showSearchTerms false undefined browser.urlbar.showSearchTerms.enabled undefined true browser.urlbar.showSearchTerms.featureGate undefined false browser.urlbar.suggest.quickactions undefined true browser.urlbar.suggest.weather undefined true browser.urlbar.weather.featureGate undefined false clipboard.plainTextOnly false undefined cookiebanners.bannerClicking.enabled false true cookiebanners.ui.desktop.enabled undefined false devtools.styleeditor.atRulesSidebarWidth undefined 238 devtools.styleeditor.mediaSidebarWidth 238 undefined devtools.styleeditor.showAtRulesSidebar undefined true devtools.styleeditor.showMediaSidebar true undefined docshell.shistory.bfcache.ship_allow_beforeunload_listeners false true dom.document.edit_command.contentReadOnly.enabled true false dom.document.edit_command.insertBrOnReturn.enabled true false dom.events.dataTransfer.mozFile.enabled undefined false dom.fs.main_thread_writable_file_stream undefined false dom.importMaps.enabled false true dom.input_event_queue.duration.max undefined 8 dom.input_events.strict_input_vsync_alignment true undefined dom.mozCurrentTransform.enabled false undefined dom.origin-trials.offscreen-canvas.state 0 undefined dom.picture_source_dimension_attributes.enabled false true dom.security.credentialmanagement.identity.select_first_in_ui_lists undefined false dom.sitepermsaddon-provider.enabled false true dom.sitepermsaddon-provider.separatedBlocklistedDomains undefined shopee.co.th dom.webidl.crosscontext_hasinstance.enabled true false dom.webmidi.enabled false true editor.word_select.delete_space_after_doubleclick_selection undefined false extensions.InstallTrigger.enabled true false extensions.manifestV3.enabled false true extensions.openPopupWithoutUserGesture.enabled undefined false extensions.webcompat-reporter.enabled false true geo.provider.network.url https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY% https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY% gfx.canvas.accelerated.gpu-path-size undefined 4 gfx.color_management.enablev4 false true gfx.display.max-frame-rate undefined 0 gfx.offscreencanvas.domain-allowlist *.zoom.us,zoom.us undefined gfx.offscreencanvas.domain-enabled true undefined html5.inert.enabled false true input_event_queue.count_for_prediction 9 undefined input_event_queue.default_duration_per_event 1 undefined input_event_queue.duration.max 8 undefined input_event_queue.duration.min 1 undefined javascript.options.experimental.class_static_blocks true undefined javascript.options.experimental.ergonomic_brand_checks true undefined javascript.options.experimental.private_fields true undefined javascript.options.experimental.private_methods true undefined javascript.options.experimental.top_level_await true undefined layout.css.font-variant-emoji.enabled undefined false layout.css.round.enabled undefined false layout.css.trig.enabled false true layout.dynamic-reflow-roots.enabled false true media.seamless-looping-video undefined false media.utility-process.max-crashes undefined 2 media.webrtc.platformencoder.sw_mft false true network.cache.frecency_array_check_enabled false true network.cookie.sameSite.laxByDefault false true network.cookie.sameSite.noneRequiresSecure false true network.jar.record_failure_reason false true network.predictor.enable-prefetch false true network.url.strip-data-url-whitespace undefined false nimbus.qa.pref-1 undefined default nimbus.qa.pref-2 undefined default privacy.annotate_channels.strict_list.enabled false true security.block_fileuri_script_with_wrong_mime false true security.csp.script-src-attr-elem.enabled false true security.csp.style-src-attr-elem.enabled false true security.csp.unsafe-hashes.enabled undefined false security.disallow_non_local_systemprincipal_in_tests undefined false security.remote_settings.crlite_filters.enabled false true security.sandbox.gpu.level undefined 0 services.sync.engine.bookmarks.validation.enabled undefined true services.sync.engine.passwords.validation.enabled undefined true toolkit.background_tasks.remove_directory.testing.sleep_ms undefined 0 toolkit.telemetry.dap.logLevel undefined Warn toolkit.telemetry.dap_enabled undefined false toolkit.telemetry.dap_helper undefined https://helper1.dap.cloudflareresearch.com/v01 toolkit.telemetry.dap_helper_owner undefined Cloudflare toolkit.telemetry.dap_leader undefined https://interop-00.api.divviup.org toolkit.telemetry.dap_leader_owner undefined ISRG toolkit.telemetry.enabled false true webchannel.allowObject.urlWhitelist https://content.cdn.mozilla.net https://support.mozilla.org https://install.mozilla.org https://content.cdn.mozilla.net https://install.mozilla.org webgl.out-of-process.async-present false true xul.panel-animations.enabled false undefined</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">起動時にパスフレーズなしでLUKS暗号化システムパーティションをマウントする方法、金庫の前に鍵を置く方式</title>
@@ -6019,414 +6802,6 @@ table.diff_firefox101_pref_diff tbody tr { transition: background 0.125s ease-in
 
       
         <summary type="html">This is difference between the default preference of Firefox 101.0 beta 3 and one of 100.0. This diff table is generated with my small script firefox-prefjs-surveyer. Preference difference PrefFirefox 100.0Firefox 101.0 beta 3 app.normandy.test-prefs.bool undefined false app.normandy.test-prefs.integer undefined 0 app.normandy.test-prefs.string undefined app.releaseNotesURL https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew app.releaseNotesURL.aboutDialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog app.update.channel release beta app.update.url.details https://www.mozilla.org/%LOCALE%/firefox/notes https://www.mozilla.org/%LOCALE%/firefox/beta/notes app.update.url.manual https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update browser.cache.offline.enable true false browser.download.always_ask_before_handling_new_types undefined false browser.flash-protected-mode-flip.done false undefined browser.flash-protected-mode-flip.enable false undefined browser.newtabpage.activity-stream.telemetry.ut.events false true browser.places.snapshots.expiration.days undefined 210 browser.places.snapshots.expiration.userManaged.days undefined 420 browser.snapshots.score.InNavigation 3 undefined browser.snapshots.score.IsOverlappingVisit 3 undefined browser.snapshots.source.CommonReferrer undefined 3 browser.snapshots.source.Overlapping undefined 3 browser.startup.upgradeDialog.enabled true false browser.theme.colorway-closet undefined false browser.urlbar.quicksuggest.blockingEnabled undefined false browser.urlbar.quicksuggest.impressionCaps.nonSponsoredEnabled undefined false browser.urlbar.quicksuggest.impressionCaps.sponsoredEnabled undefined false canvas.mozgetasfile.enabled false undefined devtools.debugger.features.skip-pausing true undefined devtools.inspector.draggable_properties undefined true dom.block_external_protocol_navigation_from_sandbox undefined false dom.enable_web_task_scheduling undefined false dom.forms.datetime-local true undefined dom.forms.datetime-local.widget true undefined dom.image-lazy-loading.root-margin.bottom 300.0 100.0 dom.image-lazy-loading.root-margin.bottom.percentage false true dom.image-lazy-loading.root-margin.left 300.0 100.0 dom.image-lazy-loading.root-margin.left.percentage false true dom.image-lazy-loading.root-margin.right 300.0 100.0 dom.image-lazy-loading.root-margin.right.percentage false true dom.image-lazy-loading.root-margin.top 300.0 100.0 dom.image-lazy-loading.root-margin.top.percentage false true dom.input.dirpicker false undefined dom.input.showPicker undefined true dom.ipc.plugins.flash.disable-protected-mode false undefined dom.ipc.plugins.flash.subprocess.crashreporter.enabled true undefined dom.origin-trials.test-trial.state undefined 0 dom.webidl.crosscontext_hasinstance.enabled true false dom.webmidi.enabled false true dom.window.content.untrusted.enabled true false dom.window.sidebar.enabled true false extensions.eventPages.enabled undefined false extensions.manifestV3.enabled undefined false extensions.webcompat-reporter.enabled false true fission.enforceBlocklistedPrefsInSubprocesses undefined false fission.omitBlocklistedPrefsInSubprocesses undefined false geo.provider.network.url https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY% https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY% gfx.canvas.accelerated.profile-cache-miss-ratio undefined 0.66 gfx.canvas.accelerated.profile-fallback-ratio undefined 0.3 gfx.canvas.accelerated.profile-frames undefined 10 html5.inert.enabled false true javascript.options.wasm_simd_avx false true javascript.options.wasm_simd_wormhole undefined false layout.accessiblecaret.magnifier.enabled undefined false layout.css.constructable-stylesheets.enabled false true layout.css.prefers-contrast.enabled false true layout.dynamic-reflow-roots.enabled false true media.gmp-manager.checkContentSignature undefined true media.utility-ffmpeg.enabled undefined true media.utility-ffvpx.enabled undefined true media.utility-opus.enabled undefined true media.utility-process.enabled undefined false media.utility-vorbis.enabled undefined true media.utility-wav.enabled undefined true media.video.dropped_frame_stats.enabled undefined true media.videocontrols.picture-in-picture.audio-toggle.enabled false true media.videocontrols.picture-in-picture.display-text-tracks.enabled false true media.videocontrols.picture-in-picture.display-text-tracks.size undefined medium media.webrtc.platformencoder.sw_mft false true mozilla.widget.raise-on-setfocus undefined true network.cache.frecency_array_check_enabled false true network.cookie.sameSite.laxByDefault false true network.cookie.sameSite.noneRequiresSecure false true network.cookie.sameSite.schemeful false true network.http.http2.websockets true false network.jar.record_failure_reason false true network.predictor.enable-prefetch false true privacy.annotate_channels.strict_list.enabled false true privacy.restrict3rdpartystorage.expiration_redirect 900 2592000 remote.active-protocols 2 3 remote.force-local true undefined security.disallow_non_local_systemprincipal_in_tests undefined false security.intermediate_preloading_healer.enabled false true security.pki.name_matching_mode 3 undefined security.remote_settings.crlite_filters.enabled false true services.sync.engine.bookmarks.validation.enabled undefined true services.sync.engine.passwords.validation.enabled undefined true toolkit.telemetry.enabled false true widget.swipe.whole-page-pixel-size undefined 550.0 widget.transparent-windows undefined true widget.use-xdg-desktop-portal.location undefined 2</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Note: M5Paper Power Supply/Management</title>
-      <link href="https://cat-in-136.github.io/2022/05/note-m5paper-power-supply-management.html" rel="alternate" type="text/html" title="Note: M5Paper Power Supply/Management" />
-      <published>2022-05-08T00:11:23+09:00</published>
-      <updated>2022-05-08T00:11:23+09:00</updated>
-      <id>https://cat-in-136.github.io/2022/05/note-m5paper-power-supply-management</id>
-      
-      
-      
-      <content type="html" xml:base="https://cat-in-136.github.io/2022/05/note-m5paper-power-supply-management.html">&lt;p&gt;This post describes a summary of the following conditions for the power supply/management of M5Paper.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Powered by USB Type-C or not&lt;/li&gt;
-  &lt;li&gt;“Shutdown” or “DeepSleep”&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The following figure is an excerpt from the outline diagram on the back of the M5Paper that relates to the power supply.&lt;/p&gt;
-
-&lt;figure&gt;
-&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;646.08&quot; height=&quot;457.19&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
-  &lt;g id=&quot;m5paper-power-diagram-base&quot;&gt;
-    &lt;g transform=&quot;translate(-76.138 -139.86)&quot; fill=&quot;none&quot;&gt;
-      &lt;rect x=&quot;101.53&quot; y=&quot;171.63&quot; width=&quot;11.25&quot; height=&quot;4.388&quot; rx=&quot;1.5704&quot; ry=&quot;1.5704&quot; stroke=&quot;#000&quot; stroke-width=&quot;.35278&quot; /&gt;
-      &lt;text x=&quot;107.0668&quot; y=&quot;175.01181&quot; font-family=&quot;sans-serif&quot; font-size=&quot;3.5278px&quot; letter-spacing=&quot;0px&quot; stroke=&quot;#000000&quot; stroke-width=&quot;.26458px&quot; text-align=&quot;center&quot; text-anchor=&quot;middle&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:125%&quot;&gt;
-        &lt;tspan x=&quot;107.0668&quot; y=&quot;175.01181&quot; fill=&quot;#000000&quot; font-size=&quot;3.5278px&quot; stroke=&quot;none&quot; stroke-width=&quot;.26458px&quot; text-align=&quot;center&quot; text-anchor=&quot;middle&quot;&gt;MOS&lt;/tspan&gt;
-      &lt;/text&gt;
-    &lt;/g&gt;
-    &lt;g transform=&quot;translate(-72.424 -137.74)&quot;&gt;
-      &lt;rect x=&quot;103.26&quot; y=&quot;157.37&quot; width=&quot;9.0747&quot; height=&quot;8.7066&quot; rx=&quot;1.9333&quot; ry=&quot;1.9333&quot; fill=&quot;#aade87&quot; /&gt;
-      &lt;text x=&quot;107.81548&quot; y=&quot;161.00313&quot; fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;3.175px&quot; letter-spacing=&quot;0px&quot; stroke-width=&quot;.26458px&quot; text-anchor=&quot;middle&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:110%&quot;&gt;
-        &lt;tspan x=&quot;107.81548&quot; y=&quot;161.00313&quot; text-align=&quot;center&quot;&gt;BM&lt;/tspan&gt;
-        &lt;tspan x=&quot;107.81548&quot; y=&quot;164.49562&quot; text-align=&quot;center&quot;&gt;8563&lt;/tspan&gt;
-      &lt;/text&gt;
-    &lt;/g&gt;
-    &lt;g transform=&quot;translate(-76.138 -137.22)&quot;&gt;
-      &lt;rect x=&quot;77.314&quot; y=&quot;163.71&quot; width=&quot;18.454&quot; height=&quot;4.9492&quot; rx=&quot;1.5704&quot; ry=&quot;1.5704&quot; fill=&quot;none&quot; stroke=&quot;#800000&quot; stroke-width=&quot;.35278&quot; /&gt;
-      &lt;text x=&quot;86.380272&quot; y=&quot;167.34073&quot; fill=&quot;none&quot; font-family=&quot;sans-serif&quot; font-size=&quot;3.5278px&quot; letter-spacing=&quot;0px&quot; stroke=&quot;#000000&quot; stroke-width=&quot;.26458px&quot; text-align=&quot;center&quot; text-anchor=&quot;middle&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:125%&quot;&gt;
-        &lt;tspan x=&quot;86.380272&quot; y=&quot;167.34073&quot; fill=&quot;#000000&quot; font-size=&quot;3.5278px&quot; stroke=&quot;none&quot; stroke-width=&quot;.26458px&quot; text-align=&quot;center&quot; text-anchor=&quot;middle&quot;&gt;BATTERY&lt;/tspan&gt;
-      &lt;/text&gt;
-      &lt;rect x=&quot;96.31&quot; y=&quot;164.98&quot; width=&quot;.77051&quot; height=&quot;2.4051&quot; fill=&quot;#800000&quot; /&gt;
-    &lt;/g&gt;
-    &lt;g transform=&quot;translate(-76.138 -139.86)&quot;&gt;
-      &lt;g transform=&quot;matrix(.39104 0 0 .39104 106.03 142.32)&quot; fill=&quot;#e7352c&quot;&gt;
-        &lt;path d=&quot;m6.93 15.65a1.48 1.48 0 1 1-1.48-1.48 1.48 1.48 0 0 1 1.48 1.48&quot; /&gt;
-        &lt;path d=&quot;m19.84 14.11a15.34 15.34 0 0 0-13-13 9.73 9.73 0 0 0-2.15 1.55v1.43a12.18 12.18 0 0 1 12.17 12.16h1.43a10.25 10.25 0 0 0 1.55-2.14&quot; /&gt;
-        &lt;path d=&quot;m21 9.62a9.62 9.62 0 0 0-9.67-9.62c-0.34 0-0.67 0-1 0.05l-0.22 0.64a16.55 16.55 0 0 1 10.14 10.13l0.64-0.23c0-0.32 0.06-0.64 0.06-1&quot; /&gt;
-        &lt;path d=&quot;m11.44 21a11.44 11.44 0 0 1-11.44-11.39 11.36 11.36 0 0 1 3.35-8.09l0.65 0.61a10.56 10.56 0 0 0 0 15 10.56 10.56 0 0 0 15 0l0.61 0.61a11.35 11.35 0 0 1-8.17 3.26&quot; /&gt;
-        &lt;path d=&quot;m11.31 16.91a6.65 6.65 0 0 0-2.61-5.91 6.51 6.51 0 0 0-3.35-1.36 0.61 0.61 0 0 1-0.53-0.64 0.59 0.59 0 0 1 0.65-0.54 7.85 7.85 0 0 1 7 8.58 6.85 6.85 0 0 1-0.26 1.35l1.74 0.49a9.66 9.66 0 0 0 1.5-0.57 10.64 10.64 0 0 0 0.19-2.05 11 11 0 0 0-9.33-10.86 4.84 4.84 0 0 0-1.75 0 3.81 3.81 0 0 0-1.89 1.17 3.74 3.74 0 0 0 1.67 6 8.66 8.66 0 0 0 0.94 0.17 3.51 3.51 0 0 1 2.92 3.46 3.47 3.47 0 0 1-0.56 1.89l1.2 0.77a8.91 8.91 0 0 0 1.8 0.3 6.58 6.58 0 0 0 0.66-2.3&quot; /&gt;
-      &lt;/g&gt;
-      &lt;rect x=&quot;104.39&quot; y=&quot;141.04&quot; width=&quot;11.485&quot; height=&quot;10.77&quot; rx=&quot;1.5704&quot; ry=&quot;1.5704&quot; fill=&quot;none&quot; stroke=&quot;#e7352c&quot; stroke-width=&quot;.35278&quot; /&gt;
-    &lt;/g&gt;
-    &lt;text x=&quot;40.758881&quot; y=&quot;3.0064886&quot; fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;2.8222px&quot; letter-spacing=&quot;0px&quot; stroke-width=&quot;.26458px&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:110%&quot;&gt;
-      &lt;tspan x=&quot;40.758881&quot; y=&quot;3.0064886&quot; font-weight=&quot;bold&quot;&gt;ESP32&lt;/tspan&gt;
-      &lt;tspan x=&quot;40.758881&quot; y=&quot;6.1109271&quot;&gt;D0WDQ6-V3&lt;/tspan&gt;
-      &lt;tspan x=&quot;40.758881&quot; y=&quot;9.215374&quot;&gt;16M-FLASH&lt;/tspan&gt;
-      &lt;tspan x=&quot;40.758881&quot; y=&quot;12.319813&quot;&gt;8M-PSRAM&lt;/tspan&gt;
-    &lt;/text&gt;
-    &lt;text x=&quot;4.9717717&quot; y=&quot;34.719135&quot; fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;2.8222px&quot; letter-spacing=&quot;0px&quot; stroke-width=&quot;.26458px&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:110%&quot;&gt;
-      &lt;tspan x=&quot;4.9717717&quot; y=&quot;34.719135&quot; font-weight=&quot;bold&quot;&gt;Li-Po&lt;/tspan&gt;
-      &lt;tspan x=&quot;4.9717717&quot; y=&quot;37.823582&quot;&gt;1150mAh&lt;/tspan&gt;
-      &lt;tspan x=&quot;4.9717717&quot; y=&quot;40.928013&quot;&gt;4.35V&lt;/tspan&gt;
-    &lt;/text&gt;
-    &lt;path d=&quot;m1.838 2.906a9.5202 9.5202 0 0 1 10.892 3.261 9.5202 9.5202 0 0 1 0 11.37 9.5202 9.5202 0 0 1-10.892 3.261&quot; fill=&quot;none&quot; stroke=&quot;#000&quot; stroke-width=&quot;.70556&quot; /&gt;
-    &lt;path transform=&quot;scale(.26458)&quot; d=&quot;m33.557 39.594a0.37503 0.37503 0 0 0-0.33008 0.60156c0.58103 0.80954 0.99299 1.6979 1.2363 2.6191h-12.146v4.002h12.15c-0.24136 0.91118-0.65301 1.7861-1.2344 2.5762a0.37503 0.37503 0 0 0 0.42969 0.57617l13.109-4.8203a0.37503 0.37503 0 0 0 0-0.70117l-13.109-4.8281a0.37503 0.37503 0 0 0-0.10547-0.025391z&quot; color=&quot;#000000&quot; stroke-width=&quot;3.7795&quot; style=&quot;&quot; /&gt;
-    &lt;g transform=&quot;translate(-73.492 -139.86)&quot;&gt;
-      &lt;rect x=&quot;114.94&quot; y=&quot;163.27&quot; width=&quot;9.0747&quot; height=&quot;8.7066&quot; rx=&quot;1.9333&quot; ry=&quot;1.9333&quot; fill=&quot;#faa&quot; /&gt;
-      &lt;text x=&quot;119.4726&quot; y=&quot;166.91499&quot; fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;3.175px&quot; letter-spacing=&quot;0px&quot; stroke-width=&quot;.26458px&quot; text-anchor=&quot;middle&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:110%&quot;&gt;
-        &lt;tspan x=&quot;119.4726&quot; y=&quot;166.91499&quot; text-align=&quot;center&quot;&gt;SY&lt;/tspan&gt;
-        &lt;tspan x=&quot;119.4726&quot; y=&quot;170.40749&quot; text-align=&quot;center&quot;&gt;7088&lt;/tspan&gt;
-      &lt;/text&gt;
-    &lt;/g&gt;
-    &lt;g transform=&quot;translate(-60.583 -139.86)&quot;&gt;
-      &lt;rect x=&quot;114.94&quot; y=&quot;163.27&quot; width=&quot;9.0747&quot; height=&quot;8.7066&quot; rx=&quot;4.3533&quot; ry=&quot;4.3533&quot; fill=&quot;none&quot; stroke=&quot;#800000&quot; stroke-width=&quot;.35278&quot; /&gt;
-      &lt;text x=&quot;119.4726&quot; y=&quot;166.91499&quot; fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;3.175px&quot; letter-spacing=&quot;0px&quot; stroke-width=&quot;.26458px&quot; text-anchor=&quot;middle&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:110%&quot;&gt;
-        &lt;tspan x=&quot;119.4726&quot; y=&quot;166.91499&quot; font-weight=&quot;bold&quot; text-align=&quot;center&quot;&gt;5V&lt;/tspan&gt;
-        &lt;tspan x=&quot;119.4726&quot; y=&quot;170.40749&quot; text-align=&quot;center&quot;&gt;BUS&lt;/tspan&gt;
-      &lt;/text&gt;
-    &lt;/g&gt;
-    &lt;g transform=&quot;translate(-58.837 -121.7)&quot;&gt;
-      &lt;g transform=&quot;translate(-2.8307,-2.4278)&quot;&gt;
-        &lt;rect x=&quot;77.314&quot; y=&quot;163.71&quot; width=&quot;18.454&quot; height=&quot;4.9492&quot; rx=&quot;1.5704&quot; ry=&quot;1.5704&quot; fill=&quot;#faa&quot; /&gt;
-        &lt;text x=&quot;86.551369&quot; y=&quot;167.34073&quot; fill=&quot;none&quot; font-family=&quot;sans-serif&quot; font-size=&quot;3.5278px&quot; letter-spacing=&quot;0px&quot; stroke=&quot;#000000&quot; stroke-width=&quot;.26458px&quot; text-align=&quot;center&quot; text-anchor=&quot;middle&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:125%&quot;&gt;
-          &lt;tspan x=&quot;86.551369&quot; y=&quot;167.34073&quot; fill=&quot;#000000&quot; font-size=&quot;3.5278px&quot; stroke=&quot;none&quot; stroke-width=&quot;.26458px&quot; text-align=&quot;center&quot; text-anchor=&quot;middle&quot;&gt;SLM6635&lt;/tspan&gt;
-        &lt;/text&gt;
-      &lt;/g&gt;
-    &lt;/g&gt;
-    &lt;g transform=&quot;translate(-73.3 -152.3)&quot; fill=&quot;none&quot;&gt;
-      &lt;text x=&quot;119.39691&quot; y=&quot;190.77817&quot; font-family=&quot;sans-serif&quot; font-size=&quot;2.8222px&quot; letter-spacing=&quot;0px&quot; stroke=&quot;#000000&quot; stroke-width=&quot;.26458px&quot; text-align=&quot;center&quot; text-anchor=&quot;middle&quot; word-spacing=&quot;0px&quot; style=&quot;line-height:110%&quot;&gt;
-        &lt;tspan x=&quot;119.39691&quot; y=&quot;190.77817&quot; fill=&quot;#000000&quot; font-size=&quot;2.8222px&quot; stroke=&quot;none&quot; stroke-width=&quot;.26458px&quot; text-align=&quot;center&quot; text-anchor=&quot;middle&quot;&gt;USB-C&lt;/tspan&gt;
-      &lt;/text&gt;
-      &lt;path d=&quot;m124.02 188v2.8722c0 0.74432-0.59921 1.3435-1.3435 1.3435h-6.4034c-0.74431 0-1.3435-0.59921-1.3435-1.3435v-2.8722&quot; stroke=&quot;#000&quot; stroke-width=&quot;.70556&quot; /&gt;
-      &lt;path d=&quot;m122.72 192.16v4.3243h-6.4971v-4.3243&quot; stroke=&quot;#000&quot; stroke-width=&quot;.70556&quot; /&gt;
-    &lt;/g&gt;
-    &lt;g font-family=&quot;sans-serif&quot; font-size=&quot;2.8222px&quot; letter-spacing=&quot;0px&quot; word-spacing=&quot;0px&quot;&gt;
-      &lt;text x=&quot;28.430695&quot; y=&quot;15.621563&quot; text-align=&quot;end&quot; text-anchor=&quot;end&quot; style=&quot;line-height:110%&quot;&gt;
-        &lt;tspan x=&quot;28.430695&quot; y=&quot;15.621563&quot;&gt;G2&lt;/tspan&gt;
-      &lt;/text&gt;
-      &lt;text x=&quot;35.79467&quot; y=&quot;15.621563&quot; fill=&quot;#000000&quot; style=&quot;line-height:110%&quot;&gt;
-        &lt;tspan x=&quot;35.79467&quot; y=&quot;15.621563&quot;&gt;SDA21&lt;/tspan&gt;
-        &lt;tspan x=&quot;35.79467&quot; y=&quot;18.726002&quot;&gt;SCL22&lt;/tspan&gt;
-      &lt;/text&gt;
-      &lt;text x=&quot;15.902069&quot; y=&quot;14.953419&quot; fill=&quot;#000000&quot; stroke-width=&quot;.26458px&quot; style=&quot;line-height:110%&quot;&gt;
-        &lt;tspan x=&quot;15.902069&quot; y=&quot;14.953419&quot; font-weight=&quot;bold&quot;&gt;PWR&lt;/tspan&gt;
-        &lt;tspan x=&quot;15.902069&quot; y=&quot;18.057858&quot;&gt;G38&lt;/tspan&gt;
-      &lt;/text&gt;
-    &lt;/g&gt;
-    &lt;path d=&quot;m28.666 11.947-0.07422 12.645 0.35156 2e-3 0.07617-12.645z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
-    &lt;path d=&quot;m28.939 24.551-0.34375 0.08398 1.7227 7.1758 0.34375-0.08203z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
-    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
-      &lt;path d=&quot;m30.747 31.009-0.14351 1.2236-0.68341-1.0251c0.28724 0.12102 0.62097 0.0398 0.82692-0.19853z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
-      &lt;path d=&quot;m30.746 30.977a0.033076 0.033076 0 0 0-0.02344 0.0098c-0.19682 0.22777-0.51515 0.30681-0.78906 0.19141a0.033076 0.033076 0 0 0-0.04102 0.04883l0.6836 1.0234a0.033076 0.033076 0 0 0 0.06055-0.01367l0.14258-1.2246a0.033076 0.033076 0 0 0-0.0332-0.03516zm-0.03516 0.07031-0.13086 1.0938-0.60938-0.91797c0.2628 0.0824 0.54051 0.01755 0.74023-0.17578z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
-    &lt;/g&gt;
-    &lt;path d=&quot;m34.598 11.936-0.35156 0.02734 0.60742 7.6777 0.35156-0.0293z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
-    &lt;path d=&quot;m33.312 28.262-1.5 3.4375 0.32422 0.14062 1.5-3.4375z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
-    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
-      &lt;path d=&quot;m32.638 31.317-0.85217 0.88979 0.07272-1.2299c0.15622 0.26972 0.47146 0.4061 0.77945 0.3401z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
-      &lt;path d=&quot;m31.85 30.945a0.033076 0.033076 0 0 0-0.02344 0.0293l-0.07422 1.2305a0.033076 0.033076 0 0 0 0.05664 0.02539l0.85352-0.89062a0.033076 0.033076 0 0 0-0.03125-0.05469c-0.29434 0.06307-0.59517-0.06702-0.74414-0.32422a0.033076 0.033076 0 0 0-0.03711-0.01563zm0.03906 0.07422c0.15968 0.22416 0.42161 0.338 0.69726 0.30469l-0.76172 0.79492z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
-    &lt;/g&gt;
-    &lt;path d=&quot;m19.191 30.836-0.08398 0.3418 6.4219 1.5996 0.08594-0.3418z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
-    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
-      &lt;path d=&quot;m25.016 32.028 1.0193 0.6921-1.2248 0.1331c0.23994-0.19895 0.32192-0.5325 0.20555-0.8252z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
-      &lt;path d=&quot;m25.035 32a0.033076 0.033076 0 0 0-0.04883 0.04102c0.11121 0.27973 0.03154 0.59739-0.19727 0.78711a0.033076 0.033076 0 0 0 0.02539 0.05859l1.2246-0.13281a0.033076 0.033076 0 0 0 0.01563-0.06055zm-0.0039 0.07813 0.91211 0.61914-1.0957 0.11914c0.19403-0.19465 0.26204-0.47234 0.18359-0.73828z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
-    &lt;/g&gt;
-    &lt;path d=&quot;m13.721 31.316-0.24219 0.25586 8.6465 8.1406 0.24023-0.25586z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
-    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
-      &lt;path d=&quot;m13.801 32.221-0.55036-1.1023 1.1334 0.48314c-0.3066 0.05613-0.54128 0.30693-0.58299 0.61914z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
-      &lt;path d=&quot;m13.264 31.088a0.033076 0.033076 0 0 0-0.04297 0.04492l0.55078 1.1035a0.033076 0.033076 0 0 0 0.0625-0.01172c0.03986-0.29837 0.26427-0.53632 0.55664-0.58984a0.033076 0.033076 0 0 0 0.0059-0.06445zm0.05859 0.0957 1.0117 0.43359c-0.26378 0.07544-0.4602 0.28266-0.52148 0.55274z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
-    &lt;/g&gt;
-    &lt;path d=&quot;m42.906 40.391-8.8203 0.73047 0.0293 0.35156 8.8203-0.73047z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
-    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
-      &lt;path d=&quot;m34.812 41.666-1.1875-0.32844 1.1173-0.51908c-0.16341 0.26542-0.13403 0.60764 0.0701 0.84752z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
-      &lt;path d=&quot;m34.729 40.789-1.1172 0.51758a0.033076 0.033076 0 0 0 0.0059 0.0625l1.1855 0.32812a0.033076 0.033076 0 0 0 0.03516-0.05273c-0.19508-0.22925-0.22223-0.55549-0.06641-0.80859a0.033076 0.033076 0 0 0-0.04297-0.04687zm-0.0078 0.07617c-0.1211 0.24646-0.09887 0.53123 0.06055 0.75781l-1.0625-0.29297z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
-    &lt;/g&gt;
-    &lt;path d=&quot;m35.943 35.773-0.13281 0.32617 5.75 2.334 0.13281-0.32617z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
-    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
-      &lt;path d=&quot;m36.346 36.587-0.91145-0.82896 1.2314 0.041c-0.2656 0.16312-0.39381 0.48176-0.3199 0.78795z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
-      &lt;path d=&quot;m35.436 35.725a0.033076 0.033076 0 0 0-0.02344 0.05859l0.91211 0.82812a0.033076 0.033076 0 0 0 0.05469-0.03125c-0.07064-0.29262 0.05141-0.5964 0.30469-0.75195a0.033076 0.033076 0 0 0-0.01563-0.0625zm0.08789 0.07031 1.1016 0.03516c-0.21993 0.16497-0.32482 0.43071-0.28516 0.70508z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
-    &lt;/g&gt;
-    &lt;path d=&quot;m13.42 16.557-0.24609 0.25391 15.471 15.084 0.24609-0.25195z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
-    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
-      &lt;path d=&quot;m28.579 30.989 0.53105 1.1117-1.1248-0.50284c0.30753-0.05077 0.54655-0.29743 0.5937-0.60887z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
-      &lt;path d=&quot;m28.574 30.957a0.033076 0.033076 0 0 0-0.02734 0.02734c-0.04506 0.29763-0.27315 0.53166-0.56641 0.58008a0.033076 0.033076 0 0 0-0.0078 0.06445l1.123 0.50195a0.033076 0.033076 0 0 0 0.04492-0.04492l-0.53125-1.1113a0.033076 0.033076 0 0 0-0.03516-0.01758zm-0.0078 0.08398 0.47461 0.99219-1.0059-0.44922c0.26528-0.07031 0.46476-0.2742 0.53125-0.54297z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
-    &lt;/g&gt;
-    &lt;path d=&quot;m41.381 29.479-5.6113 2.3242 0.13477 0.32617 5.6113-2.3242z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
-    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
-      &lt;path d=&quot;m40.657 29.508 1.231-0.04972-0.90556 0.83539c0.07459-0.30263-0.05785-0.61955-0.32547-0.78567z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
-      &lt;path d=&quot;m41.887 29.424-1.2305 0.05078a0.033076 0.033076 0 0 0-0.01563 0.06055c0.25576 0.15876 0.38168 0.46141 0.31055 0.75a0.033076 0.033076 0 0 0 0.05469 0.0332l0.9043-0.83594a0.033076 0.033076 0 0 0-0.02344-0.05859zm-0.08594 0.07031-0.81055 0.74805c0.04047-0.27168-0.07027-0.53576-0.29102-0.70312z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
-    &lt;/g&gt;
-    &lt;path d=&quot;m50.523 27.586v0.35352h3.834v-0.35352z&quot; color=&quot;#000000&quot; fill-rule=&quot;evenodd&quot; style=&quot;&quot; /&gt;
-    &lt;g fill-rule=&quot;evenodd&quot; stroke-linejoin=&quot;round&quot;&gt;
-      &lt;path d=&quot;m53.678 27.335 1.1563 0.42521-1.1563 0.42521c0.18473-0.25105 0.18366-0.59452 0-0.85041z&quot; color=&quot;#000000&quot; stroke-width=&quot;.066146&quot; style=&quot;&quot; /&gt;
-      &lt;path d=&quot;m53.689 27.305a0.033076 0.033076 0 0 0-0.03906 0.05078c0.17552 0.24456 0.17616 0.57115 0 0.81055a0.033076 0.033076 0 0 0 0.03906 0.05078l1.1562-0.42578a0.033076 0.033076 0 0 0 0-0.06055zm0.01563 0.07617 1.0352 0.38086-1.0352 0.37891c0.14115-0.23573 0.14033-0.52072 0-0.75977z&quot; color=&quot;#000000&quot; style=&quot;&quot; /&gt;
-    &lt;/g&gt;
-  &lt;/g&gt;
-  &lt;!--
-  &lt;g fill=&quot;none&quot; stroke=&quot;#f00&quot; stroke-width=&quot;1.35278&quot; stroke-dasharray=&quot;2&quot;&gt;
-    &lt;path d=&quot;m28.843 11.949-0.07504 12.644&quot;/&gt;
-    &lt;path d=&quot;m28.768 24.593 1.7229 7.1761&quot;/&gt;
-    &lt;path d=&quot;m33.474 28.333-1.4994 3.4364&quot;/&gt;
-    &lt;path d=&quot;m19.15 31.007 6.4228 1.5999&quot;/&gt;
-    &lt;path d=&quot;m22.245 39.585-8.6458-8.141&quot;/&gt;
-    &lt;path d=&quot;m42.921 40.567-8.8204 0.72959&quot;/&gt;
-    &lt;path d=&quot;m41.627 38.271-5.7498-2.3344&quot;/&gt;
-    &lt;path d=&quot;m13.297 16.684 15.471 15.085&quot;/&gt;
-    &lt;path d=&quot;m35.837 31.966 5.6111-2.3245&quot;/&gt;
-    &lt;path d=&quot;m50.523 27.762h3.8344&quot;/&gt;
-    &lt;animate attributeName=&quot;stroke-dashoffset&quot; values=&quot;0;-8&quot; dur=&quot;1s&quot; repeatCount=&quot;indefinite&quot;/&gt;
-  &lt;/g&gt;
-  --&gt;
-&lt;/svg&gt;
-&lt;figcaption&gt;M5Paper Power Supply Outline Diagram&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;The following conditions must be achieved to keep the power ON:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Powered by USB Type-C;&lt;/li&gt;
-  &lt;li&gt;Alarm IRQ from RTC (BM8563);&lt;/li&gt;
-  &lt;li&gt;GPIO2 (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;M5EPD_MAIN_PWR_PIN&lt;/code&gt;) set to HIGH; or&lt;/li&gt;
-  &lt;li&gt;Power button (GPIO38, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;M5EPD_KEY_PUSH_PIN&lt;/code&gt;)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Shutdown is achieved by setting all the above conditions to &lt;em&gt;false&lt;/em&gt;.
-It indicates as long as M5Paper is connected and powered by USB Type-C, always it cannot shutdown.&lt;/p&gt;
-
-&lt;p&gt;Then how is the shutdown process of sample programs such as &lt;a href=&quot;https://github.com/m5stack/M5Paper_FactoryTest&quot;&gt;FactoryTest&lt;/a&gt; handled?
-The process is as follows:&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Shutdown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// **snip**&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;M5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;disableEPDPower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// digitalWrite(M5EPD_EPD_PWR_EN_PIN, 0);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;M5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;disableEXTPower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// digitalWrite(M5EPD_EXT_PWR_EN_PIN, 0);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;M5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;disableMainPower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// digitalWrite(M5EPD_MAIN_PWR_PIN, 1);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;esp_deep_sleep_start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If USB Type-C is connected, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;M5.disableMainPower()&lt;/code&gt; (setting GPIO2 to OFF) does not turn off its power and
-go to the next line and then deep sleep, not a &lt;em&gt;genuine&lt;/em&gt; shutdown.
-If not, it shutdown immediately after &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;M5.disableMainPower()&lt;/code&gt; (setting GPIO2 to OFF) and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;esp_deep_sleep_start()&lt;/code&gt; does not executed.&lt;/p&gt;
-
-&lt;h3 id=&quot;case-shutdown--connected-and-powered-by-usb-type-c&quot;&gt;Case: Shutdown / Connected and Powered by USB Type-C&lt;/h3&gt;
-
-&lt;p&gt;As long as M5Paper is connected and powered by USB Type-C, always one condition “Powered by USB Type-C” is &lt;em&gt;true&lt;/em&gt; and it cannot shutdown.&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;323.04&quot; height=&quot;228.595&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
-    &lt;use href=&quot;#m5paper-power-diagram-base&quot; /&gt;
-    &lt;g fill=&quot;none&quot; stroke=&quot;#f00&quot; stroke-width=&quot;1.35278&quot; stroke-dasharray=&quot;2&quot;&gt;
-      &lt;path d=&quot;m28.843 11.949-0.07504 12.644&quot; /&gt;
-      &lt;path d=&quot;m28.768 24.593 1.7229 7.1761&quot; /&gt;
-      &lt;path d=&quot;m22.245 39.585-8.6458-8.141&quot; /&gt;
-      &lt;path d=&quot;m42.921 40.567-8.8204 0.72959&quot; /&gt;
-      &lt;path d=&quot;m41.627 38.271-5.7498-2.3344&quot; /&gt;
-      &lt;path d=&quot;m35.837 31.966 5.6111-2.3245&quot; /&gt;
-      &lt;path d=&quot;m50.523 27.762h3.8344&quot; /&gt;
-      &lt;animate attributeName=&quot;stroke-dashoffset&quot; values=&quot;0;-8&quot; dur=&quot;1s&quot; repeatCount=&quot;indefinite&quot; /&gt;
-    &lt;/g&gt;
-  &lt;/svg&gt;
-  &lt;figcaption&gt;Powered by USB Type-C&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;After &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;M5.disableMainPower()&lt;/code&gt; executed (setting GPIO2 to OFF), the MOS output is still HIGH and the power is still ON.&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;323.04&quot; height=&quot;228.595&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
-    &lt;use href=&quot;#m5paper-power-diagram-base&quot; /&gt;
-    &lt;g fill=&quot;none&quot; stroke=&quot;#f00&quot; stroke-width=&quot;1.35278&quot; stroke-dasharray=&quot;2&quot;&gt;
-      &lt;path d=&quot;m22.245 39.585-8.6458-8.141&quot; /&gt;
-      &lt;path d=&quot;m42.921 40.567-8.8204 0.72959&quot; /&gt;
-      &lt;path d=&quot;m41.627 38.271-5.7498-2.3344&quot; /&gt;
-      &lt;path d=&quot;m35.837 31.966 5.6111-2.3245&quot; /&gt;
-      &lt;path d=&quot;m50.523 27.762h3.8344&quot; /&gt;
-      &lt;animate attributeName=&quot;stroke-dashoffset&quot; values=&quot;0;-8&quot; dur=&quot;1s&quot; repeatCount=&quot;indefinite&quot; /&gt;
-    &lt;/g&gt;
-  &lt;/svg&gt;
-  &lt;figcaption&gt;Powered by USB Type-C, After main power disabled&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;After that, if the USB Type-C cable unplugged further, the power goes off. Because the MOS output gets LOW.&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;323.04&quot; height=&quot;228.595&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
-    &lt;use href=&quot;#m5paper-power-diagram-base&quot; /&gt;
-  &lt;/svg&gt;
-  &lt;figcaption&gt;Powered by USB Type-C, After main power disabled and then USB Type-C unplugged&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;At this time, it is re-booted by pressing the PWR button, interrupt by the RTC Alarm, or plugging USB Type-C.&lt;/p&gt;
-
-&lt;h3 id=&quot;case-shutdown--usb-type-c-unpuggled&quot;&gt;Case: Shutdown / USB Type-C Unpuggled&lt;/h3&gt;
-
-&lt;p&gt;Other hand, if the USB Type-C cable is unplugged without calling &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;M5.disableMainPower()&lt;/code&gt;, the GPIO2 output remains HIGH.
-Therefore, the power remains ON and is supplied from the LiPo battery.&lt;/p&gt;
-
-&lt;p&gt;It is the same condition as just after booting without the USB Type-C power supply.&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;323.04&quot; height=&quot;228.595&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
-    &lt;use href=&quot;#m5paper-power-diagram-base&quot; /&gt;
-    &lt;g fill=&quot;none&quot; stroke=&quot;#f00&quot; stroke-width=&quot;1.35278&quot; stroke-dasharray=&quot;2&quot;&gt;
-      &lt;path d=&quot;m28.843 11.949-0.07504 12.644&quot; /&gt;
-      &lt;path d=&quot;m28.768 24.593 1.7229 7.1761&quot; /&gt;
-      &lt;path d=&quot;m19.15 31.007 6.4228 1.5999&quot; /&gt;
-      &lt;path d=&quot;m35.837 31.966 5.6111-2.3245&quot; /&gt;
-      &lt;path d=&quot;m50.523 27.762h3.8344&quot; /&gt;
-      &lt;animate attributeName=&quot;stroke-dashoffset&quot; values=&quot;0;-8&quot; dur=&quot;1s&quot; repeatCount=&quot;indefinite&quot; /&gt;
-    &lt;/g&gt;
-  &lt;/svg&gt;
-  &lt;figcaption&gt;After USB Type-C unplugged&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;After &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;M5.disableMainPower()&lt;/code&gt; executed (setting GPIO2 to OFF), the MOS output and the power go off.&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;323.04&quot; height=&quot;228.595&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
-    &lt;use href=&quot;#m5paper-power-diagram-base&quot; /&gt;
-  &lt;/svg&gt;
-  &lt;figcaption&gt;After USB Type-C unplugged and set GPIO2 to OFF&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;At this time, it is re-booted by pressing the PWR button, interrupt by the RTC Alarm, or plugging USB Type-C.&lt;/p&gt;
-
-&lt;h3 id=&quot;case-deep-sleep--connected-and-powered-by-usb-type-c&quot;&gt;Case: Deep sleep / Connected and Powered by USB Type-C&lt;/h3&gt;
-
-&lt;p&gt;The ESP32 immediately stops operating when it goes to deep sleep.
-The output of GPIO2 goes LOW. Because GPIOs do not keep their state in deep sleep to conserve power.&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;323.04&quot; height=&quot;228.595&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
-    &lt;use href=&quot;#m5paper-power-diagram-base&quot; /&gt;
-    &lt;g fill=&quot;none&quot; stroke=&quot;#f00&quot; stroke-width=&quot;1.35278&quot; stroke-dasharray=&quot;2&quot;&gt;
-      &lt;path d=&quot;m22.245 39.585-8.6458-8.141&quot; /&gt;
-      &lt;path d=&quot;m42.921 40.567-8.8204 0.72959&quot; /&gt;
-      &lt;path d=&quot;m41.627 38.271-5.7498-2.3344&quot; /&gt;
-      &lt;path d=&quot;m35.837 31.966 5.6111-2.3245&quot; /&gt;
-      &lt;path d=&quot;m50.523 27.762h3.8344&quot; /&gt;
-      &lt;animate attributeName=&quot;stroke-dashoffset&quot; values=&quot;0;-8&quot; dur=&quot;1s&quot; repeatCount=&quot;indefinite&quot; /&gt;
-    &lt;/g&gt;
-  &lt;/svg&gt;
-  &lt;figcaption&gt;Deep sleep, powered by USB Type-C&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Pressing the PWR button etc… does not wake up or restart from the deep sleep status.
-Because the MOS output remains HIGH and unchanged.&lt;/p&gt;
-
-&lt;p&gt;The ESP32 remains powered by USB Type-C, so the ULP coprocessor works.
-ESP32 wake-up functions such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;esp_sleep_enable_timer_wakeup()&lt;/code&gt; or ULP coprocessor program can be used.&lt;/p&gt;
-
-&lt;h3 id=&quot;case-deep-sleep--usb-type-c-unpuggled&quot;&gt;Case: Deep sleep / USB Type-C Unpuggled&lt;/h3&gt;
-
-&lt;p&gt;The ESP32 immediately stops operating when it goes to deep sleep.
-The output of GPIO2 goes LOW. Because GPIOs do not keep their state in deep sleep to conserve power.&lt;/p&gt;
-
-&lt;p&gt;When USB Type-C Unpuggled, such a process causes MOS output to OFF and a transition to a state equivalent to a &lt;em&gt;genuine&lt;/em&gt; shutdown.&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;323.04&quot; height=&quot;228.595&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
-    &lt;use href=&quot;#m5paper-power-diagram-base&quot; /&gt;
-  &lt;/svg&gt;
-  &lt;figcaption&gt;After Deep sleep and USB Type-C unplugged&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;The ESP32 is not powered, so the ULP coprocessor does not work.
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;esp_sleep_enable_timer_wakeup()&lt;/code&gt; or ULP coprocessor program cannot be used for wake-up.&lt;/p&gt;
-
-&lt;p&gt;At this time, it is re-booted by pressing the PWR button, interrupt by the RTC Alarm, or plugging USB Type-C.&lt;/p&gt;
-
-&lt;p&gt;It is possible to change this behaviour to add following to lines before going to deep sleep.&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gpio_hold_en&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gpio_num_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;M5EPD_MAIN_PWR_PIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;gpio_deep_sleep_hold_en&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// ...snip...&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;esp_deep_sleep_start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;In this case, it keeps the GPIO2 even during deep sleep.&lt;/p&gt;
-
-&lt;figure&gt;
-  &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; width=&quot;323.04&quot; height=&quot;228.595&quot; viewBox=&quot;0 0 64.608 45.719&quot; class=&quot;fitcontain&quot;&gt;
-    &lt;use href=&quot;#m5paper-power-diagram-base&quot; /&gt;
-    &lt;g fill=&quot;none&quot; stroke=&quot;#f00&quot; stroke-width=&quot;1.35278&quot; stroke-dasharray=&quot;2&quot;&gt;
-      &lt;path d=&quot;m28.843 11.949-0.07504 12.644&quot; /&gt;
-      &lt;path d=&quot;m28.768 24.593 1.7229 7.1761&quot; /&gt;
-      &lt;path d=&quot;m19.15 31.007 6.4228 1.5999&quot; /&gt;
-      &lt;path d=&quot;m35.837 31.966 5.6111-2.3245&quot; /&gt;
-      &lt;path d=&quot;m50.523 27.762h3.8344&quot; /&gt;
-      &lt;animate attributeName=&quot;stroke-dashoffset&quot; values=&quot;0;-8&quot; dur=&quot;1s&quot; repeatCount=&quot;indefinite&quot; /&gt;
-    &lt;/g&gt;
-  &lt;/svg&gt;
-  &lt;figcaption&gt;Deep sleep with keeping GPIO2 to HIGH, powered by USB Type-C&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;In this case, pressing the PWR button etc… does not wake up or restart from the deep sleep status.
-Because GPIO2 keeps HIGH and the MOS output remains HIGH and unchanged.&lt;/p&gt;
-
-&lt;p&gt;The ESP32 remains powered by the LiPo battery, so the ULP coprocessor works.
-ESP32 wake-up functions such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;esp_sleep_enable_timer_wakeup()&lt;/code&gt; or ULP coprocessor program can be used.&lt;/p&gt;
-
-&lt;h3 id=&quot;note-rtc-alarm-issue&quot;&gt;Note: RTC Alarm issue&lt;/h3&gt;
-
-&lt;p&gt;When writing a program to reboot using RTC (BM8563) Alarm, be aware of the following bugs!&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;https://github.com/m5stack/M5EPD/issues/26&lt;/li&gt;
-  &lt;li&gt;https://github.com/m5stack/M5-CoreInk/pull/3&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://docs.m5stack.com/en/core/m5paper&quot;&gt;M5Paper&lt;/a&gt;, M5Stack&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://community.m5stack.com/topic/2892/m5paper-shutdown-deep-sleep-wakeup&quot;&gt;M5Paper Shutdown() / Deep Sleep / Wakeup | M5Stack Community&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://lang-ship.com/blog/work/m5stack-coreink-m5paper/&quot;&gt;M5Stack CoreInk、M5Paperのバッテリーについて | Lang-ship&lt;/a&gt; (Japanese)&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.belling.com.cn/media/file_object/bel_product/BM8563/datasheet/BM8563_V1.1_cn.pdf&quot;&gt;Low-Cost, µP Supervisory Circuits - BM8563&lt;/a&gt;, BM8563 Datasheet, Shanghai Belling (Chinese)&lt;/li&gt;
-&lt;/ul&gt;</content>
-      
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>cat_in_136</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="m5paper" />
-      
-        <category term="embedded" />
-      
-
-      
-        <summary type="html">This post describes a summary of the following conditions for the power supply/management of M5Paper. Powered by USB Type-C or not “Shutdown” or “DeepSleep” The following figure is an excerpt from the outline diagram on the back of the M5Paper that relates to the power supply. MOS BM 8563 BATTERY ESP32 D0WDQ6-V3 16M-FLASH 8M-PSRAM Li-Po 1150mAh 4.35V SY 7088 5V BUS SLM6635 USB-C G2 SDA21 SCL22 PWR G38 M5Paper Power Supply Outline Diagram The following conditions must be achieved to keep the power ON: Powered by USB Type-C; Alarm IRQ from RTC (BM8563); GPIO2 (M5EPD_MAIN_PWR_PIN) set to HIGH; or Power button (GPIO38, M5EPD_KEY_PUSH_PIN) Shutdown is achieved by setting all the above conditions to false. It indicates as long as M5Paper is connected and powered by USB Type-C, always it cannot shutdown. Then how is the shutdown process of sample programs such as FactoryTest handled? The process is as follows: void Shutdown() { // **snip** M5.disableEPDPower(); // digitalWrite(M5EPD_EPD_PWR_EN_PIN, 0); M5.disableEXTPower(); // digitalWrite(M5EPD_EXT_PWR_EN_PIN, 0); M5.disableMainPower(); // digitalWrite(M5EPD_MAIN_PWR_PIN, 1); esp_deep_sleep_start(); while(1); } If USB Type-C is connected, M5.disableMainPower() (setting GPIO2 to OFF) does not turn off its power and go to the next line and then deep sleep, not a genuine shutdown. If not, it shutdown immediately after M5.disableMainPower() (setting GPIO2 to OFF) and esp_deep_sleep_start() does not executed. Case: Shutdown / Connected and Powered by USB Type-C As long as M5Paper is connected and powered by USB Type-C, always one condition “Powered by USB Type-C” is true and it cannot shutdown. Powered by USB Type-C After M5.disableMainPower() executed (setting GPIO2 to OFF), the MOS output is still HIGH and the power is still ON. Powered by USB Type-C, After main power disabled After that, if the USB Type-C cable unplugged further, the power goes off. Because the MOS output gets LOW. Powered by USB Type-C, After main power disabled and then USB Type-C unplugged At this time, it is re-booted by pressing the PWR button, interrupt by the RTC Alarm, or plugging USB Type-C. Case: Shutdown / USB Type-C Unpuggled Other hand, if the USB Type-C cable is unplugged without calling M5.disableMainPower(), the GPIO2 output remains HIGH. Therefore, the power remains ON and is supplied from the LiPo battery. It is the same condition as just after booting without the USB Type-C power supply. After USB Type-C unplugged After M5.disableMainPower() executed (setting GPIO2 to OFF), the MOS output and the power go off. After USB Type-C unplugged and set GPIO2 to OFF At this time, it is re-booted by pressing the PWR button, interrupt by the RTC Alarm, or plugging USB Type-C. Case: Deep sleep / Connected and Powered by USB Type-C The ESP32 immediately stops operating when it goes to deep sleep. The output of GPIO2 goes LOW. Because GPIOs do not keep their state in deep sleep to conserve power. Deep sleep, powered by USB Type-C Pressing the PWR button etc… does not wake up or restart from the deep sleep status. Because the MOS output remains HIGH and unchanged. The ESP32 remains powered by USB Type-C, so the ULP coprocessor works. ESP32 wake-up functions such as esp_sleep_enable_timer_wakeup() or ULP coprocessor program can be used. Case: Deep sleep / USB Type-C Unpuggled The ESP32 immediately stops operating when it goes to deep sleep. The output of GPIO2 goes LOW. Because GPIOs do not keep their state in deep sleep to conserve power. When USB Type-C Unpuggled, such a process causes MOS output to OFF and a transition to a state equivalent to a genuine shutdown. After Deep sleep and USB Type-C unplugged The ESP32 is not powered, so the ULP coprocessor does not work. esp_sleep_enable_timer_wakeup() or ULP coprocessor program cannot be used for wake-up. At this time, it is re-booted by pressing the PWR button, interrupt by the RTC Alarm, or plugging USB Type-C. It is possible to change this behaviour to add following to lines before going to deep sleep. gpio_hold_en((gpio_num_t) M5EPD_MAIN_PWR_PIN); gpio_deep_sleep_hold_en(); // ...snip... esp_deep_sleep_start(); In this case, it keeps the GPIO2 even during deep sleep. Deep sleep with keeping GPIO2 to HIGH, powered by USB Type-C In this case, pressing the PWR button etc… does not wake up or restart from the deep sleep status. Because GPIO2 keeps HIGH and the MOS output remains HIGH and unchanged. The ESP32 remains powered by the LiPo battery, so the ULP coprocessor works. ESP32 wake-up functions such as esp_sleep_enable_timer_wakeup() or ULP coprocessor program can be used. Note: RTC Alarm issue When writing a program to reboot using RTC (BM8563) Alarm, be aware of the following bugs! https://github.com/m5stack/M5EPD/issues/26 https://github.com/m5stack/M5-CoreInk/pull/3 References M5Paper, M5Stack M5Paper Shutdown() / Deep Sleep / Wakeup | M5Stack Community M5Stack CoreInk、M5Paperのバッテリーについて | Lang-ship (Japanese) Low-Cost, µP Supervisory Circuits - BM8563, BM8563 Datasheet, Shanghai Belling (Chinese)</summary>
       
 
       
