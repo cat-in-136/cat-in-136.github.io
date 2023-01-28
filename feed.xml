@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator>
   <link href="https://cat-in-136.github.io/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://cat-in-136.github.io/" rel="alternate" type="text/html" />
-  <updated>2023-01-21T09:11:18+09:00</updated>
+  <updated>2023-01-29T07:51:55+09:00</updated>
   <id>https://cat-in-136.github.io/</id>
 
   
@@ -17,6 +17,932 @@
 
   
   
+  
+    <entry>
+      <title type="html">二次方程式の虚数解の可視化</title>
+      <link href="https://cat-in-136.github.io/2023/01/visualize-imaginary-solution.html" rel="alternate" type="text/html" title="二次方程式の虚数解の可視化" />
+      <published>2023-01-29T07:47:31+09:00</published>
+      <updated>2023-01-29T07:47:31+09:00</updated>
+      <id>https://cat-in-136.github.io/2023/01/visualize-imaginary-solution</id>
+      
+      
+      
+      <content type="html" xml:base="https://cat-in-136.github.io/2023/01/visualize-imaginary-solution.html">&lt;p&gt;
+  二次方程式
+  &lt;table&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td style=&quot;width:100%&quot;&gt;
+          &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;
+            &lt;semantics&gt;
+              &lt;mrow&gt;
+                &lt;mi&gt;a&lt;/mi&gt;
+                &lt;msup&gt;
+                  &lt;mi&gt;x&lt;/mi&gt;
+                  &lt;mn&gt;2&lt;/mn&gt;
+                &lt;/msup&gt;
+                &lt;mo&gt;+&lt;/mo&gt;
+                &lt;mi&gt;b&lt;/mi&gt;
+                &lt;mi&gt;x&lt;/mi&gt;
+                &lt;mo&gt;+&lt;/mo&gt;
+                &lt;mi&gt;c&lt;/mi&gt;
+                &lt;mo&gt;=&lt;/mo&gt;
+                &lt;mn&gt;0&lt;/mn&gt;
+              &lt;/mrow&gt;
+              &lt;annotation encoding=&quot;application/x-tex&quot;&gt;ax^2 + bx + c = 0&lt;/annotation&gt;
+            &lt;/semantics&gt;
+          &lt;/math&gt;
+        &lt;/td&gt;
+        &lt;td&gt;(1.1)&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+  の解は、下記の公式であたえられる
+  &lt;table&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td style=&quot;width:100%&quot;&gt;
+          &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;
+            &lt;semantics&gt;
+              &lt;mrow&gt;
+                &lt;mi&gt;x&lt;/mi&gt;
+                &lt;mo&gt;=&lt;/mo&gt;
+                &lt;mrow&gt;
+                  &lt;mfrac&gt;
+                    &lt;mrow&gt;
+                      &lt;mo&gt;−&lt;/mo&gt;
+                      &lt;mi&gt;b&lt;/mi&gt;
+                      &lt;mo&gt;±&lt;/mo&gt;
+                      &lt;msqrt&gt;
+                        &lt;msup&gt;
+                          &lt;mi&gt;b&lt;/mi&gt;
+                          &lt;mn&gt;2&lt;/mn&gt;
+                        &lt;/msup&gt;
+                        &lt;mo&gt;−&lt;/mo&gt;
+                        &lt;mn&gt;4&lt;/mn&gt;
+                        &lt;mi&gt;a&lt;/mi&gt;
+                        &lt;mi&gt;c&lt;/mi&gt;
+                      &lt;/msqrt&gt;
+                    &lt;/mrow&gt;
+                    &lt;mrow&gt;
+                      &lt;mn&gt;2&lt;/mn&gt;
+                      &lt;mi&gt;a&lt;/mi&gt;
+                    &lt;/mrow&gt;
+                  &lt;/mfrac&gt;
+                &lt;/mrow&gt;
+              &lt;/mrow&gt;
+              &lt;annotation encoding=&quot;application/x-tex&quot;&gt;x = {-b \pm \sqrt{b^2-4ac} \over 2a}&lt;/annotation&gt;
+            &lt;/semantics&gt;
+          &lt;/math&gt;
+        &lt;/td&gt;
+        &lt;td&gt;(1.2)&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+  ここで、判別式(discriminant)とよばれるルートの中身
+  &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;b^2-4ac&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
+  の値が負になるとき、実数解を持たない。これを複素数を導入することで判別式が負になるときも解（虚数解）が与えられる。
+&lt;/p&gt;
+&lt;p&gt;
+ここで登場する二乗すると-1になる虚数単位&lt;i&gt;i&lt;/i&gt;はしばしば高校の数学教師は存在しないと言ったりするがそれはナンセンスな話である。
+&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;div&gt;
+  アイは院のサロンで、数人の院生と共に教授と話していた。何の流れだったか、 存在、非存在の話になった。アイが教授に高校時代、数学教師(アテネだ!)から「この世界にアイは存在しません」と聞いた、という話をしたとき、彼は、&lt;br/&gt;
+  「そんなことを言う数学教師はばかだ。」&lt;br/&gt;
+  そう吐き捨てた。一緒にいた院生は首を振り、アイが無駄な話を始めた、というような顔をした。&lt;br/&gt;
+  「それを言うなら負の数だってない。整数だってないよ。ゼロだってインド人が作るまではなかったんだから。でもあるだろ? ぼんやりあったもの、あった方がいいものを形にするのが数学なんだから。」
+  &lt;/div&gt;
+  &lt;cite&gt;―― 西加南子『i』ポプラ社、2016年&lt;/cite&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;
+実際には実数を表した数直線（実軸; real axis）と90度をなす新たな数直線（虚軸; imaginary axis）を導入した虚数平面（complex plane）として目に見える=存在する形で扱うことができる。（だから、&lt;strong&gt;実軸上には&lt;/strong&gt;存在しないといった言い方ならば理にかなっている。）
+&lt;/p&gt;
+&lt;p&gt;
+  そこで本稿では、しばしば存在しないと言われてしまう虚数解について、実際に存在を目で見ることによって確認したい。
+&lt;/p&gt;
+&lt;p&gt;
+  二次方程式の虚数解の図示やネット上に数多あって、例えば下記のようなページがある。
+&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;a href=&quot;http://toretate.fc2web.com/bgmath/2009/rootofquadreq/09090704.html&quot;&gt;2次方程式の解を目で見る&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;a href=&quot;https://amk86g18nx2l.blog.fc2.com/blog-entry-50.html&quot;&gt;虚数解はどこにあるか（1） | しろくま手帳&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;a href=&quot;http://izumi-math.jp/M_Sanae/cplx/cplx.html&quot;&gt;虚数解のイメージ化&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;
+  ただいずれも図を描くためのコードは公開されておらず読者がプログラミングをする必要がある。
+  本稿ではすべての図について、 gnuplot のコードを付けた。
+  また、グラフの概形について考察も掘り下げる。
+&lt;/p&gt;
+&lt;h3&gt;複素解析でよくある可視化&lt;/h3&gt;
+&lt;h4&gt;domain coloring の導入&lt;/h4&gt;
+&lt;p&gt;
+複素関数を素直にグラフで図示しようとすると、関数の引数の実軸・虚軸、関数値の実軸・虚軸の合計4軸必要となり、現実的に表現できない。
+そこで複素解析学(complex analysis)では、関数値の偏角を色相(hue)にマッピングして表すことで、この図示の困難を克服することがしばしば行われる（domain coloringと呼ばれる）。
+&lt;/p&gt;
+
+&lt;p&gt;
+  例えば
+  &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+    &lt;semantics&gt;
+    &lt;mrow&gt;
+      &lt;mi&gt;f&lt;/mi&gt;
+      &lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;
+      &lt;mi&gt;x&lt;/mi&gt;
+      &lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;
+      &lt;mo&gt;=&lt;/mo&gt;
+      &lt;mi&gt;x&lt;/mi&gt;
+    &lt;/mrow&gt;
+    &lt;annotation encoding=&quot;application/x-tex&quot;&gt;f(x)=x&lt;/annotation&gt;
+    &lt;/semantics&gt;
+  &lt;/math&gt;
+  をこの方式で表すと下記のようになる。
+&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img class=&quot;fitcontain&quot; src=&quot;/images/2023-01-29-identical_color.png&quot; width=&quot;640&quot; height=&quot;480&quot; loading=&quot;lazy&quot; /&gt;
+  &lt;figcaption&gt;Fig-1.1 f(x)=x&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;aside&gt;
+&lt;details&gt;
+&lt;summary&gt;上図を出力するための gnuplot のコード&lt;/summary&gt;
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/gnuplot
+set cbrange [-pi:pi]
+set cbtics (&quot;-π&quot; -pi, &quot;0&quot; 0, &quot;π&quot; pi)
+set pm3d corners2color c1
+set palette defined ( 0 0 1 1, 1 1 1 1 )
+set isosamples 100, 100
+
+set palette model HSV defined ( 0 0.5 1 1, 0.5 1 1 1, 0.5 0 1 1, 1 0.5 1 1 )
+#set palette model HSV start 0.5 defined (0 0 1 1, 1 1 1 1)
+
+set xlabel &quot;real&quot;
+set ylabel &quot;imag&quot;
+set nokey
+
+set isosamples 512, 512
+set size square
+
+I = {0,1}
+f(x) = x
+
+splot &apos;++&apos; using 1:2:(abs(f(x+I*y))):(arg(f(x+I*y))) with pm3d
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;/aside&gt;
+
+&lt;p&gt;
+  グラフ上の上方向の高さは絶対値を使っているので、まんなかの 0 がグラフの視覚的に最も低い場所になる。
+  偏角を確認するために、この三次元グラフの真上から覗くと下図のようになる。
+&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img class=&quot;fitcontain&quot; src=&quot;/images/2023-01-29-identical_color_2d.png&quot; width=&quot;640&quot; height=&quot;480&quot; loading=&quot;lazy&quot; /&gt;
+  &lt;figcaption&gt;Fig-1.2 argument of f(x)=x&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;aside&gt;
+&lt;details&gt;
+&lt;summary&gt;上図を出力するための gnuplot のコード&lt;/summary&gt;
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/gnuplot
+
+set cbrange [-pi:pi]
+set cbtics (&quot;-π&quot; -pi, &quot;0&quot; 0, &quot;π&quot; pi)
+set pm3d corners2color c1
+set palette defined ( 0 0 1 1, 1 1 1 1 )
+set isosamples 100, 100
+
+set palette model HSV defined ( 0 0.5 1 1, 0.5 1 1 1, 0.5 0 1 1, 1 0.5 1 1 )
+#set palette model HSV start 0.5 defined (0 0 1 1, 1 1 1 1)
+
+set xlabel &quot;real&quot;
+set ylabel &quot;imag&quot;
+set nokey
+
+set isosamples 512, 512
+set size square
+set xrange [-5:5]
+set yrange [-5:5]
+set view map
+
+I = {0,1}
+f(x) = x
+
+splot &apos;++&apos; using 1:2:(abs(f(x+I*y))):(arg(f(x+I*y))) with pm3d
+pause -1
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;/aside&gt;
+
+&lt;p&gt;
+  1 は偏角 0 度なので赤、虚数単位 i は偏角 90 度なので緑、-1 は 180 度で水色、-i は 270 度で青紫色、のように表示される。
+  複素解析では複素関数の関数値が0となる点をゼロ点 (zero) と呼ばれるが、domain coloring ではゼロ点の近傍は半時計回りに色相が変化するような絵面になる。
+&lt;/p&gt;
+
+&lt;h4&gt;二次関数の domain coloring 表示&lt;/h4&gt;
+
+&lt;p&gt;
+  二次関数を解析するにあたり、簡単のため下記の関数で考えるものとする。
+  &lt;table&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td style=&quot;width:100%&quot;&gt;
+          &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;
+            &lt;semantics&gt;
+              &lt;mrow&gt;
+                &lt;mi&gt;f&lt;/mi&gt;
+                &lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;
+                &lt;mi&gt;x&lt;/mi&gt;
+                &lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;
+                &lt;mo&gt;=&lt;/mo&gt;
+                &lt;msup&gt;
+                  &lt;mi&gt;x&lt;/mi&gt;
+                  &lt;mn&gt;2&lt;/mn&gt;
+                &lt;/msup&gt;
+                &lt;mo&gt;+&lt;/mo&gt;
+                &lt;mi&gt;h&lt;/mi&gt;
+              &lt;/mrow&gt;
+              &lt;annotation encoding=&quot;application/x-tex&quot;&gt;f(x)=x^2+h&lt;/annotation&gt;
+            &lt;/semantics&gt;
+          &lt;/math&gt;
+        &lt;/td&gt;
+        &lt;td&gt;(1.3)&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+  この(1.3)に対して
+  &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+    &lt;semantics&gt;
+      &lt;mrow&gt;
+        &lt;mi&gt;x&lt;/mi&gt;
+        &lt;mo accent=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x2192;&lt;/mo&gt;
+        &lt;mi&gt;x&lt;/mi&gt;
+        &lt;mo&gt;&amp;#x2212;&lt;/mo&gt;
+        &lt;mfrac&gt;
+          &lt;mrow&gt;
+            &lt;mo&gt;&amp;#x2212;&lt;/mo&gt;
+            &lt;mi&gt;b&lt;/mi&gt;
+          &lt;/mrow&gt;
+          &lt;mrow&gt;
+            &lt;mn&gt;2&lt;/mn&gt;
+            &lt;mi&gt;a&lt;/mi&gt;
+          &lt;/mrow&gt;
+        &lt;/mfrac&gt;
+        &lt;mo&gt;,&lt;/mo&gt;
+        &lt;mi&gt;y&lt;/mi&gt;
+        &lt;mo accent=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x2192;&lt;/mo&gt;
+        &lt;msup&gt;
+          &lt;mi&gt;a&lt;/mi&gt;
+          &lt;mrow&gt;
+            &lt;mo&gt;&amp;#x2212;&lt;/mo&gt;
+            &lt;mn&gt;1&lt;/mn&gt;
+          &lt;/mrow&gt;
+        &lt;/msup&gt;
+        &lt;mrow&gt;
+          &lt;mo&gt;(&lt;/mo&gt;
+          &lt;mi&gt;y&lt;/mi&gt;
+          &lt;mo&gt;&amp;#x2212;&lt;/mo&gt;
+          &lt;mrow&gt;
+            &lt;mo&gt;(&lt;/mo&gt;
+            &lt;mi&gt;c&lt;/mi&gt;
+            &lt;mo&gt;&amp;#x2212;&lt;/mo&gt;
+            &lt;mi&gt;a&lt;/mi&gt;
+            &lt;msup&gt;
+              &lt;mrow&gt;
+                &lt;mo&gt;(&lt;/mo&gt;
+                &lt;mfrac&gt;
+                  &lt;mrow&gt;
+                    &lt;mo&gt;&amp;#x2212;&lt;/mo&gt;
+                    &lt;mi&gt;b&lt;/mi&gt;
+                  &lt;/mrow&gt;
+                  &lt;mrow&gt;
+                    &lt;mn&gt;2&lt;/mn&gt;
+                    &lt;mi&gt;a&lt;/mi&gt;
+                  &lt;/mrow&gt;
+                &lt;/mfrac&gt;
+                &lt;mo&gt;)&lt;/mo&gt;
+              &lt;/mrow&gt;
+              &lt;mn&gt;2&lt;/mn&gt;
+            &lt;/msup&gt;
+            &lt;mo&gt;&amp;#x2212;&lt;/mo&gt;
+            &lt;mi&gt;h&lt;/mi&gt;
+            &lt;mi&gt;a&lt;/mi&gt;
+            &lt;mo&gt;)&lt;/mo&gt;
+          &lt;/mrow&gt;
+          &lt;mo&gt;)&lt;/mo&gt;
+        &lt;/mrow&gt;
+      &lt;/mrow&gt;
+      &lt;annotation encoding=&quot;application/x-tex&quot;&gt;x \to x - \frac{-b}{2a}, y \to a^{-1} \left(y-\left(c-a\left(\frac{-b}{2a}\right)^2-ha\right)\right)&lt;/annotation&gt;
+    &lt;/semantics&gt;
+  &lt;/math&gt;
+  という操作を行うと、(1.1)の左辺と同じになる。
+  すなわち(1.3)から x 軸方向への平行移動、y軸方向への平行移動および拡大縮小操作を組み合わせることで(1.1)の左辺が求められる。
+  だから(1.3)を考えて、後はこれを水平移動および拡大縮小操作を施されたものとして考えれば良い。
+&lt;/p&gt;
+
+&lt;p&gt;
+  (1.3)がゼロとなる方程式の解は h &amp;lt; 0 のとき実数解を2個持ち、 h = 0 のとき x = 0 で重解となり、 h &amp;gt; 0 のとき虚数解を 2 個持つ。
+  h を替えることによって変わってくるのだが、この変化を視覚的にみるために、 h を -10 から 10 に変えて Fig-1.1, 1.2 と同様にプロットした。
+&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img class=&quot;fitcontain&quot; src=&quot;/images/2023-01-29-double_root_color_anim_pm3d.gif&quot; width=&quot;640&quot; height=&quot;480&quot; loading=&quot;lazy&quot; /&gt;
+  &lt;figcaption&gt;Fig-1.3 f(x)=x^2+h&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figure&gt;
+  &lt;img class=&quot;fitcontain&quot; src=&quot;/images/2023-01-29-double_root_color_anim_pm2d.gif&quot; width=&quot;640&quot; height=&quot;480&quot; loading=&quot;lazy&quot; /&gt;
+  &lt;figcaption&gt;Fig-1.4 argument of f(x)=x^2+h&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;aside&gt;
+&lt;details&gt;
+&lt;summary&gt;上図を出力するための gnuplot のコード&lt;/summary&gt;
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/gnuplot
+
+set cbrange [-pi:pi]
+set cbtics (&quot;-π&quot; -pi, &quot;0&quot; 0, &quot;π&quot; pi)
+set pm3d corners2color c1
+set palette defined ( 0 0 1 1, 1 1 1 1 )
+set isosamples 100, 100
+
+set palette model HSV defined ( 0 0.5 1 1, 0.5 1 1 1, 0.5 0 1 1, 1 0.5 1 1 )
+#set palette model HSV start 0.5 defined (0 0 1 1, 1 1 1 1)
+
+set xlabel &quot;real&quot;
+set ylabel &quot;imag&quot;
+set nokey
+
+I = {0,1}
+f(x,h) = x**2 + h
+
+set terminal gif animate delay 10
+set output &quot;double_root_color_anim_pm3d.gif&quot;
+set zrange [0:60]
+
+do for [h=-10:10]{
+  set label 1 sprintf(&quot;h=%d&quot;, h) at screen 0.1,0.1 left
+  splot &apos;++&apos; using 1:2:(abs(f(x+I*y, h))):(arg(f(x+I*y, h))) with pm3d
+  #pause -1
+}
+
+set output
+unset zrange
+
+set isosamples 512, 512
+set size square
+set view map
+
+set terminal gif animate delay 10
+set output &quot;double_root_color_anim_pm2d.gif&quot;
+
+do for [h=-10:10]{
+  set label 1 sprintf(&quot;h=%d&quot;, h) at screen 0.1,0.1 left
+  splot arg(f(x+I*y, h)) with pm3d
+  #pause -1
+}
+
+set output
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;/aside&gt;
+
+&lt;p&gt;
+  hを変えていくことでゼロ点が実軸上と虚軸上を動いていく様子がわかる。
+  h = 0 を境目に実軸と虚軸が入れ替わったような対称的な様子がわかる。
+&lt;/p&gt;
+
+&lt;p&gt;
+  このようにして domain coloring の色相が周回する場所という形で二次方程式の解の場所を確認することができた。
+  これで複素解析学の意味では「関数グラフの概形を見た」「虚数解を見た」と言える。
+  が、h を変える、すなわち関数値を実軸方向に増減させると、なぜこうなるのか?がいまいちわからない。
+  したがって、他の表示の仕方で概形を眺めたほうが良かろう。
+&lt;/p&gt;
+
+&lt;h2&gt;実部と虚部でそれぞれ見る&lt;/h2&gt;
+
+&lt;h3&gt;実部&lt;/h3&gt;
+
+&lt;p&gt;
+  (1.3)の実部を計算する。
+  (1.3)に
+  &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+    &lt;semantics&gt;
+      &lt;mrow&gt;
+        &lt;mi&gt;x&lt;/mi&gt;
+        &lt;mo&gt;=&lt;/mo&gt;
+        &lt;mi&gt;a&lt;/mi&gt;
+        &lt;mo&gt;+&lt;/mo&gt;
+        &lt;mi&gt;b&lt;/mi&gt;
+        &lt;mi&gt;i&lt;/mi&gt;
+      &lt;/mrow&gt;
+      &lt;annotation encoding=&quot;application/x-tex&quot;&gt;x=a+bi&lt;/annotation&gt;
+    &lt;/semantics&gt;
+  &lt;/math&gt;
+  を代入すると
+  &lt;table&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td style=&quot;width:100%&quot;&gt;
+          &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;
+            &lt;semantics&gt;
+              &lt;mrow&gt;
+                &lt;mi&gt;f&lt;/mi&gt;
+                &lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;
+                &lt;mi&gt;x&lt;/mi&gt;
+                &lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;
+                &lt;mo&gt;=&lt;/mo&gt;
+                &lt;mi&gt;f&lt;/mi&gt;
+                &lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;
+                &lt;mi&gt;a&lt;/mi&gt;
+                &lt;mo&gt;+&lt;/mo&gt;
+                &lt;mi&gt;b&lt;/mi&gt;
+                &lt;mi&gt;i&lt;/mi&gt;
+                &lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;
+                &lt;mo&gt;=&lt;/mo&gt;
+                &lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;
+                &lt;mi&gt;a&lt;/mi&gt;
+                &lt;mo&gt;+&lt;/mo&gt;
+                &lt;mi&gt;b&lt;/mi&gt;
+                &lt;mi&gt;i&lt;/mi&gt;
+                &lt;msup&gt;
+                  &lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;
+                  &lt;mn&gt;2&lt;/mn&gt;
+                &lt;/msup&gt;
+                &lt;mo&gt;+&lt;/mo&gt;
+                &lt;mi&gt;h&lt;/mi&gt;
+                &lt;mo&gt;=&lt;/mo&gt;
+                &lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;
+                &lt;msup&gt;
+                  &lt;mi&gt;a&lt;/mi&gt;
+                  &lt;mn&gt;2&lt;/mn&gt;
+                &lt;/msup&gt;
+                &lt;mo&gt;&amp;#x2212;&lt;/mo&gt;
+                &lt;msup&gt;
+                  &lt;mi&gt;b&lt;/mi&gt;
+                  &lt;mn&gt;2&lt;/mn&gt;
+                &lt;/msup&gt;
+                &lt;mo&gt;+&lt;/mo&gt;
+                &lt;mi&gt;h&lt;/mi&gt;
+                &lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;
+                &lt;mo&gt;+&lt;/mo&gt;
+                &lt;mn&gt;2&lt;/mn&gt;
+                &lt;mi&gt;a&lt;/mi&gt;
+                &lt;mi&gt;b&lt;/mi&gt;
+                &lt;mi&gt;i&lt;/mi&gt;
+              &lt;/mrow&gt;
+              &lt;annotation encoding=&quot;application/x-tex&quot;&gt;f(x)=f(a+bi)=(a+bi)^2+h=(a^2-b^2+h)+2abi&lt;/annotation&gt;
+            &lt;/semantics&gt;
+          &lt;/math&gt;
+        &lt;/td&gt;
+        &lt;td&gt;(1.4)&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+  よって実部は
+  &lt;table&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td style=&quot;width:100%&quot;&gt;
+          &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;
+            &lt;semantics&gt;
+              &lt;mrow&gt;
+                &lt;mi&gt;Re&lt;/mi&gt;
+                &lt;mi&gt;f&lt;/mi&gt;
+                &lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;
+                &lt;mi&gt;a&lt;/mi&gt;
+                &lt;mo&gt;+&lt;/mo&gt;
+                &lt;mi&gt;b&lt;/mi&gt;
+                &lt;mi&gt;i&lt;/mi&gt;
+                &lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;
+                &lt;mo&gt;=&lt;/mo&gt;
+                &lt;msup&gt;
+                  &lt;mi&gt;a&lt;/mi&gt;
+                  &lt;mn&gt;2&lt;/mn&gt;
+                &lt;/msup&gt;
+                &lt;mo&gt;&amp;#x2212;&lt;/mo&gt;
+                &lt;msup&gt;
+                  &lt;mi&gt;b&lt;/mi&gt;
+                  &lt;mn&gt;2&lt;/mn&gt;
+                &lt;/msup&gt;
+                &lt;mo&gt;+&lt;/mo&gt;
+                &lt;mi&gt;h&lt;/mi&gt;
+              &lt;/mrow&gt;
+              &lt;annotation encoding=&quot;application/x-tex&quot;&gt;\operatorname{Re} f(a+bi)=a^2-b^2+h&lt;/annotation&gt;
+            &lt;/semantics&gt;
+          &lt;/math&gt;
+        &lt;/td&gt;
+        &lt;td&gt;(1.5)&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+  であり双曲放物面(hyperbolic paraboloid)となる。 h=0 のときの概形を下図に示す。
+&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img class=&quot;fitcontain&quot; src=&quot;/images/2023-01-29-double_root_real_zero.svg&quot; width=&quot;227&quot; height=&quot;171&quot; loading=&quot;lazy&quot; /&gt;
+  &lt;figcaption&gt;Fig-1.5 Re (x^2)&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;aside&gt;
+&lt;details&gt;
+&lt;summary&gt;上図を出力するための gnuplot のコード&lt;/summary&gt;
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/gnuplot
+
+set isosamples 50, 50
+
+set xlabel &quot;real&quot;
+set ylabel &quot;imag&quot;
+unset key
+
+I = {0,1}
+f(x) = x**2
+
+splot real(f(x+I*y)), \
+    [-10:10] &quot;++&quot; u ($1):(0):(f($1)) w l ls 2, \
+    [-10:10] &quot;++&quot; u (0):($1):(-f(-$1)) w l ls 3
+
+pause -1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;/aside&gt;
+
+&lt;p&gt;
+  xが実軸上(b=0)のとき、自明ではあるが
+  &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+    &lt;semantics&gt;
+      &lt;mrow&gt;
+        &lt;mi&gt;f&lt;/mi&gt;
+        &lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;
+        &lt;mi&gt;a&lt;/mi&gt;
+        &lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;
+        &lt;mo&gt;=&lt;/mo&gt;
+        &lt;msup&gt;
+          &lt;mi&gt;a&lt;/mi&gt;
+          &lt;mn&gt;2&lt;/mn&gt;
+        &lt;/msup&gt;
+        &lt;mo&gt;+&lt;/mo&gt;
+        &lt;mi&gt;h&lt;/mi&gt;
+      &lt;/mrow&gt;
+      &lt;annotation encoding=&quot;application/x-tex&quot;&gt;f(a)=a^2+h&lt;/annotation&gt;
+    &lt;/semantics&gt;
+  &lt;/math&gt;
+  と下に凸となる放物線となる。
+  xが虚軸上(a=0)のとき、
+  &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+    &lt;semantics&gt;
+      &lt;mrow&gt;
+        &lt;mi&gt;f&lt;/mi&gt;
+        &lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;
+        &lt;mi&gt;b&lt;/mi&gt;
+        &lt;mi&gt;i&lt;/mi&gt;
+        &lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;
+        &lt;mo&gt;=&lt;/mo&gt;
+        &lt;mo&gt;&amp;#x2212;&lt;/mo&gt;
+        &lt;msup&gt;
+          &lt;mi&gt;b&lt;/mi&gt;
+          &lt;mn&gt;2&lt;/mn&gt;
+        &lt;/msup&gt;
+        &lt;mo&gt;+&lt;/mo&gt;
+        &lt;mi&gt;h&lt;/mi&gt;
+      &lt;/mrow&gt;
+      &lt;annotation encoding=&quot;application/x-tex&quot;&gt;f(bi)=-b^2+h&lt;/annotation&gt;
+    &lt;/semantics&gt;
+  &lt;/math&gt;
+  と上に凸となる放物線となる。
+  実軸上と虚軸上の場合の概形も上図に描き足した。
+  それぞれ緑色と水色で示した線である。
+  緑色の放物線を水色の放物線に沿って並行移動することでこの双曲放物面を形作ることができる。
+&lt;/p&gt;
+
+&lt;p&gt;
+  また対称性に関して、
+  &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+    &lt;semantics&gt;
+      &lt;mrow&gt;
+        &lt;mi&gt;x&lt;/mi&gt;
+        &lt;mo accent=&quot;false&quot; stretchy=&quot;false&quot;&gt;&amp;#x2192;&lt;/mo&gt;
+        &lt;mo&gt;&amp;#x2212;&lt;/mo&gt;
+        &lt;mi&gt;i&lt;/mi&gt;
+        &lt;mi&gt;x&lt;/mi&gt;
+      &lt;/mrow&gt;
+      &lt;annotation encoding=&quot;application/x-tex&quot;&gt; x \to - i x&lt;/annotation&gt;
+    &lt;/semantics&gt;
+  &lt;/math&gt;
+  と置き換えると同じ値になることからわかるとおり、グラフの実部と虚部を入れ替えて上下反転（関数値を-1倍）すると同じ概形となる。
+  このとき前述の緑色と水色で示した放射線は外見上入れ替わるような感じになる。
+&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img class=&quot;fitcontain&quot; src=&quot;/images/2023-01-29-double_root_real_zero_rotate_anim.gif&quot; width=&quot;640&quot; height=&quot;480&quot; loading=&quot;lazy&quot; /&gt;
+  &lt;figcaption&gt;Fig-1.6 symmetry of Re (x^2)&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;aside&gt;
+&lt;details&gt;
+&lt;summary&gt;上図を出力するための gnuplot のコード&lt;/summary&gt;
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/gnuplot
+
+set isosamples 50, 50
+
+set xlabel &quot;real&quot;
+set ylabel &quot;imag&quot;
+unset key
+
+I = {0,1}
+f(x) = x**2
+
+splot real(f(x+I*y)), \
+    [-10:10] &quot;++&quot; u ($1):(0):(f($1)) w l ls 2, \
+    [-10:10] &quot;++&quot; u (0):($1):(-f(-$1)) w l ls 3
+
+pause -1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;/aside&gt;
+
+&lt;h3&gt;虚部&lt;/h3&gt;
+
+&lt;p&gt;
+  (1.3)の虚部は(1.4)より、
+  &lt;table&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td style=&quot;width:100%&quot;&gt;
+          &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;
+            &lt;semantics&gt;
+              &lt;mrow&gt;
+                &lt;mi&gt;Im&lt;/mi&gt;
+                &lt;mi&gt;f&lt;/mi&gt;
+                &lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;
+                &lt;mi&gt;a&lt;/mi&gt;
+                &lt;mo&gt;+&lt;/mo&gt;
+                &lt;mi&gt;b&lt;/mi&gt;
+                &lt;mi&gt;i&lt;/mi&gt;
+                &lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;
+                &lt;mo&gt;=&lt;/mo&gt;
+                &lt;mn&gt;2&lt;/mn&gt;
+                &lt;mi&gt;a&lt;/mi&gt;
+                &lt;mi&gt;b&lt;/mi&gt;
+              &lt;/mrow&gt;
+              &lt;annotation encoding=&quot;application/x-tex&quot;&gt; \operatorname{Im} f(a+bi)=2ab &lt;/annotation&gt;
+            &lt;/semantics&gt;
+          &lt;/math&gt;
+        &lt;/td&gt;
+        &lt;td&gt;(1.6)&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+  この概形は下図のようになる。
+&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img class=&quot;fitcontain&quot; src=&quot;/images/2023-01-29-double_root_imag_zero.svg&quot; width=&quot;227&quot; height=&quot;171&quot; loading=&quot;lazy&quot; /&gt;
+  &lt;figcaption&gt;Fig-1.6 Im (x^2)&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;aside&gt;
+&lt;details&gt;
+&lt;summary&gt;上図を出力するための gnuplot のコード&lt;/summary&gt;
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/gnuplot
+
+set isosamples 50, 50
+
+set xlabel &quot;real&quot;
+set ylabel &quot;imag&quot;
+unset key
+
+I = {0,1}
+f(x) = x**2
+
+splot imag(f(x+I*y)), &quot;-&quot; w l
+0 -10 0
+0 +10 0
+
+
+-10 0 0
++10 0 0
+e
+
+pause -1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;/aside&gt;
+
+&lt;p&gt;
+  ここで(1.6)式には h が出てこず、 h がどんな値であっても一定である。
+  &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+    &lt;semantics&gt;
+      &lt;mrow&gt;
+        &lt;mi&gt;f&lt;/mi&gt;
+        &lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;
+        &lt;mi&gt;x&lt;/mi&gt;
+        &lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;
+        &lt;mo&gt;=&lt;/mo&gt;
+        &lt;mn&gt;0&lt;/mn&gt;
+      &lt;/mrow&gt;
+      &lt;annotation encoding=&quot;application/x-tex&quot;&gt;f(x)=0&lt;/annotation&gt;
+    &lt;/semantics&gt;
+  &lt;/math&gt;
+  のためには
+  &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+    &lt;semantics&gt;
+      &lt;mrow&gt;
+        &lt;mi&gt;Rm&lt;/mi&gt;
+        &lt;mi&gt;f&lt;/mi&gt;
+        &lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;
+        &lt;mi&gt;x&lt;/mi&gt;
+        &lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;
+        &lt;mo&gt;=&lt;/mo&gt;
+        &lt;mn&gt;0&lt;/mn&gt;
+      &lt;/mrow&gt;
+      &lt;annotation encoding=&quot;application/x-tex&quot;&gt;\operatorname{Rm} f(x)=0&lt;/annotation&gt;
+    &lt;/semantics&gt;
+  &lt;/math&gt;
+  かつ
+  &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+    &lt;semantics&gt;
+      &lt;mrow&gt;
+        &lt;mi&gt;Im&lt;/mi&gt;
+        &lt;mi&gt;f&lt;/mi&gt;
+        &lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;
+        &lt;mi&gt;x&lt;/mi&gt;
+        &lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;
+        &lt;mo&gt;=&lt;/mo&gt;
+        &lt;mn&gt;0&lt;/mn&gt;
+      &lt;/mrow&gt;
+      &lt;annotation encoding=&quot;application/x-tex&quot;&gt;\operatorname{Im} f(x)=0&lt;/annotation&gt;
+    &lt;/semantics&gt;
+  &lt;/math&gt;
+  であるから、この虚部(1.6)が 0 で、かつ実部の双曲放物面(1.5)が 0 になるものを探せば良い。
+  (1.6)が 0 となるのは、
+  &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+    &lt;semantics&gt;
+      &lt;mrow&gt;
+        &lt;mi&gt;a&lt;/mi&gt;
+        &lt;mo&gt;=&lt;/mo&gt;
+        &lt;mn&gt;0&lt;/mn&gt;
+      &lt;/mrow&gt;
+      &lt;annotation encoding=&quot;application/x-tex&quot;&gt;a=0&lt;/annotation&gt;
+    &lt;/semantics&gt;
+  &lt;/math&gt;
+  または
+  &lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;
+    &lt;semantics&gt;
+      &lt;mrow&gt;
+        &lt;mi&gt;b&lt;/mi&gt;
+        &lt;mo&gt;=&lt;/mo&gt;
+        &lt;mn&gt;0&lt;/mn&gt;
+      &lt;/mrow&gt;
+      &lt;annotation encoding=&quot;application/x-tex&quot;&gt;b=0&lt;/annotation&gt;
+    &lt;/semantics&gt;
+  &lt;/math&gt;
+  すなわち実軸と虚軸になる。
+&lt;/p&gt;
+
+&lt;p&gt;
+  なので(1.5)の実軸と虚軸において 0 になる点を探せば良い。
+  Fig-1.5 で示した緑色の放物線を水色の放物線が h によってどう変わるかを見れば良い。
+&lt;/p&gt;
+
+&lt;h3&gt;解の位置&lt;/h3&gt;
+
+&lt;p&gt;
+  (1.5)の実軸と虚軸における双曲線、
+  Fig-1.5 の緑色の放物線を水色の放物線が h を -10 から 10 まで変えるとどのように変わるかを示したのが下図となる。
+&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img class=&quot;fitcontain&quot; src=&quot;/images/2023-01-29-double_root_shifting_anim.gif&quot; width=&quot;640&quot; height=&quot;480&quot; loading=&quot;lazy&quot; /&gt;
+  &lt;figcaption&gt;Fig-1.7 x^2+h, h = -10,...,10&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;aside&gt;
+&lt;details&gt;
+&lt;summary&gt;上図を出力するための gnuplot のコード&lt;/summary&gt;
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/gnuplot
+
+set isosamples 50, 50
+
+set nokey
+
+I = {0,1}
+f(x,h) = x**2 + h
+
+set terminal gif animate delay 10
+set output &quot;double_root_shifting_anim.gif&quot;
+
+set grid
+
+do for [h=-10:10]{
+  set multiplot layout 2,2
+
+  set xrange [-10:10]
+  set yrange [-10:10]
+  set zrange [-130:130]
+  set xlabel &quot;real&quot;
+  set ylabel &quot;imag&quot;
+
+  set label 1 sprintf(&quot;h=%d&quot;, h) at screen 0.05,0.95 left
+
+  set view 60, 30, 1, 1
+  splot real(f(x+I*y,h)), \
+    [-10:10] &quot;++&quot; u ($1):(0):(f($1,h)) w l ls 2 lw 2, \
+    [-10:10] &quot;++&quot; u (0):($1):(-f(-$1,-h)) w l ls 3 lw 2
+  set view 60, 30+90, 1, 1
+  replot
+
+  set xrange [-10:10]
+  set yrange [-130:130]
+  set xlabel &quot;real&quot;
+  set ylabel &quot;&quot;
+  plot real(f(x,h)) ls 2
+  set xlabel &quot;imag&quot;
+  set ylabel &quot;&quot;
+  plot real(-f(-x,-h)) ls 3
+
+  #pause -1
+
+  unset multiplot
+}
+
+set output
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;/aside&gt;
+
+&lt;p&gt;
+  h &amp;lt; 0 では実軸上の放物線（緑色）が 0 となる点が 2 つあって、これが実数解である。
+  h &amp;gt; 0 では虚軸上の放物線（水色）が 0 となる点が 2 つあって、これが虚数解である。
+  h = 0 では両者の共通となるところとして重解となっている。
+&lt;/p&gt;
+
+&lt;p&gt;
+  domain coloring での図示とちがって、 h を上下に動かすことによって解がどのように決まるかを視覚的に示すことができた。
+  虚数解を視覚的に存在することを図で確認することができた。
+&lt;/p&gt;
+
+&lt;h3&gt;参考文献&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;a href=&quot;http://toretate.fc2web.com/bgmath/2009/rootofquadreq/09090704.html&quot;&gt;2次方程式の解を目で見る&lt;/a&gt;,
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;a href=&quot;https://amk86g18nx2l.blog.fc2.com/blog-entry-50.html&quot;&gt;虚数解はどこにあるか（1） | しろくま手帳&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    早苗雅史,
+    &lt;a href=&quot;http://izumi-math.jp/M_Sanae/cplx/cplx.html&quot;&gt;虚数解のイメージ化&lt;/a&gt;
+    北海道算数数学教育会 高等学校部会研究部 数学のいずみ
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;a href=&quot;http://www.gnuplot.info/docs/loc1331.html&quot;&gt;Complex values&lt;/a&gt;,
+    gnuplot document
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;a href=&quot;http://takeno.iee.niit.ac.jp/~foo/gp-jman/data/current/20211223/gnuplot-ja-div/node52.html&quot;&gt;17.1 複素数値 (Complex values)&lt;/a&gt;
+    (gnuplot document の和訳)
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;a href=&quot;https://mathrelish.com/mathematics/singularity-in-complex-analysis&quot;&gt;複素解析での特異点とは - ヴィジュアルな色相環を用いたプロットを通して | Math Relish&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    Yusuke Sakane,
+    &lt;a href=&quot;http://www4.math.sci.osaka-u.ac.jp/~sakane/shudaibetu/hyperbolic_paraboloid2.html&quot;&gt;双曲放物面２&lt;/a&gt;, ベジエ曲線とベジエ曲面
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script type=&quot;application/javascript&quot; async=&quot;async&quot; src=&quot;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=MML_CHTML&quot;&gt;&lt;/script&gt;</content>
+      
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>cat_in_136</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="チラシの裏" />
+      
+        <category term="math" />
+      
+
+      
+        <summary type="html">二次方程式 a x 2 + b x + c = 0 ax^2 + bx + c = 0 (1.1) の解は、下記の公式であたえられる x = − b ± b 2 − 4 a c 2 a x = {-b \pm \sqrt{b^2-4ac} \over 2a} (1.2) ここで、判別式(discriminant)とよばれるルートの中身 b2−4acb^2-4ac の値が負になるとき、実数解を持たない。これを複素数を導入することで判別式が負になるときも解（虚数解）が与えられる。 ここで登場する二乗すると-1になる虚数単位iはしばしば高校の数学教師は存在しないと言ったりするがそれはナンセンスな話である。 アイは院のサロンで、数人の院生と共に教授と話していた。何の流れだったか、 存在、非存在の話になった。アイが教授に高校時代、数学教師(アテネだ!)から「この世界にアイは存在しません」と聞いた、という話をしたとき、彼は、 「そんなことを言う数学教師はばかだ。」 そう吐き捨てた。一緒にいた院生は首を振り、アイが無駄な話を始めた、というような顔をした。 「それを言うなら負の数だってない。整数だってないよ。ゼロだってインド人が作るまではなかったんだから。でもあるだろ? ぼんやりあったもの、あった方がいいものを形にするのが数学なんだから。」 ―― 西加南子『i』ポプラ社、2016年 実際には実数を表した数直線（実軸; real axis）と90度をなす新たな数直線（虚軸; imaginary axis）を導入した虚数平面（complex plane）として目に見える=存在する形で扱うことができる。（だから、実軸上には存在しないといった言い方ならば理にかなっている。） そこで本稿では、しばしば存在しないと言われてしまう虚数解について、実際に存在を目で見ることによって確認したい。 二次方程式の虚数解の図示やネット上に数多あって、例えば下記のようなページがある。 2次方程式の解を目で見る 虚数解はどこにあるか（1） | しろくま手帳 虚数解のイメージ化 ただいずれも図を描くためのコードは公開されておらず読者がプログラミングをする必要がある。 本稿ではすべての図について、 gnuplot のコードを付けた。 また、グラフの概形について考察も掘り下げる。 複素解析でよくある可視化 domain coloring の導入 複素関数を素直にグラフで図示しようとすると、関数の引数の実軸・虚軸、関数値の実軸・虚軸の合計4軸必要となり、現実的に表現できない。 そこで複素解析学(complex analysis)では、関数値の偏角を色相(hue)にマッピングして表すことで、この図示の困難を克服することがしばしば行われる（domain coloringと呼ばれる）。 例えば f ( x ) = x f(x)=x をこの方式で表すと下記のようになる。 Fig-1.1 f(x)=x 上図を出力するための gnuplot のコード #!/usr/bin/gnuplot set cbrange [-pi:pi] set cbtics (&quot;-π&quot; -pi, &quot;0&quot; 0, &quot;π&quot; pi) set pm3d corners2color c1 set palette defined ( 0 0 1 1, 1 1 1 1 ) set isosamples 100, 100 set palette model HSV defined ( 0 0.5 1 1, 0.5 1 1 1, 0.5 0 1 1, 1 0.5 1 1 ) #set palette model HSV start 0.5 defined (0 0 1 1, 1 1 1 1) set xlabel &quot;real&quot; set ylabel &quot;imag&quot; set nokey set isosamples 512, 512 set size square I = {0,1} f(x) = x splot &apos;++&apos; using 1:2:(abs(f(x+I*y))):(arg(f(x+I*y))) with pm3d グラフ上の上方向の高さは絶対値を使っているので、まんなかの 0 がグラフの視覚的に最も低い場所になる。 偏角を確認するために、この三次元グラフの真上から覗くと下図のようになる。 Fig-1.2 argument of f(x)=x 上図を出力するための gnuplot のコード #!/usr/bin/gnuplot set cbrange [-pi:pi] set cbtics (&quot;-π&quot; -pi, &quot;0&quot; 0, &quot;π&quot; pi) set pm3d corners2color c1 set palette defined ( 0 0 1 1, 1 1 1 1 ) set isosamples 100, 100 set palette model HSV defined ( 0 0.5 1 1, 0.5 1 1 1, 0.5 0 1 1, 1 0.5 1 1 ) #set palette model HSV start 0.5 defined (0 0 1 1, 1 1 1 1) set xlabel &quot;real&quot; set ylabel &quot;imag&quot; set nokey set isosamples 512, 512 set size square set xrange [-5:5] set yrange [-5:5] set view map I = {0,1} f(x) = x splot &apos;++&apos; using 1:2:(abs(f(x+I*y))):(arg(f(x+I*y))) with pm3d pause -1 1 は偏角 0 度なので赤、虚数単位 i は偏角 90 度なので緑、-1 は 180 度で水色、-i は 270 度で青紫色、のように表示される。 複素解析では複素関数の関数値が0となる点をゼロ点 (zero) と呼ばれるが、domain coloring ではゼロ点の近傍は半時計回りに色相が変化するような絵面になる。 二次関数の domain coloring 表示 二次関数を解析するにあたり、簡単のため下記の関数で考えるものとする。 f ( x ) = x 2 + h f(x)=x^2+h (1.3) この(1.3)に対して x &amp;#x2192; x &amp;#x2212; &amp;#x2212; b 2 a , y &amp;#x2192; a &amp;#x2212; 1 ( y &amp;#x2212; ( c &amp;#x2212; a ( &amp;#x2212; b 2 a ) 2 &amp;#x2212; h a ) ) x \to x - \frac{-b}{2a}, y \to a^{-1} \left(y-\left(c-a\left(\frac{-b}{2a}\right)^2-ha\right)\right) という操作を行うと、(1.1)の左辺と同じになる。 すなわち(1.3)から x 軸方向への平行移動、y軸方向への平行移動および拡大縮小操作を組み合わせることで(1.1)の左辺が求められる。 だから(1.3)を考えて、後はこれを水平移動および拡大縮小操作を施されたものとして考えれば良い。 (1.3)がゼロとなる方程式の解は h &amp;lt; 0 のとき実数解を2個持ち、 h = 0 のとき x = 0 で重解となり、 h &amp;gt; 0 のとき虚数解を 2 個持つ。 h を替えることによって変わってくるのだが、この変化を視覚的にみるために、 h を -10 から 10 に変えて Fig-1.1, 1.2 と同様にプロットした。 Fig-1.3 f(x)=x^2+h Fig-1.4 argument of f(x)=x^2+h 上図を出力するための gnuplot のコード #!/usr/bin/gnuplot set cbrange [-pi:pi] set cbtics (&quot;-π&quot; -pi, &quot;0&quot; 0, &quot;π&quot; pi) set pm3d corners2color c1 set palette defined ( 0 0 1 1, 1 1 1 1 ) set isosamples 100, 100 set palette model HSV defined ( 0 0.5 1 1, 0.5 1 1 1, 0.5 0 1 1, 1 0.5 1 1 ) #set palette model HSV start 0.5 defined (0 0 1 1, 1 1 1 1) set xlabel &quot;real&quot; set ylabel &quot;imag&quot; set nokey I = {0,1} f(x,h) = x**2 + h set terminal gif animate delay 10 set output &quot;double_root_color_anim_pm3d.gif&quot; set zrange [0:60] do for [h=-10:10]{ set label 1 sprintf(&quot;h=%d&quot;, h) at screen 0.1,0.1 left splot &apos;++&apos; using 1:2:(abs(f(x+I*y, h))):(arg(f(x+I*y, h))) with pm3d #pause -1 } set output unset zrange set isosamples 512, 512 set size square set view map set terminal gif animate delay 10 set output &quot;double_root_color_anim_pm2d.gif&quot; do for [h=-10:10]{ set label 1 sprintf(&quot;h=%d&quot;, h) at screen 0.1,0.1 left splot arg(f(x+I*y, h)) with pm3d #pause -1 } set output hを変えていくことでゼロ点が実軸上と虚軸上を動いていく様子がわかる。 h = 0 を境目に実軸と虚軸が入れ替わったような対称的な様子がわかる。 このようにして domain coloring の色相が周回する場所という形で二次方程式の解の場所を確認することができた。 これで複素解析学の意味では「関数グラフの概形を見た」「虚数解を見た」と言える。 が、h を変える、すなわち関数値を実軸方向に増減させると、なぜこうなるのか?がいまいちわからない。 したがって、他の表示の仕方で概形を眺めたほうが良かろう。 実部と虚部でそれぞれ見る 実部 (1.3)の実部を計算する。 (1.3)に x = a + b i x=a+bi を代入すると f ( x ) = f ( a + b i ) = ( a + b i ) 2 + h = ( a 2 &amp;#x2212; b 2 + h ) + 2 a b i f(x)=f(a+bi)=(a+bi)^2+h=(a^2-b^2+h)+2abi (1.4) よって実部は Re f ( a + b i ) = a 2 &amp;#x2212; b 2 + h \operatorname{Re} f(a+bi)=a^2-b^2+h (1.5) であり双曲放物面(hyperbolic paraboloid)となる。 h=0 のときの概形を下図に示す。 Fig-1.5 Re (x^2) 上図を出力するための gnuplot のコード #!/usr/bin/gnuplot set isosamples 50, 50 set xlabel &quot;real&quot; set ylabel &quot;imag&quot; unset key I = {0,1} f(x) = x**2 splot real(f(x+I*y)), \ [-10:10] &quot;++&quot; u ($1):(0):(f($1)) w l ls 2, \ [-10:10] &quot;++&quot; u (0):($1):(-f(-$1)) w l ls 3 pause -1 xが実軸上(b=0)のとき、自明ではあるが f ( a ) = a 2 + h f(a)=a^2+h と下に凸となる放物線となる。 xが虚軸上(a=0)のとき、 f ( b i ) = &amp;#x2212; b 2 + h f(bi)=-b^2+h と上に凸となる放物線となる。 実軸上と虚軸上の場合の概形も上図に描き足した。 それぞれ緑色と水色で示した線である。 緑色の放物線を水色の放物線に沿って並行移動することでこの双曲放物面を形作ることができる。 また対称性に関して、 x &amp;#x2192; &amp;#x2212; i x x \to - i x と置き換えると同じ値になることからわかるとおり、グラフの実部と虚部を入れ替えて上下反転（関数値を-1倍）すると同じ概形となる。 このとき前述の緑色と水色で示した放射線は外見上入れ替わるような感じになる。 Fig-1.6 symmetry of Re (x^2) 上図を出力するための gnuplot のコード #!/usr/bin/gnuplot set isosamples 50, 50 set xlabel &quot;real&quot; set ylabel &quot;imag&quot; unset key I = {0,1} f(x) = x**2 splot real(f(x+I*y)), \ [-10:10] &quot;++&quot; u ($1):(0):(f($1)) w l ls 2, \ [-10:10] &quot;++&quot; u (0):($1):(-f(-$1)) w l ls 3 pause -1 虚部 (1.3)の虚部は(1.4)より、 Im f ( a + b i ) = 2 a b \operatorname{Im} f(a+bi)=2ab (1.6) この概形は下図のようになる。 Fig-1.6 Im (x^2) 上図を出力するための gnuplot のコード #!/usr/bin/gnuplot set isosamples 50, 50 set xlabel &quot;real&quot; set ylabel &quot;imag&quot; unset key I = {0,1} f(x) = x**2 splot imag(f(x+I*y)), &quot;-&quot; w l 0 -10 0 0 +10 0 -10 0 0 +10 0 0 e pause -1 ここで(1.6)式には h が出てこず、 h がどんな値であっても一定である。 f ( x ) = 0 f(x)=0 のためには Rm f ( x ) = 0 \operatorname{Rm} f(x)=0 かつ Im f ( x ) = 0 \operatorname{Im} f(x)=0 であるから、この虚部(1.6)が 0 で、かつ実部の双曲放物面(1.5)が 0 になるものを探せば良い。 (1.6)が 0 となるのは、 a = 0 a=0 または b = 0 b=0 すなわち実軸と虚軸になる。 なので(1.5)の実軸と虚軸において 0 になる点を探せば良い。 Fig-1.5 で示した緑色の放物線を水色の放物線が h によってどう変わるかを見れば良い。 解の位置 (1.5)の実軸と虚軸における双曲線、 Fig-1.5 の緑色の放物線を水色の放物線が h を -10 から 10 まで変えるとどのように変わるかを示したのが下図となる。 Fig-1.7 x^2+h, h = -10,...,10 上図を出力するための gnuplot のコード #!/usr/bin/gnuplot set isosamples 50, 50 set nokey I = {0,1} f(x,h) = x**2 + h set terminal gif animate delay 10 set output &quot;double_root_shifting_anim.gif&quot; set grid do for [h=-10:10]{ set multiplot layout 2,2 set xrange [-10:10] set yrange [-10:10] set zrange [-130:130] set xlabel &quot;real&quot; set ylabel &quot;imag&quot; set label 1 sprintf(&quot;h=%d&quot;, h) at screen 0.05,0.95 left set view 60, 30, 1, 1 splot real(f(x+I*y,h)), \ [-10:10] &quot;++&quot; u ($1):(0):(f($1,h)) w l ls 2 lw 2, \ [-10:10] &quot;++&quot; u (0):($1):(-f(-$1,-h)) w l ls 3 lw 2 set view 60, 30+90, 1, 1 replot set xrange [-10:10] set yrange [-130:130] set xlabel &quot;real&quot; set ylabel &quot;&quot; plot real(f(x,h)) ls 2 set xlabel &quot;imag&quot; set ylabel &quot;&quot; plot real(-f(-x,-h)) ls 3 #pause -1 unset multiplot } set output h &amp;lt; 0 では実軸上の放物線（緑色）が 0 となる点が 2 つあって、これが実数解である。 h &amp;gt; 0 では虚軸上の放物線（水色）が 0 となる点が 2 つあって、これが虚数解である。 h = 0 では両者の共通となるところとして重解となっている。 domain coloring での図示とちがって、 h を上下に動かすことによって解がどのように決まるかを視覚的に示すことができた。 虚数解を視覚的に存在することを図で確認することができた。 参考文献 2次方程式の解を目で見る, 虚数解はどこにあるか（1） | しろくま手帳 早苗雅史, 虚数解のイメージ化 北海道算数数学教育会 高等学校部会研究部 数学のいずみ Complex values, gnuplot document 17.1 複素数値 (Complex values) (gnuplot document の和訳) 複素解析での特異点とは - ヴィジュアルな色相環を用いたプロットを通して | Math Relish Yusuke Sakane, 双曲放物面２, ベジエ曲線とベジエ曲面</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Diff between firefox 110.0 beta 3 default preference and firefox 109.0</title>
@@ -5950,693 +6876,6 @@ table.diff_firefox104_pref_diff tbody tr { transition: background 0.125s ease-in
 
       
         <summary type="html">This is difference between the default preference of Firefox 104.0 beta 6 and one of 103.0.1. This diff table is generated with my small script firefox-prefjs-surveyer. Preference difference PrefFirefox 103.0.1Firefox 104.0 beta 6 app.normandy.test-prefs.bool undefined false app.normandy.test-prefs.integer undefined 0 app.normandy.test-prefs.string undefined app.releaseNotesURL https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew app.releaseNotesURL.aboutDialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog app.update.channel release beta app.update.url.details https://www.mozilla.org/%LOCALE%/firefox/notes https://www.mozilla.org/%LOCALE%/firefox/beta/notes app.update.url.manual https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update apz.minimap.enabled false undefined browser.browser.firefoxView.featureTour undefined default, default, true browser.cache.offline.enable true false browser.contentblocking.features.strict tp,tpPrivate,cm,fp,stp,lvl2,rp,rpTop,ocsp,qps tp,tpPrivate,cm,fp,stp,lvl2,rp,rpTop,ocsp,qps,qpsPBM browser.fixup.alternate.enabled true false browser.newtabpage.activity-stream.asrouter.providers.messaging-experiments {&amp;quot;id&amp;quot;:&amp;quot;messaging-experiments&amp;quot;,&amp;quot;enabled&amp;quot;:true,&amp;quot;type&amp;quot;:&amp;quot;remote-experiments&amp;quot;,&amp;quot;messageGroups&amp;quot;:[&amp;quot;cfr&amp;quot;,&amp;quot;aboutwelcome&amp;quot;,&amp;quot;infobar&amp;quot;,&amp;quot;spotlight&amp;quot;,&amp;quot;moments-page&amp;quot;,&amp;quot;pbNewtab&amp;quot;],&amp;quot;updateCycleInMs&amp;quot;:3600000} {&amp;quot;id&amp;quot;:&amp;quot;messaging-experiments&amp;quot;,&amp;quot;enabled&amp;quot;:true,&amp;quot;type&amp;quot;:&amp;quot;remote-experiments&amp;quot;,&amp;quot;updateCycleInMs&amp;quot;:3600000} browser.newtabpage.activity-stream.discoverystream.engagementLabelEnabled false undefined browser.newtabpage.activity-stream.discoverystream.lastCardMessage.enabled false undefined browser.newtabpage.activity-stream.discoverystream.loadMore.enabled false undefined browser.newtabpage.activity-stream.showRecentSaves undefined true browser.newtabpage.activity-stream.telemetry.ut.events false true browser.privacySegmentation.windowSeparation.enabled undefined false browser.privatebrowsing.enable-new-indicator undefined false browser.promo.pin.enabled undefined true browser.safebrowsing.provider.mozilla.lists base-track-digest256,mozstd-trackwhite-digest256,google-trackwhite-digest256,content-track-digest256,mozplugin-block-digest256,mozplugin2-block-digest256,ads-track-digest256,social-track-digest256,analytics-track-digest256,base-fingerprinting-track-digest256,content-fingerprinting-track-digest256,base-cryptomining-track-digest256,content-cryptomining-track-digest256,fanboyannoyance-ads-digest256,fanboysocial-ads-digest256,easylist-ads-digest256,easyprivacy-ads-digest256,adguard-ads-digest256,social-tracking-protection-digest256,social-tracking-protection-facebook-digest256,social-tracking-protection-linkedin-digest256,social-tracking-protection-twitter-digest256 base-track-digest256,mozstd-trackwhite-digest256,google-trackwhite-digest256,content-track-digest256,mozplugin-block-digest256,mozplugin2-block-digest256,ads-track-digest256,social-track-digest256,analytics-track-digest256,base-fingerprinting-track-digest256,content-fingerprinting-track-digest256,base-cryptomining-track-digest256,content-cryptomining-track-digest256,fanboyannoyance-ads-digest256,fanboysocial-ads-digest256,easylist-ads-digest256,easyprivacy-ads-digest256,adguard-ads-digest256,social-tracking-protection-digest256,social-tracking-protection-facebook-digest256,social-tracking-protection-linkedin-digest256,social-tracking-protection-twitter-digest256,base-email-track-digest256,content-email-track-digest256 browser.sessionstore.collect_session_storage undefined true browser.sessionstore.collect_zoom undefined true browser.sessionstore.platform_collection undefined true browser.snapshots.score.IsUsedRemoved -10 undefined browser.snapshots.score.IsUserRemoved undefined -10 browser.tabs.remote.coep.credentialless undefined false browser.urlbar.dnsResolveSingleWordsAfterSearch 1 0 canvas.hitregions.enabled false undefined devtools.responsive.showUserAgentInput false true docshell.shistory.bfcache.ship_allow_beforeunload_listeners false true dom.caches.hide_in_pbmode.enabled undefined false dom.fullscreen.modal false true dom.image-lazy-loading.root-margin.bottom 300.0 100.0 dom.image-lazy-loading.root-margin.bottom.percentage false true dom.image-lazy-loading.root-margin.left 300.0 100.0 dom.image-lazy-loading.root-margin.left.percentage false true dom.image-lazy-loading.root-margin.right 300.0 100.0 dom.image-lazy-loading.root-margin.right.percentage false true dom.image-lazy-loading.root-margin.top 300.0 100.0 dom.image-lazy-loading.root-margin.top.percentage false true dom.indexedDB.hide_in_pbmode.enabled undefined false dom.indexedDB.preprocessing undefined false dom.indexedDB.storageOption.enabled false undefined dom.indexedDB.testing undefined false dom.mouse_event.region.enabled undefined false dom.mozCurrentTransform.enabled true false dom.origin-trials.coep-credentialless.state undefined 0 dom.serviceWorkers.hide_in_pbmode.enabled undefined true dom.storage_access.forward_declared.enabled undefined false dom.storage_access.forward_declared.lifetime undefined 900 dom.webidl.crosscontext_hasinstance.enabled true false dom.webmidi.enabled false true extensions.InstallTrigger.enabled true false extensions.unifiedExtensions.enabled undefined false extensions.webcompat-reporter.enabled false true fission.enforceBlocklistedPrefsInSubprocesses.tmp false undefined fission.omitBlocklistedPrefsInSubprocesses.tmp false undefined geo.provider.network.url https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY% https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY% gfx.canvas.accelerated.async-present undefined true gfx.offscreencanvas.enabled false true html5.inert.enabled false true javascript.options.experimental.array_find_last false undefined javascript.options.experimental.shadow_realms undefined false javascript.options.wasm_simd true undefined javascript.options.wasm_simd_wormhole undefined false layers.low-precision-buffer false undefined layers.low-precision-resolution 0.25 undefined layout.css.animation-composition.enabled undefined false layout.css.contain-intrinsic-size.enabled undefined false layout.css.font-loading-api.workers.enabled undefined true layout.css.outline-style-auto.enabled true undefined layout.dynamic-reflow-roots.enabled false true media.webrtc.platformencoder.sw_mft false true network.cache.frecency_array_check_enabled false true network.cookie.lifetimePolicy 0 undefined network.cookie.sameSite.laxByDefault false true network.cookie.sameSite.noneRequiresSecure false true network.cookie.sameSite.schemeful false true network.jar.record_failure_reason false true network.predictor.enable-prefetch false true nimbus.validation.enabled undefined true pdfjs.annotationEditorEnabled false undefined pdfjs.annotationEditorMode undefined 0 pdfjs.forcePageColors undefined false privacy.annotate_channels.strict_list.enabled false true privacy.partition.always_partition_third_party_non_cookie_storage undefined false privacy.trackingprotection.emailtracking.data_collection.enabled undefined true privacy.trackingprotection.emailtracking.enabled undefined false privacy.trackingprotection.emailtracking.webapp.domains undefined mail.163.com,mail.aol.com,fastmail.com,webmail.gandi.net,mail.google.com,navigator-bs.gmx.com,app.hey.com,horde.org/apps/webmail,hushmail.com,icloud.com/mail,kolabnow.com,laposte.net/accueil,mail.lycos.com,mail.com/mail/,mail.ru,mailfence.com,outlook.live.com,email-postaci.com/,posteo.de,mail.protonmail.com,app.rackspace.com,mail.rediff.com,emailmg.ipage.com,runbox.com,mail.sina.com.cn,tutanota.com,mail.yahoo.com,mail.yandex.com,mail.zimbra.com,zoho.com/mail/ security.block_fileuri_script_with_wrong_mime false true security.disallow_non_local_systemprincipal_in_tests undefined false security.insecure_field_warning.contextual.enabled true undefined security.remote_settings.crlite_filters.enabled false true services.sync.engine.bookmarks.validation.enabled undefined true services.sync.engine.passwords.validation.enabled undefined true services.sync.prefs.sync-seen.browser.newtabpage.activity-stream.section.highlights undefined false services.sync.prefs.sync-seen.browser.newtabpage.activity-stream.section.highlights.includePocket undefined false services.sync.prefs.sync-seen.general.autoScroll undefined false services.sync.prefs.sync-seen.media.eme.enabled undefined false services.sync.prefs.sync.network.cookie.lifetimePolicy true undefined svg.embedder-prefers-color-scheme.content.enabled undefined false toolkit.telemetry.enabled false true urlclassifier.disallow_completions goog-downloadwhite-digest256,base-track-digest256,mozstd-trackwhite-digest256,content-track-digest256,mozplugin-block-digest256,mozplugin2-block-digest256,goog-passwordwhite-proto,ads-track-digest256,social-track-digest256,analytics-track-digest256,base-fingerprinting-track-digest256,content-fingerprinting-track-digest256,base-cryptomining-track-digest256,content-cryptomining-track-digest256,fanboyannoyance-ads-digest256,fanboysocial-ads-digest256,easylist-ads-digest256,easyprivacy-ads-digest256,adguard-ads-digest256,social-tracking-protection-digest256,social-tracking-protection-facebook-digest256,social-tracking-protection-linkedin-digest256,social-tracking-protection-twitter-digest256 goog-downloadwhite-digest256,base-track-digest256,mozstd-trackwhite-digest256,content-track-digest256,mozplugin-block-digest256,mozplugin2-block-digest256,goog-passwordwhite-proto,ads-track-digest256,social-track-digest256,analytics-track-digest256,base-fingerprinting-track-digest256,content-fingerprinting-track-digest256,base-cryptomining-track-digest256,content-cryptomining-track-digest256,fanboyannoyance-ads-digest256,fanboysocial-ads-digest256,easylist-ads-digest256,easyprivacy-ads-digest256,adguard-ads-digest256,social-tracking-protection-digest256,social-tracking-protection-facebook-digest256,social-tracking-protection-linkedin-digest256,social-tracking-protection-twitter-digest256,base-email-track-digest256,content-email-track-digest256 urlclassifier.features.emailtracking.allowlistTables undefined mozstd-trackwhite-digest256 urlclassifier.features.emailtracking.blocklistTables undefined base-email-track-digest256 urlclassifier.features.emailtracking.datacollection.allowlistTables undefined mozstd-trackwhite-digest256 urlclassifier.features.emailtracking.datacollection.blocklistTables undefined base-email-track-digest256,content-email-track-digest256 webgl.out-of-process.async-present undefined false webgl.out-of-process.async-present.force-sync undefined true webgl.use-canvas-render-thread undefined true widget.disable-swipe-tracker true false widget.non-native-theme.solid-outline-style undefined false</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Diff between firefox 103.0 beta 3 default preference and firefox 102.0</title>
-      <link href="https://cat-in-136.github.io/2022/07/diff-between-firefox-1030-beta-3-default.html" rel="alternate" type="text/html" title="Diff between firefox 103.0 beta 3 default preference and firefox 102.0" />
-      <published>2022-07-03T08:54:14+09:00</published>
-      <updated>2022-07-03T08:54:14+09:00</updated>
-      <id>https://cat-in-136.github.io/2022/07/diff-between-firefox-1030-beta-3-default</id>
-      
-      
-      
-      <content type="html" xml:base="https://cat-in-136.github.io/2022/07/diff-between-firefox-1030-beta-3-default.html">&lt;p&gt;
-This is difference between the default preference of Firefox 103.0 beta 3 and one of 102.0.
-This diff table is generated with my small script &lt;a href=&quot;https://github.com/cat-in-136/firefox-prefjs-surveyer&quot;&gt;firefox-prefjs-surveyer&lt;/a&gt;.
-&lt;/p&gt;
-
-&lt;div&gt;
-&lt;table class=&quot;diff_firefox103_pref_diff&quot;&gt;
-&lt;caption&gt;Preference difference&lt;/caption&gt;
-&lt;thead&gt;
-&lt;tr&gt;&lt;td&gt;Pref&lt;/td&gt;&lt;td&gt;Firefox 102.0&lt;/td&gt;&lt;td&gt;Firefox 103.0 beta 3&lt;/td&gt;&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;bool&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;integer&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;string&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;releaseNotesURL&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;releaseNotesURL.&lt;wbr /&gt;aboutDialog&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;channel&lt;/td&gt;
-        &lt;td&gt;release&lt;/td&gt;
-        &lt;td&gt;beta&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;url.&lt;wbr /&gt;details&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/notes&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/beta/notes&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;url.&lt;wbr /&gt;manual&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;aboutwelcome.&lt;wbr /&gt;templateMR&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;cache.&lt;wbr /&gt;offline.&lt;wbr /&gt;enable&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;display.&lt;wbr /&gt;os-zoom-behavior&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;1&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;discoverystream.&lt;wbr /&gt;compactLayout.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;discoverystream.&lt;wbr /&gt;recentSaves.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;ut.&lt;wbr /&gt;events&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;preferences.&lt;wbr /&gt;instantApply&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;safebrowsing.&lt;wbr /&gt;provider.&lt;wbr /&gt;mozilla.&lt;wbr /&gt;lists&lt;/td&gt;
-        &lt;td&gt;base-track-digest256,&lt;wbr /&gt;mozstd-trackwhite-digest256,&lt;wbr /&gt;google-trackwhite-digest256,&lt;wbr /&gt;content-track-digest256,&lt;wbr /&gt;mozplugin-block-digest256,&lt;wbr /&gt;mozplugin2-block-digest256,&lt;wbr /&gt;block-flash-digest256,&lt;wbr /&gt;except-flash-digest256,&lt;wbr /&gt;allow-flashallow-digest256,&lt;wbr /&gt;except-flashallow-digest256,&lt;wbr /&gt;block-flashsubdoc-digest256,&lt;wbr /&gt;except-flashsubdoc-digest256,&lt;wbr /&gt;ads-track-digest256,&lt;wbr /&gt;social-track-digest256,&lt;wbr /&gt;analytics-track-digest256,&lt;wbr /&gt;base-fingerprinting-track-digest256,&lt;wbr /&gt;content-fingerprinting-track-digest256,&lt;wbr /&gt;base-cryptomining-track-digest256,&lt;wbr /&gt;content-cryptomining-track-digest256,&lt;wbr /&gt;fanboyannoyance-ads-digest256,&lt;wbr /&gt;fanboysocial-ads-digest256,&lt;wbr /&gt;easylist-ads-digest256,&lt;wbr /&gt;easyprivacy-ads-digest256,&lt;wbr /&gt;adguard-ads-digest256,&lt;wbr /&gt;social-tracking-protection-digest256,&lt;wbr /&gt;social-tracking-protection-facebook-digest256,&lt;wbr /&gt;social-tracking-protection-linkedin-digest256,&lt;wbr /&gt;social-tracking-protection-twitter-digest256&lt;/td&gt;
-        &lt;td&gt;base-track-digest256,&lt;wbr /&gt;mozstd-trackwhite-digest256,&lt;wbr /&gt;google-trackwhite-digest256,&lt;wbr /&gt;content-track-digest256,&lt;wbr /&gt;mozplugin-block-digest256,&lt;wbr /&gt;mozplugin2-block-digest256,&lt;wbr /&gt;ads-track-digest256,&lt;wbr /&gt;social-track-digest256,&lt;wbr /&gt;analytics-track-digest256,&lt;wbr /&gt;base-fingerprinting-track-digest256,&lt;wbr /&gt;content-fingerprinting-track-digest256,&lt;wbr /&gt;base-cryptomining-track-digest256,&lt;wbr /&gt;content-cryptomining-track-digest256,&lt;wbr /&gt;fanboyannoyance-ads-digest256,&lt;wbr /&gt;fanboysocial-ads-digest256,&lt;wbr /&gt;easylist-ads-digest256,&lt;wbr /&gt;easyprivacy-ads-digest256,&lt;wbr /&gt;adguard-ads-digest256,&lt;wbr /&gt;social-tracking-protection-digest256,&lt;wbr /&gt;social-tracking-protection-facebook-digest256,&lt;wbr /&gt;social-tracking-protection-linkedin-digest256,&lt;wbr /&gt;social-tracking-protection-twitter-digest256&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;devtools.&lt;wbr /&gt;browserconsole.&lt;wbr /&gt;enableNetworkMonitoring&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;devtools.&lt;wbr /&gt;browsertoolbox.&lt;wbr /&gt;scope&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;everything&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;devtools.&lt;wbr /&gt;devices.&lt;wbr /&gt;url&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://code.cdn.mozilla.net/devices/devices.json&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;devtools.&lt;wbr /&gt;netmonitor.&lt;wbr /&gt;features.&lt;wbr /&gt;serverSentEvents&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;devtools.&lt;wbr /&gt;netmonitor.&lt;wbr /&gt;features.&lt;wbr /&gt;webSockets&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;devtools.&lt;wbr /&gt;remote.&lt;wbr /&gt;tls-handshake-timeout&lt;/td&gt;
-        &lt;td&gt;10000&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;block_&lt;wbr /&gt;reload_&lt;wbr /&gt;from_&lt;wbr /&gt;resize_&lt;wbr /&gt;event_&lt;wbr /&gt;handler&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;events.&lt;wbr /&gt;asyncClipboard.&lt;wbr /&gt;readText&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;fileHandle.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;fullscreen.&lt;wbr /&gt;modal&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;image-lazy-loading.&lt;wbr /&gt;root-margin.&lt;wbr /&gt;bottom&lt;/td&gt;
-        &lt;td&gt;300.&lt;wbr /&gt;0&lt;/td&gt;
-        &lt;td&gt;100.&lt;wbr /&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;image-lazy-loading.&lt;wbr /&gt;root-margin.&lt;wbr /&gt;bottom.&lt;wbr /&gt;percentage&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;image-lazy-loading.&lt;wbr /&gt;root-margin.&lt;wbr /&gt;left&lt;/td&gt;
-        &lt;td&gt;300.&lt;wbr /&gt;0&lt;/td&gt;
-        &lt;td&gt;100.&lt;wbr /&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;image-lazy-loading.&lt;wbr /&gt;root-margin.&lt;wbr /&gt;left.&lt;wbr /&gt;percentage&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;image-lazy-loading.&lt;wbr /&gt;root-margin.&lt;wbr /&gt;right&lt;/td&gt;
-        &lt;td&gt;300.&lt;wbr /&gt;0&lt;/td&gt;
-        &lt;td&gt;100.&lt;wbr /&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;image-lazy-loading.&lt;wbr /&gt;root-margin.&lt;wbr /&gt;right.&lt;wbr /&gt;percentage&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;image-lazy-loading.&lt;wbr /&gt;root-margin.&lt;wbr /&gt;top&lt;/td&gt;
-        &lt;td&gt;300.&lt;wbr /&gt;0&lt;/td&gt;
-        &lt;td&gt;100.&lt;wbr /&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;image-lazy-loading.&lt;wbr /&gt;root-margin.&lt;wbr /&gt;top.&lt;wbr /&gt;percentage&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;ipc.&lt;wbr /&gt;shims.&lt;wbr /&gt;enabledWarnings&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;menuitem.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;mozCurrentTransform.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;streams.&lt;wbr /&gt;transferable.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;text-recognition.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;webidl.&lt;wbr /&gt;crosscontext_&lt;wbr /&gt;hasinstance.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;webmidi.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;extensions.&lt;wbr /&gt;InstallTrigger.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;extensions.&lt;wbr /&gt;InstallTriggerImpl.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;extensions.&lt;wbr /&gt;webcompat-reporter.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;fission.&lt;wbr /&gt;enforce&lt;wbr /&gt;Blocklisted&lt;wbr /&gt;Prefs&lt;wbr /&gt;In&lt;wbr /&gt;Subprocesses.&lt;wbr /&gt;tmp&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;fission.&lt;wbr /&gt;frontend.&lt;wbr /&gt;simulate-events&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;fission.&lt;wbr /&gt;frontend.&lt;wbr /&gt;simulate-messages&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;fission.&lt;wbr /&gt;omit&lt;wbr /&gt;Blocklisted&lt;wbr /&gt;Prefs&lt;wbr /&gt;In&lt;wbr /&gt;Subprocesses.&lt;wbr /&gt;tmp&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;geo.&lt;wbr /&gt;provider.&lt;wbr /&gt;network.&lt;wbr /&gt;url&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY%&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;gfx.&lt;wbr /&gt;direct3d11.&lt;wbr /&gt;reuse-decoder-device&lt;/td&gt;
-        &lt;td&gt;-1&lt;/td&gt;
-        &lt;td&gt;1&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;html5.&lt;wbr /&gt;inert.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;image.&lt;wbr /&gt;decode-sync.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;experimental.&lt;wbr /&gt;array_&lt;wbr /&gt;find_&lt;wbr /&gt;last&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;wasm_&lt;wbr /&gt;simd_&lt;wbr /&gt;wormhole&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;backdrop-filter.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;has-selector.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;linear-easing-function.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;display_&lt;wbr /&gt;partial_&lt;wbr /&gt;background_&lt;wbr /&gt;images&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;dynamic-reflow-roots.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;expose_&lt;wbr /&gt;high_&lt;wbr /&gt;rate_&lt;wbr /&gt;mode_&lt;wbr /&gt;from_&lt;wbr /&gt;refreshdriver&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;mathml.&lt;wbr /&gt;scriptminsize_&lt;wbr /&gt;attribute.&lt;wbr /&gt;disabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;mathml.&lt;wbr /&gt;scriptsizemultiplier_&lt;wbr /&gt;attribute.&lt;wbr /&gt;disabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;autoplay.&lt;wbr /&gt;block-webaudio&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;av1.&lt;wbr /&gt;force-thread-count&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;av1.&lt;wbr /&gt;new-thread-count-strategy&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;videocontrols.&lt;wbr /&gt;picture-in-picture.&lt;wbr /&gt;display-text-tracks.&lt;wbr /&gt;toggle.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;webrtc.&lt;wbr /&gt;platformencoder.&lt;wbr /&gt;sw_&lt;wbr /&gt;mft&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;allow_&lt;wbr /&gt;raw_&lt;wbr /&gt;sockets_&lt;wbr /&gt;in_&lt;wbr /&gt;content_&lt;wbr /&gt;processes&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;cache.&lt;wbr /&gt;frecency_&lt;wbr /&gt;array_&lt;wbr /&gt;check_&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;cookie.&lt;wbr /&gt;sameSite.&lt;wbr /&gt;laxByDefault&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;cookie.&lt;wbr /&gt;sameSite.&lt;wbr /&gt;noneRequiresSecure&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;cookie.&lt;wbr /&gt;sameSite.&lt;wbr /&gt;schemeful&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;origin.&lt;wbr /&gt;redirectTainted&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;jar.&lt;wbr /&gt;record_&lt;wbr /&gt;failure_&lt;wbr /&gt;reason&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;predictor.&lt;wbr /&gt;enable-prefetch&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;trr.&lt;wbr /&gt;retry_&lt;wbr /&gt;on_&lt;wbr /&gt;recoverable_&lt;wbr /&gt;errors&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;pdfjs.&lt;wbr /&gt;annotationEditorEnabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;plugins.&lt;wbr /&gt;flashBlock.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;privacy.&lt;wbr /&gt;annotate_&lt;wbr /&gt;channels.&lt;wbr /&gt;strict_&lt;wbr /&gt;list.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;privacy.&lt;wbr /&gt;query_&lt;wbr /&gt;stripping.&lt;wbr /&gt;enabled.&lt;wbr /&gt;pbmode&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;privacy.&lt;wbr /&gt;restrict3rdpartystorage.&lt;wbr /&gt;preferences.&lt;wbr /&gt;learnMoreURLSuffix&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;total-cookie-protection&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;reader.&lt;wbr /&gt;improvements_&lt;wbr /&gt;H12022.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;block_&lt;wbr /&gt;fileuri_&lt;wbr /&gt;script_&lt;wbr /&gt;with_&lt;wbr /&gt;wrong_&lt;wbr /&gt;mime&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;disallow_&lt;wbr /&gt;non_&lt;wbr /&gt;local_&lt;wbr /&gt;systemprincipal_&lt;wbr /&gt;in_&lt;wbr /&gt;tests&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;pki.&lt;wbr /&gt;sha1_&lt;wbr /&gt;enforcement_&lt;wbr /&gt;level&lt;/td&gt;
-        &lt;td&gt;1&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;remote_&lt;wbr /&gt;settings.&lt;wbr /&gt;crlite_&lt;wbr /&gt;filters.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;tls.&lt;wbr /&gt;ech.&lt;wbr /&gt;disable_&lt;wbr /&gt;grease_&lt;wbr /&gt;on_&lt;wbr /&gt;fallback&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;tls.&lt;wbr /&gt;ech.&lt;wbr /&gt;grease_&lt;wbr /&gt;probability&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;50&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;tls.&lt;wbr /&gt;ech.&lt;wbr /&gt;grease_&lt;wbr /&gt;size&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;100&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;webauthn.&lt;wbr /&gt;ctap2&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;engine.&lt;wbr /&gt;bookmarks.&lt;wbr /&gt;validation.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;engine.&lt;wbr /&gt;passwords.&lt;wbr /&gt;validation.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;engine.&lt;wbr /&gt;tabs.&lt;wbr /&gt;filteredSchemes&lt;/td&gt;
-        &lt;td class=&quot;dump&quot;&gt;about|resource|chrome|file|blob|moz-extension&lt;/td&gt;
-        &lt;td class=&quot;dump&quot;&gt;about|resource|chrome|file|blob|moz-extension|data&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;urlclassifier.&lt;wbr /&gt;disallow_&lt;wbr /&gt;completions&lt;/td&gt;
-        &lt;td&gt;goog-downloadwhite-digest256,&lt;wbr /&gt;base-track-digest256,&lt;wbr /&gt;mozstd-trackwhite-digest256,&lt;wbr /&gt;content-track-digest256,&lt;wbr /&gt;mozplugin-block-digest256,&lt;wbr /&gt;mozplugin2-block-digest256,&lt;wbr /&gt;block-flash-digest256,&lt;wbr /&gt;except-flash-digest256,&lt;wbr /&gt;allow-flashallow-digest256,&lt;wbr /&gt;except-flashallow-digest256,&lt;wbr /&gt;block-flashsubdoc-digest256,&lt;wbr /&gt;except-flashsubdoc-digest256,&lt;wbr /&gt;goog-passwordwhite-proto,&lt;wbr /&gt;ads-track-digest256,&lt;wbr /&gt;social-track-digest256,&lt;wbr /&gt;analytics-track-digest256,&lt;wbr /&gt;base-fingerprinting-track-digest256,&lt;wbr /&gt;content-fingerprinting-track-digest256,&lt;wbr /&gt;base-cryptomining-track-digest256,&lt;wbr /&gt;content-cryptomining-track-digest256,&lt;wbr /&gt;fanboyannoyance-ads-digest256,&lt;wbr /&gt;fanboysocial-ads-digest256,&lt;wbr /&gt;easylist-ads-digest256,&lt;wbr /&gt;easyprivacy-ads-digest256,&lt;wbr /&gt;adguard-ads-digest256,&lt;wbr /&gt;social-tracking-protection-digest256,&lt;wbr /&gt;social-tracking-protection-facebook-digest256,&lt;wbr /&gt;social-tracking-protection-linkedin-digest256,&lt;wbr /&gt;social-tracking-protection-twitter-digest256&lt;/td&gt;
-        &lt;td&gt;goog-downloadwhite-digest256,&lt;wbr /&gt;base-track-digest256,&lt;wbr /&gt;mozstd-trackwhite-digest256,&lt;wbr /&gt;content-track-digest256,&lt;wbr /&gt;mozplugin-block-digest256,&lt;wbr /&gt;mozplugin2-block-digest256,&lt;wbr /&gt;goog-passwordwhite-proto,&lt;wbr /&gt;ads-track-digest256,&lt;wbr /&gt;social-track-digest256,&lt;wbr /&gt;analytics-track-digest256,&lt;wbr /&gt;base-fingerprinting-track-digest256,&lt;wbr /&gt;content-fingerprinting-track-digest256,&lt;wbr /&gt;base-cryptomining-track-digest256,&lt;wbr /&gt;content-cryptomining-track-digest256,&lt;wbr /&gt;fanboyannoyance-ads-digest256,&lt;wbr /&gt;fanboysocial-ads-digest256,&lt;wbr /&gt;easylist-ads-digest256,&lt;wbr /&gt;easyprivacy-ads-digest256,&lt;wbr /&gt;adguard-ads-digest256,&lt;wbr /&gt;social-tracking-protection-digest256,&lt;wbr /&gt;social-tracking-protection-facebook-digest256,&lt;wbr /&gt;social-tracking-protection-linkedin-digest256,&lt;wbr /&gt;social-tracking-protection-twitter-digest256&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;urlclassifier.&lt;wbr /&gt;flashAllow&lt;wbr /&gt;ExceptTable&lt;/td&gt;
-        &lt;td&gt;except-flashallow-digest256&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;urlclassifier.&lt;wbr /&gt;flashAllow&lt;wbr /&gt;Table&lt;/td&gt;
-        &lt;td&gt;allow-flashallow-digest256&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;urlclassifier.&lt;wbr /&gt;flash&lt;wbr /&gt;ExceptTable&lt;/td&gt;
-        &lt;td&gt;except-flash-digest256&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;urlclassifier.&lt;wbr /&gt;flashSubDocExceptTable&lt;/td&gt;
-        &lt;td&gt;except-flashsubdoc-digest256&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;urlclassifier.&lt;wbr /&gt;flashSubDoc&lt;wbr /&gt;Table&lt;/td&gt;
-        &lt;td&gt;block-flashsubdoc-digest256&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;urlclassifier.&lt;wbr /&gt;flashTable&lt;/td&gt;
-        &lt;td&gt;block-flash-digest256&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;widget.&lt;wbr /&gt;swipe.&lt;wbr /&gt;whole-page-pixel-size&lt;/td&gt;
-        &lt;td&gt;550.&lt;wbr /&gt;0&lt;/td&gt;
-        &lt;td&gt;40.&lt;wbr /&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;widget.&lt;wbr /&gt;use-xdg-desktop-portal.&lt;wbr /&gt;open-uri&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;2&lt;/td&gt;
-      &lt;/tr&gt;
-
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;style type=&quot;text/css&quot;&gt;&lt;!-- /* --&gt;&lt;![CDATA[ /* */
-table.diff_firefox103_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
-table.diff_firefox103_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
-table.diff_firefox103_pref_diff thead td { background-color: #ddd; font-weight: bold; }
-table.diff_firefox103_pref_diff td.json,
-table.diff_firefox103_pref_diff td.uri,
-table.diff_firefox103_pref_diff td.dump { word-break: break-all; }
-table.diff_firefox103_pref_diff td.undefined { color: #888; font-style: italic; }
-table.diff_firefox103_pref_diff tr.sameval td:first-child { color: #444; }
-table.diff_firefox103_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
-table.diff_firefox103_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
-table.diff_firefox103_pref_diff tbody tr:hover { background-color: #eee; }
-table.diff_firefox103_pref_diff tbody tr { transition: background 0.125s ease-in-out 0s; }
-/* ]]&gt;&lt;!-- */ --&gt;&lt;/style&gt;</content>
-      
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>cat_in_136</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="pref diff" />
-      
-        <category term="mozilla" />
-      
-
-      
-        <summary type="html">This is difference between the default preference of Firefox 103.0 beta 3 and one of 102.0. This diff table is generated with my small script firefox-prefjs-surveyer. Preference difference PrefFirefox 102.0Firefox 103.0 beta 3 app.normandy.test-prefs.bool undefined false app.normandy.test-prefs.integer undefined 0 app.normandy.test-prefs.string undefined app.releaseNotesURL https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew app.releaseNotesURL.aboutDialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog app.update.channel release beta app.update.url.details https://www.mozilla.org/%LOCALE%/firefox/notes https://www.mozilla.org/%LOCALE%/firefox/beta/notes app.update.url.manual https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update browser.aboutwelcome.templateMR undefined false browser.cache.offline.enable true false browser.display.os-zoom-behavior undefined 1 browser.newtabpage.activity-stream.discoverystream.compactLayout.enabled false undefined browser.newtabpage.activity-stream.discoverystream.recentSaves.enabled undefined false browser.newtabpage.activity-stream.telemetry.ut.events false true browser.preferences.instantApply true undefined browser.safebrowsing.provider.mozilla.lists base-track-digest256,mozstd-trackwhite-digest256,google-trackwhite-digest256,content-track-digest256,mozplugin-block-digest256,mozplugin2-block-digest256,block-flash-digest256,except-flash-digest256,allow-flashallow-digest256,except-flashallow-digest256,block-flashsubdoc-digest256,except-flashsubdoc-digest256,ads-track-digest256,social-track-digest256,analytics-track-digest256,base-fingerprinting-track-digest256,content-fingerprinting-track-digest256,base-cryptomining-track-digest256,content-cryptomining-track-digest256,fanboyannoyance-ads-digest256,fanboysocial-ads-digest256,easylist-ads-digest256,easyprivacy-ads-digest256,adguard-ads-digest256,social-tracking-protection-digest256,social-tracking-protection-facebook-digest256,social-tracking-protection-linkedin-digest256,social-tracking-protection-twitter-digest256 base-track-digest256,mozstd-trackwhite-digest256,google-trackwhite-digest256,content-track-digest256,mozplugin-block-digest256,mozplugin2-block-digest256,ads-track-digest256,social-track-digest256,analytics-track-digest256,base-fingerprinting-track-digest256,content-fingerprinting-track-digest256,base-cryptomining-track-digest256,content-cryptomining-track-digest256,fanboyannoyance-ads-digest256,fanboysocial-ads-digest256,easylist-ads-digest256,easyprivacy-ads-digest256,adguard-ads-digest256,social-tracking-protection-digest256,social-tracking-protection-facebook-digest256,social-tracking-protection-linkedin-digest256,social-tracking-protection-twitter-digest256 devtools.browserconsole.enableNetworkMonitoring undefined false devtools.browsertoolbox.scope undefined everything devtools.devices.url https://code.cdn.mozilla.net/devices/devices.json undefined devtools.netmonitor.features.serverSentEvents true undefined devtools.netmonitor.features.webSockets true undefined devtools.remote.tls-handshake-timeout 10000 undefined dom.block_reload_from_resize_event_handler true false dom.events.asyncClipboard.readText undefined false dom.fileHandle.enabled true false dom.fullscreen.modal undefined false dom.image-lazy-loading.root-margin.bottom 300.0 100.0 dom.image-lazy-loading.root-margin.bottom.percentage false true dom.image-lazy-loading.root-margin.left 300.0 100.0 dom.image-lazy-loading.root-margin.left.percentage false true dom.image-lazy-loading.root-margin.right 300.0 100.0 dom.image-lazy-loading.root-margin.right.percentage false true dom.image-lazy-loading.root-margin.top 300.0 100.0 dom.image-lazy-loading.root-margin.top.percentage false true dom.ipc.shims.enabledWarnings false undefined dom.menuitem.enabled false undefined dom.mozCurrentTransform.enabled true false dom.streams.transferable.enabled false true dom.text-recognition.enabled undefined false dom.webidl.crosscontext_hasinstance.enabled true false dom.webmidi.enabled false true extensions.InstallTrigger.enabled true false extensions.InstallTriggerImpl.enabled true false extensions.webcompat-reporter.enabled false true fission.enforceBlocklistedPrefsInSubprocesses.tmp undefined false fission.frontend.simulate-events false undefined fission.frontend.simulate-messages false undefined fission.omitBlocklistedPrefsInSubprocesses.tmp undefined false geo.provider.network.url https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY% https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY% gfx.direct3d11.reuse-decoder-device -1 1 html5.inert.enabled false true image.decode-sync.enabled undefined false javascript.options.experimental.array_find_last undefined false javascript.options.wasm_simd_wormhole undefined false layout.css.backdrop-filter.enabled false true layout.css.has-selector.enabled undefined false layout.css.linear-easing-function.enabled undefined false layout.display_partial_background_images false true layout.dynamic-reflow-roots.enabled false true layout.expose_high_rate_mode_from_refreshdriver undefined true mathml.scriptminsize_attribute.disabled false true mathml.scriptsizemultiplier_attribute.disabled false true media.autoplay.block-webaudio false true media.av1.force-thread-count undefined 0 media.av1.new-thread-count-strategy undefined false media.videocontrols.picture-in-picture.display-text-tracks.toggle.enabled undefined true media.webrtc.platformencoder.sw_mft false true network.allow_raw_sockets_in_content_processes undefined false network.cache.frecency_array_check_enabled false true network.cookie.sameSite.laxByDefault false true network.cookie.sameSite.noneRequiresSecure false true network.cookie.sameSite.schemeful false true network.http.origin.redirectTainted undefined true network.jar.record_failure_reason false true network.predictor.enable-prefetch false true network.trr.retry_on_recoverable_errors undefined true pdfjs.annotationEditorEnabled undefined false plugins.flashBlock.enabled true undefined privacy.annotate_channels.strict_list.enabled false true privacy.query_stripping.enabled.pbmode false true privacy.restrict3rdpartystorage.preferences.learnMoreURLSuffix undefined total-cookie-protection reader.improvements_H12022.enabled false undefined security.block_fileuri_script_with_wrong_mime false true security.disallow_non_local_systemprincipal_in_tests undefined false security.pki.sha1_enforcement_level 1 undefined security.remote_settings.crlite_filters.enabled false true security.tls.ech.disable_grease_on_fallback undefined true security.tls.ech.grease_probability undefined 50 security.tls.ech.grease_size undefined 100 security.webauthn.ctap2 undefined false services.sync.engine.bookmarks.validation.enabled undefined true services.sync.engine.passwords.validation.enabled undefined true services.sync.engine.tabs.filteredSchemes about|resource|chrome|file|blob|moz-extension about|resource|chrome|file|blob|moz-extension|data toolkit.telemetry.enabled false true urlclassifier.disallow_completions goog-downloadwhite-digest256,base-track-digest256,mozstd-trackwhite-digest256,content-track-digest256,mozplugin-block-digest256,mozplugin2-block-digest256,block-flash-digest256,except-flash-digest256,allow-flashallow-digest256,except-flashallow-digest256,block-flashsubdoc-digest256,except-flashsubdoc-digest256,goog-passwordwhite-proto,ads-track-digest256,social-track-digest256,analytics-track-digest256,base-fingerprinting-track-digest256,content-fingerprinting-track-digest256,base-cryptomining-track-digest256,content-cryptomining-track-digest256,fanboyannoyance-ads-digest256,fanboysocial-ads-digest256,easylist-ads-digest256,easyprivacy-ads-digest256,adguard-ads-digest256,social-tracking-protection-digest256,social-tracking-protection-facebook-digest256,social-tracking-protection-linkedin-digest256,social-tracking-protection-twitter-digest256 goog-downloadwhite-digest256,base-track-digest256,mozstd-trackwhite-digest256,content-track-digest256,mozplugin-block-digest256,mozplugin2-block-digest256,goog-passwordwhite-proto,ads-track-digest256,social-track-digest256,analytics-track-digest256,base-fingerprinting-track-digest256,content-fingerprinting-track-digest256,base-cryptomining-track-digest256,content-cryptomining-track-digest256,fanboyannoyance-ads-digest256,fanboysocial-ads-digest256,easylist-ads-digest256,easyprivacy-ads-digest256,adguard-ads-digest256,social-tracking-protection-digest256,social-tracking-protection-facebook-digest256,social-tracking-protection-linkedin-digest256,social-tracking-protection-twitter-digest256 urlclassifier.flashAllowExceptTable except-flashallow-digest256 undefined urlclassifier.flashAllowTable allow-flashallow-digest256 undefined urlclassifier.flashExceptTable except-flash-digest256 undefined urlclassifier.flashSubDocExceptTable except-flashsubdoc-digest256 undefined urlclassifier.flashSubDocTable block-flashsubdoc-digest256 undefined urlclassifier.flashTable block-flash-digest256 undefined widget.swipe.whole-page-pixel-size 550.0 40.0 widget.use-xdg-desktop-portal.open-uri undefined 2</summary>
       
 
       
