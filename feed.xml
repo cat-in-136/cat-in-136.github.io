@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator>
   <link href="https://cat-in-136.github.io/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://cat-in-136.github.io/" rel="alternate" type="text/html" />
-  <updated>2023-03-21T21:58:08+09:00</updated>
+  <updated>2023-04-16T23:35:15+09:00</updated>
   <id>https://cat-in-136.github.io/</id>
 
   
@@ -17,6 +17,773 @@
 
   
   
+  
+    <entry>
+      <title type="html">Diff between firefox 113.0 beta 3 default preference and firefox 112.0</title>
+      <link href="https://cat-in-136.github.io/2023/04/diff-between-firefox-1130-beta-3-default.html" rel="alternate" type="text/html" title="Diff between firefox 113.0 beta 3 default preference and firefox 112.0" />
+      <published>2023-04-16T23:30:46+09:00</published>
+      <updated>2023-04-16T23:30:46+09:00</updated>
+      <id>https://cat-in-136.github.io/2023/04/diff-between-firefox-1130-beta-3-default</id>
+      
+      
+      
+      <content type="html" xml:base="https://cat-in-136.github.io/2023/04/diff-between-firefox-1130-beta-3-default.html">&lt;p&gt;
+This is difference between the default preference of Firefox 113.0 beta 3 and one of 112.0.
+This diff table is generated with my small script &lt;a href=&quot;https://github.com/cat-in-136/firefox-prefjs-surveyer&quot;&gt;firefox-prefjs-surveyer&lt;/a&gt;.
+&lt;/p&gt;
+
+&lt;div&gt;
+&lt;table class=&quot;diff_firefox113_pref_diff&quot;&gt;
+&lt;caption&gt;Preference difference&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;&lt;td&gt;Pref&lt;/td&gt;&lt;td&gt;Firefox 113.0&lt;/td&gt;&lt;td&gt;Firefox 113.0 beta 3&lt;/td&gt;&lt;/tr&gt;
+&lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;accessibility.&lt;wbr /&gt;cache.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;bool&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;integer&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;string&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;releaseNotesURL&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;releaseNotesURL.&lt;wbr /&gt;aboutDialog&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;channel&lt;/td&gt;
+        &lt;td&gt;release&lt;/td&gt;
+        &lt;td&gt;beta&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;url.&lt;wbr /&gt;details&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/notes&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/beta/notes&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;url.&lt;wbr /&gt;manual&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;apz.&lt;wbr /&gt;scrollthumb.&lt;wbr /&gt;recalc&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;aboutwelcome.&lt;wbr /&gt;skipFocus&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;bookmarks.&lt;wbr /&gt;editDialog.&lt;wbr /&gt;delayedApply.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;cache.&lt;wbr /&gt;offline.&lt;wbr /&gt;enable&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;chrome.&lt;wbr /&gt;history.&lt;wbr /&gt;maxAgeInDays&lt;/td&gt;
+        &lt;td&gt;180&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;content-modal.&lt;wbr /&gt;about-welcome-behavior&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;default&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;history.&lt;wbr /&gt;maxAgeInDays&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;180&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;interactions.&lt;wbr /&gt;bookmarks&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;interactions.&lt;wbr /&gt;history&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;interactions.&lt;wbr /&gt;passwords&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;preferences-entrypoint.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;ut.&lt;wbr /&gt;events&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;opaqueResponseBlocking&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;opaqueResponseBlocking.&lt;wbr /&gt;javascriptValidator&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;ssl_&lt;wbr /&gt;override_&lt;wbr /&gt;behavior&lt;/td&gt;
+        &lt;td&gt;2&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;translations.&lt;wbr /&gt;autoTranslate&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;translations.&lt;wbr /&gt;simulateUnsupportedEngine&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;bestMatch.&lt;wbr /&gt;blockingEnabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;quickactions.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;quickactions.&lt;wbr /&gt;showPrefs&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;quicksuggest.&lt;wbr /&gt;blockingEnabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;resultMenu&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;shortcuts.&lt;wbr /&gt;quickactions&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;showSearchTerms.&lt;wbr /&gt;featureGate&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;suggest.&lt;wbr /&gt;quickactions&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;cookiebanners.&lt;wbr /&gt;ui.&lt;wbr /&gt;desktop.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;devtools.&lt;wbr /&gt;debugger.&lt;wbr /&gt;features.&lt;wbr /&gt;javascript-tracing&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;devtools.&lt;wbr /&gt;debugger.&lt;wbr /&gt;features.&lt;wbr /&gt;outline&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;devtools.&lt;wbr /&gt;debugger.&lt;wbr /&gt;javascript-tracing-log-method&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;console&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;devtools.&lt;wbr /&gt;inspector.&lt;wbr /&gt;simple-highlighters-reduced-motion&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;docshell.&lt;wbr /&gt;shistory.&lt;wbr /&gt;bfcache.&lt;wbr /&gt;ship_&lt;wbr /&gt;allow_&lt;wbr /&gt;beforeunload_&lt;wbr /&gt;listeners&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;compression_&lt;wbr /&gt;streams.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;document.&lt;wbr /&gt;edit_&lt;wbr /&gt;command.&lt;wbr /&gt;contentReadOnly.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;document.&lt;wbr /&gt;edit_&lt;wbr /&gt;command.&lt;wbr /&gt;insertBrOnReturn.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;event.&lt;wbr /&gt;wheel-event-groups.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;forms.&lt;wbr /&gt;always_&lt;wbr /&gt;allow_&lt;wbr /&gt;key_&lt;wbr /&gt;and_&lt;wbr /&gt;focus_&lt;wbr /&gt;events.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;media.&lt;wbr /&gt;mozPreservesPitch.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;mozImageSmoothingEnabled.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;mozTextStyle.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;webgpu.&lt;wbr /&gt;wgpu-backend&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;dom.&lt;wbr /&gt;workers.&lt;wbr /&gt;importScripts.&lt;wbr /&gt;enforceStrictMimeType&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;editor.&lt;wbr /&gt;join_&lt;wbr /&gt;split_&lt;wbr /&gt;direction.&lt;wbr /&gt;compatible_&lt;wbr /&gt;with_&lt;wbr /&gt;the_&lt;wbr /&gt;other_&lt;wbr /&gt;browsers&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;extensions.&lt;wbr /&gt;InstallTrigger.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;extensions.&lt;wbr /&gt;formautofill.&lt;wbr /&gt;addresses.&lt;wbr /&gt;capture.&lt;wbr /&gt;v2.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;extensions.&lt;wbr /&gt;pocket.&lt;wbr /&gt;bffApi&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;firefox-api-proxy.&lt;wbr /&gt;cdn.&lt;wbr /&gt;mozilla.&lt;wbr /&gt;net&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;extensions.&lt;wbr /&gt;pocket.&lt;wbr /&gt;bffRecentSaves&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;extensions.&lt;wbr /&gt;pocket.&lt;wbr /&gt;oAuthConsumerKeyBff&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;94110-6d5ff7a89d72c869766af0e0&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;extensions.&lt;wbr /&gt;webcompat-reporter.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;fission.&lt;wbr /&gt;enforceBlocklistedPrefsInSubprocesses&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;geo.&lt;wbr /&gt;provider.&lt;wbr /&gt;network.&lt;wbr /&gt;url&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY%&lt;/td&gt;
+        &lt;td class=&quot;uri&quot;&gt;https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;gfx.&lt;wbr /&gt;color_&lt;wbr /&gt;management.&lt;wbr /&gt;rec2020_&lt;wbr /&gt;gamma_&lt;wbr /&gt;as_&lt;wbr /&gt;rec709&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;gfx.&lt;wbr /&gt;color_&lt;wbr /&gt;management.&lt;wbr /&gt;rec709_&lt;wbr /&gt;gamma_&lt;wbr /&gt;as_&lt;wbr /&gt;srgb&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;image.&lt;wbr /&gt;avif.&lt;wbr /&gt;sequence.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;experimental.&lt;wbr /&gt;enable_&lt;wbr /&gt;array_&lt;wbr /&gt;from_&lt;wbr /&gt;async&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;allow-mixed-page-sizes&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;color-mix.&lt;wbr /&gt;color-spaces.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;color-mix.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;d-property.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;forced-color-adjust.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;more_&lt;wbr /&gt;color_&lt;wbr /&gt;4.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;nth-child-of.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;prefers-reduced-transparency.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;dynamic-reflow-roots.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;layout.&lt;wbr /&gt;image.&lt;wbr /&gt;eager_&lt;wbr /&gt;broken_&lt;wbr /&gt;image_&lt;wbr /&gt;icon&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;media.&lt;wbr /&gt;cubeb.&lt;wbr /&gt;sandbox_&lt;wbr /&gt;v2&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;media.&lt;wbr /&gt;ffmpeg.&lt;wbr /&gt;vaapi.&lt;wbr /&gt;force-surface-copy&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;media.&lt;wbr /&gt;ffmpeg.&lt;wbr /&gt;vaapi.&lt;wbr /&gt;force-surface-zero-copy&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;2&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;media.&lt;wbr /&gt;getusermedia.&lt;wbr /&gt;camera.&lt;wbr /&gt;macavf.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;media.&lt;wbr /&gt;gmp.&lt;wbr /&gt;decoder.&lt;wbr /&gt;preferred&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;media.&lt;wbr /&gt;videocontrols.&lt;wbr /&gt;picture-in-picture.&lt;wbr /&gt;improved-video-controls.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;media.&lt;wbr /&gt;videocontrols.&lt;wbr /&gt;picture-in-picture.&lt;wbr /&gt;urlbar-button.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;media.&lt;wbr /&gt;webrtc.&lt;wbr /&gt;platformencoder.&lt;wbr /&gt;sw_&lt;wbr /&gt;mft&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;cache.&lt;wbr /&gt;frecency_&lt;wbr /&gt;array_&lt;wbr /&gt;check_&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;cookie.&lt;wbr /&gt;sameSite.&lt;wbr /&gt;noneRequiresSecure&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;dns.&lt;wbr /&gt;force_&lt;wbr /&gt;use_&lt;wbr /&gt;https_&lt;wbr /&gt;rr&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;early-hints.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;early-hints.&lt;wbr /&gt;preconnect.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;early-hints.&lt;wbr /&gt;preconnect.&lt;wbr /&gt;max_&lt;wbr /&gt;connections&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;windows-sso.&lt;wbr /&gt;container-enabled.&lt;wbr /&gt;0&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;jar.&lt;wbr /&gt;record_&lt;wbr /&gt;failure_&lt;wbr /&gt;reason&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;predictor.&lt;wbr /&gt;enable-prefetch&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;network.&lt;wbr /&gt;trr.&lt;wbr /&gt;ping_&lt;wbr /&gt;timeout&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;3000&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;print.&lt;wbr /&gt;save_&lt;wbr /&gt;as_&lt;wbr /&gt;pdf.&lt;wbr /&gt;use_&lt;wbr /&gt;page_&lt;wbr /&gt;rule_&lt;wbr /&gt;size_&lt;wbr /&gt;as_&lt;wbr /&gt;paper_&lt;wbr /&gt;size.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;privacy.&lt;wbr /&gt;annotate_&lt;wbr /&gt;channels.&lt;wbr /&gt;strict_&lt;wbr /&gt;list.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;privacy.&lt;wbr /&gt;annotate_&lt;wbr /&gt;channels.&lt;wbr /&gt;strict_&lt;wbr /&gt;list.&lt;wbr /&gt;pbmode.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;privacy.&lt;wbr /&gt;partition.&lt;wbr /&gt;network_&lt;wbr /&gt;state.&lt;wbr /&gt;ws_&lt;wbr /&gt;connection_&lt;wbr /&gt;queue&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;privacy.&lt;wbr /&gt;resistFingerprinting.&lt;wbr /&gt;testing.&lt;wbr /&gt;setTZtoUTC&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;privacy.&lt;wbr /&gt;resistFingerprintingLite&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;privacy.&lt;wbr /&gt;resistFingerprintingLite.&lt;wbr /&gt;overrides&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;block_&lt;wbr /&gt;fileuri_&lt;wbr /&gt;script_&lt;wbr /&gt;with_&lt;wbr /&gt;wrong_&lt;wbr /&gt;mime&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;disallow_&lt;wbr /&gt;non_&lt;wbr /&gt;local_&lt;wbr /&gt;systemprincipal_&lt;wbr /&gt;in_&lt;wbr /&gt;tests&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;remote_&lt;wbr /&gt;settings.&lt;wbr /&gt;crlite_&lt;wbr /&gt;filters.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;ssl3.&lt;wbr /&gt;ecdhe_&lt;wbr /&gt;ecdsa_&lt;wbr /&gt;aes_&lt;wbr /&gt;128_&lt;wbr /&gt;sha&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;ssl3.&lt;wbr /&gt;ecdhe_&lt;wbr /&gt;ecdsa_&lt;wbr /&gt;aes_&lt;wbr /&gt;256_&lt;wbr /&gt;sha&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;webauth.&lt;wbr /&gt;softtoken_&lt;wbr /&gt;counter&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;0&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;webauth.&lt;wbr /&gt;webauthn_&lt;wbr /&gt;enable_&lt;wbr /&gt;android_&lt;wbr /&gt;fido2&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;webauth.&lt;wbr /&gt;webauthn_&lt;wbr /&gt;testing_&lt;wbr /&gt;allow_&lt;wbr /&gt;direct_&lt;wbr /&gt;attestation&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;security.&lt;wbr /&gt;webauthn.&lt;wbr /&gt;ctap2&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;engine.&lt;wbr /&gt;bookmarks.&lt;wbr /&gt;validation.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;engine.&lt;wbr /&gt;passwords.&lt;wbr /&gt;validation.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;snav.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;svg.&lt;wbr /&gt;nearestAndFarthestViewportElement.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;telemetry.&lt;wbr /&gt;fog.&lt;wbr /&gt;artifact_&lt;wbr /&gt;build&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr&gt;
+        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;enabled&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;oldkey&quot;&gt;
+        &lt;td&gt;webgl.&lt;wbr /&gt;all-angle-options&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;webgl.&lt;wbr /&gt;forbid-hardware&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;false&lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;tr class=&quot;newkey&quot;&gt;
+        &lt;td&gt;webgl.&lt;wbr /&gt;forbid-software&lt;/td&gt;
+        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
+        &lt;td&gt;true&lt;/td&gt;
+      &lt;/tr&gt;
+
+    &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+
+
+&lt;style type=&quot;text/css&quot;&gt;&lt;!-- /* --&gt;&lt;![CDATA[ /* */
+table.diff_firefox113_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
+table.diff_firefox113_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
+table.diff_firefox113_pref_diff thead td { background-color: #ddd; font-weight: bold; }
+table.diff_firefox113_pref_diff td.json,
+table.diff_firefox113_pref_diff td.uri,
+table.diff_firefox113_pref_diff td.dump { word-break: break-all; }
+table.diff_firefox113_pref_diff td.undefined { color: #888; font-style: italic; }
+table.diff_firefox113_pref_diff tr.sameval td:first-child { color: #444; }
+table.diff_firefox113_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
+table.diff_firefox113_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
+table.diff_firefox113_pref_diff tbody tr:hover { background-color: #eee; }
+table.diff_firefox113_pref_diff tbody tr { transition: background 0.125s ease-in-out 0s; }
+/* ]]&gt;&lt;!-- */ --&gt;&lt;/style&gt;</content>
+      
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>cat_in_136</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="pref diff" />
+      
+        <category term="mozilla" />
+      
+
+      
+        <summary type="html">This is difference between the default preference of Firefox 113.0 beta 3 and one of 112.0. This diff table is generated with my small script firefox-prefjs-surveyer. Preference difference PrefFirefox 113.0Firefox 113.0 beta 3 accessibility.cache.enabled false true app.normandy.test-prefs.bool undefined false app.normandy.test-prefs.integer undefined 0 app.normandy.test-prefs.string undefined app.releaseNotesURL https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew app.releaseNotesURL.aboutDialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog app.update.channel release beta app.update.url.details https://www.mozilla.org/%LOCALE%/firefox/notes https://www.mozilla.org/%LOCALE%/firefox/beta/notes app.update.url.manual https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update apz.scrollthumb.recalc undefined false browser.aboutwelcome.skipFocus true undefined browser.bookmarks.editDialog.delayedApply.enabled false true browser.cache.offline.enable true false browser.migrate.chrome.history.maxAgeInDays 180 undefined browser.migrate.content-modal.about-welcome-behavior undefined default browser.migrate.history.maxAgeInDays undefined 180 browser.migrate.interactions.bookmarks undefined false browser.migrate.interactions.history undefined false browser.migrate.interactions.passwords undefined false browser.migrate.preferences-entrypoint.enabled undefined true browser.newtabpage.activity-stream.telemetry.ut.events false true browser.opaqueResponseBlocking false true browser.opaqueResponseBlocking.javascriptValidator false true browser.ssl_override_behavior 2 undefined browser.translations.autoTranslate undefined false browser.translations.simulateUnsupportedEngine undefined false browser.urlbar.bestMatch.blockingEnabled false true browser.urlbar.quickactions.enabled undefined true browser.urlbar.quickactions.showPrefs undefined true browser.urlbar.quicksuggest.blockingEnabled false true browser.urlbar.resultMenu false true browser.urlbar.shortcuts.quickactions undefined true browser.urlbar.showSearchTerms.featureGate false true browser.urlbar.suggest.quickactions undefined true cookiebanners.ui.desktop.enabled false true devtools.debugger.features.javascript-tracing undefined false devtools.debugger.features.outline true undefined devtools.debugger.javascript-tracing-log-method undefined console devtools.inspector.simple-highlighters-reduced-motion undefined false docshell.shistory.bfcache.ship_allow_beforeunload_listeners false true dom.compression_streams.enabled undefined true dom.document.edit_command.contentReadOnly.enabled true false dom.document.edit_command.insertBrOnReturn.enabled true false dom.event.wheel-event-groups.enabled undefined false dom.forms.always_allow_key_and_focus_events.enabled undefined false dom.media.mozPreservesPitch.enabled undefined false dom.mozImageSmoothingEnabled.enabled undefined false dom.mozTextStyle.enabled false undefined dom.webgpu.wgpu-backend undefined dom.workers.importScripts.enforceStrictMimeType undefined false editor.join_split_direction.compatible_with_the_other_browsers false true extensions.InstallTrigger.enabled true false extensions.formautofill.addresses.capture.v2.enabled undefined false extensions.pocket.bffApi undefined firefox-api-proxy.cdn.mozilla.net extensions.pocket.bffRecentSaves undefined true extensions.pocket.oAuthConsumerKeyBff undefined 94110-6d5ff7a89d72c869766af0e0 extensions.webcompat-reporter.enabled false true fission.enforceBlocklistedPrefsInSubprocesses false true geo.provider.network.url https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY% https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY% gfx.color_management.rec2020_gamma_as_rec709 undefined true gfx.color_management.rec709_gamma_as_srgb undefined true image.avif.sequence.enabled false true javascript.options.experimental.enable_array_from_async undefined false layout.css.allow-mixed-page-sizes false true layout.css.color-mix.color-spaces.enabled false true layout.css.color-mix.enabled false true layout.css.d-property.enabled true undefined layout.css.forced-color-adjust.enabled false true layout.css.more_color_4.enabled false true layout.css.nth-child-of.enabled false true layout.css.prefers-reduced-transparency.enabled undefined false layout.dynamic-reflow-roots.enabled false true layout.image.eager_broken_image_icon undefined false media.cubeb.sandbox_v2 false undefined media.ffmpeg.vaapi.force-surface-copy false undefined media.ffmpeg.vaapi.force-surface-zero-copy undefined 2 media.getusermedia.camera.macavf.enabled false true media.gmp.decoder.preferred undefined false media.videocontrols.picture-in-picture.improved-video-controls.enabled false true media.videocontrols.picture-in-picture.urlbar-button.enabled undefined false media.webrtc.platformencoder.sw_mft false true network.cache.frecency_array_check_enabled false true network.cookie.sameSite.noneRequiresSecure false true network.dns.force_use_https_rr undefined false network.early-hints.enabled false true network.early-hints.preconnect.enabled false true network.early-hints.preconnect.max_connections undefined 0 network.http.windows-sso.container-enabled.0 undefined true network.jar.record_failure_reason false true network.predictor.enable-prefetch false true network.trr.ping_timeout undefined 3000 print.save_as_pdf.use_page_rule_size_as_paper_size.enabled false true privacy.annotate_channels.strict_list.enabled false true privacy.annotate_channels.strict_list.pbmode.enabled false true privacy.partition.network_state.ws_connection_queue true undefined privacy.resistFingerprinting.testing.setTZtoUTC undefined false privacy.resistFingerprintingLite undefined false privacy.resistFingerprintingLite.overrides undefined security.block_fileuri_script_with_wrong_mime false true security.disallow_non_local_systemprincipal_in_tests undefined false security.remote_settings.crlite_filters.enabled false true security.ssl3.ecdhe_ecdsa_aes_128_sha true false security.ssl3.ecdhe_ecdsa_aes_256_sha true false security.webauth.softtoken_counter undefined 0 security.webauth.webauthn_enable_android_fido2 undefined false security.webauth.webauthn_testing_allow_direct_attestation undefined false security.webauthn.ctap2 false true services.sync.engine.bookmarks.validation.enabled undefined true services.sync.engine.passwords.validation.enabled undefined true snav.enabled false undefined svg.nearestAndFarthestViewportElement.enabled true false telemetry.fog.artifact_build undefined false toolkit.telemetry.enabled false true webgl.all-angle-options false undefined webgl.forbid-hardware undefined false webgl.forbid-software undefined true</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Diff between firefox 112.0 beta 4 default preference and firefox 111.0</title>
@@ -6631,168 +7398,6 @@ table.diff_firefox106_pref_diff tbody tr { transition: background 0.125s ease-in
 
       
         <summary type="html">This is difference between the default preference of Firefox 106.0 beta 5 and one of 105.0.1. This diff table is generated with my small script firefox-prefjs-surveyer. Preference difference PrefFirefox 105.0.1Firefox 106.0 beta 5 app.normandy.test-prefs.bool undefined false app.normandy.test-prefs.integer undefined 0 app.normandy.test-prefs.string undefined app.releaseNotesURL https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-browser&amp;amp;utm_campaign=whatsnew app.releaseNotesURL.aboutDialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog app.update.channel release beta app.update.url.details https://www.mozilla.org/%LOCALE%/firefox/notes https://www.mozilla.org/%LOCALE%/firefox/beta/notes app.update.url.manual https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update browser.aboutwelcome.templateMR false true browser.cache.offline.enable true false browser.contentblocking.features.strict tp,tpPrivate,cm,fp,stp,lvl2,rp,rpTop,ocsp,qps,qpsPBM tp,tpPrivate,cookieBehavior5,cookieBehaviorPBM5,cm,fp,stp,lvl2,rp,rpTop,ocsp,qps,qpsPBM browser.dataFeatureRecommendations.enabled undefined false browser.firefox-view.feature-tour {&amp;quot;message&amp;quot;:&amp;quot;FIREFOX_VIEW_FEATURE_TOUR&amp;quot;,&amp;quot;screen&amp;quot;:&amp;quot;&amp;quot;,&amp;quot;complete&amp;quot;:true} {&amp;quot;message&amp;quot;:&amp;quot;FIREFOX_VIEW_FEATURE_TOUR&amp;quot;,&amp;quot;screen&amp;quot;:&amp;quot;FIREFOX_VIEW_SPOTLIGHT&amp;quot;,&amp;quot;complete&amp;quot;:false} browser.firefox-view.view-count undefined 0 browser.newtabpage.activity-stream.discoverystream.hideDescriptionsRegions undefined browser.newtabpage.activity-stream.discoverystream.saveToPocketCardRegions undefined browser.newtabpage.activity-stream.telemetry.ut.events false true browser.privacySegmentation.enabled false undefined browser.privacySegmentation.preferences.learnMoreURLSuffix data-features undefined browser.privacySegmentation.windowSeparation.enabled false undefined browser.privateWindowSeparation.enabled undefined true browser.privatebrowsing.enable-new-indicator false true browser.privatebrowsing.enable-new-logo false true browser.promo.pin.enabled false true browser.search.separatePrivateDefault false true browser.startup.upgradeDialog.enabled false true browser.swipe.navigation-icon-move-distance 0 100 browser.tabs.firefox-view false true browser.tabs.firefox-view.logLevel undefined Warn browser.tabs.tabmanager.enabled false true browser.theme.colorway-closet false true browser.theme.dark-private-windows false true browser.urlbar.quickactions.showInZeroPrefix undefined true browser.urlbar.quickactions.showPrefs undefined true browser.urlbar.shortcuts.quickactions undefined true browser.urlbar.showSearchTerms undefined false browser.urlbar.suggest.quickactions undefined true cookiebanners.bannerClicking.enabled undefined false cookiebanners.bannerClicking.logLevel undefined Error cookiebanners.bannerClicking.testing undefined false cookiebanners.bannerClicking.timeout undefined 3000 cookiebanners.listService.testRules undefined [] cookiebanners.service.enableGlobalRules undefined false devtools.toolbox.alwaysOnTop undefined true devtools.toolbox.sideEnabled true undefined docshell.shistory.bfcache.ship_allow_beforeunload_listeners false true dom.caches.hide_in_pbmode.enabled false undefined dom.document.edit_command.contentReadOnly.enabled true false dom.document.edit_command.insertBrOnReturn.enabled true false dom.focus.fixup undefined false dom.image-lazy-loading.root-margin.bottom 300.0 600.0 dom.image-lazy-loading.root-margin.left 300.0 600.0 dom.image-lazy-loading.root-margin.right 300.0 600.0 dom.image-lazy-loading.root-margin.top 300.0 600.0 dom.indexedDB.hide_in_pbmode.enabled false undefined dom.mozCurrentTransform.enabled true false dom.picture_source_dimension_attributes.enabled undefined false dom.resize_observer.last_reported_size_invalid undefined true dom.security.credentialmanagement.identity.enabled undefined false dom.security.credentialmanagement.identity.wait_for_timeout undefined true dom.serviceWorkers.hide_in_pbmode.enabled true undefined dom.sitepermsaddon-provider.enabled undefined false dom.text-recognition.enabled false true dom.webidl.crosscontext_hasinstance.enabled true false dom.webmidi.enabled false true extensions.InstallTrigger.enabled true false extensions.eventPages.enabled false true extensions.formautofill.creditCards.heuristics.nameExpirySection.enabled undefined false extensions.formautofill.creditCards.heuristics.numberOnly.confidenceThreshold undefined 0.5 extensions.manifestV2.actionsPopupURLRestricted undefined false extensions.manifestV3.enabled false true extensions.pocket.refresh.layout.enabled true undefined extensions.webcompat-reporter.enabled false true extensions.webextensions.base-content-security-policy script-src &amp;#x27;self&amp;#x27; https://* http://localhost:* http://127.0.0.1:* moz-extension: blob: filesystem: &amp;#x27;unsafe-eval&amp;#x27; &amp;#x27;wasm-unsafe-eval&amp;#x27; &amp;#x27;unsafe-inline&amp;#x27;; object-src &amp;#x27;self&amp;#x27; moz-extension: blob: filesystem:; script-src &amp;#x27;self&amp;#x27; https://* http://localhost:* http://127.0.0.1:* moz-extension: blob: filesystem: &amp;#x27;unsafe-eval&amp;#x27; &amp;#x27;wasm-unsafe-eval&amp;#x27; &amp;#x27;unsafe-inline&amp;#x27;; extensions.webextensions.base-content-security-policy.v3 script-src &amp;#x27;self&amp;#x27; &amp;#x27;wasm-unsafe-eval&amp;#x27; http://localhost:* http://127.0.0.1:*; object-src &amp;#x27;self&amp;#x27;; script-src &amp;#x27;self&amp;#x27; &amp;#x27;wasm-unsafe-eval&amp;#x27;; extensions.webextensions.default-content-security-policy script-src &amp;#x27;self&amp;#x27; &amp;#x27;wasm-unsafe-eval&amp;#x27;; object-src &amp;#x27;self&amp;#x27;; script-src &amp;#x27;self&amp;#x27; &amp;#x27;wasm-unsafe-eval&amp;#x27;; extensions.webextensions.default-content-security-policy.v3 script-src &amp;#x27;self&amp;#x27;; object-src &amp;#x27;self&amp;#x27;; script-src &amp;#x27;self&amp;#x27;; geo.provider.network.url https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY% https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY% gfx.blithelper.lut-size.rgb.b undefined 15 gfx.blithelper.lut-size.rgb.g undefined 31 gfx.blithelper.lut-size.rgb.r undefined 31 gfx.blithelper.lut-size.ycbcr.cb undefined 15 gfx.blithelper.lut-size.ycbcr.cr undefined 31 gfx.blithelper.lut-size.ycbcr.y undefined 31 gfx.blithelper.precision undefined 2 html5.inert.enabled false true javascript.options.mem.gc_heap_growth_factor 40 50 layout.css.iframe-embedder-prefers-color-scheme.content.enabled undefined true layout.css.prefers-color-scheme.content-override 3 2 layout.css.supports-selector.enabled true undefined layout.css.webkit-line-clamp.block.enabled undefined false layout.css.webkit-line-clamp.enabled true undefined layout.dynamic-reflow-roots.enabled false true layout.skip_ticks_while_page_suspended undefined true mathml.deprecated_alignment_attributes.disabled true undefined mathml.error_message_layout_for_invalid_markup.disabled undefined true mathml.legacy_maction_and_semantics_implementations.disabled undefined true mathml.mathvariant_styling_fallback.disabled undefined true mathml.mfrac_bevelled_attribute.disabled true undefined mathml.mfrac_linethickness_names.disabled true undefined mathml.script_shift_attributes.disabled true undefined media.navigator.mediadatadecoder_vpx_enabled false true media.webrtc.capture.allow-iosurface undefined true media.webrtc.platformencoder.sw_mft false true network.cache.frecency_array_check_enabled false true network.cookie.sameSite.laxByDefault false true network.cookie.sameSite.noneRequiresSecure false true network.jar.record_failure_reason false true network.predictor.enable-prefetch false true pdfjs.annotationEditorMode -1 0 privacy.annotate_channels.strict_list.enabled false true security.block_fileuri_script_with_wrong_mime false true security.disallow_non_local_systemprincipal_in_tests undefined false security.remote_settings.crlite_filters.enabled false true services.sync.engine.bookmarks.validation.enabled undefined true services.sync.engine.passwords.validation.enabled undefined true services.sync.prefs.sync.browser.firefox-view.feature-tour undefined true signon.showAutoCompleteOrigins true undefined toolkit.telemetry.enabled false true widget.disable-swipe-tracker true false</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Linux上のpodman上でqmk flashすることに関するメモ</title>
-      <link href="https://cat-in-136.github.io/2022/08/note-qmk-flash-on-podman-on-linux.html" rel="alternate" type="text/html" title="Linux上のpodman上でqmk flashすることに関するメモ" />
-      <published>2022-08-28T15:21:33+09:00</published>
-      <updated>2022-08-28T15:21:33+09:00</updated>
-      <id>https://cat-in-136.github.io/2022/08/note-qmk-flash-on-podman-on-linux</id>
-      
-      
-      
-      <content type="html" xml:base="https://cat-in-136.github.io/2022/08/note-qmk-flash-on-podman-on-linux.html">&lt;p&gt;いわゆる自作キーボードにおける pro micro へファームウェアをflashする（焼く）のを Linux 上の podman コンテナ内でなんとかするための試みに関するメモ&lt;/p&gt;
-
-&lt;p&gt;今どきはキーマップぐらいの変更ならば Google Chrome/Chromium つかって &lt;a href=&quot;https://remap-keys.app&quot;&gt;Remap&lt;/a&gt; でflashするのが圧倒的に楽ではある。QMK をカスタムすること、あるいは何らかの宗教上の理由などで Google Chrome/Chromium を使えないときには CLI で焼く必要がある&lt;/p&gt;
-
-&lt;p&gt;本稿で紹介する方法は、USBデバイスの設定である udev と QMK のファームウェア以外はコンテナ上で動かすことで、ホスト環境への影響をなくすとともにセットアップをかんたんにしている&lt;/p&gt;
-
-&lt;p&gt;なお、podman で確認したが docker ユーザの場合は docker に読み替えても実行できるはずだ&lt;/p&gt;
-
-&lt;h3 id=&quot;udev&quot;&gt;udev&lt;/h3&gt;
-
-&lt;p&gt;USB接続した pro micro を linux PC に認識させる必要がある。 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/udev/rules.d/&lt;/code&gt; に udev のルールをインストールする&lt;/p&gt;
-
-&lt;p&gt;ルールは &lt;a href=&quot;https://github.com/qmk/qmk_firmware&quot;&gt;qmk/qmk_firmware&lt;/a&gt; の中にあって、下記から落とすのが良い&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/qmk/qmk_firmware/tree/master/util/udev/50-qmk.rules&quot;&gt;https://github.com/qmk/qmk_firmware/tree/master/util/udev/50-qmk.rules&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;ところで、キーボードによっては USB Vendor ID , Product ID を書き換えているものがある。その場合は、そのキーボード用にルールをつくる必要がある&lt;/p&gt;
-
-&lt;p&gt;たとえば、 meishi2 keyboard ( &lt;a href=&quot;https://github.com/Biacco42/meishi2&quot;&gt;biacco42/meishi2&lt;/a&gt; ) の場合は、 Vendor ID を&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bc42&lt;/code&gt; Product ID を &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0003&lt;/code&gt; としていたため、そのルールを書く必要がある。具体的には、下記のルールを &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;50-qmk.rules&lt;/code&gt; に追記するか、別のルールファイルとして作った上で &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/udev/rules.d/&lt;/code&gt; に置くこと&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## meishi2
-SUBSYSTEMS==&quot;usb&quot;, ATTRS{idVendor}==&quot;bc42&quot;, ATTRS{idProduct}==&quot;0003&quot;, TAG+=&quot;uaccess&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;作業が終わったら下記コマンドで udev のルールを反映させる（再起動不要）&lt;/p&gt;
-
-&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;udevadm control &lt;span class=&quot;nt&quot;&gt;--reload-rules&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;qmk_firmware&quot;&gt;qmk_firmware&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/qmk/qmk_firmware&quot;&gt;qmk/qmk_firmware&lt;/a&gt; を入手する&lt;/p&gt;
-
-&lt;p&gt;この作業は必須ではないが、結局ソースコードをいじったりするのが  Remap などを使わずにビルドする主目的であるから、 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git clone&lt;/code&gt; する(そこそこサイズが大きいので気になる人は partial clone などをしたほうが良いかもしれない)&lt;/p&gt;
-
-&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;git clone &lt;span class=&quot;nt&quot;&gt;--recurse-submodules&lt;/span&gt; https://github.com/qmk/qmk_firmware.git
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;なお後述の qmk_cli の docker イメージをあたらしいものに更新したら、 qmk_firmware も &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git pull&lt;/code&gt; して新しくしたほうがよいだろう。逆もしかり&lt;/p&gt;
-
-&lt;h3 id=&quot;qmkのインストールなどが必要だが&quot;&gt;qmkのインストールなどが必要だが、、、&lt;/h3&gt;
-
-&lt;p&gt;python pip で qmk のインストールなどが必要だが、いろいろとインストールが面倒なので、コンテナを使うこととする&lt;/p&gt;
-
-&lt;p&gt;QMK 謹製のイメージが docker hub にあがっているのでそれを使う&lt;/p&gt;
-
-&lt;h3 id=&quot;qmk_cli-イメージを使ってビルド&quot;&gt;qmk_cli イメージを使ってビルド&lt;/h3&gt;
-
-&lt;p&gt;QMK 謹製のイメージとして &lt;a href=&quot;https://hub.docker.com/r/qmkfm/qmk_cli&quot;&gt;qmkfm/qmk_cli&lt;/a&gt; がある。これには、QMK のビルドとキーボードにflashする一連の作業に必要なものがほとんど入っている&lt;/p&gt;
-
-&lt;p&gt;結論から言うと、下記のように実行すればよい（当然 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;podman pull&lt;/code&gt; は初回のみで良い）。&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-kb&lt;/code&gt; にはキーボードの名前、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-km&lt;/code&gt; にはキーマップの名前を書く&lt;/p&gt;
-
-&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;podman pull qmkfm/qmk_cli
-&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;podman run &lt;span class=&quot;nt&quot;&gt;--rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;/qmk_firmware:/qmk_firmware:z qmkfm/qmk_cli &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;  /bin/bash -c \
-  &quot;qmk setup &amp;amp;&amp;amp; qmk compile -kb biacco42/meishi2 -km default&quot;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;多くの和文のブログ記事などでは make コマンドでビルドを行っているが、QMK のユーザマニュアルには &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;qmk&lt;/code&gt; コマンドのほうが書かれているのでこちらを採用した&lt;/p&gt;
-
-&lt;p&gt;qmk_firmware のところで &lt;a href=&quot;https://github.com/qmk/qmk_firmware.git&quot;&gt;qmk/qmk_firmware&lt;/a&gt; の入手が必須ではないといったが、これを省いた場合は &lt;code&gt;-v `pwd`/qmk_firmware:/qmk_firmware:z&lt;/code&gt; を削除すること。このとき、コンテナ内の &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/qmk_firmware&lt;/code&gt; に &lt;a href=&quot;https://github.com/qmk/qmk_firmware.git&quot;&gt;qmk/qmk_firmware&lt;/a&gt; がダウンロードされる&lt;/p&gt;
-
-&lt;p&gt;上の例ではホスト側にある &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;qmk_firmware&lt;/code&gt; ディレクトリをコンテナ内のボリュームとして割り当てている。この場合でも &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;qmk setup&lt;/code&gt; は必要ではあるが、このときは &lt;a href=&quot;https://github.com/qmk/qmk_firmware.git&quot;&gt;qmk/qmk_firmware&lt;/a&gt; がダウンロードされずに、いまある &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/qmk_firmware&lt;/code&gt; が使われる&lt;/p&gt;
-
-&lt;p&gt;注意点&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;SELinux を有効にしていることを想定しているため &lt;code&gt;-v `pwd`/qmk_firmware:/qmk_firmware:z&lt;/code&gt; のように末尾に &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:z&lt;/code&gt; をつけている。SELinux 有効環境下で &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:z&lt;/code&gt; を付けないとコンテナ内から &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;qmk_firmware&lt;/code&gt; ディレクトリにアクセスするときに権限エラー (permission denied) となる&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;なお既述のとおり qmk_firmware を &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git pull&lt;/code&gt; して新しくしたら、 qmk_cli の docker イメージもあたらしいものに更新したほうがよいだろう。逆もしかり&lt;/p&gt;
-
-&lt;h3 id=&quot;qmk_cli-イメージを使ってflash&quot;&gt;qmk_cli イメージを使ってflash&lt;/h3&gt;
-
-&lt;p&gt;下記のように実行すればよい。&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-kb&lt;/code&gt; にはキーボードの名前、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-km&lt;/code&gt; にはキーマップの名前を書く&lt;/p&gt;
-
-&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;setsebool &lt;span class=&quot;nt&quot;&gt;-P&lt;/span&gt; container_use_devices 1
-&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;podman run &lt;span class=&quot;nt&quot;&gt;--rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;/qmk_firmware:/qmk_firmware:z &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; /dev:/dev:rw qmkfm/qmk_cli &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;  /bin/bash -c \
-  &quot;qmk setup &amp;amp;&amp;amp; qmk flash -kb biacco42/meishi2 -km default&quot;
-…（出力中略）…
-Linking: .build/biacco42_meishi2_default.elf                                                        [OK]
-Creating load file for flashing: .build/biacco42_meishi2_default.hex                                [OK]
-Copying biacco42_meishi2_default.hex to qmk_firmware folder                                         [OK]
-Checking file size of biacco42_meishi2_default.hex                                                  [OK]
- * The firmware size is fine - 20726/28672 (72%, 7946 bytes free)
-Waiting for USB serial port - reset your controller now (Ctrl+C to cancel)..............................
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;この &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Waiting for USB serial port - reset your controller now (Ctrl+C to cancel)&lt;/code&gt; が出たところで、書いてあるとおり pro micro をリセットする。すなわち pro micro の RST を GND に短絡させる。通常はキーボード側にリセットボタンがあるはずなので、それを押す&lt;/p&gt;
-
-&lt;p&gt;リセットする（リセットボタンを押す）と &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/dev/ttyACM0&lt;/code&gt; といった pro micro のデバイスファイルが linux PC 上に生えたのを qmk コマンドが検知して先に進み、ファームウェアが flash されてコマンドの実行が終わる&lt;/p&gt;
-
-&lt;p&gt;注意点&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-v /dev:/dev:rw&lt;/code&gt; を指定して &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/dev/&lt;/code&gt; 以下をコンテナ内に見せている。&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--device /dev/ttyACM0&lt;/code&gt; のような指定でも良いはずであるが、デバイスファイルがリセット時に変わったりしたりするため &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/dev/&lt;/code&gt; をそのまま見せている。もし、これを指定し忘れるとデバイスファイルが見つからないため &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Waiting for USB serial port - reset your controller now (Ctrl+C to cancel)........&lt;/code&gt; のメッセージが出たまま先に進まないという現象になる&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo setsebool -P container_use_devices 1&lt;/code&gt; は初回一回のみでよいが、SELinux 環境下では必須で、これがないとコンテナ内からデバイスをアクセスする権限がないため権限エラーとなる。未設定時のエラーメッセージは OCI permission denied であるが、SELinux のエラーログを見れば &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;container_use_devices&lt;/code&gt; を設定することが書いているので、それをもとに従えばよい&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;keymap-json-ファイルからflashするには&quot;&gt;keymap JSON ファイルからflashするには&lt;/h3&gt;
-
-&lt;p&gt;簡易的な手段として、&lt;a href=&quot;https://config.qmk.fm/&quot;&gt;QMK Configurator&lt;/a&gt;などからエクスポートするなどして得たキーマップのJSONファイルからファームウェアをビルドしてflashすることもできる。qmk_cli はこの JSON ファイルに対応しているから、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;qmk_firmware&lt;/code&gt; の中に JSON ファイルを置いた上で &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;qmk flash&lt;/code&gt; を実行すれば良い&lt;/p&gt;
-
-&lt;p&gt;例えばカスタムしたキーマップを &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;qmk_firmware/biacco42_meishi2_layout_mine.json&lt;/code&gt; に置いたら、下記のように実行すれば良い。JSON ファイルにキーボード情報が書かれているので &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-kb&lt;/code&gt; オプションは不要である&lt;/p&gt;
-
-&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;podman run &lt;span class=&quot;nt&quot;&gt;--rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;/qmk_firmware:/qmk_firmware:z &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; /dev:/dev:rw qmkfm/qmk_cli &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;  /bin/bash -c \
-  &quot;qmk setup &amp;amp;&amp;amp; qmk flash biacco42_meishi2_layout_mine.json&quot;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;参考文献&quot;&gt;参考文献&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/qmk/qmk_firmware/blob/master/docs/ja/faq_build.md&quot;&gt;qmk_firmware/faq_build.md at master · qmk/qmk_firmware&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/qmk/qmk_firmware/blob/master/docs/cli_commands.md&quot;&gt;qmk_firmware/cli_commands.md at master · qmk/qmk_firmware&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://docs.qmk.fm/#/newbs_building_firmware&quot;&gt;Building Your First Firmware&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://docs.qmk.fm/#/newbs_flashing&quot;&gt;Flashing Firmware&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content>
-      
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>cat_in_136</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="qmk" />
-      
-        <category term="podman" />
-      
-        <category term="linux" />
-      
-        <category term="自作キーボード" />
-      
-
-      
-        <summary type="html">いわゆる自作キーボードにおける pro micro へファームウェアをflashする（焼く）のを Linux 上の podman コンテナ内でなんとかするための試みに関するメモ 今どきはキーマップぐらいの変更ならば Google Chrome/Chromium つかって Remap でflashするのが圧倒的に楽ではある。QMK をカスタムすること、あるいは何らかの宗教上の理由などで Google Chrome/Chromium を使えないときには CLI で焼く必要がある 本稿で紹介する方法は、USBデバイスの設定である udev と QMK のファームウェア以外はコンテナ上で動かすことで、ホスト環境への影響をなくすとともにセットアップをかんたんにしている なお、podman で確認したが docker ユーザの場合は docker に読み替えても実行できるはずだ udev USB接続した pro micro を linux PC に認識させる必要がある。 /etc/udev/rules.d/ に udev のルールをインストールする ルールは qmk/qmk_firmware の中にあって、下記から落とすのが良い https://github.com/qmk/qmk_firmware/tree/master/util/udev/50-qmk.rules ところで、キーボードによっては USB Vendor ID , Product ID を書き換えているものがある。その場合は、そのキーボード用にルールをつくる必要がある たとえば、 meishi2 keyboard ( biacco42/meishi2 ) の場合は、 Vendor ID をbc42 Product ID を 0003 としていたため、そのルールを書く必要がある。具体的には、下記のルールを 50-qmk.rules に追記するか、別のルールファイルとして作った上で /etc/udev/rules.d/ に置くこと ## meishi2 SUBSYSTEMS==&quot;usb&quot;, ATTRS{idVendor}==&quot;bc42&quot;, ATTRS{idProduct}==&quot;0003&quot;, TAG+=&quot;uaccess&quot; 作業が終わったら下記コマンドで udev のルールを反映させる（再起動不要） $ sudo udevadm control --reload-rules qmk_firmware qmk/qmk_firmware を入手する この作業は必須ではないが、結局ソースコードをいじったりするのが Remap などを使わずにビルドする主目的であるから、 git clone する(そこそこサイズが大きいので気になる人は partial clone などをしたほうが良いかもしれない) $ git clone --recurse-submodules https://github.com/qmk/qmk_firmware.git なお後述の qmk_cli の docker イメージをあたらしいものに更新したら、 qmk_firmware も git pull して新しくしたほうがよいだろう。逆もしかり qmkのインストールなどが必要だが、、、 python pip で qmk のインストールなどが必要だが、いろいろとインストールが面倒なので、コンテナを使うこととする QMK 謹製のイメージが docker hub にあがっているのでそれを使う qmk_cli イメージを使ってビルド QMK 謹製のイメージとして qmkfm/qmk_cli がある。これには、QMK のビルドとキーボードにflashする一連の作業に必要なものがほとんど入っている 結論から言うと、下記のように実行すればよい（当然 podman pull は初回のみで良い）。-kb にはキーボードの名前、-km にはキーマップの名前を書く $ podman pull qmkfm/qmk_cli $ podman run --rm -it -v `pwd`/qmk_firmware:/qmk_firmware:z qmkfm/qmk_cli \ /bin/bash -c \ &quot;qmk setup &amp;amp;&amp;amp; qmk compile -kb biacco42/meishi2 -km default&quot; 多くの和文のブログ記事などでは make コマンドでビルドを行っているが、QMK のユーザマニュアルには qmk コマンドのほうが書かれているのでこちらを採用した qmk_firmware のところで qmk/qmk_firmware の入手が必須ではないといったが、これを省いた場合は -v `pwd`/qmk_firmware:/qmk_firmware:z を削除すること。このとき、コンテナ内の /qmk_firmware に qmk/qmk_firmware がダウンロードされる 上の例ではホスト側にある qmk_firmware ディレクトリをコンテナ内のボリュームとして割り当てている。この場合でも qmk setup は必要ではあるが、このときは qmk/qmk_firmware がダウンロードされずに、いまある /qmk_firmware が使われる 注意点 SELinux を有効にしていることを想定しているため -v `pwd`/qmk_firmware:/qmk_firmware:z のように末尾に :z をつけている。SELinux 有効環境下で :z を付けないとコンテナ内から qmk_firmware ディレクトリにアクセスするときに権限エラー (permission denied) となる なお既述のとおり qmk_firmware を git pull して新しくしたら、 qmk_cli の docker イメージもあたらしいものに更新したほうがよいだろう。逆もしかり qmk_cli イメージを使ってflash 下記のように実行すればよい。-kb にはキーボードの名前、-km にはキーマップの名前を書く $ sudo setsebool -P container_use_devices 1 $ podman run --rm -it -v `pwd`/qmk_firmware:/qmk_firmware:z -v /dev:/dev:rw qmkfm/qmk_cli \ /bin/bash -c \ &quot;qmk setup &amp;amp;&amp;amp; qmk flash -kb biacco42/meishi2 -km default&quot; …（出力中略）… Linking: .build/biacco42_meishi2_default.elf [OK] Creating load file for flashing: .build/biacco42_meishi2_default.hex [OK] Copying biacco42_meishi2_default.hex to qmk_firmware folder [OK] Checking file size of biacco42_meishi2_default.hex [OK] * The firmware size is fine - 20726/28672 (72%, 7946 bytes free) Waiting for USB serial port - reset your controller now (Ctrl+C to cancel).............................. この Waiting for USB serial port - reset your controller now (Ctrl+C to cancel) が出たところで、書いてあるとおり pro micro をリセットする。すなわち pro micro の RST を GND に短絡させる。通常はキーボード側にリセットボタンがあるはずなので、それを押す リセットする（リセットボタンを押す）と /dev/ttyACM0 といった pro micro のデバイスファイルが linux PC 上に生えたのを qmk コマンドが検知して先に進み、ファームウェアが flash されてコマンドの実行が終わる 注意点 -v /dev:/dev:rw を指定して /dev/ 以下をコンテナ内に見せている。--device /dev/ttyACM0 のような指定でも良いはずであるが、デバイスファイルがリセット時に変わったりしたりするため /dev/ をそのまま見せている。もし、これを指定し忘れるとデバイスファイルが見つからないため Waiting for USB serial port - reset your controller now (Ctrl+C to cancel)........ のメッセージが出たまま先に進まないという現象になる sudo setsebool -P container_use_devices 1 は初回一回のみでよいが、SELinux 環境下では必須で、これがないとコンテナ内からデバイスをアクセスする権限がないため権限エラーとなる。未設定時のエラーメッセージは OCI permission denied であるが、SELinux のエラーログを見れば container_use_devices を設定することが書いているので、それをもとに従えばよい keymap JSON ファイルからflashするには 簡易的な手段として、QMK Configuratorなどからエクスポートするなどして得たキーマップのJSONファイルからファームウェアをビルドしてflashすることもできる。qmk_cli はこの JSON ファイルに対応しているから、qmk_firmware の中に JSON ファイルを置いた上で qmk flash を実行すれば良い 例えばカスタムしたキーマップを qmk_firmware/biacco42_meishi2_layout_mine.json に置いたら、下記のように実行すれば良い。JSON ファイルにキーボード情報が書かれているので -kb オプションは不要である $ podman run --rm -it -v `pwd`/qmk_firmware:/qmk_firmware:z -v /dev:/dev:rw qmkfm/qmk_cli \ /bin/bash -c \ &quot;qmk setup &amp;amp;&amp;amp; qmk flash biacco42_meishi2_layout_mine.json&quot; 参考文献 qmk_firmware/faq_build.md at master · qmk/qmk_firmware qmk_firmware/cli_commands.md at master · qmk/qmk_firmware Building Your First Firmware Flashing Firmware</summary>
       
 
       
