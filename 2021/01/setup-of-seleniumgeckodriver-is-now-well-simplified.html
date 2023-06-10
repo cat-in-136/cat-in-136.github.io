@@ -53,19 +53,19 @@ However, some of automated procedure didn’t work now, so I switched to the <st
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i geckodriver selenium-webdriver
 </code></pre></div></div>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">Builder</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">selenium-webdriver</span><span class="dl">'</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">firefox</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">selenium-webdriver/firefox</span><span class="dl">'</span><span class="p">);</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">Builder</span> <span class="p">}</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">selenium-webdriver</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">firefox</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">selenium-webdriver/firefox</span><span class="dl">'</span><span class="p">);</span>
 
-<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">geckodriver</span><span class="dl">'</span><span class="p">);</span>
+<span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">geckodriver</span><span class="dl">'</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">options</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">firefox</span><span class="p">.</span><span class="nx">Options</span><span class="p">()</span>
-  <span class="p">.</span><span class="nx">headless</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">options</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">firefox</span><span class="p">.</span><span class="nc">Options</span><span class="p">()</span>
+  <span class="p">.</span><span class="nf">headless</span><span class="p">();</span>
 <span class="c1">//.setBinary(executablePath);</span>
 
-<span class="kd">const</span> <span class="nx">driver</span> <span class="o">=</span> <span class="k">await</span> <span class="k">new</span> <span class="nx">Builder</span><span class="p">()</span>
-  <span class="p">.</span><span class="nx">forBrowser</span><span class="p">(</span><span class="dl">'</span><span class="s1">firefox</span><span class="dl">'</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">setFirefoxOptions</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">build</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">driver</span> <span class="o">=</span> <span class="k">await</span> <span class="k">new</span> <span class="nc">Builder</span><span class="p">()</span>
+  <span class="p">.</span><span class="nf">forBrowser</span><span class="p">(</span><span class="dl">'</span><span class="s1">firefox</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">setFirefoxOptions</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">build</span><span class="p">();</span>
 </code></pre></div></div>
 
 <h2 id="no-need-to-download-geckodriver-manually">No need to download geckodriver manually</h2>
@@ -89,12 +89,12 @@ Downloading geckodriver... Extracting... Complete.
 
 <p><code class="language-plaintext highlighter-rouge">require('geckodriver')</code> adds the directory where geckodriver is located to the system PATH.</p>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">assert</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">assert</span><span class="dl">'</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">assert</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">assert</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
 
-<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">geckodriver</span><span class="dl">'</span><span class="p">);</span>
-<span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PATH</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">delimiter</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="dl">'</span><span class="s1">node_modules/geckodriver</span><span class="dl">'</span><span class="p">)),</span> <span class="kc">true</span><span class="p">);</span>
+<span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">geckodriver</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">assert</span><span class="p">.</span><span class="nf">equal</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PATH</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">delimiter</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">includes</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nf">resolve</span><span class="p">(</span><span class="dl">'</span><span class="s1">node_modules/geckodriver</span><span class="dl">'</span><span class="p">)),</span> <span class="kc">true</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>Instead of manually downloading the geckodriver file and configuring the system PATH,
@@ -104,19 +104,19 @@ you can simply add this library to the package.json <code class="language-plaint
 
 <p>Hence, if you simply add <code class="language-plaintext highlighter-rouge">require('geckodriver')</code>, it will work fine!</p>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">Builder</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">selenium-webdriver</span><span class="dl">'</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">firefox</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">selenium-webdriver/firefox</span><span class="dl">'</span><span class="p">);</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">Builder</span> <span class="p">}</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">selenium-webdriver</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">firefox</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">selenium-webdriver/firefox</span><span class="dl">'</span><span class="p">);</span>
 
-<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">geckodriver</span><span class="dl">'</span><span class="p">);</span>
+<span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">geckodriver</span><span class="dl">'</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">options</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">firefox</span><span class="p">.</span><span class="nx">Options</span><span class="p">()</span>
-  <span class="p">.</span><span class="nx">headless</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">options</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">firefox</span><span class="p">.</span><span class="nc">Options</span><span class="p">()</span>
+  <span class="p">.</span><span class="nf">headless</span><span class="p">();</span>
 <span class="c1">//.setBinary(executablePath);</span>
 
-<span class="kd">const</span> <span class="nx">driver</span> <span class="o">=</span> <span class="k">await</span> <span class="k">new</span> <span class="nx">Builder</span><span class="p">()</span>
-  <span class="p">.</span><span class="nx">forBrowser</span><span class="p">(</span><span class="dl">'</span><span class="s1">firefox</span><span class="dl">'</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">setFirefoxOptions</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">build</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">driver</span> <span class="o">=</span> <span class="k">await</span> <span class="k">new</span> <span class="nc">Builder</span><span class="p">()</span>
+  <span class="p">.</span><span class="nf">forBrowser</span><span class="p">(</span><span class="dl">'</span><span class="s1">firefox</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">setFirefoxOptions</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">build</span><span class="p">();</span>
 </code></pre></div></div>
 
   </div>

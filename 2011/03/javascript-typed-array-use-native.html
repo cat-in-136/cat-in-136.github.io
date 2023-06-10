@@ -42,9 +42,9 @@
 
   <div class="post-content" itemprop="articleBody">
     <div>
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Uint8Array</span><span class="p">([</span><span class="mh">0x12</span><span class="p">,</span> <span class="mh">0x34</span><span class="p">]);</span>
-<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Uint16Array</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">buffer</span><span class="p">);</span>
-<span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">0x</span><span class="dl">"</span> <span class="o">+</span> <span class="p">(</span><span class="nx">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toString</span><span class="p">(</span><span class="mi">16</span><span class="p">));</span> <span class="c1">// #=&gt; 0x3412 or 0x1234 ?</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Uint8Array</span><span class="p">([</span><span class="mh">0x12</span><span class="p">,</span> <span class="mh">0x34</span><span class="p">]);</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Uint16Array</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">buffer</span><span class="p">);</span>
+<span class="nf">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">0x</span><span class="dl">"</span> <span class="o">+</span> <span class="p">(</span><span class="nx">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nf">toString</span><span class="p">(</span><span class="mi">16</span><span class="p">));</span> <span class="c1">// #=&gt; 0x3412 or 0x1234 ?</span></code></pre></figure>
 </div>
 
 <div>

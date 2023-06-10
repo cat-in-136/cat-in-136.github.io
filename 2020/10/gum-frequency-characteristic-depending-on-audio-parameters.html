@@ -63,14 +63,14 @@ It outputs it to the speaker, and then does time/frequency analysis in <a href="
 
 <p>Note that if the microphone and the speaker are close to each other, you may hear feedback, so I added a 1 second delay for safety.</p>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">audioCtx</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AudioContext</span><span class="p">();</span>
-<span class="kd">const</span> <span class="nx">audioSrc</span> <span class="o">=</span> <span class="nx">audioCtx</span><span class="p">.</span><span class="nx">createMediaStreamSource</span><span class="p">(</span><span class="nx">stream</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">synthDelay</span> <span class="o">=</span> <span class="nx">audioCtx</span><span class="p">.</span><span class="nx">createDelay</span><span class="p">();</span>
-<span class="nx">synthDelay</span><span class="p">.</span><span class="nx">delayTime</span><span class="p">.</span><span class="nx">setValueAtTime</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">audioCtx</span><span class="p">.</span><span class="nx">currentTime</span><span class="p">);</span> <span class="c1">// add 1 sec delay for safety.</span>
-<span class="kd">const</span> <span class="nx">analyser</span> <span class="o">=</span> <span class="nx">audioCtx</span><span class="p">.</span><span class="nx">createAnalyser</span><span class="p">();</span>
-<span class="nx">audioSrc</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">synthDelay</span><span class="p">);</span>
-<span class="nx">synthDelay</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">audioCtx</span><span class="p">.</span><span class="nx">destination</span><span class="p">);</span>
-<span class="nx">synthDelay</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">analyser</span><span class="p">);</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">audioCtx</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AudioContext</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">audioSrc</span> <span class="o">=</span> <span class="nx">audioCtx</span><span class="p">.</span><span class="nf">createMediaStreamSource</span><span class="p">(</span><span class="nx">stream</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">synthDelay</span> <span class="o">=</span> <span class="nx">audioCtx</span><span class="p">.</span><span class="nf">createDelay</span><span class="p">();</span>
+<span class="nx">synthDelay</span><span class="p">.</span><span class="nx">delayTime</span><span class="p">.</span><span class="nf">setValueAtTime</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">audioCtx</span><span class="p">.</span><span class="nx">currentTime</span><span class="p">);</span> <span class="c1">// add 1 sec delay for safety.</span>
+<span class="kd">const</span> <span class="nx">analyser</span> <span class="o">=</span> <span class="nx">audioCtx</span><span class="p">.</span><span class="nf">createAnalyser</span><span class="p">();</span>
+<span class="nx">audioSrc</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="nx">synthDelay</span><span class="p">);</span>
+<span class="nx">synthDelay</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="nx">audioCtx</span><span class="p">.</span><span class="nx">destination</span><span class="p">);</span>
+<span class="nx">synthDelay</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="nx">analyser</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>I confirmed that changing the parameter settings (<a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints"><code class="language-plaintext highlighter-rouge">MediaTrackConstraints</code></a>) affects the waveforms/frequency characteristics.</p>

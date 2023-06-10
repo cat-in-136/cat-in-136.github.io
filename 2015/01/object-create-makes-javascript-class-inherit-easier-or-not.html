@@ -45,28 +45,28 @@
 下記のようなクラス継承のコードは…
 </p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">class</span> <span class="nx">Pet</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">class</span> <span class="nc">Pet</span> <span class="p">{</span>
     <span class="nl">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span>
     <span class="nl">age</span><span class="p">:</span> <span class="nx">number</span><span class="p">;</span>
-    <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="p">}</span>
-    <span class="nx">countAge</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">countAge</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kd">class</span> <span class="nx">Cat</span> <span class="kd">extends</span> <span class="nx">Pet</span> <span class="p">{</span>
-    <span class="nx">sleep</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is sleeping.</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">class</span> <span class="nc">Cat</span> <span class="kd">extends</span> <span class="nc">Pet</span> <span class="p">{</span>
+    <span class="nf">sleep</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nf">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is sleeping.</span><span class="dl">"</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cat</span><span class="p">(</span><span class="dl">"</span><span class="s2">Cathy</span><span class="dl">"</span><span class="p">);</span>
-<span class="nx">cat</span><span class="p">.</span><span class="nx">countAge</span><span class="p">();</span>
-<span class="nx">cat</span><span class="p">.</span><span class="nx">sleep</span><span class="p">();</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">cat</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">cat</span><span class="p">.</span><span class="nx">age</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> y.o.</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
+<span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cat</span><span class="p">(</span><span class="dl">"</span><span class="s2">Cathy</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">cat</span><span class="p">.</span><span class="nf">countAge</span><span class="p">();</span>
+<span class="nx">cat</span><span class="p">.</span><span class="nf">sleep</span><span class="p">();</span>
+<span class="nf">alert</span><span class="p">(</span><span class="nx">cat</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">cat</span><span class="p">.</span><span class="nx">age</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> y.o.</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
 
 <p>
 伝統的には<code>prototype</code>をコピーして継承をするのが、
@@ -74,27 +74,27 @@ JavaScript のやり方。
 流派はあるが大体下記のような感じじゃないだろうか：
 </p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">Pet</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nf">Pet</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="nx">Pet</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">countAge</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="nx">Pet</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">countAge</span> <span class="o">=</span> <span class="nf">function </span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kd">function</span> <span class="nx">Cat</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">Pet</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+<span class="kd">function</span> <span class="nf">Cat</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Pet</span><span class="p">.</span><span class="nf">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
 <span class="p">}</span>
-<span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="nx">Pet</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
+<span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nf">extend</span><span class="p">(</span><span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="nx">Pet</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
 <span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="kd">constructor</span> <span class="o">=</span> <span class="nx">Cat</span><span class="p">;</span>
-<span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">sleep</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is sleeping.</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">sleep</span> <span class="o">=</span> <span class="nf">function </span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is sleeping.</span><span class="dl">"</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cat</span><span class="p">(</span><span class="dl">"</span><span class="s2">Cathy</span><span class="dl">"</span><span class="p">);</span>
-<span class="nx">cat</span><span class="p">.</span><span class="nx">countAge</span><span class="p">();</span>
-<span class="nx">cat</span><span class="p">.</span><span class="nx">sleep</span><span class="p">();</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">cat</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">cat</span><span class="p">.</span><span class="nx">age</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> y.o.</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
+<span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cat</span><span class="p">(</span><span class="dl">"</span><span class="s2">Cathy</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">cat</span><span class="p">.</span><span class="nf">countAge</span><span class="p">();</span>
+<span class="nx">cat</span><span class="p">.</span><span class="nf">sleep</span><span class="p">();</span>
+<span class="nf">alert</span><span class="p">(</span><span class="nx">cat</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">cat</span><span class="p">.</span><span class="nx">age</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> y.o.</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
 
 <p>
 最近の JavaScript (ECMA Script 5) では、<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.2.3.5"><code>Object.create( O [, Properties] )</code></a>というのがある。
@@ -124,18 +124,18 @@ JavaScript のやり方。
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">Cat</span> <span class="o">=</span> <span class="p">{</span>
     <span class="na">age</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="na">countAge</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="na">countAge</span><span class="p">:</span> <span class="nf">function </span><span class="p">()</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
     <span class="p">},</span>
-    <span class="na">sleep</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is sleeping.</span><span class="dl">"</span><span class="p">);</span>
+    <span class="na">sleep</span><span class="p">:</span> <span class="nf">function </span><span class="p">()</span> <span class="p">{</span>
+        <span class="nf">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is sleeping.</span><span class="dl">"</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">Cat</span><span class="p">,</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="p">{</span><span class="na">value</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Cathy</span><span class="dl">"</span><span class="p">}});</span>
-<span class="nx">cat</span><span class="p">.</span><span class="nx">countAge</span><span class="p">();</span>
-<span class="nx">cat</span><span class="p">.</span><span class="nx">sleep</span><span class="p">();</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">cat</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">cat</span><span class="p">.</span><span class="nx">age</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> y.o.</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
+<span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="nx">Cat</span><span class="p">,</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="p">{</span><span class="na">value</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Cathy</span><span class="dl">"</span><span class="p">}});</span>
+<span class="nx">cat</span><span class="p">.</span><span class="nf">countAge</span><span class="p">();</span>
+<span class="nx">cat</span><span class="p">.</span><span class="nf">sleep</span><span class="p">();</span>
+<span class="nf">alert</span><span class="p">(</span><span class="nx">cat</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">cat</span><span class="p">.</span><span class="nx">age</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> y.o.</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
 
 <p>
 なお <code>cat.name = "Cathy"</code>を改名可能なようにするためには、
@@ -156,11 +156,11 @@ JavaScript のやり方。
 結構冗長。
 </p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">Pet</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nf">Pet</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="nx">Pet</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
+<span class="nx">Pet</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
     <span class="na">name</span><span class="p">:</span> <span class="p">{</span>
         <span class="na">writable</span><span class="p">:</span> <span class="kc">true</span>
     <span class="p">},</span>
@@ -172,31 +172,31 @@ JavaScript のやり方。
         <span class="na">enumerable</span><span class="p">:</span> <span class="kc">false</span>
     <span class="p">},</span>
     <span class="na">countAge</span><span class="p">:</span> <span class="p">{</span>
-        <span class="na">value</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="na">value</span><span class="p">:</span> <span class="nf">function </span><span class="p">()</span> <span class="p">{</span>
             <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">});</span>
 
-<span class="kd">function</span> <span class="nx">Cat</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">Pet</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+<span class="kd">function</span> <span class="nf">Cat</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Pet</span><span class="p">.</span><span class="nf">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
 <span class="p">}</span>
-<span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">Pet</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
+<span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="nx">Pet</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
     <span class="na">constructor</span><span class="p">:</span> <span class="p">{</span>
         <span class="na">value</span><span class="p">:</span> <span class="nx">Cat</span><span class="p">,</span>
         <span class="na">enumerable</span><span class="p">:</span> <span class="kc">false</span>
     <span class="p">},</span>
     <span class="na">sleep</span><span class="p">:</span> <span class="p">{</span>
-        <span class="na">value</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is sleeping.</span><span class="dl">"</span><span class="p">);</span>
+        <span class="na">value</span><span class="p">:</span> <span class="nf">function </span><span class="p">()</span> <span class="p">{</span>
+            <span class="nf">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is sleeping.</span><span class="dl">"</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">});</span>
 
-<span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cat</span><span class="p">(</span><span class="dl">"</span><span class="s2">Cathy</span><span class="dl">"</span><span class="p">);</span>
-<span class="nx">cat</span><span class="p">.</span><span class="nx">countAge</span><span class="p">();</span>
-<span class="nx">cat</span><span class="p">.</span><span class="nx">sleep</span><span class="p">();</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">cat</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">cat</span><span class="p">.</span><span class="nx">age</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> y.o.</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
+<span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cat</span><span class="p">(</span><span class="dl">"</span><span class="s2">Cathy</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">cat</span><span class="p">.</span><span class="nf">countAge</span><span class="p">();</span>
+<span class="nx">cat</span><span class="p">.</span><span class="nf">sleep</span><span class="p">();</span>
+<span class="nf">alert</span><span class="p">(</span><span class="nx">cat</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">cat</span><span class="p">.</span><span class="nx">age</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> y.o.</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
 
 <p>
 prototype を<code>Object.create()</code> するという業!
@@ -218,36 +218,36 @@ ECMA Script 6 ないし TypeScript となっていて、
 JavaScript に変換すると下のようになる。
 </p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">__extends</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">__extends</span> <span class="o">||</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">p</span> <span class="k">in</span> <span class="nx">b</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">p</span><span class="p">))</span> <span class="nx">d</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="o">=</span> <span class="nx">b</span><span class="p">[</span><span class="nx">p</span><span class="p">];</span>
-    <span class="kd">function</span> <span class="nx">__</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="kd">constructor</span> <span class="o">=</span> <span class="nx">d</span><span class="p">;</span> <span class="p">}</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">__extends</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">__extends</span> <span class="o">||</span> <span class="nf">function </span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for </span><span class="p">(</span><span class="kd">var</span> <span class="nx">p</span> <span class="k">in</span> <span class="nx">b</span><span class="p">)</span> <span class="k">if </span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nf">hasOwnProperty</span><span class="p">(</span><span class="nx">p</span><span class="p">))</span> <span class="nx">d</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="o">=</span> <span class="nx">b</span><span class="p">[</span><span class="nx">p</span><span class="p">];</span>
+    <span class="kd">function</span> <span class="nf">__</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="kd">constructor</span> <span class="o">=</span> <span class="nx">d</span><span class="p">;</span> <span class="p">}</span>
     <span class="nx">__</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">b</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
-    <span class="nx">d</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">__</span><span class="p">();</span>
+    <span class="nx">d</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">__</span><span class="p">();</span>
 <span class="p">};</span>
-<span class="kd">var</span> <span class="nx">Pet</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="kd">function</span> <span class="nx">Pet</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+<span class="kd">var</span> <span class="nx">Pet</span> <span class="o">=</span> <span class="p">(</span><span class="nf">function </span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">function</span> <span class="nf">Pet</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="p">}</span>
-    <span class="nx">Pet</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">countAge</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">Pet</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">countAge</span> <span class="o">=</span> <span class="nf">function </span><span class="p">()</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
     <span class="p">};</span>
     <span class="k">return</span> <span class="nx">Pet</span><span class="p">;</span>
 <span class="p">})();</span>
-<span class="kd">var</span> <span class="nx">Cat</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">_super</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">__extends</span><span class="p">(</span><span class="nx">Cat</span><span class="p">,</span> <span class="nx">_super</span><span class="p">);</span>
-    <span class="kd">function</span> <span class="nx">Cat</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">_super</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">Cat</span> <span class="o">=</span> <span class="p">(</span><span class="nf">function </span><span class="p">(</span><span class="nx">_super</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">__extends</span><span class="p">(</span><span class="nx">Cat</span><span class="p">,</span> <span class="nx">_super</span><span class="p">);</span>
+    <span class="kd">function</span> <span class="nf">Cat</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">_super</span><span class="p">.</span><span class="nf">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
     <span class="p">}</span>
-    <span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">sleep</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is sleeping.</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">sleep</span> <span class="o">=</span> <span class="nf">function </span><span class="p">()</span> <span class="p">{</span>
+        <span class="nf">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is sleeping.</span><span class="dl">"</span><span class="p">);</span>
     <span class="p">};</span>
     <span class="k">return</span> <span class="nx">Cat</span><span class="p">;</span>
 <span class="p">})(</span><span class="nx">Pet</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cat</span><span class="p">(</span><span class="dl">"</span><span class="s2">Cathy</span><span class="dl">"</span><span class="p">);</span>
-<span class="nx">cat</span><span class="p">.</span><span class="nx">countAge</span><span class="p">();</span>
-<span class="nx">cat</span><span class="p">.</span><span class="nx">sleep</span><span class="p">();</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">cat</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">cat</span><span class="p">.</span><span class="nx">age</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> y.o.</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
+<span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cat</span><span class="p">(</span><span class="dl">"</span><span class="s2">Cathy</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">cat</span><span class="p">.</span><span class="nf">countAge</span><span class="p">();</span>
+<span class="nx">cat</span><span class="p">.</span><span class="nf">sleep</span><span class="p">();</span>
+<span class="nf">alert</span><span class="p">(</span><span class="nx">cat</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> is </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">cat</span><span class="p">.</span><span class="nx">age</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> y.o.</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
 
 <p>参考文献</p>
 

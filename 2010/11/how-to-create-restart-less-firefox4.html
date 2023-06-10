@@ -101,26 +101,26 @@ There is no difference from traditional extensions... Only one exception is to a
 <p>
 This file shall contains entry point functions : <code>install(data,reason)</code>, <code>startup(data,reason)</code>, <code>shutdown(data,reason)</code> and <code>uninstall(data,reason)</code>.
 </p>
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">install</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">reason</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nf">install</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">reason</span><span class="p">)</span> <span class="p">{</span>
 <span class="p">}</span>
 
-<span class="kd">function</span> <span class="nx">startup</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">reason</span><span class="p">)</span> <span class="p">{</span>
+<span class="kd">function</span> <span class="nf">startup</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">reason</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">prompts</span> <span class="o">=</span> <span class="nx">Components</span><span class="p">.</span><span class="nx">classes</span><span class="p">[</span><span class="dl">"</span><span class="s2">@mozilla.org/embedcomp/prompt-service;1</span><span class="dl">"</span><span class="p">]</span>
-                    <span class="p">.</span><span class="nx">getService</span><span class="p">(</span><span class="nx">Components</span><span class="p">.</span><span class="nx">interfaces</span><span class="p">.</span><span class="nx">nsIPromptService</span><span class="p">);</span>
-    <span class="nx">prompts</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span>
+                    <span class="p">.</span><span class="nf">getService</span><span class="p">(</span><span class="nx">Components</span><span class="p">.</span><span class="nx">interfaces</span><span class="p">.</span><span class="nx">nsIPromptService</span><span class="p">);</span>
+    <span class="nx">prompts</span><span class="p">.</span><span class="nf">alert</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span>
                   <span class="dl">"</span><span class="s2">Startup!</span><span class="dl">"</span><span class="p">,</span>
                   <span class="dl">"</span><span class="s2">Hello world.</span><span class="dl">"</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="kd">function</span> <span class="nx">shutdown</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">reason</span><span class="p">)</span> <span class="p">{</span>
+<span class="kd">function</span> <span class="nf">shutdown</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">reason</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">prompts</span> <span class="o">=</span> <span class="nx">Components</span><span class="p">.</span><span class="nx">classes</span><span class="p">[</span><span class="dl">"</span><span class="s2">@mozilla.org/embedcomp/prompt-service;1</span><span class="dl">"</span><span class="p">]</span>
-                    <span class="p">.</span><span class="nx">getService</span><span class="p">(</span><span class="nx">Components</span><span class="p">.</span><span class="nx">interfaces</span><span class="p">.</span><span class="nx">nsIPromptService</span><span class="p">);</span>
-    <span class="nx">prompts</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span>
+                    <span class="p">.</span><span class="nf">getService</span><span class="p">(</span><span class="nx">Components</span><span class="p">.</span><span class="nx">interfaces</span><span class="p">.</span><span class="nx">nsIPromptService</span><span class="p">);</span>
+    <span class="nx">prompts</span><span class="p">.</span><span class="nf">alert</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span>
                   <span class="dl">"</span><span class="s2">Shutdown!</span><span class="dl">"</span><span class="p">,</span>
                   <span class="dl">"</span><span class="s2">Good bye.</span><span class="dl">"</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="kd">function</span> <span class="nx">uninstall</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">reason</span><span class="p">)</span> <span class="p">{</span>
+<span class="kd">function</span> <span class="nf">uninstall</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">reason</span><span class="p">)</span> <span class="p">{</span>
 <span class="p">}</span></code></pre></figure>
 <p>
 This extension says "Hello world." after it is installed and/or enabled, and "Good bye." after it is uninstalled and/or disabled.

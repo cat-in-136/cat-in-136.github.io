@@ -66,27 +66,27 @@ When a browser window is closed, everything injected shall be removed.</p>
 
 <p>Source code:</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">BrowserWindowObserver</span><span class="p">(</span><span class="nx">handlers</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nf">BrowserWindowObserver</span><span class="p">(</span><span class="nx">handlers</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">handlers</span> <span class="o">=</span> <span class="nx">handlers</span><span class="p">;</span>
 <span class="p">}</span>
 <span class="nx">BrowserWindowObserver</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">observe</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">aSubject</span><span class="p">,</span> <span class="nx">aTopic</span><span class="p">,</span> <span class="nx">aData</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">aTopic</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">domwindowopened</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="na">observe</span><span class="p">:</span> <span class="nf">function </span><span class="p">(</span><span class="nx">aSubject</span><span class="p">,</span> <span class="nx">aTopic</span><span class="p">,</span> <span class="nx">aData</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if </span><span class="p">(</span><span class="nx">aTopic</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">domwindowopened</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
             <span class="c1">// Let this notified when DOM content loaded.</span>
-            <span class="nx">aSubject</span><span class="p">.</span><span class="nx">QueryInterface</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIDOMWindow</span><span class="p">)</span>
-              <span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">DOMContentLoaded</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">aTopic</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">domwindowclosed</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">aSubject</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="dl">"</span><span class="s2">windowtype</span><span class="dl">"</span><span class="p">)</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">navigator:browser</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">this</span><span class="p">.</span><span class="nx">handlers</span><span class="p">.</span><span class="nx">onShutdown</span><span class="p">(</span><span class="nx">aSubject</span><span class="p">);</span>
+            <span class="nx">aSubject</span><span class="p">.</span><span class="nc">QueryInterface</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIDOMWindow</span><span class="p">)</span>
+              <span class="p">.</span><span class="nf">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">DOMContentLoaded</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if </span><span class="p">(</span><span class="nx">aTopic</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">domwindowclosed</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if </span><span class="p">(</span><span class="nx">aSubject</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nf">getAttribute</span><span class="p">(</span><span class="dl">"</span><span class="s2">windowtype</span><span class="dl">"</span><span class="p">)</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">navigator:browser</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">handlers</span><span class="p">.</span><span class="nf">onShutdown</span><span class="p">(</span><span class="nx">aSubject</span><span class="p">);</span>
             <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">},</span>
     <span class="na">handleEvent</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">aEvent</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">let</span> <span class="nx">aWindow</span> <span class="o">=</span> <span class="nx">aEvent</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">;</span>
-        <span class="nx">aWindow</span><span class="p">.</span><span class="nx">removeEventListener</span><span class="p">(</span><span class="nx">aEvent</span><span class="p">.</span><span class="nx">type</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+        <span class="nx">aWindow</span><span class="p">.</span><span class="nf">removeEventListener</span><span class="p">(</span><span class="nx">aEvent</span><span class="p">.</span><span class="nx">type</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="nx">aWindow</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="dl">"</span><span class="s2">windowtype</span><span class="dl">"</span><span class="p">)</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">navigator:browser</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">handlers</span><span class="p">.</span><span class="nx">onStartup</span><span class="p">(</span><span class="nx">aWindow</span><span class="p">);</span>
+        <span class="k">if </span><span class="p">(</span><span class="nx">aWindow</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nf">getAttribute</span><span class="p">(</span><span class="dl">"</span><span class="s2">windowtype</span><span class="dl">"</span><span class="p">)</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">navigator:browser</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">handlers</span><span class="p">.</span><span class="nf">onStartup</span><span class="p">(</span><span class="nx">aWindow</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">};</span></code></pre></figure>
@@ -117,25 +117,25 @@ When a browser window is closed, everything injected shall be removed.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">_gWindowListener</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
 
-<span class="kd">function</span> <span class="nx">startup</span><span class="p">(</span><span class="nx">params</span><span class="p">,</span> <span class="nx">aReason</span><span class="p">)</span> <span class="p">{</span>
+<span class="kd">function</span> <span class="nf">startup</span><span class="p">(</span><span class="nx">params</span><span class="p">,</span> <span class="nx">aReason</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// do something...</span>
 
     <span class="kd">let</span> <span class="nx">ww</span> <span class="o">=</span> <span class="nx">Cc</span><span class="p">[</span><span class="dl">"</span><span class="s2">@mozilla.org/embedcomp/window-watcher;1</span><span class="dl">"</span><span class="p">]</span>
-      <span class="p">.</span><span class="nx">getService</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIWindowWatcher</span><span class="p">);</span>
+      <span class="p">.</span><span class="nf">getService</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIWindowWatcher</span><span class="p">);</span>
     <span class="kd">let</span> <span class="nx">wm</span> <span class="o">=</span> <span class="nx">Cc</span><span class="p">[</span><span class="dl">"</span><span class="s2">@mozilla.org/appshell/window-mediator;1</span><span class="dl">"</span><span class="p">]</span>
-      <span class="p">.</span><span class="nx">getService</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIWindowMediator</span><span class="p">);</span>
+      <span class="p">.</span><span class="nf">getService</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIWindowMediator</span><span class="p">);</span>
 
     <span class="c1">// create and register a browser window observer.</span>
-    <span class="nx">_gWindowListener</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BrowserWindowObserver</span><span class="p">({</span>
+    <span class="nx">_gWindowListener</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BrowserWindowObserver</span><span class="p">({</span>
         <span class="na">onStartup</span><span class="p">:</span> <span class="nx">browserWindowStartupFunc</span><span class="p">,</span>
         <span class="na">onShutdown</span><span class="p">:</span> <span class="nx">browserWindowShutdownFunc</span>
     <span class="p">});</span>
-    <span class="nx">ww</span><span class="p">.</span><span class="nx">registerNotification</span><span class="p">(</span><span class="nx">_gWindowListener</span><span class="p">);</span>
+    <span class="nx">ww</span><span class="p">.</span><span class="nf">registerNotification</span><span class="p">(</span><span class="nx">_gWindowListener</span><span class="p">);</span>
 
     <span class="c1">// call startup function for each the browser windows.</span>
-    <span class="kd">let</span> <span class="nx">winenu</span> <span class="o">=</span> <span class="nx">wm</span><span class="p">.</span><span class="nx">getEnumerator</span><span class="p">(</span><span class="dl">"</span><span class="s2">navigator:browser</span><span class="dl">"</span><span class="p">);</span>
-    <span class="k">while</span> <span class="p">(</span><span class="nx">winenu</span><span class="p">.</span><span class="nx">hasMoreElements</span><span class="p">())</span> <span class="p">{</span>
-        <span class="nx">browserWindowShutdownFunc</span><span class="p">(</span><span class="nx">winenu</span><span class="p">.</span><span class="nx">getNext</span><span class="p">());</span>
+    <span class="kd">let</span> <span class="nx">winenu</span> <span class="o">=</span> <span class="nx">wm</span><span class="p">.</span><span class="nf">getEnumerator</span><span class="p">(</span><span class="dl">"</span><span class="s2">navigator:browser</span><span class="dl">"</span><span class="p">);</span>
+    <span class="k">while </span><span class="p">(</span><span class="nx">winenu</span><span class="p">.</span><span class="nf">hasMoreElements</span><span class="p">())</span> <span class="p">{</span>
+        <span class="nf">browserWindowShutdownFunc</span><span class="p">(</span><span class="nx">winenu</span><span class="p">.</span><span class="nf">getNext</span><span class="p">());</span>
     <span class="p">}</span>
 <span class="p">}</span></code></pre></figure>
 
@@ -157,21 +157,21 @@ When a browser window is closed, everything injected shall be removed.</p>
 
 <p>Source code:</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">shutdown</span><span class="p">(</span><span class="nx">params</span><span class="p">,</span> <span class="nx">aReason</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nf">shutdown</span><span class="p">(</span><span class="nx">params</span><span class="p">,</span> <span class="nx">aReason</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// do something ...</span>
 
     <span class="kd">let</span> <span class="nx">ww</span> <span class="o">=</span> <span class="nx">Cc</span><span class="p">[</span><span class="dl">"</span><span class="s2">@mozilla.org/embedcomp/window-watcher;1</span><span class="dl">"</span><span class="p">]</span>
-      <span class="p">.</span><span class="nx">getService</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIWindowWatcher</span><span class="p">);</span>
+      <span class="p">.</span><span class="nf">getService</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIWindowWatcher</span><span class="p">);</span>
     <span class="kd">let</span> <span class="nx">wm</span> <span class="o">=</span> <span class="nx">Cc</span><span class="p">[</span><span class="dl">"</span><span class="s2">@mozilla.org/appshell/window-mediator;1</span><span class="dl">"</span><span class="p">]</span>
-      <span class="p">.</span><span class="nx">getService</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIWindowMediator</span><span class="p">);</span>
+      <span class="p">.</span><span class="nf">getService</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIWindowMediator</span><span class="p">);</span>
     <span class="c1">// unregister a browser window observer.</span>
-    <span class="nx">ww</span><span class="p">.</span><span class="nx">unregisterNotification</span><span class="p">(</span><span class="nx">_gWindowListener</span><span class="p">);</span>
+    <span class="nx">ww</span><span class="p">.</span><span class="nf">unregisterNotification</span><span class="p">(</span><span class="nx">_gWindowListener</span><span class="p">);</span>
     <span class="nx">_gWindowListener</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
 
     <span class="c1">// call shutdown function for each the browser windows.</span>
-    <span class="kd">let</span> <span class="nx">winenu</span> <span class="o">=</span> <span class="nx">wm</span><span class="p">.</span><span class="nx">getEnumerator</span><span class="p">(</span><span class="dl">"</span><span class="s2">navigator:browser</span><span class="dl">"</span><span class="p">);</span>
-    <span class="k">while</span> <span class="p">(</span><span class="nx">winenu</span><span class="p">.</span><span class="nx">hasMoreElements</span><span class="p">())</span> <span class="p">{</span>
-        <span class="nx">browserWindowShutdownFunc</span><span class="p">(</span><span class="nx">winenu</span><span class="p">.</span><span class="nx">getNext</span><span class="p">());</span>
+    <span class="kd">let</span> <span class="nx">winenu</span> <span class="o">=</span> <span class="nx">wm</span><span class="p">.</span><span class="nf">getEnumerator</span><span class="p">(</span><span class="dl">"</span><span class="s2">navigator:browser</span><span class="dl">"</span><span class="p">);</span>
+    <span class="k">while </span><span class="p">(</span><span class="nx">winenu</span><span class="p">.</span><span class="nf">hasMoreElements</span><span class="p">())</span> <span class="p">{</span>
+        <span class="nf">browserWindowShutdownFunc</span><span class="p">(</span><span class="nx">winenu</span><span class="p">.</span><span class="nf">getNext</span><span class="p">());</span>
     <span class="p">}</span>
 <span class="p">}</span></code></pre></figure>
 
@@ -181,18 +181,18 @@ When a browser window is closed, everything injected shall be removed.</p>
 
 <p>Source code:</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">browserWindowStartupFunc</span><span class="p">(</span><span class="nx">aWindow</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nx">contextMenu</span> <span class="o">=</span> <span class="nx">aWindow</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">contentAreaContextMenu</span><span class="dl">"</span><span class="p">);</span>
-    <span class="kd">let</span> <span class="nx">menuitem</span> <span class="o">=</span> <span class="nx">aWindow</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">menuitem</span><span class="dl">"</span><span class="p">);</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nf">browserWindowStartupFunc</span><span class="p">(</span><span class="nx">aWindow</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">contextMenu</span> <span class="o">=</span> <span class="nx">aWindow</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">contentAreaContextMenu</span><span class="dl">"</span><span class="p">);</span>
+    <span class="kd">let</span> <span class="nx">menuitem</span> <span class="o">=</span> <span class="nx">aWindow</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nf">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">menuitem</span><span class="dl">"</span><span class="p">);</span>
     <span class="nx">menuitem</span><span class="p">.</span><span class="nx">label</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Foobar</span><span class="dl">"</span><span class="p">;</span>
     <span class="nx">menuitem</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">foobar_menuitem</span><span class="dl">"</span><span class="p">;</span>
-    <span class="nx">contextMenu</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">menuitem</span><span class="p">);</span>
+    <span class="nx">contextMenu</span><span class="p">.</span><span class="nf">appendChild</span><span class="p">(</span><span class="nx">menuitem</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="kd">function</span> <span class="nx">browserWindowShutdownFunc</span><span class="p">(</span><span class="nx">aWindow</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nx">contextMenu</span> <span class="o">=</span> <span class="nx">aWindow</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">contentAreaContextMenu</span><span class="dl">"</span><span class="p">);</span>
-    <span class="kd">let</span> <span class="nx">menuitem</span> <span class="o">=</span> <span class="nx">aWindow</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">foobar_menuitem</span><span class="dl">"</span><span class="p">);</span>
-    <span class="nx">contextMenu</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">menuitem</span><span class="p">);</span>
+<span class="kd">function</span> <span class="nf">browserWindowShutdownFunc</span><span class="p">(</span><span class="nx">aWindow</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">contextMenu</span> <span class="o">=</span> <span class="nx">aWindow</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">contentAreaContextMenu</span><span class="dl">"</span><span class="p">);</span>
+    <span class="kd">let</span> <span class="nx">menuitem</span> <span class="o">=</span> <span class="nx">aWindow</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">foobar_menuitem</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">contextMenu</span><span class="p">.</span><span class="nf">removeChild</span><span class="p">(</span><span class="nx">menuitem</span><span class="p">);</span>
 <span class="p">}</span></code></pre></figure>
 
 <h4>References</h4>

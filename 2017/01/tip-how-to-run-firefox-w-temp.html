@@ -51,23 +51,23 @@ without <a href="https://github.com/mozilla-jetpack/jpm">jpm</a> (<code>jpm run<
   <li>
     Create a temporary profile using
     <a href="https://github.com/saadtazi/firefox-profile-js">firefox-profile</a>.
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">const</span> <span class="nx">FirefoxProfile</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">firefox-profile</span><span class="dl">"</span><span class="p">);</span>
-<span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">let</span> <span class="nx">profile</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FirefoxProfile</span><span class="p">();</span>
-  <span class="nx">profile</span><span class="p">.</span><span class="nx">setPreference</span><span class="p">(</span><span class="dl">"</span><span class="s2">devtools.chrome.enabled</span><span class="dl">"</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">const</span> <span class="nx">FirefoxProfile</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">firefox-profile</span><span class="dl">"</span><span class="p">);</span>
+<span class="k">new</span> <span class="nc">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">profile</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FirefoxProfile</span><span class="p">();</span>
+  <span class="nx">profile</span><span class="p">.</span><span class="nf">setPreference</span><span class="p">(</span><span class="dl">"</span><span class="s2">devtools.chrome.enabled</span><span class="dl">"</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
   <span class="c1">// ..append preferences as you want..</span>
-  <span class="nx">profile</span><span class="p">.</span><span class="nx">updatePreferences</span><span class="p">();</span>
+  <span class="nx">profile</span><span class="p">.</span><span class="nf">updatePreferences</span><span class="p">();</span>
 
-  <span class="nx">profile</span><span class="p">.</span><span class="nx">encoded</span><span class="p">((</span><span class="nx">zippedProfile</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="nx">resolve</span><span class="p">(</span><span class="nx">profile</span><span class="p">,</span> <span class="nx">zippedProfile</span><span class="p">);</span>
+  <span class="nx">profile</span><span class="p">.</span><span class="nf">encoded</span><span class="p">((</span><span class="nx">zippedProfile</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nf">resolve</span><span class="p">(</span><span class="nx">profile</span><span class="p">,</span> <span class="nx">zippedProfile</span><span class="p">);</span>
     <span class="c1">// Note: you can obtain profile directory by `profile.profileDir`!</span>
   <span class="p">});</span>
 <span class="p">});</span></code></pre></figure>
   </li>
   <li>
     Run firefox instance using <a href="https://github.com/mozilla-jetpack/node-fx-runner">node-firefo-connect</a>.
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">const</span> <span class="nx">FxRunner</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">fx-runner/lib/run</span><span class="dl">"</span><span class="p">);</span>
-<span class="nx">FxRunner</span><span class="p">({</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">const</span> <span class="nx">FxRunner</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">fx-runner/lib/run</span><span class="dl">"</span><span class="p">);</span>
+<span class="nc">FxRunner</span><span class="p">({</span>
   <span class="dl">"</span><span class="s2">no-remote</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
   <span class="dl">"</span><span class="s2">profile</span><span class="dl">"</span><span class="p">:</span> <span class="nx">profileDir</span><span class="p">,</span> <span class="c1">// profile.profileDir</span>
   <span class="dl">"</span><span class="s2">env</span><span class="dl">"</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">,</span>
@@ -76,12 +76,12 @@ without <a href="https://github.com/mozilla-jetpack/jpm">jpm</a> (<code>jpm run<
       <li>
         Note: <code>FxRunner</code> returns a Promise object that is
         resolved <em>just after</em> the Firefox process starts.
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">FxRunner</span><span class="p">({</span> <span class="cm">/* ..snip.. */</span> <span class="p">}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">results</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nc">FxRunner</span><span class="p">({</span> <span class="cm">/* ..snip.. */</span> <span class="p">}).</span><span class="nf">then</span><span class="p">((</span><span class="nx">results</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="cm">/* Any Firefox window have not been open yet. */</span>
-  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">timer</span><span class="dl">"</span><span class="p">).</span><span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">resolve</span><span class="p">(</span><span class="nx">results</span><span class="p">),</span> <span class="mi">1000</span><span class="p">);</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nc">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nf">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">timer</span><span class="dl">"</span><span class="p">).</span><span class="nf">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nf">resolve</span><span class="p">(</span><span class="nx">results</span><span class="p">),</span> <span class="mi">1000</span><span class="p">);</span>
   <span class="p">});</span>
-<span class="p">}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">results</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="p">}).</span><span class="nf">then</span><span class="p">((</span><span class="nx">results</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="cm">/* Firefox window is already open. */</span>
 <span class="p">});</span></code></pre></figure>
       </li>

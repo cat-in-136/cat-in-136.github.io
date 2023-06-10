@@ -44,7 +44,7 @@
     <p>On firefox 3.7a4, following code throws a exception:</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Components</span><span class="p">.</span><span class="nx">classes</span><span class="p">[</span><span class="dl">"</span><span class="s2">@mozilla.org/preferences;1</span><span class="dl">"</span><span class="p">]</span>
-  <span class="p">.</span><span class="nx">getService</span><span class="p">(</span><span class="nx">Components</span><span class="p">.</span><span class="nx">interfaces</span><span class="p">.</span><span class="nx">nsIPref</span><span class="p">);</span></code></pre></figure>
+  <span class="p">.</span><span class="nf">getService</span><span class="p">(</span><span class="nx">Components</span><span class="p">.</span><span class="nx">interfaces</span><span class="p">.</span><span class="nx">nsIPref</span><span class="p">);</span></code></pre></figure>
 
 <p>Thrown exception is:</p>
 
@@ -65,28 +65,28 @@ Error: uncaught exception: [Exception... "Component returned failure code: 0x805
 <p><code>nsIPref#getBranch</code> -&gt; <code>nsIPrefService#getBranch</code></p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">pref</span> <span class="o">=</span> <span class="nx">Components</span><span class="p">.</span><span class="nx">classes</span><span class="p">[</span><span class="dl">"</span><span class="s2">@mozilla.org/preferences;1</span><span class="dl">"</span><span class="p">]</span>
-  <span class="p">.</span><span class="nx">getService</span><span class="p">(</span><span class="nx">Components</span><span class="p">.</span><span class="nx">interfaces</span><span class="p">.</span><span class="nx">nsIPref</span><span class="p">);</span>
- <span class="kd">var</span> <span class="nx">branch</span> <span class="o">=</span> <span class="nx">pref</span><span class="p">.</span><span class="nx">getBranch</span><span class="p">(</span><span class="dl">"</span><span class="s2">browser</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
+  <span class="p">.</span><span class="nf">getService</span><span class="p">(</span><span class="nx">Components</span><span class="p">.</span><span class="nx">interfaces</span><span class="p">.</span><span class="nx">nsIPref</span><span class="p">);</span>
+ <span class="kd">var</span> <span class="nx">branch</span> <span class="o">=</span> <span class="nx">pref</span><span class="p">.</span><span class="nf">getBranch</span><span class="p">(</span><span class="dl">"</span><span class="s2">browser</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
 
 <p>shall be replaced with</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">pref</span> <span class="o">=</span> <span class="nx">Components</span><span class="p">.</span><span class="nx">classes</span><span class="p">[</span><span class="dl">"</span><span class="s2">@mozilla.org/preferences-service;1</span><span class="dl">"</span><span class="p">]</span>
-  <span class="p">.</span><span class="nx">getService</span><span class="p">(</span><span class="nx">Components</span><span class="p">.</span><span class="nx">interfaces</span><span class="p">.</span><span class="nx">nsIPrefService</span><span class="p">);</span>
- <span class="kd">var</span> <span class="nx">branch</span> <span class="o">=</span> <span class="nx">pref</span><span class="p">.</span><span class="nx">getBranch</span><span class="p">(</span><span class="dl">"</span><span class="s2">browser</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
+  <span class="p">.</span><span class="nf">getService</span><span class="p">(</span><span class="nx">Components</span><span class="p">.</span><span class="nx">interfaces</span><span class="p">.</span><span class="nx">nsIPrefService</span><span class="p">);</span>
+ <span class="kd">var</span> <span class="nx">branch</span> <span class="o">=</span> <span class="nx">pref</span><span class="p">.</span><span class="nf">getBranch</span><span class="p">(</span><span class="dl">"</span><span class="s2">browser</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
 
 <h4>Example#2</h4>
 
 <p><code>nsIPref#getBoolPref</code> -&gt; <code>nsIPrefBranch#getBoolPref</code></p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">pref</span> <span class="o">=</span> <span class="nx">Components</span><span class="p">.</span><span class="nx">classes</span><span class="p">[</span><span class="dl">"</span><span class="s2">@mozilla.org/preferences;1</span><span class="dl">"</span><span class="p">]</span>
-  <span class="p">.</span><span class="nx">getService</span><span class="p">(</span><span class="nx">Components</span><span class="p">.</span><span class="nx">interfaces</span><span class="p">.</span><span class="nx">nsIPref</span><span class="p">);</span>
- <span class="kd">var</span> <span class="nx">autoHide</span> <span class="o">=</span> <span class="nx">pref</span><span class="p">.</span><span class="nx">getBoolPref</span><span class="p">(</span><span class="dl">"</span><span class="s2">browser.tabs.autoHide</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
+  <span class="p">.</span><span class="nf">getService</span><span class="p">(</span><span class="nx">Components</span><span class="p">.</span><span class="nx">interfaces</span><span class="p">.</span><span class="nx">nsIPref</span><span class="p">);</span>
+ <span class="kd">var</span> <span class="nx">autoHide</span> <span class="o">=</span> <span class="nx">pref</span><span class="p">.</span><span class="nf">getBoolPref</span><span class="p">(</span><span class="dl">"</span><span class="s2">browser.tabs.autoHide</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
 
 <p>shall be replaced with</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">pref</span> <span class="o">=</span> <span class="nx">Components</span><span class="p">.</span><span class="nx">classes</span><span class="p">[</span><span class="dl">"</span><span class="s2">@mozilla.org/preferences-service;1</span><span class="dl">"</span><span class="p">]</span>
-  <span class="p">.</span><span class="nx">getService</span><span class="p">(</span><span class="nx">Components</span><span class="p">.</span><span class="nx">interfaces</span><span class="p">.</span><span class="nx">nsIPrefBranch</span><span class="p">);</span>
- <span class="kd">var</span> <span class="nx">autoHide</span> <span class="o">=</span> <span class="nx">pref</span><span class="p">.</span><span class="nx">getBoolPref</span><span class="p">(</span><span class="dl">"</span><span class="s2">browser.tabs.autoHide</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
+  <span class="p">.</span><span class="nf">getService</span><span class="p">(</span><span class="nx">Components</span><span class="p">.</span><span class="nx">interfaces</span><span class="p">.</span><span class="nx">nsIPrefBranch</span><span class="p">);</span>
+ <span class="kd">var</span> <span class="nx">autoHide</span> <span class="o">=</span> <span class="nx">pref</span><span class="p">.</span><span class="nf">getBoolPref</span><span class="p">(</span><span class="dl">"</span><span class="s2">browser.tabs.autoHide</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
 
 <h4>See Also</h4>
 

@@ -71,23 +71,23 @@ on bootstrapped (restartless) addon.</p>
     
 <span class="nx">Cu</span><span class="p">.</span><span class="k">import</span><span class="p">(</span><span class="dl">"</span><span class="s2">resource://gre/modules/XPCOMUtils.jsm</span><span class="dl">"</span><span class="p">);</span>
     
-<span class="kd">function</span> <span class="nx">ComponentFooBar</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+<span class="kd">function</span> <span class="nf">ComponentFooBar</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
 <span class="nx">ComponentFooBar</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
   <span class="na">classDescription</span><span class="p">:</span> <span class="dl">"</span><span class="s2">foobar class</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">contractID</span><span class="p">:</span> <span class="dl">"</span><span class="s2">@mozilla.org/foo/bar;1</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">classID</span><span class="p">:</span> <span class="nx">Components</span><span class="p">.</span><span class="nx">ID</span><span class="p">(</span><span class="dl">"</span><span class="s2">{22e1de77-790a-4a78-9ed4-8a8fca8c9f0f}</span><span class="dl">"</span><span class="p">),</span>
-  <span class="na">QueryInterface</span><span class="p">:</span> <span class="nx">XPCOMUtils</span><span class="p">.</span><span class="nx">generateQI</span><span class="p">([]),</span>
+  <span class="na">classID</span><span class="p">:</span> <span class="nx">Components</span><span class="p">.</span><span class="nc">ID</span><span class="p">(</span><span class="dl">"</span><span class="s2">{22e1de77-790a-4a78-9ed4-8a8fca8c9f0f}</span><span class="dl">"</span><span class="p">),</span>
+  <span class="na">QueryInterface</span><span class="p">:</span> <span class="nx">XPCOMUtils</span><span class="p">.</span><span class="nf">generateQI</span><span class="p">([]),</span>
 
   <span class="c1">// members to implement...</span>
 <span class="p">};</span>
 <span class="c1">//</span>
-<span class="kd">const</span> <span class="nx">ComponentFooBarFactory</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">freeze</span><span class="p">({</span>
+<span class="kd">const</span> <span class="nx">ComponentFooBarFactory</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nf">freeze</span><span class="p">({</span>
   <span class="na">createInstance</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">aOuter</span><span class="p">,</span> <span class="nx">aIID</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">aOuter</span><span class="p">)</span> <span class="p">{</span> <span class="k">throw</span> <span class="nx">Cr</span><span class="p">.</span><span class="nx">NS_ERROR_NO_AGGREGATION</span><span class="p">;</span> <span class="p">}</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="nx">ComponentFooBar</span><span class="p">();</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">aOuter</span><span class="p">)</span> <span class="p">{</span> <span class="k">throw</span> <span class="nx">Cr</span><span class="p">.</span><span class="nx">NS_ERROR_NO_AGGREGATION</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nc">ComponentFooBar</span><span class="p">();</span>
   <span class="p">},</span>
-  <span class="na">loadFactory</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">aLock</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/* unused */</span> <span class="p">},</span>
-  <span class="na">QueryInterface</span><span class="p">:</span> <span class="nx">XPCOMUtils</span><span class="p">.</span><span class="nx">generateQI</span><span class="p">([</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIFactory</span><span class="p">])</span>
+  <span class="na">loadFactory</span><span class="p">:</span> <span class="nf">function </span><span class="p">(</span><span class="nx">aLock</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/* unused */</span> <span class="p">},</span>
+  <span class="na">QueryInterface</span><span class="p">:</span> <span class="nx">XPCOMUtils</span><span class="p">.</span><span class="nf">generateQI</span><span class="p">([</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIFactory</span><span class="p">])</span>
 <span class="p">});</span></code></pre></figure>
 
     <ul>
@@ -97,9 +97,9 @@ on bootstrapped (restartless) addon.</p>
   <li>
     <p>To regist the component on startup, add the following codes to the <code>startup()</code> in bootstrap.js:</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">startup</span><span class="p">(</span><span class="nx">params</span><span class="p">,</span> <span class="nx">aReason</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">registrar</span> <span class="o">=</span> <span class="nx">Components</span><span class="p">.</span><span class="nx">manager</span><span class="p">.</span><span class="nx">QueryInterface</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIComponentRegistrar</span><span class="p">);</span>
-  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerFactory</span><span class="p">(</span><span class="nx">ComponentFooBar</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">classID</span><span class="p">,</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nf">startup</span><span class="p">(</span><span class="nx">params</span><span class="p">,</span> <span class="nx">aReason</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">registrar</span> <span class="o">=</span> <span class="nx">Components</span><span class="p">.</span><span class="nx">manager</span><span class="p">.</span><span class="nc">QueryInterface</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIComponentRegistrar</span><span class="p">);</span>
+  <span class="nx">registrar</span><span class="p">.</span><span class="nf">registerFactory</span><span class="p">(</span><span class="nx">ComponentFooBar</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">classID</span><span class="p">,</span>
                             <span class="nx">ComponentFooBar</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">classDescription</span><span class="p">,</span>
                             <span class="nx">ComponentFooBar</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">contractID</span><span class="p">,</span>
                             <span class="nx">ComponentFooBarFactory</span><span class="p">);</span>
@@ -108,9 +108,9 @@ on bootstrapped (restartless) addon.</p>
   <li>
     <p>To release the component on shutdown, add the following codes to the <code>shutdown()</code> in bootstrap.js:</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">shutdown</span><span class="p">(</span><span class="nx">params</span><span class="p">,</span> <span class="nx">aReason</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">registrar</span> <span class="o">=</span> <span class="nx">Components</span><span class="p">.</span><span class="nx">manager</span><span class="p">.</span><span class="nx">QueryInterface</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIComponentRegistrar</span><span class="p">);</span>
-  <span class="nx">registrar</span><span class="p">.</span><span class="nx">unregisterFactory</span><span class="p">(</span><span class="nx">ComponentFooBar</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">classID</span><span class="p">,</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nf">shutdown</span><span class="p">(</span><span class="nx">params</span><span class="p">,</span> <span class="nx">aReason</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">registrar</span> <span class="o">=</span> <span class="nx">Components</span><span class="p">.</span><span class="nx">manager</span><span class="p">.</span><span class="nc">QueryInterface</span><span class="p">(</span><span class="nx">Ci</span><span class="p">.</span><span class="nx">nsIComponentRegistrar</span><span class="p">);</span>
+  <span class="nx">registrar</span><span class="p">.</span><span class="nf">unregisterFactory</span><span class="p">(</span><span class="nx">ComponentFooBar</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">classID</span><span class="p">,</span>
                               <span class="nx">ComponentFooBarFactory</span><span class="p">);</span>
 <span class="p">}</span></code></pre></figure>
 
@@ -142,16 +142,16 @@ contract @mozilla.org/foo/var;1 {22e1de77-790a-4a78-9ed4-8a8fca8c9f0f}
     
 <span class="nx">Cu</span><span class="p">.</span><span class="k">import</span><span class="p">(</span><span class="dl">"</span><span class="s2">resource://gre/modules/XPCOMUtils.jsm</span><span class="dl">"</span><span class="p">);</span>
     
-<span class="kd">function</span> <span class="nx">ComponentFooBar</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+<span class="kd">function</span> <span class="nf">ComponentFooBar</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
 <span class="nx">ComponentFooBar</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
   <span class="na">classDescription</span><span class="p">:</span> <span class="dl">"</span><span class="s2">foobar class</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">contractID</span><span class="p">:</span> <span class="dl">"</span><span class="s2">@mozilla.org/foo/bar;1</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">classID</span><span class="p">:</span> <span class="nx">Components</span><span class="p">.</span><span class="nx">ID</span><span class="p">(</span><span class="dl">"</span><span class="s2">{22e1de77-790a-4a78-9ed4-8a8fca8c9f0f}</span><span class="dl">"</span><span class="p">),</span>
-  <span class="na">QueryInterface</span><span class="p">:</span> <span class="nx">XPCOMUtils</span><span class="p">.</span><span class="nx">generateQI</span><span class="p">([]),</span>
+  <span class="na">classID</span><span class="p">:</span> <span class="nx">Components</span><span class="p">.</span><span class="nc">ID</span><span class="p">(</span><span class="dl">"</span><span class="s2">{22e1de77-790a-4a78-9ed4-8a8fca8c9f0f}</span><span class="dl">"</span><span class="p">),</span>
+  <span class="na">QueryInterface</span><span class="p">:</span> <span class="nx">XPCOMUtils</span><span class="p">.</span><span class="nf">generateQI</span><span class="p">([]),</span>
 
   <span class="c1">// members to implement...</span>
 <span class="p">};</span>
-<span class="k">this</span><span class="p">.</span><span class="nx">NSGetFactory</span> <span class="o">=</span> <span class="nx">XPCOMUtils</span><span class="p">.</span><span class="nx">generateNSGetFactory</span><span class="p">([</span><span class="nx">ComponentFooBar</span><span class="p">]);</span></code></pre></figure>
+<span class="k">this</span><span class="p">.</span><span class="nx">NSGetFactory</span> <span class="o">=</span> <span class="nx">XPCOMUtils</span><span class="p">.</span><span class="nf">generateNSGetFactory</span><span class="p">([</span><span class="nx">ComponentFooBar</span><span class="p">]);</span></code></pre></figure>
   </li>
 </ol>
 

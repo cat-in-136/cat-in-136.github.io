@@ -55,9 +55,9 @@ I found:
 <li>Attribute <code>animated="true"</code> and internal flag <code>_shouldAnimate=true</code> is set on <code>prefwindow</code> element when the option is enabled.</li>
 <li>If <code>_shouldAnimate</code> is true and prefpane is changed, the <code>prefpane</code>'s <code>flex</code> attribute is removed. So we cannot use <code>flex</code> for <code>prefpane</code>!!</li>
 </ul>
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">if</span> <span class="p">(</span><span class="nx">aPaneElement</span><span class="p">.</span><span class="nx">hasAttribute</span><span class="p">(</span><span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">_shouldAnimate</span> <span class="o">&amp;&amp;</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">if </span><span class="p">(</span><span class="nx">aPaneElement</span><span class="p">.</span><span class="nf">hasAttribute</span><span class="p">(</span><span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">_shouldAnimate</span> <span class="o">&amp;&amp;</span>
   <span class="nx">prefpanes</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
-  <span class="nx">aPaneElement</span><span class="p">.</span><span class="nx">removeAttribute</span><span class="p">(</span><span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
+  <span class="nx">aPaneElement</span><span class="p">.</span><span class="nf">removeAttribute</span><span class="p">(</span><span class="dl">"</span><span class="s2">flex</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
 <p>
 <code>_selectPane()</code> removes <code>flex</code> attribute so as to calculate size of contents.
 </p>

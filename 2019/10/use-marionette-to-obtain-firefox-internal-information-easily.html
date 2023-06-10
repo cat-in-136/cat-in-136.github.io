@@ -72,10 +72,10 @@ The old methods are not making much sense.</p>
 
 <p>We can run JavaScript snippets on an opened page using foxr, which can be used for things like scraping.</p>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">await</span> <span class="nx">page</span><span class="p">.</span><span class="nx">goto</span><span class="p">(</span><span class="dl">'</span><span class="s1">about:config</span><span class="dl">'</span><span class="p">)</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">await</span> <span class="nx">page</span><span class="p">.</span><span class="nf">goto</span><span class="p">(</span><span class="dl">'</span><span class="s1">about:config</span><span class="dl">'</span><span class="p">)</span>
 
     <span class="c1">//await page.evaluate('ShowPrefs()');</span>
-    <span class="kd">const</span> <span class="nx">prefs</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">page</span><span class="p">.</span><span class="nx">evaluate</span><span class="p">(</span><span class="s2">`(function(){
+    <span class="kd">const</span> <span class="nx">prefs</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">page</span><span class="p">.</span><span class="nf">evaluate</span><span class="p">(</span><span class="s2">`(function(){
       const { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
       const gPrefBranch = Services.prefs;
       const defaultBranch = gPrefBranch.getDefaultBranch("");
@@ -83,7 +83,7 @@ The old methods are not making much sense.</p>
       return prefs.map(entry =&gt; [entry.name, gTypeStrs[entry.type], entry.value]);
     })()`</span><span class="p">);</span>
     <span class="c1">//console.log(prefs);</span>
-    <span class="nx">process</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">prefs</span><span class="p">));</span>
+    <span class="nx">process</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">prefs</span><span class="p">));</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">fetcher.js</code> opens about:config and run some snippets.

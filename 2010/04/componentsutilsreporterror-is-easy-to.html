@@ -53,8 +53,8 @@ Firefox 3.0+ supports <code>Components.utils.reportError()</code>. This function
 If you don't hope debugging message displayed as a error, <a href="https://developer.mozilla.org/en/nsIConsoleService#logStringMessage()">nsIConsoleService#logStringMessage()</a> is better.
 </p>
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Components</span><span class="p">.</span><span class="nx">classes</span><span class="p">[</span><span class="dl">"</span><span class="s2">@mozilla.org/consoleservice;1</span><span class="dl">"</span><span class="p">]</span>
- <span class="p">.</span><span class="nx">getService</span><span class="p">(</span><span class="nx">Components</span><span class="p">.</span><span class="nx">interfaces</span><span class="p">.</span><span class="nx">nsIConsoleService</span><span class="p">)</span>
- <span class="p">.</span><span class="nx">logStringMessage</span><span class="p">(</span><span class="dl">"</span><span class="s2">a debugging message</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
+ <span class="p">.</span><span class="nf">getService</span><span class="p">(</span><span class="nx">Components</span><span class="p">.</span><span class="nx">interfaces</span><span class="p">.</span><span class="nx">nsIConsoleService</span><span class="p">)</span>
+ <span class="p">.</span><span class="nf">logStringMessage</span><span class="p">(</span><span class="dl">"</span><span class="s2">a debugging message</span><span class="dl">"</span><span class="p">);</span></code></pre></figure>
 <p>
 yields following message to the Error Console:
 </p>
