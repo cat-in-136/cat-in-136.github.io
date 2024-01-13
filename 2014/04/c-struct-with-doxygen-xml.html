@@ -30,7 +30,7 @@
   <header class="post-header">
     <h1 class="post-title" itemprop="name"><a href="/2014/04/c-struct-with-doxygen-xml.html" itemprop="url">C言語の構造体を構造分析したい〜静的解析としての doxygen</a></h1>
 
-    <div class="post-meta">Post date: <span itemprop="datePublished" content="2014-04-27T23:32:00+09:00">2014-04-27T23:32:00+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2014-04-27T23:32:00+09:00">2014-04-27T23:32:00+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2014-04-27T23:32:00+09:00">2014-04-27T23:32:00+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2024-01-06T11:36:37+09:00">2024-01-06T11:36:37+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
       <span itemprop="keywords"><a class="tag" href="/tags/howto">Howto</a><a class="tag" href="/tags/c-language">C-language</a></span></div><div class="post-meta">
       Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2014-04-27-c-struct-with-doxygen-xml.html" class="source-path">_posts/2014-04-27-c-struct-with-doxygen-xml.html</a>
         (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2014-04-27-c-struct-with-doxygen-xml.html">History</a>)
@@ -47,24 +47,21 @@
 
 <h4>使い方</h4>
 
-<pre style="background-color: #000; color: #fff; padding: 2px; overflow: auto;"><samp>$ <kbd>doxygen -g</kbd>
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>doxygen <span class="nt">-g</span></code></pre></figure>
 
 <p>で生成された Doxyfile ないしすでにある Doxyfile において
 <code>GENERATE_XML</code> を <code>YES</code> にして、</p>
 
-<pre><code># If the GENERATE_XML tag is set to YES doxygen will generate an XML file that
+<figure class="highlight"><pre><code class="language-config" data-lang="config"><span class="c"># If the GENERATE_XML tag is set to YES doxygen will generate an XML file that
 # captures the structure of the code including all documentation.
 # The default value is: NO.
-
-GENERATE_XML           = <ins>YES</ins>
-</code></pre>
+</span>
+<span class="n">GENERATE_XML</span>           = <span class="n">YES</span></code></pre></figure>
 
 <p>ドキュメントをつくるように doxygen を実行すると xml が出力される。
 html 出力などほかの出力も有効にしているならば、一緒に出力される。</p>
 
-<pre style="background-color: #000; color: #fff; padding: 2px; overflow: auto;"><samp>$ doxygen Doxyfile
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>doxygen Doxyfile</code></pre></figure>
 
 <h4>具体例</h4>
 
@@ -90,10 +87,10 @@ html 出力などほかの出力も有効にしているならば、一緒に出
 
 <p>doxygen の実行</p>
 
-<pre style="background-color: #000; color: #fff; padding: 2px; overflow: auto;"><samp>$ <kbd>ls</kbd>
-foobar.h
-$ <kbd>doxygen -g</kbd>
-
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">foobar.h
+</span><span class="gp">$</span><span class="w"> </span>doxygen <span class="nt">-g</span>
+<span class="go">
 
 Configuration file 'Doxyfile' created.
 
@@ -103,15 +100,14 @@ Now edit the configuration file and enter
 
 to generate the documentation for your project
 
-$ <kbd>vi Doxyfile</kbd>
-$ <kbd>doxygen Doxyfile</kbd>
-(略)
-$ <kbd>ls -F</kbd>
-Doxyfile  foobar.h  html/  latex/  xml/
-$ <kbd>ls -F xml</kbd>
-combine.xslt  foobar_8h.xml  index.xsd        union__Bar.xml
-compound.xsd  index.xml      struct__Foo.xml
-</samp></pre>
+</span><span class="gp">$</span><span class="w"> </span>vi Doxyfile
+<span class="gp">$</span><span class="w"> </span>doxygen Doxyfile
+<span class="go">(略)
+</span><span class="gp">$</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-F</span>
+<span class="go">Doxyfile  foobar.h  html/  latex/  xml/
+</span><span class="gp">$</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-F</span> xml
+<span class="go">combine.xslt  foobar_8h.xml  index.xsd        union__Bar.xml
+compound.xsd  index.xml      struct__Foo.xml</span></code></pre></figure>
 
 <p>構造体 <code>struct _Foo</code> の構造を見るには <code>struct__Foo.xml</code> を見るという風な単純な構造となっている：</p>
 
@@ -269,13 +265,12 @@ compound.xsd  index.xml      struct__Foo.xml
 
 <p>列挙体が扱えないことが残念なことこの上ない。</p>
 
-<pre style="background-color: #000; color: #fff; padding: 2px; overflow: auto;"><samp>$ <kbd>ruby doxy_struct_xml_to_json.rb</kbd>
-Usage: ruby doxy_struct_xml_to_json.rb struct_id
-struct_id: struct__Foo  union__Bar  
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>ruby doxy_struct_xml_to_json.rb
+<span class="go">Usage: ruby doxy_struct_xml_to_json.rb struct_id
+struct_id: struct__Foo  union__Bar
 
-$ <kbd>ruby doxy_struct_xml_to_json.rb struct__Foo</kbd>
-{"id":"struct__Foo","name":"_Foo","members":[{"name":"bartype","type":"BarType"},{"name":"bar","type":"Bar","type_data":{"id":"union__Bar","name":"_Bar","members":[{"name":"a","type":"uint"},{"name":"b[NUM_B]","type":"uint"}]}}]}
-</samp></pre>
+</span><span class="gp">$</span><span class="w"> </span>ruby doxy_struct_xml_to_json.rb struct__Foo
+<span class="go">{"id":"struct__Foo","name":"_Foo","members":[{"name":"bartype","type":"BarType"},{"name":"bar","type":"Bar","type_data":{"id":"union__Bar","name":"_Bar","members":[{"name":"a","type":"uint"},{"name":"b[NUM_B]","type":"uint"}]}}]}</span></code></pre></figure>
 
 <h4>参考文献</h4>
 
@@ -297,29 +292,9 @@ $ <kbd>ruby doxy_struct_xml_to_json.rb struct__Foo</kbd>
 </article><aside class="post-related">
   <h2>Related Posts</h2>
   <ul class="post-list"><li class="post-item">
-    <a class="post-link" href="/2014/06/lukstruecrypt.html">
-      <span class="post-meta">2014-06-29</span>
-      <span class="post-title">LUKSを(TrueCryptみたいに)仮想ドライブファイルで運用するには</span></a>
-  </li>
-<li class="post-item">
-    <a class="post-link" href="/2017/10/list-of-all-the-config-provided-by-configuration-mania.html">
-      <span class="post-meta">2017-10-26</span>
-      <span class="post-title">List of all the Config provided by Configuration Mania</span></a>
-  </li>
-<li class="post-item">
     <a class="post-link" href="/2017/08/code-reading-firefox-send.html">
       <span class="post-meta">2017-08-12</span>
       <span class="post-title">Code Reading: &quot;Firefox Send&quot; encryption</span></a>
-  </li>
-<li class="post-item">
-    <a class="post-link" href="/2010/03/mingw32undefined-reference-to-winmain16.html">
-      <span class="post-meta">2010-03-06</span>
-      <span class="post-title">mingw32での「undefined reference to `WinMain@16&#39;」</span></a>
-  </li>
-<li class="post-item">
-    <a class="post-link" href="/2010/11/code-reading-aaencoded-javascript-code.html">
-      <span class="post-meta">2010-11-29</span>
-      <span class="post-title">code reading : javascript code encoded as aaencode</span></a>
   </li>
 <li class="post-item">
     <a class="post-link" href="/2018/04/rust-error-handling-question.html">
@@ -327,24 +302,43 @@ $ <kbd>ruby doxy_struct_xml_to_json.rb struct__Foo</kbd>
       <span class="post-title">rustのエラー処理と疑問符演算子</span></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2014/09/pqi-air-card-udp-yo.html">
-      <span class="post-meta">2014-09-21</span>
-      <span class="post-title">PQI Air Card から UDP で Yo と答えさせてデバイス検出する試み</span></a>
+    <a class="post-link" href="/2017/10/list-of-all-the-config-provided-by-configuration-mania.html">
+      <span class="post-meta">2017-10-26</span>
+      <span class="post-title">List of all the Config provided by Configuration Mania</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2010/06/study-multi-text-vs-single-text-on-xul.html">
+      <span class="post-meta">2010-06-22</span>
+      <span class="post-title">Study: multi-text vs single-text on XUL elements</span></a>
   </li>
 <li class="post-item">
     <a class="post-link" href="/2012/12/llvm-clangast.html">
       <span class="post-meta">2012-12-11</span>
       <span class="post-title">LLVM-ClangのASTを解析するまっとうな方法について</span></a>
   </li>
+<li class="post-item">
+    <a class="post-link" href="/2014/06/lukstruecrypt.html">
+      <span class="post-meta">2014-06-29</span>
+      <span class="post-title">LUKSを(TrueCryptみたいに)仮想ドライブファイルで運用するには</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2015/07/study-of-link-tracking-methods-and-protection.html">
+      <span class="post-meta">2015-07-04</span>
+      <span class="post-title">Study of the link tracking methods and the protection</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2014/09/pqi-air-card-udp-yo.html">
+      <span class="post-meta">2014-09-21</span>
+      <span class="post-title">PQI Air Card から UDP で Yo と答えさせてデバイス検出する試み</span></a>
+  </li>
 </ul>
 </aside>
       </div>
     </div><footer class="site-footer">
-  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
   <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
     <h2 class="footer-heading">cat_in_136.blog()</h2>
     <p>
-      © 2023
+      © 2024
       <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
         <a href="/about"><span itemprop="name">cat_in_136</span></a>
       </span>;

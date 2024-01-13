@@ -30,7 +30,7 @@
   <header class="post-header">
     <h1 class="post-title" itemprop="name"><a href="/2014/11/How-to-create-a-javascript-xpcom-component-on-bootstrapped-addon.html" itemprop="url">How to create a JavaScript XPCOM component on bootstrapped addon</a></h1>
 
-    <div class="post-meta">Post date: <span itemprop="datePublished" content="2014-11-16T23:04:54+09:00">2014-11-16T23:04:54+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2014-11-16T23:04:54+09:00">2014-11-16T23:04:54+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2014-11-16T23:04:54+09:00">2014-11-16T23:04:54+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2024-01-06T11:36:38+09:00">2024-01-06T11:36:38+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
       <span itemprop="keywords"><a class="tag" href="/tags/mozilla">Mozilla</a></span></div><div class="post-meta">
       Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2014-11-16-How-to-create-a-javascript-xpcom-component-on-bootstrapped-addon.html" class="source-path">_posts/2014-11-16-How-to-create-a-javascript-xpcom-component-on-bootstrapped-addon.html</a>
         (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2014-11-16-How-to-create-a-javascript-xpcom-component-on-bootstrapped-addon.html">History</a>)
@@ -53,11 +53,8 @@ on bootstrapped (restartless) addon.</p>
       <li>If you have Visual Studio, you may use <a href="http://msdn.microsoft.com/library/ms241442(v=vs.80).aspx"><code>guidgen</code></a>.</li>
       <li>
         <p>On linux, you may use <code>uuidgen</code>(1).</p>
-
-	<pre style="background-color: #000; color: #fff;"><code>% uuidgen
-22e1de77-790a-4a78-9ed4-8a8fca8c9f0f
-% 
-</code></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>uuidgen
+<span class="go">22e1de77-790a-4a78-9ed4-8a8fca8c9f0f</span></code></pre></figure>
       </li>
     </ul>
   </li>
@@ -68,9 +65,9 @@ on bootstrapped (restartless) addon.</p>
 <span class="kd">const</span> <span class="nx">Ci</span> <span class="o">=</span> <span class="nx">Components</span><span class="p">.</span><span class="nx">interfaces</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">Cu</span> <span class="o">=</span> <span class="nx">Components</span><span class="p">.</span><span class="nx">utils</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">Cr</span> <span class="o">=</span> <span class="nx">Components</span><span class="p">.</span><span class="nx">results</span><span class="p">;</span>
-    
+
 <span class="nx">Cu</span><span class="p">.</span><span class="k">import</span><span class="p">(</span><span class="dl">"</span><span class="s2">resource://gre/modules/XPCOMUtils.jsm</span><span class="dl">"</span><span class="p">);</span>
-    
+
 <span class="kd">function</span> <span class="nf">ComponentFooBar</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
 <span class="nx">ComponentFooBar</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
   <span class="na">classDescription</span><span class="p">:</span> <span class="dl">"</span><span class="s2">foobar class</span><span class="dl">"</span><span class="p">,</span>
@@ -181,6 +178,11 @@ contract @mozilla.org/foo/var;1 {22e1de77-790a-4a78-9ed4-8a8fca8c9f0f}
       <span class="post-title">List of all the Config provided by Configuration Mania</span></a>
   </li>
 <li class="post-item">
+    <a class="post-link" href="/2010/11/code-reading-aaencoded-javascript-code.html">
+      <span class="post-meta">2010-11-29</span>
+      <span class="post-title">code reading : javascript code encoded as aaencode</span></a>
+  </li>
+<li class="post-item">
     <a class="post-link" href="/2011/12/how-to-inject-some-xul-elements-to.html">
       <span class="post-meta">2011-12-24</span>
       <span class="post-title">How to inject some XUL-elements to browser windows in restart-less addon **WITHOUT** Jetpack</span><img class="post-thumb" src="/images/Do_you_want_to_wait_for_restart_firefox.png" loading="lazy" alt="thumbnail" /></a>
@@ -201,29 +203,23 @@ contract @mozilla.org/foo/var;1 {22e1de77-790a-4a78-9ed4-8a8fca8c9f0f}
       <span class="post-title">rustのエラー処理と疑問符演算子</span></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2010/05/nsipref-is-deprecated-and-removed-on.html">
-      <span class="post-meta">2010-05-26</span>
-      <span class="post-title">nsIPref is deprecated and removed on Firefox 3.7</span></a>
-  </li>
-<li class="post-item">
-    <a class="post-link" href="/2010/11/code-reading-aaencoded-javascript-code.html">
-      <span class="post-meta">2010-11-29</span>
-      <span class="post-title">code reading : javascript code encoded as aaencode</span></a>
-  </li>
-<li class="post-item">
     <a class="post-link" href="/2015/01/object-create-makes-javascript-class-inherit-easier-or-not.html">
       <span class="post-meta">2015-01-19</span>
       <span class="post-title">Object.create() のお陰でピュアな JavaScript でクラス継承は楽になったか?</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2010/05/nsipref-is-deprecated-and-removed-on.html">
+      <span class="post-meta">2010-05-26</span>
+      <span class="post-title">nsIPref is deprecated and removed on Firefox 3.7</span></a>
   </li>
 </ul>
 </aside>
       </div>
     </div><footer class="site-footer">
-  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
   <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
     <h2 class="footer-heading">cat_in_136.blog()</h2>
     <p>
-      © 2023
+      © 2024
       <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
         <a href="/about"><span itemprop="name">cat_in_136</span></a>
       </span>;

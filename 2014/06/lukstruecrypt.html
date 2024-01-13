@@ -30,7 +30,7 @@
   <header class="post-header">
     <h1 class="post-title" itemprop="name"><a href="/2014/06/lukstruecrypt.html" itemprop="url">LUKSを(TrueCryptみたいに)仮想ドライブファイルで運用するには</a></h1>
 
-    <div class="post-meta">Post date: <span itemprop="datePublished" content="2014-06-29T23:48:00+09:00">2014-06-29T23:48:00+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2014-06-29T23:48:00+09:00">2014-06-29T23:48:00+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2014-06-29T23:48:00+09:00">2014-06-29T23:48:00+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2024-01-13T15:14:19+09:00">2024-01-13T15:14:19+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
       <span itemprop="keywords"><a class="tag" href="/tags/luks">Luks</a><a class="tag" href="/tags/encrypt">Encrypt</a><a class="tag" href="/tags/linux">Linux</a><a class="tag" href="/tags/howto">Howto</a><a class="tag" href="/tags/security">Security</a></span></div><div class="post-meta">
       Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2014-06-29-lukstruecrypt.html" class="source-path">_posts/2014-06-29-lukstruecrypt.html</a>
         (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2014-06-29-lukstruecrypt.html">History</a>)
@@ -58,28 +58,24 @@
 <p>まず仮想ドライブファイルとなるファイルを作る。
 仮に 1G byte で作るのならば…</p>
 
-<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp>% dd if=/dev/zero of=/path/to/foobar.img bs=1k count=1M
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span><span class="nb">dd </span><span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/path/to/foobar.img <span class="nv">bs</span><span class="o">=</span>1k <span class="nv">count</span><span class="o">=</span>1M</code></pre></figure>
 
 <p>ファイルを置く場所が ext4 などならば fallocate(1) を使って作ってもよい。</p>
 
-<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp>% fallocate -l 1G /path/to/foobar.img
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>fallocate <span class="nt">-l</span> 1G /path/to/foobar.img</code></pre></figure>
 
 <p>なお本手法ではディスクイメージをそのまま扱う都合上、
 可変ドライブに対応しない（対応できない）。
 どうしてもというのならば、スパースファイルでも使えばよいと思う。</p>
 
-<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp>% touch /path/to/foobar.img
-% truncate -s 1G /path/to/foobar.img
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span><span class="nb">touch</span> /path/to/foobar.img
+<span class="gp">$</span><span class="w"> </span><span class="nb">truncate</span> <span class="nt">-s</span> 1G /path/to/foobar.img</code></pre></figure>
 
 <h5>暗号化仮想ドライブの構築</h5>
 
 <p>仮想ドライブファイルをループデバイスに割り当てる。</p>
 
-<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp># losetup /dev/loop0 /path/to/foobar.img
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">#</span><span class="w"> </span>losetup /dev/loop0 /path/to/foobar.img</code></pre></figure>
 
 <p>ここでは /dev/loop0 を使っているが
 また、 /dev/loop* が起動時に生成されない環境の場合は、
@@ -89,25 +85,23 @@ mknod(1) を使って予めループデバイスを作成しておくこと。</
 LUKS の暗号化の設定をする。
 下の例ではデフォルト設定で行っている。</p>
 
-<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp># cryptsetup luksFormat /dev/loop0
-WARNING!
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">#</span><span class="w"> </span>cryptsetup luksFormat /dev/loop0
+<span class="go">WARNING!
 ========
 This will overwrite data on /dev/loop0 irrevocably.
 
-Are you sure? (Type uppercase yes): <kbd>YES</kbd>
-Enter passphrase: 
+</span><span class="gp">Are you sure? (Type uppercase yes): &lt;kbd&gt;</span>YES&lt;/kbd&gt;
+<span class="go">Enter passphrase: 
 Verify passphrase: 
-# 
-</samp></pre>
+</span><span class="gp">#</span><span class="w"> </span></code></pre></figure>
 
 <p>次に /dev/mapper/foobar にデバイスマッピングしてから、
 ファイルシステムを構築する。
 この例ではファイルシステムとして ext4 を使っている。</p>
 
-<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp># cryptsetup luksOpen /dev/loop0 foobar
-Enter passphrase for /path/to/foobar.img:
-# mkfs.ext4 /dev/mapper/foobar
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">#</span><span class="w"> </span>cryptsetup luksOpen /dev/loop0 foobar
+<span class="go">Enter passphrase for /path/to/foobar.img:
+</span><span class="gp">#</span><span class="w"> </span>mkfs.ext4 /dev/mapper/foobar</code></pre></figure>
 
 <h5>暗号化仮想ドライブのマウント/アンマウント</h5>
 
@@ -116,27 +110,24 @@ Enter passphrase for /path/to/foobar.img:
 
 <p>なおパーミッションなどをこの段階で設定をしておくといいかもしれない。</p>
 
-<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp># mkdir /mnt/foobar
-# mount /dev/mapper/foobar /mnt/foobar
-# chown 500:500 /mnt/foobar
-# umount /mnt/foobar
-# rmdir /mnt/foobar
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">#</span><span class="w"> </span><span class="nb">mkdir</span> /mnt/foobar
+<span class="gp">#</span><span class="w"> </span>mount /dev/mapper/foobar /mnt/foobar
+<span class="gp">#</span><span class="w"> </span><span class="nb">chown </span>500:500 /mnt/foobar
+<span class="gp">#</span><span class="w"> </span>umount /mnt/foobar
+<span class="gp">#</span><span class="w"> </span><span class="nb">rmdir</span> /mnt/foobar</code></pre></figure>
 
 <h5>暗号化仮想ドライブの開放</h5>
 
 <p>LUKSの開放、ループデバイスの割り当て解除の順番で行う：</p>
 
-<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp># cryptsetup luksClose foobar
-# losetup -d /dev/loop0
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">#</span><span class="w"> </span>cryptsetup luksClose foobar
+<span class="gp">#</span><span class="w"> </span>losetup <span class="nt">-d</span> /dev/loop0</code></pre></figure>
 
 <h4>日常使い</h4>
 
 <p>ループデバイスへの割り当てはコマンドラインで行う必要がある：</p>
 
-<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp># losetup /dev/loop0 /path/to/foobar.img
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">#</span><span class="w"> </span>losetup /dev/loop0 /path/to/foobar.img</code></pre></figure>
 
 <p>こうした時点で各種 gtk アプリ (厳密には GIO サブシステム) からはドライブと
 認識されているので、
@@ -147,19 +138,17 @@ USB メモリのような操作感でマウントして使える。
 
 <p>なおコマンドラインでマウントするには下記のとおりとなる。</p>
 
-<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp># losetup /dev/loop0 /path/to/foobar.img
-# cryptsetup luksOpen /dev/loop0 foobar
-# mkdir /mnt/foobar
-# mount /dev/mapper/foobar /mnt/foobar
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">#</span><span class="w"> </span>losetup /dev/loop0 /path/to/foobar.img
+<span class="gp">#</span><span class="w"> </span>cryptsetup luksOpen /dev/loop0 foobar
+<span class="gp">#</span><span class="w"> </span><span class="nb">mkdir</span> /mnt/foobar
+<span class="gp">#</span><span class="w"> </span>mount /dev/mapper/foobar /mnt/foobar</code></pre></figure>
 
 <p>アンマウントは下記のとおりとなる。</p>
 
-<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp># umount /mnt/foobar
-# rmdir /mnt/foobar
-# cryptsetup luksClose foobar
-# losetup -d /dev/loop0
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">#</span><span class="w"> </span>umount /mnt/foobar
+<span class="gp">#</span><span class="w"> </span><span class="nb">rmdir</span> /mnt/foobar
+<span class="gp">#</span><span class="w"> </span>cryptsetup luksClose foobar
+<span class="gp">#</span><span class="w"> </span>losetup <span class="nt">-d</span> /dev/loop0</code></pre></figure>
 
 <h4>ドライブ拡張</h4>
 
@@ -170,12 +159,11 @@ USB メモリのような操作感でマウントして使える。
 
 <p>以下は2G byteに増量する例。</p>
 
-<pre class="prompt" style="background-color: #000; color: #fff; padding: 2px;"><samp>% truncate -s 2G /path/to/foobar.img
-% su
-# losetup /dev/loop0 /path/to/foobar.img
-# cryptsetup luksOpen /dev/loop0 foobar
-# resize2fs /dev/mapper/foobar
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span><span class="nb">truncate</span> <span class="nt">-s</span> 2G /path/to/foobar.img
+<span class="gp">$</span><span class="w"> </span>su
+<span class="gp">#</span><span class="w"> </span>losetup /dev/loop0 /path/to/foobar.img
+<span class="gp">#</span><span class="w"> </span>cryptsetup luksOpen /dev/loop0 foobar
+<span class="gp">#</span><span class="w"> </span>resize2fs /dev/mapper/foobar</code></pre></figure>
 
 <h4>参考文献</h4>
 
@@ -199,54 +187,53 @@ USB メモリのような操作感でマウントして使える。
 </article><aside class="post-related">
   <h2>Related Posts</h2>
   <ul class="post-list"><li class="post-item">
-    <a class="post-link" href="/2014/04/c-struct-with-doxygen-xml.html">
-      <span class="post-meta">2014-04-27</span>
-      <span class="post-title">C言語の構造体を構造分析したい〜静的解析としての doxygen</span></a>
-  </li>
-<li class="post-item">
-    <a class="post-link" href="/2010/03/mingw32undefined-reference-to-winmain16.html">
-      <span class="post-meta">2010-03-06</span>
-      <span class="post-title">mingw32での「undefined reference to `WinMain@16&#39;」</span></a>
-  </li>
-<li class="post-item">
     <a class="post-link" href="/2010/11/code-reading-aaencoded-javascript-code.html">
       <span class="post-meta">2010-11-29</span>
       <span class="post-title">code reading : javascript code encoded as aaencode</span></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2012/09/gr-sakura-linux-comusb.html">
-      <span class="post-meta">2012-09-23</span>
-      <span class="post-title">（チラシの裏）GR-SAKURA を linux で繋いで仮想COM(USB)通信時のおぼえがき</span></a>
+    <a class="post-link" href="/2018/04/rust-error-handling-question.html">
+      <span class="post-meta">2018-04-29</span>
+      <span class="post-title">rustのエラー処理と疑問符演算子</span></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2017/07/apply-to-html-svg-filter-inkscape.html">
-      <span class="post-meta">2017-07-22</span>
-      <span class="post-title">Apply to HTML elements the SVG filters of inkscape preset filters</span></a>
+    <a class="post-link" href="/2017/08/code-reading-firefox-send.html">
+      <span class="post-meta">2017-08-12</span>
+      <span class="post-title">Code Reading: &quot;Firefox Send&quot; encryption</span></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2011/02/tip-how-to-convert-from-gnu-arch-to.html">
-      <span class="post-meta">2011-02-05</span>
-      <span class="post-title">Tip: How to convert from GNU-Arch to Mercurial repository</span></a>
+    <a class="post-link" href="/2014/04/c-struct-with-doxygen-xml.html">
+      <span class="post-meta">2014-04-27</span>
+      <span class="post-title">C言語の構造体を構造分析したい〜静的解析としての doxygen</span></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2013/03/html-copy.html">
-      <span class="post-meta">2013-03-04</span>
-      <span class="post-title">HTML の COPY 禁止をするにはどうすればいいですか? </span></a>
+    <a class="post-link" href="/2015/05/declaration-of-a-parameter-as-array-with-static-keyword-in-c-language.html">
+      <span class="post-meta">2015-05-01</span>
+      <span class="post-title">C言語での static キーワード付き配列パラメータ宣言</span></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2012/12/tip-how-to-run-new-firefox-instance-w.html">
-      <span class="post-meta">2012-12-31</span>
-      <span class="post-title">Tip: How to run a new Firefox instance w/ temporary profile</span></a>
+    <a class="post-link" href="/2010/06/study-multi-text-vs-single-text-on-xul.html">
+      <span class="post-meta">2010-06-22</span>
+      <span class="post-title">Study: multi-text vs single-text on XUL elements</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2016/05/bit-shift-operator-vs-division-operator-but.html">
+      <span class="post-meta">2016-05-06</span>
+      <span class="post-title">ビットシフトと割り算はどっちが良いか、とはいうけれど</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2012/12/llvm-clangast.html">
+      <span class="post-meta">2012-12-11</span>
+      <span class="post-title">LLVM-ClangのASTを解析するまっとうな方法について</span></a>
   </li>
 </ul>
 </aside>
       </div>
     </div><footer class="site-footer">
-  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
   <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
     <h2 class="footer-heading">cat_in_136.blog()</h2>
     <p>
-      © 2023
+      © 2024
       <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
         <a href="/about"><span itemprop="name">cat_in_136</span></a>
       </span>;

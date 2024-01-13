@@ -30,7 +30,7 @@
   <header class="post-header">
     <h1 class="post-title" itemprop="name"><a href="/2010/03/mingw32undefined-reference-to-winmain16.html" itemprop="url">mingw32での「undefined reference to `WinMain@16&#39;」</a></h1>
 
-    <div class="post-meta">Post date: <span itemprop="datePublished" content="2010-03-06T01:01:00+09:00">2010-03-06T01:01:00+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2013-11-23T22:32:35+09:00">2013-11-23T22:32:35+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2010-03-06T01:01:00+09:00">2010-03-06T01:01:00+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2024-01-06T11:36:32+09:00">2024-01-06T11:36:32+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
       <span itemprop="keywords"><a class="tag" href="/tags/win32api">Win32api</a><a class="tag" href="/tags/mingw">Mingw</a><a class="tag" href="/tags/windows">Windows</a></span></div><div class="post-meta">
       Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2010-03-06-mingw32undefined-reference-to-winmain16.html" class="source-path">_posts/2010-03-06-mingw32undefined-reference-to-winmain16.html</a>
         (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2010-03-06-mingw32undefined-reference-to-winmain16.html">History</a>)
@@ -49,9 +49,9 @@
 <span class="p">{</span>
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
-<pre style="background-color: #000; color: #fff; overflow: auto; padding: 2px;"><code>$ gcc -o foobar.exe foobar.c -D_UNICODE -DUNICODE -mwindows -lmingw32 -lkernel32
-/usr/i686-pc-mingw32/sys-root/mingw/lib/libmingw32.a(main.o):(.text+0xd2): undefined reference to `WinMain@16'
-$ </code></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>gcc <span class="nt">-o</span> foobar.exe foobar.c <span class="nt">-D_UNICODE</span> <span class="nt">-DUNICODE</span> <span class="nt">-mwindows</span> <span class="nt">-lmingw32</span> <span class="nt">-lkernel32</span>
+<span class="gp">$</span><span class="w">
+</span><span class="go">/usr/i686-pc-mingw32/sys-root/mingw/lib/libmingw32.a(main.o):(.text+0xd2): undefined reference to `WinMain@16'</span></code></pre></figure>
 <p>
 解決策は<strong><code>int main(int, char**)</code>を定義するべし</strong>。これはぐぐれば比較的容易に発見可能。では、なぜか?という点の解説は日本語のページにはあまりないようだ。
 </p>
@@ -59,8 +59,8 @@ $ </code></pre>
 <p>
 コンパイルオプションから<code>-D_UNICODE -DUNICODE</code>を抜くとANSI版でコンパイルされる。このとき問題なくコンパイルされ、（Unicode対応していない点を除いて）正常に動作する。
 </p>
-<pre style="background-color: #000; color: #fff; overflow: auto; padding: 2px;"><code>$ gcc -o foobar.exe foobar.c -mwindows -lmingw32 -lkernel32
-$ </code></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>gcc <span class="nt">-o</span> foobar.exe foobar.c <span class="nt">-mwindows</span> <span class="nt">-lmingw32</span> <span class="nt">-lkernel32</span>
+<span class="gp">$</span></code></pre></figure>
 <p>
 このコンパイルオプションとき、<code>TCHAR</code>は<code>CHAR</code>に、<code>_tWinMain</code>関数は<code>WinMain</code>関数とみなされる。これは<code>tchar.h</code>での単純な<code>#define</code>で実現されている。
 </p>
@@ -126,14 +126,9 @@ $ </code></pre>
       <span class="post-title">UnicodeでMingw32の落とし穴〜_tWinMain/wWinMain問題など〜</span></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2010/11/code-reading-aaencoded-javascript-code.html">
-      <span class="post-meta">2010-11-29</span>
-      <span class="post-title">code reading : javascript code encoded as aaencode</span></a>
-  </li>
-<li class="post-item">
-    <a class="post-link" href="/2012/09/gr-sakura-linux-comusb.html">
-      <span class="post-meta">2012-09-23</span>
-      <span class="post-title">（チラシの裏）GR-SAKURA を linux で繋いで仮想COM(USB)通信時のおぼえがき</span></a>
+    <a class="post-link" href="/2013/11/define.html">
+      <span class="post-meta">2013-11-26</span>
+      <span class="post-title">#define 展開を沢山一気に確認+整形をプログラムでやらせるときに注意する点について</span><img class="post-thumb" src="/images/vc-tooltip.png" loading="lazy" alt="thumbnail" /></a>
   </li>
 <li class="post-item">
     <a class="post-link" href="/2015/05/declaration-of-a-parameter-as-array-with-static-keyword-in-c-language.html">
@@ -141,29 +136,33 @@ $ </code></pre>
       <span class="post-title">C言語での static キーワード付き配列パラメータ宣言</span></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2013/11/define.html">
-      <span class="post-meta">2013-11-26</span>
-      <span class="post-title">#define 展開を沢山一気に確認+整形をプログラムでやらせるときに注意する点について</span><img class="post-thumb" src="/images/vc-tooltip.png" loading="lazy" alt="thumbnail" /></a>
-  </li>
-<li class="post-item">
-    <a class="post-link" href="/2014/06/lukstruecrypt.html">
-      <span class="post-meta">2014-06-29</span>
-      <span class="post-title">LUKSを(TrueCryptみたいに)仮想ドライブファイルで運用するには</span></a>
-  </li>
-<li class="post-item">
     <a class="post-link" href="/2018/04/rust-error-handling-question.html">
       <span class="post-meta">2018-04-29</span>
       <span class="post-title">rustのエラー処理と疑問符演算子</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2016/05/bit-shift-operator-vs-division-operator-but.html">
+      <span class="post-meta">2016-05-06</span>
+      <span class="post-title">ビットシフトと割り算はどっちが良いか、とはいうけれど</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2012/12/llvm-clangast.html">
+      <span class="post-meta">2012-12-11</span>
+      <span class="post-title">LLVM-ClangのASTを解析するまっとうな方法について</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2013/03/html-user-select.html">
+      <span class="post-meta">2013-03-05</span>
+      <span class="post-title">HTML でのコピペしやすさを user-select などで向上させる</span></a>
   </li>
 </ul>
 </aside>
       </div>
     </div><footer class="site-footer">
-  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
   <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
     <h2 class="footer-heading">cat_in_136.blog()</h2>
     <p>
-      © 2023
+      © 2024
       <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
         <a href="/about"><span itemprop="name">cat_in_136</span></a>
       </span>;

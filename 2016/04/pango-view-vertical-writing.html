@@ -11,7 +11,7 @@
   <link rel="canonical" href="https://cat-in-136.github.io/2016/04/pango-view-vertical-writing.html" />
   <link rel="alternate" type="application/rss+xml" title="cat_in_136.blog() &raquo; Feed" href="/feed.xml" />
   <meta property="og:url" content="https://cat-in-136.github.io/2016/04/pango-view-vertical-writing.html" />
-  <meta property="og:title" content="pango で縦書きとその能力" /><meta property="og:description" content="pango での縦書き Pango の gravity 指定で縦書きが実現できる。 pango-view(1)だと、--gravity east オプション設定を指定すれば良い。 % pango..." /><meta property="og:type" content="article" /><meta property="og:image" content="/images/201604_pango_view_vertical_writing_sagabon_render002.svg" /><meta property="og:site_name" content="cat_in_136.blog()" /><meta name="twitter:card" content="summary" />
+  <meta property="og:title" content="pango で縦書きとその能力" /><meta property="og:description" content="pango での縦書き Pango の gravity 指定で縦書きが実現できる。 pango-view(1)だと、--gravity east オプション設定を指定すれば良い。 $ pango..." /><meta property="og:type" content="article" /><meta property="og:image" content="/images/201604_pango_view_vertical_writing_sagabon_render002.svg" /><meta property="og:site_name" content="cat_in_136.blog()" /><meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@cat_in_136" />
   <meta name="twitter:creator" content="@cat_in_136" />
 </head>
@@ -30,7 +30,7 @@
   <header class="post-header">
     <h1 class="post-title" itemprop="name"><a href="/2016/04/pango-view-vertical-writing.html" itemprop="url">pango で縦書きとその能力</a></h1>
 
-    <div class="post-meta">Post date: <span itemprop="datePublished" content="2016-04-23T03:00:34+09:00">2016-04-23T03:00:34+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2018-11-04T23:12:48+09:00">2018-11-04T23:12:48+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2016-04-23T03:00:34+09:00">2016-04-23T03:00:34+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2024-01-13T15:14:20+09:00">2024-01-13T15:14:20+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
       <span itemprop="keywords"><a class="tag" href="/tags/font">Font</a><a class="tag" href="/tags/%E7%B8%A6%E6%9B%B8%E3%81%8D">縦書き</a><a class="tag" href="/tags/howto">Howto</a><a class="tag" href="/tags/%E5%A4%89%E4%BD%93%E3%81%8B%E3%81%AA">変体かな</a></span></div><div class="post-meta">
       Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2016-04-23-pango-view-vertical-writing.html" class="source-path">_posts/2016-04-23-pango-view-vertical-writing.html</a>
         (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2016-04-23-pango-view-vertical-writing.html">History</a>)
@@ -48,8 +48,7 @@ Pango の gravity 指定で縦書きが実現できる。
 <code>pango-view(1)</code>だと、<code>--gravity east</code> オプション設定を指定すれば良い。
 </p>
 
-<pre class="prompt"><samp>% pango-view --output ipapgothic_render01.svg --font 'IPAPGothic 24' --text 'pangoで縦書き' --gravity east
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>pango-view <span class="nt">--output</span> ipapgothic_render01.svg <span class="nt">--font</span> <span class="s1">'IPAPGothic 24'</span> <span class="nt">--text</span> <span class="s1">'pangoで縦書き'</span> <span class="nt">--gravity</span> east</code></pre></figure>
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
 <object width="183" height="45" data="/images/201604_pango_view_vertical_writing_ipapgothic_render01.svg"></object>
@@ -61,8 +60,7 @@ Pango の gravity 指定で縦書きが実現できる。
 90度回転させることで文字の進行方向を鉛直方向に変える。
 </p>
 
-<pre class="prompt"><samp>% pango-view --output ipapgothic_render02.svg --font 'IPAPGothic 24' --text 'pangoで縦書き' --gravity east --rotate -90
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>pango-view <span class="nt">--output</span> ipapgothic_render02.svg <span class="nt">--font</span> <span class="s1">'IPAPGothic 24'</span> <span class="nt">--text</span> <span class="s1">'pangoで縦書き'</span> <span class="nt">--gravity</span> east <span class="nt">--rotate</span> <span class="nt">-90</span></code></pre></figure>
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
 <object width="46" height="183" data="/images/201604_pango_view_vertical_writing_ipapgothic_render02.svg"></object>
@@ -90,8 +88,7 @@ Pango の gravity 指定で縦書きが実現できる。
 なお、この連綿では、「と」および「か」が変体かな「と（登）」および「か（可）」となっている。
 </p>
 
-<pre class="prompt"><samp>% pango-view --output sagabon_render001.pdf --font '嵯峨本フォントプロトタイプ 24' --markup --text '&lt;span font_features="&amp;quot;liga&amp;quot; on"&gt;いとおかし&lt;/span&gt;' --gravity east --rotate -90
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>pango-view <span class="nt">--output</span> sagabon_render001.pdf <span class="nt">--font</span> <span class="s1">'嵯峨本フォントプロトタイプ 24'</span> <span class="nt">--markup</span> <span class="nt">--text</span> <span class="s1">'&lt;span font_features="&amp;quot;liga&amp;quot; on"&gt;いとおかし&lt;/span&gt;'</span> <span class="nt">--gravity</span> east <span class="nt">--rotate</span> <span class="nt">-90</span></code></pre></figure>
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
 <object width="45" height="127" data="/images/201604_pango_view_vertical_writing_sagabon_render001.svg"></object>
@@ -102,8 +99,7 @@ Pango の gravity 指定で縦書きが実現できる。
 ただし、複雑なタグを使うと文字が崩れるようだ。(Pango 1.38現在)
 </p>
 
-<pre class="prompt"><samp>% pango-view --output sagabon_render002.pdf --font '嵯峨本フォントプロトタイプ 24' --markup --text 'いとおかし　&lt;span font_features="&amp;quot;liga&amp;quot; on"&gt;いとおかし&lt;/span&gt;' --gravity east --rotate -90
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>pango-view <span class="nt">--output</span> sagabon_render002.pdf <span class="nt">--font</span> <span class="s1">'嵯峨本フォントプロトタイプ 24'</span> <span class="nt">--markup</span> <span class="nt">--text</span> <span class="s1">'いとおかし　&lt;span font_features="&amp;quot;liga&amp;quot; on"&gt;いとおかし&lt;/span&gt;'</span> <span class="nt">--gravity</span> east <span class="nt">--rotate</span> <span class="nt">-90</span></code></pre></figure>
 
 <figure style="display: block; margin: auto; text-align: center; font-size: smaller;">
 <object width="46" height="220" data="/images/201604_pango_view_vertical_writing_sagabon_render002.svg"></object>
@@ -159,24 +155,24 @@ Pango の gravity 指定で縦書きが実現できる。
       <span class="post-title">アートアクアリウムの水盤における光学的解析のメモ</span></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2013/02/netscape-communicator-4-beta-2-throbber.html">
-      <span class="post-meta">2013-02-24</span>
-      <span class="post-title">#Netscape Communicator 4 beta 2 Throbber ☆彡☆彡 🌙</span></a>
-  </li>
-<li class="post-item">
     <a class="post-link" href="/2016/08/html-complex-ruby.html">
       <span class="post-meta">2016-08-05</span>
       <span class="post-title">HTML5 Complex Ruby 今日の実装状況</span></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2014/12/light-weight-font-android.html">
-      <span class="post-meta">2014-12-29</span>
-      <span class="post-title">Light な weight な日本語フォントを android に投入</span></a>
+    <a class="post-link" href="/2013/02/netscape-communicator-4-beta-2-throbber.html">
+      <span class="post-meta">2013-02-24</span>
+      <span class="post-title">#Netscape Communicator 4 beta 2 Throbber ☆彡☆彡 🌙</span></a>
   </li>
 <li class="post-item">
     <a class="post-link" href="/2014/05/note-do-same-without.html">
       <span class="post-meta">2014-05-12</span>
       <span class="post-title">Note: do same without browser.tabs.closeButtons on Firefox 31+</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2014/12/light-weight-font-android.html">
+      <span class="post-meta">2014-12-29</span>
+      <span class="post-title">Light な weight な日本語フォントを android に投入</span></a>
   </li>
 <li class="post-item">
     <a class="post-link" href="/2015/07/Tokyo2015-logo-calc-area.html">
@@ -187,11 +183,10 @@ Pango の gravity 指定で縦書きが実現できる。
 </aside>
       </div>
     </div><footer class="site-footer">
-  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
   <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
     <h2 class="footer-heading">cat_in_136.blog()</h2>
     <p>
-      © 2023
+      © 2024
       <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
         <a href="/about"><span itemprop="name">cat_in_136</span></a>
       </span>;

@@ -30,7 +30,7 @@
   <header class="post-header">
     <h1 class="post-title" itemprop="name"><a href="/2012/12/llvm-clangast.html" itemprop="url">LLVM-ClangのASTを解析するまっとうな方法について</a></h1>
 
-    <div class="post-meta">Post date: <span itemprop="datePublished" content="2012-12-11T06:00:00+09:00">2012-12-11T06:00:00+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2014-04-27T12:03:19+09:00">2014-04-27T12:03:19+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2012-12-11T06:00:00+09:00">2012-12-11T06:00:00+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2024-01-06T11:36:36+09:00">2024-01-06T11:36:36+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
       <span itemprop="keywords"><a class="tag" href="/tags/%E3%83%81%E3%83%A9%E3%82%B7%E3%81%AE%E8%A3%8F">チラシの裏</a><a class="tag" href="/tags/clang">Clang</a><a class="tag" href="/tags/c-language">C-language</a></span></div><div class="post-meta">
       Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2012-12-11-llvm-clangast.html" class="source-path">_posts/2012-12-11-llvm-clangast.html</a>
         (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2012-12-11-llvm-clangast.html">History</a>)
@@ -41,7 +41,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody" lang="ja">
-    <blockquote cite="http://llvm.org/devmtg/2010-11/Gregor-libclang.pdf" style="padding: 1em; background-color: #eee; box-shadow: 3px 3px 10px #888;">
+    <blockquote cite="http://llvm.org/devmtg/2010-11/Gregor-libclang.pdf">
   <p>Clang is not just a great compiler...</p>
   <p style="text-align: right;">-- <a href="http://llvm.org/devmtg/2010-11/Gregor-libclang.pdf" title="libclang: Thinking Beyond the Compiler">Doug Gregor, <em style="font-weight: light; font-style: italic;">Apple Inc.</em></a></p>
 </blockquote>
@@ -54,14 +54,12 @@
 
 <h4>昔は XML で構文木を吐き出す機能があったらしい</h4>
 
-<pre style="color: #fff; background-color: #000;"><code>% clang -cc1 -ast-print-xml source.c
-</code></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>clang <span class="nt">-cc1</span> <span class="nt">-ast-print-xml</span> source.c</code></pre></figure>
 
 <p>今のバージョンは <code>-ast-print-xml</code> オプションはない。
 <code>-emit-ast</code> で我慢しろ、らしい。</p>
 
-<pre style="color: #fff; background-color: #000;"><code>% clang -emit-ast source.c
-</code></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>clang <span class="nt">-emit-ast</span> source.c</code></pre></figure>
 
 <p>これで生成される <code>source.ast</code> ファイルがバイナリ形式だから困ったものである。</p>
 
@@ -109,15 +107,13 @@
 <p>なお、コンパイルは以下のように。
 (Clang でコンパイルしたかったが、なんかうまくリンクが通らなかったので GCC でやった。)</p>
 
-<pre style="color: #fff; background-color: #000;"><code>% g++ -o astana astana.cpp -L/usr/lib64/llvm -lclang
-</code></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>g++ <span class="nt">-o</span> astana astana.cpp <span class="nt">-L</span>/usr/lib64/llvm <span class="nt">-lclang</span></code></pre></figure>
 
 <p>ちなみに使い方は、引数に ast ファイルを渡してやる。
 つまり、全体的な使い方としては以下のようになる。</p>
 
-<pre style="color: #fff; background-color: #000;"><code>% clang -emit-ast source.c
-% astana source.ast &gt; source.txt
-</code></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>clang <span class="nt">-emit-ast</span> source.c
+<span class="gp">$</span><span class="w"> </span>astana source.ast <span class="o">&gt;</span> source.txt</code></pre></figure>
 
 <h4>ちょっとした XML を吐こうとすると</h4>
 
@@ -233,9 +229,8 @@
 
 <p>使い方は、前のと同じく</p>
 
-<pre style="color: #fff; background-color: #000;"><code>% clang -emit-ast source.c
-% astana source.ast &gt; source.xml
-</code></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>clang <span class="nt">-emit-ast</span> source.c
+<span class="gp">$</span><span class="w"> </span>astana source.ast <span class="o">&gt;</span> source.xml</code></pre></figure>
 
 <p>しかし、さすがに自力で XML を吐こうとするとメンドイ。
 これでも表示項目足りないくらいだし。</p>
@@ -266,19 +261,14 @@
       <span class="post-title">rustのエラー処理と疑問符演算子</span></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2010/05/how-to-launch-application-in-terminal.html">
-      <span class="post-meta">2010-05-02</span>
-      <span class="post-title">How to Launch &quot;Application in Terminal&quot; from (your) GTK Application</span></a>
-  </li>
-<li class="post-item">
     <a class="post-link" href="/2016/05/bit-shift-operator-vs-division-operator-but.html">
       <span class="post-meta">2016-05-06</span>
       <span class="post-title">ビットシフトと割り算はどっちが良いか、とはいうけれど</span></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2014/09/pqi-air-card-udp-yo.html">
-      <span class="post-meta">2014-09-21</span>
-      <span class="post-title">PQI Air Card から UDP で Yo と答えさせてデバイス検出する試み</span></a>
+    <a class="post-link" href="/2010/05/how-to-launch-application-in-terminal.html">
+      <span class="post-meta">2010-05-02</span>
+      <span class="post-title">How to Launch &quot;Application in Terminal&quot; from (your) GTK Application</span></a>
   </li>
 <li class="post-item">
     <a class="post-link" href="/2015/05/declaration-of-a-parameter-as-array-with-static-keyword-in-c-language.html">
@@ -286,29 +276,33 @@
       <span class="post-title">C言語での static キーワード付き配列パラメータ宣言</span></a>
   </li>
 <li class="post-item">
+    <a class="post-link" href="/2014/09/pqi-air-card-udp-yo.html">
+      <span class="post-meta">2014-09-21</span>
+      <span class="post-title">PQI Air Card から UDP で Yo と答えさせてデバイス検出する試み</span></a>
+  </li>
+<li class="post-item">
     <a class="post-link" href="/2010/03/pitfall-of-unicode-in-mingw32.html">
       <span class="post-meta">2010-03-17</span>
       <span class="post-title">Pitfall of &quot;Unicode in Mingw32&quot;</span></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2017/10/list-of-all-the-config-provided-by-configuration-mania.html">
-      <span class="post-meta">2017-10-26</span>
-      <span class="post-title">List of all the Config provided by Configuration Mania</span></a>
+    <a class="post-link" href="/2010/06/study-multi-text-vs-single-text-on-xul.html">
+      <span class="post-meta">2010-06-22</span>
+      <span class="post-title">Study: multi-text vs single-text on XUL elements</span></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2010/03/mingw32undefined-reference-to-winmain16.html">
-      <span class="post-meta">2010-03-06</span>
-      <span class="post-title">mingw32での「undefined reference to `WinMain@16&#39;」</span></a>
+    <a class="post-link" href="/2014/04/c-struct-with-doxygen-xml.html">
+      <span class="post-meta">2014-04-27</span>
+      <span class="post-title">C言語の構造体を構造分析したい〜静的解析としての doxygen</span></a>
   </li>
 </ul>
 </aside>
       </div>
     </div><footer class="site-footer">
-  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
   <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
     <h2 class="footer-heading">cat_in_136.blog()</h2>
     <p>
-      © 2023
+      © 2024
       <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
         <a href="/about"><span itemprop="name">cat_in_136</span></a>
       </span>;

@@ -30,7 +30,7 @@
   <header class="post-header">
     <h1 class="post-title" itemprop="name"><a href="/2018/01/new-year-message-2018.html" itemprop="url">新年の挨拶（とウェブフォント）</a></h1>
 
-    <div class="post-meta">Post date: <span itemprop="datePublished" content="2018-01-01T01:41:08+09:00">2018-01-01T01:41:08+09:00</span></div><div class="post-meta">Tags:
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2018-01-01T01:41:08+09:00">2018-01-01T01:41:08+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2024-01-13T15:14:21+09:00">2024-01-13T15:14:21+09:00</span></div><div class="post-meta">Tags:
       <span itemprop="keywords"><a class="tag" href="/tags/font">Font</a><a class="tag" href="/tags/webfont">Webfont</a><a class="tag" href="/tags/html">Html</a><a class="tag" href="/tags/%E7%B8%A6%E6%9B%B8%E3%81%8D">縦書き</a></span></div><div class="post-meta">
       Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2018-01-01-new-year-message-2018.html" class="source-path">_posts/2018-01-01-new-year-message-2018.html</a>
         (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2018-01-01-new-year-message-2018.html">History</a>)
@@ -203,9 +203,8 @@ Google Chrome も私が作成したフォントでは GSUB がうまく働かな
 OpenType をそのままだと容量上非効率なのでウェブフォントに特化した WOFF あるいは WOFF2 が推奨される。
 ttx だと必要な python パッケージさえ入っていればそのまま出力できた。
 </p>
-<pre class="console"><samp>% ttx -q --flavor woff2 Gantan2018CatIn136.ttx
-% ttx -q --flavor woff --with-zopfli Gantan2018CatIn136.ttx
-</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>ttx <span class="nt">-q</span> <span class="nt">--flavor</span> woff2 Gantan2018CatIn136.ttx
+<span class="gp">$</span><span class="w"> </span>ttx <span class="nt">-q</span> <span class="nt">--flavor</span> woff <span class="nt">--with-zopfli</span> Gantan2018CatIn136.ttx</code></pre></figure>
 <p>
 WOFF2 の方がサイズ的に有利なのでそちらの方を使うのが好ましい。
 だが <a href="https://caniuse.com/#search=woff2">WOFF2 に対応していないブラウザ</a>もいまだ生き残っているため WOFF も作成した。
@@ -268,14 +267,19 @@ WOFF さえ対応していないブラウザは縦書きをろくに対応して
       <span class="post-title">HTML5 Complex Ruby 今日の実装状況</span></a>
   </li>
 <li class="post-item">
+    <a class="post-link" href="/2016/04/pango-view-otf-font-features.html">
+      <span class="post-meta">2016-04-09</span>
+      <span class="post-title">pango-view と OTF font features</span></a>
+  </li>
+<li class="post-item">
     <a class="post-link" href="/2017/10/list-of-all-the-config-provided-by-configuration-mania.html">
       <span class="post-meta">2017-10-26</span>
       <span class="post-title">List of all the Config provided by Configuration Mania</span></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2016/04/pango-view-otf-font-features.html">
-      <span class="post-meta">2016-04-09</span>
-      <span class="post-title">pango-view と OTF font features</span></a>
+    <a class="post-link" href="/2016/04/pango-view-vertical-writing.html">
+      <span class="post-meta">2016-04-23</span>
+      <span class="post-title">pango で縦書きとその能力</span></a>
   </li>
 <li class="post-item">
     <a class="post-link" href="/2013/04/two-element-barchart-designing.html">
@@ -287,20 +291,14 @@ WOFF さえ対応していないブラウザは縦書きをろくに対応して
       <span class="post-meta">2013-02-24</span>
       <span class="post-title">#Netscape Communicator 4 beta 2 Throbber ☆彡☆彡 🌙</span></a>
   </li>
-<li class="post-item">
-    <a class="post-link" href="/2016/04/pango-view-vertical-writing.html">
-      <span class="post-meta">2016-04-23</span>
-      <span class="post-title">pango で縦書きとその能力</span></a>
-  </li>
 </ul>
 </aside>
       </div>
     </div><footer class="site-footer">
-  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
   <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
     <h2 class="footer-heading">cat_in_136.blog()</h2>
     <p>
-      © 2023
+      © 2024
       <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
         <a href="/about"><span itemprop="name">cat_in_136</span></a>
       </span>;

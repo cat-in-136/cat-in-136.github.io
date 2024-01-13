@@ -30,7 +30,7 @@
   <header class="post-header">
     <h1 class="post-title" itemprop="name"><a href="/2012/09/gr-sakura-linux-comusb.html" itemprop="url">（チラシの裏）GR-SAKURA を linux で繋いで仮想COM(USB)通信時のおぼえがき</a></h1>
 
-    <div class="post-meta">Post date: <span itemprop="datePublished" content="2012-09-23T00:27:00+09:00">2012-09-23T00:27:00+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2012-09-23T00:27:11+09:00">2012-09-23T00:27:11+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2012-09-23T00:27:00+09:00">2012-09-23T00:27:00+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2024-01-06T11:36:35+09:00">2024-01-06T11:36:35+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
       <span itemprop="keywords"><a class="tag" href="/tags/linux">Linux</a><a class="tag" href="/tags/%E3%83%81%E3%83%A9%E3%82%B7%E3%81%AE%E8%A3%8F">チラシの裏</a><a class="tag" href="/tags/gr-sakura">Gr-sakura</a></span></div><div class="post-meta">
       Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2012-09-23-gr-sakura-linux-comusb.html" class="source-path">_posts/2012-09-23-gr-sakura-linux-comusb.html</a>
         (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2012-09-23-gr-sakura-linux-comusb.html">History</a>)
@@ -65,16 +65,16 @@
 <p>USBケーブルで GR-SAKURA と繋ぐだけですぐに SAKURA として認識しつながった。
 しかも、シリアルデバイス <code>/dev/ttyACM0</code> ができている。</p>
 
-<pre style="background-color: #000; color: #fff; overflow: auto;"><code>% usb-devices
-...(略)...
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>usb-devices
+<span class="go">...(略)...
 P:  Vendor=2129 ProdID=0531 Rev=01.00
 S:  Manufacturer=TOKUDEN
 S:  Product=Gadget Renesas SAKURA
 S:  SerialNumber=1.1
-C:  #Ifs= 2 Cfg#= 1 Atr=c0 MxPwr=100mA
-...(略)...
-% dmesg
-...(略)...
+</span><span class="gp">C:  #</span><span class="nv">Ifs</span><span class="o">=</span> 2 Cfg#<span class="o">=</span> 1 <span class="nv">Atr</span><span class="o">=</span>c0 <span class="nv">MxPwr</span><span class="o">=</span>100mA
+<span class="go">...(略)...
+</span><span class="gp">$</span><span class="w"> </span>dmesg
+<span class="go">...(略)...
 [18628.698339] usb 3-2: new full-speed USB device number 6 using ohci_hcd
 [18628.854347] usb 3-2: New USB device found, idVendor=2129, idProduct=0531
 [18628.854358] usb 3-2: New USB device strings: Mfr=1, Product=2, SerialNumber=3
@@ -83,34 +83,30 @@ C:  #Ifs= 2 Cfg#= 1 Atr=c0 MxPwr=100mA
 [18628.854375] usb 3-2: SerialNumber: 1.1
 [18628.856429] cdc_acm 3-2:1.0: This device cannot do calls on its own. It is not a modem.
 [18628.856470] cdc_acm 3-2:1.0: ttyACM0: USB ACM device
-% 
-</code></pre>
+</span><span class="gp">$</span></code></pre></figure>
 
 <p>ちなみに、Manufacturer が Renesas ではなくて、TOKUDEN となっているのは、 GR-SAKURA が 特殊電子回路株式会社 の OEM 生産的なものであることを示しているのであろう。</p>
 
 <p>このデバイスは下記のような権限なので dialout グループの人か root でないと読み書きできない。</p>
 
-<pre style="background-color: #000; color: #fff; overflow: auto;"><code>% ls -l /dev/ttyACM*
-crw-rw----. 1 root dialout 166, 0  9月 22 23:29 /dev/ttyACM0
-% 
-</code></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-l</span> /dev/ttyACM<span class="k">*</span>
+<span class="go">crw-rw----. 1 root dialout 166, 0  9月 22 23:29 /dev/ttyACM0
+</span><span class="gp">$</span></code></pre></figure>
 
 <p>さらに、dmesg が仰っしゃるとおり、このデバイスはコールできい。モデムでない。
 となると、 dialout というグループは気持ち悪い。
 加えて <code>ttyACM0</code> という名前も気に食わない。
 そう思う人は以下のような udev スクリプトを作って、<code>/etc/udev/rules.d/51-gr-sakura.rules</code> に放り込んでやればよい。</p>
 
-<pre><code># Gadget Renesas SAKURA (idVendor=2129, idProduct=0531)
-KERNEL=="ttyACM[0-9]*", ATTRS{product}=="Gadget Renesas SAKURA", MODE="0660", GROUP="plugdev", SYMLINK+="ttyUSB-Sakura"
-</code></pre>
+<figure class="highlight"><pre><code class="language-config" data-lang="config"><span class="c"># Gadget Renesas SAKURA (idVendor=2129, idProduct=0531)
+</span><span class="n">KERNEL</span>==<span class="s2">"ttyACM[0-9]*"</span>, <span class="n">ATTRS</span>{<span class="n">product</span>}==<span class="s2">"Gadget Renesas SAKURA"</span>, <span class="n">MODE</span>=<span class="s2">"0660"</span>, <span class="n">GROUP</span>=<span class="s2">"plugdev"</span>, <span class="n">SYMLINK</span>+=<span class="s2">"ttyUSB-Sakura"</span></code></pre></figure>
 
 <p>すると plugdev グループの人からアクセスできるようになる。
 また、<code>/dev/ttyUSB-Sakura</code> というわかりやすい名前のシンボリックリンクも貼られて気持ちイイ!</p>
 
-<pre style="background-color: #000; color: #fff; overflow: auto;"><code>% ls -l /dev/ttyUSB-Sakura /dev/ttyACM*
-crw-rw----. 1 root plugdev 166, 0  9月 22 23:39 /dev/ttyACM0
-lrwxrwxrwx. 1 root root         7  9月 22 23:39 /dev/ttyUSB-Sakura -&gt; ttyACM0
-</code></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-l</span> /dev/ttyUSB-Sakura /dev/ttyACM<span class="k">*</span>
+<span class="go">crw-rw----. 1 root plugdev 166, 0  9月 22 23:39 /dev/ttyACM0
+</span><span class="gp">lrwxrwxrwx. 1 root root         7  9月 22 23:39 /dev/ttyUSB-Sakura -&gt;</span><span class="w"> </span>ttyACM0</code></pre></figure>
 
 <h4>参考文献♪</h4>
 
@@ -137,19 +133,14 @@ lrwxrwxrwx. 1 root root         7  9月 22 23:39 /dev/ttyUSB-Sakura -&gt; ttyACM
       <span class="post-title">【担当者さん必見】メンバーみんなで日程調整ができる「Scheduling Poll」プラグイン登場！</span><img class="post-thumb" src="/images/201511_redmine_scheduling_polls_ticket_vote.png" loading="lazy" alt="thumbnail" /></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2010/03/mingw32undefined-reference-to-winmain16.html">
-      <span class="post-meta">2010-03-06</span>
-      <span class="post-title">mingw32での「undefined reference to `WinMain@16&#39;」</span></a>
+    <a class="post-link" href="/2016/04/pango-view-vertical-writing.html">
+      <span class="post-meta">2016-04-23</span>
+      <span class="post-title">pango で縦書きとその能力</span><img class="post-thumb" src="/images/201604_pango_view_vertical_writing_sagabon_render002.svg" loading="lazy" alt="thumbnail" /></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2014/06/lukstruecrypt.html">
-      <span class="post-meta">2014-06-29</span>
-      <span class="post-title">LUKSを(TrueCryptみたいに)仮想ドライブファイルで運用するには</span></a>
-  </li>
-<li class="post-item">
-    <a class="post-link" href="/2013/02/netscape-communicator-4-beta-2-throbber.html">
-      <span class="post-meta">2013-02-24</span>
-      <span class="post-title">#Netscape Communicator 4 beta 2 Throbber ☆彡☆彡 🌙</span><img class="post-thumb" src="/images/ns4b_splash.png" loading="lazy" alt="thumbnail" /></a>
+    <a class="post-link" href="/2016/04/pango-view-otf-font-features.html">
+      <span class="post-meta">2016-04-09</span>
+      <span class="post-title">pango-view と OTF font features</span><img class="post-thumb" src="/images/201604_pango_view_otf_font_features_jis8903_render005.svg" loading="lazy" alt="thumbnail" /></a>
   </li>
 <li class="post-item">
     <a class="post-link" href="/2014/12/light-weight-font-android.html">
@@ -157,29 +148,33 @@ lrwxrwxrwx. 1 root root         7  9月 22 23:39 /dev/ttyUSB-Sakura -&gt; ttyACM
       <span class="post-title">Light な weight な日本語フォントを android に投入</span><img class="post-thumb" src="/images/201412_light_weight_font_screen103.png" loading="lazy" alt="thumbnail" /></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2016/04/pango-view-vertical-writing.html">
-      <span class="post-meta">2016-04-23</span>
-      <span class="post-title">pango で縦書きとその能力</span><img class="post-thumb" src="/images/201604_pango_view_vertical_writing_sagabon_render002.svg" loading="lazy" alt="thumbnail" /></a>
-  </li>
-<li class="post-item">
-    <a class="post-link" href="/2013/04/two-element-barchart-designing.html">
-      <span class="post-meta">2013-04-13</span>
-      <span class="post-title">２本の（省略付き）棒グラフを思いのまま描く方法</span><img class="post-thumb" src="/images/bar.png" loading="lazy" alt="thumbnail" /></a>
-  </li>
-<li class="post-item">
     <a class="post-link" href="/2014/05/note-do-same-without.html">
       <span class="post-meta">2014-05-12</span>
       <span class="post-title">Note: do same without browser.tabs.closeButtons on Firefox 31+</span><img class="post-thumb" src="/images/note-do-same-without-value0.png" loading="lazy" alt="thumbnail" /></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2013/02/netscape-communicator-4-beta-2-throbber.html">
+      <span class="post-meta">2013-02-24</span>
+      <span class="post-title">#Netscape Communicator 4 beta 2 Throbber ☆彡☆彡 🌙</span><img class="post-thumb" src="/images/ns4b_splash.png" loading="lazy" alt="thumbnail" /></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2016/10/optical-analysis-of-art-aquarium-water-bowl.html">
+      <span class="post-meta">2016-10-08</span>
+      <span class="post-title">アートアクアリウムの水盤における光学的解析のメモ</span><img class="post-thumb" src="https://c7.staticflickr.com/9/8134/30075992142_fc249ffbab_t.jpg" loading="lazy" alt="thumbnail" /></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2011/01/xul-tip-scrolling-for-tabs-on-xul.html">
+      <span class="post-meta">2011-01-20</span>
+      <span class="post-title">XUL Tip: Scrolling for tabs on XUL tabbox</span><img class="post-thumb" src="/images/scrolledtab.png" loading="lazy" alt="thumbnail" /></a>
   </li>
 </ul>
 </aside>
       </div>
     </div><footer class="site-footer">
-  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
   <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
     <h2 class="footer-heading">cat_in_136.blog()</h2>
     <p>
-      © 2023
+      © 2024
       <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
         <a href="/about"><span itemprop="name">cat_in_136</span></a>
       </span>;

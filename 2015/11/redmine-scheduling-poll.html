@@ -30,7 +30,7 @@
   <header class="post-header">
     <h1 class="post-title" itemprop="name"><a href="/2015/11/redmine-scheduling-poll.html" itemprop="url">【担当者さん必見】メンバーみんなで日程調整ができる「Scheduling Poll」プラグイン登場！</a></h1>
 
-    <div class="post-meta">Post date: <span itemprop="datePublished" content="2015-11-30T23:48:32+09:00">2015-11-30T23:48:32+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2015-11-30T23:48:32+09:00">2015-11-30T23:48:32+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2024-01-13T15:14:19+09:00">2024-01-13T15:14:19+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
       <span itemprop="keywords"><a class="tag" href="/tags/redmine">Redmine</a><a class="tag" href="/tags/howto">Howto</a><a class="tag" href="/tags/%E3%83%81%E3%83%A9%E3%82%B7%E3%81%AE%E8%A3%8F">チラシの裏</a></span></div><div class="post-meta">
       Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2015-11-30-redmine-scheduling-poll.html" class="source-path">_posts/2015-11-30-redmine-scheduling-poll.html</a>
         (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2015-11-30-redmine-scheduling-poll.html">History</a>)
@@ -57,11 +57,10 @@ redmineのプラグイン「<a href="https://github.com/cat-in-136/redmine_sched
 <p>
 まず git clone と migrate してインストールしましょう！
 </p>
-<pre class="terminal">% cd plugins
-% git clone https://github.com/cat-in-136/redmine_scheduling_poll.git
-% cd ..
-% bundle exec rake redmine:plugins:migrate RAILS_ENV=production
-</pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>plugins
+<span class="gp">$</span><span class="w"> </span>git clone https://github.com/cat-in-136/redmine_scheduling_poll.git
+<span class="gp">$</span><span class="w"> </span><span class="nb">cd</span> ..
+<span class="gp">$</span><span class="w"> </span>bundle <span class="nb">exec </span>rake redmine:plugins:migrate <span class="nv">RAILS_ENV</span><span class="o">=</span>production</code></pre></figure>
 <p>
 管理者さんは、プロジェクトに対して「Scheduling polls」を有効にしましょう。
 </p>
@@ -201,11 +200,6 @@ redmineのプラグイン「<a href="https://github.com/cat-in-136/redmine_sched
       <span class="post-title">pango-view と OTF font features</span><img class="post-thumb" src="/images/201604_pango_view_otf_font_features_jis8903_render005.svg" loading="lazy" alt="thumbnail" /></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2013/04/two-element-barchart-designing.html">
-      <span class="post-meta">2013-04-13</span>
-      <span class="post-title">２本の（省略付き）棒グラフを思いのまま描く方法</span><img class="post-thumb" src="/images/bar.png" loading="lazy" alt="thumbnail" /></a>
-  </li>
-<li class="post-item">
     <a class="post-link" href="/2014/05/note-do-same-without.html">
       <span class="post-meta">2014-05-12</span>
       <span class="post-title">Note: do same without browser.tabs.closeButtons on Firefox 31+</span><img class="post-thumb" src="/images/note-do-same-without-value0.png" loading="lazy" alt="thumbnail" /></a>
@@ -216,6 +210,11 @@ redmineのプラグイン「<a href="https://github.com/cat-in-136/redmine_sched
       <span class="post-title">Light な weight な日本語フォントを android に投入</span><img class="post-thumb" src="/images/201412_light_weight_font_screen103.png" loading="lazy" alt="thumbnail" /></a>
   </li>
 <li class="post-item">
+    <a class="post-link" href="/2013/04/two-element-barchart-designing.html">
+      <span class="post-meta">2013-04-13</span>
+      <span class="post-title">２本の（省略付き）棒グラフを思いのまま描く方法</span><img class="post-thumb" src="/images/bar.png" loading="lazy" alt="thumbnail" /></a>
+  </li>
+<li class="post-item">
     <a class="post-link" href="/2016/08/html-complex-ruby.html">
       <span class="post-meta">2016-08-05</span>
       <span class="post-title">HTML5 Complex Ruby 今日の実装状況</span></a>
@@ -224,11 +223,10 @@ redmineのプラグイン「<a href="https://github.com/cat-in-136/redmine_sched
 </aside>
       </div>
     </div><footer class="site-footer">
-  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
   <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
     <h2 class="footer-heading">cat_in_136.blog()</h2>
     <p>
-      © 2023
+      © 2024
       <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
         <a href="/about"><span itemprop="name">cat_in_136</span></a>
       </span>;

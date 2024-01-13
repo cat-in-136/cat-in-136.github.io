@@ -76,9 +76,9 @@
 例えば引数を指定しないと下記のように異常終了する。
 </p>
 
-<pre class="terminal">% target/debug/foobar
-<samp>thread 'main' panicked at 'index out of bounds: the len is 1 but the index is 1', /builddir/build/BUILD/rustc-1.25.0-src/src/liballoc/vec.rs:1551:10
-note: Run with `RUST_BACKTRACE=1` for a backtrace.</samp></pre>
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="gp">$</span><span class="w"> </span>target/debug/foobar
+<span class="go">thread 'main' panicked at 'index out of bounds: the len is 1 but the index is 1', /builddir/build/BUILD/rustc-1.25.0-src/src/liballoc/vec.rs:1551:10
+note: Run with `RUST_BACKTRACE=1` for a backtrace.</span></code></pre></figure>
 
 <p>
 現代的な言語ではこれの対処をかんたんに書くことができる。
@@ -551,14 +551,14 @@ Rust は例外に対応していないので、いちいち戻り値を確認す
       <span class="post-title">List of all the Config provided by Configuration Mania</span></a>
   </li>
 <li class="post-item">
-    <a class="post-link" href="/2010/03/pitfall-of-unicode-in-mingw32.html">
-      <span class="post-meta">2010-03-17</span>
-      <span class="post-title">Pitfall of &quot;Unicode in Mingw32&quot;</span></a>
-  </li>
-<li class="post-item">
     <a class="post-link" href="/2012/12/llvm-clangast.html">
       <span class="post-meta">2012-12-11</span>
       <span class="post-title">LLVM-ClangのASTを解析するまっとうな方法について</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2010/03/pitfall-of-unicode-in-mingw32.html">
+      <span class="post-meta">2010-03-17</span>
+      <span class="post-title">Pitfall of &quot;Unicode in Mingw32&quot;</span></a>
   </li>
 <li class="post-item">
     <a class="post-link" href="/2017/08/code-reading-firefox-send.html">
@@ -584,11 +584,10 @@ Rust は例外に対応していないので、いちいち戻り値を確認す
 </aside>
       </div>
     </div><footer class="site-footer">
-  <a href="#top" title="Go to top of page" onclick="window.scroll(0,0);return false;">↑</a>
   <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
     <h2 class="footer-heading">cat_in_136.blog()</h2>
     <p>
-      © 2023
+      © 2024
       <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
         <a href="/about"><span itemprop="name">cat_in_136</span></a>
       </span>;
