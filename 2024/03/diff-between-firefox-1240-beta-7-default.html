@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,max-scale=10,min-scale=0.5,user-scalable=yes" />
+  <title>Diff between firefox 124.0 beta 7 default preference and firefox 123.0.1</title>
+
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="https://code.cdn.mozilla.net/fonts/fira.css" />
+
+  <link rel="canonical" href="https://cat-in-136.github.io/2024/03/diff-between-firefox-1240-beta-7-default.html" />
+  <link rel="alternate" type="application/rss+xml" title="cat_in_136.blog() &raquo; Feed" href="/feed.xml" />
+  <meta property="og:url" content="https://cat-in-136.github.io/2024/03/diff-between-firefox-1240-beta-7-default.html" />
+  <meta property="og:title" content="Diff between firefox 124.0 beta 7 default preference and firefox 123.0.1" /><meta property="og:description" content="This is difference between the default preference of Firefox 124.0 beta 7 and one of 123.0.1. Thi..." /><meta property="og:type" content="article" /><meta property="og:site_name" content="cat_in_136.blog()" /><meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@cat_in_136" />
+  <meta name="twitter:creator" content="@cat_in_136" />
+</head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" href="/">cat_in_136.blog()</a>
+    <nav class="site-nav">
+      <a href="javascript:void(0);" class="menu-icon" title="barger button"></a>
+      <div class="trigger"><a class="page-link" href="/about">About</a><a class="page-link" href="/archive">Archive</a><a class="page-link" href="/tags">Tags</a></div>
+    </nav>
+  </div>
+</header>
+<div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name"><a href="/2024/03/diff-between-firefox-1240-beta-7-default.html" itemprop="url">Diff between firefox 124.0 beta 7 default preference and firefox 123.0.1</a></h1>
+
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2024-03-07T01:01:15+09:00">2024-03-07T01:01:15+09:00</span></div><div class="post-meta">Text by: <span itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><span itemprop="name">cat_in_136</span></span></div><div class="post-meta">Tags:
+      <span itemprop="keywords"><a class="tag" href="/tags/pref-diff">Pref diff</a><a class="tag" href="/tags/mozilla">Mozilla</a></span></div><div class="post-meta">
+      Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2024-03-07-diff-between-firefox-1240-beta-7-default.html" class="source-path">_posts/2024-03-07-diff-between-firefox-1240-beta-7-default.html</a>
+        (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2024-03-07-diff-between-firefox-1240-beta-7-default.html">History</a>)
+    </div><div class="post-meta">
+      <a href="#comments"><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2024/03/diff-between-firefox-1240-beta-7-default.html">↓Comments</span></a>
+      <script id="dsq-count-scr" src="https://catin136blog.disqus.com/count.js" defer="defer" async="async"></script>
+    </div>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>
+This is difference between the default preference of Firefox 124.0 beta 7 and one of 123.0.1.
+This diff table is generated with my small script <a href="https://github.com/cat-in-136/firefox-prefjs-surveyer">firefox-prefjs-surveyer</a>.
+</p>
+
+<div>
+<table class="diff_firefox124_pref_diff">
+<caption>Preference difference</caption>
+<thead>
+<tr><td>Pref</td><td>Firefox 123.0.1</td><td>Firefox 124.0 beta 7</td></tr>
+</thead>
+    <tbody>
+      <tr>
+        <td>app.<wbr />releaseNotesURL</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=whatsnew</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=whatsnew</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />releaseNotesURL.<wbr />aboutDialog</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=about-dialog</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=about-dialog</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />channel</td>
+        <td>release</td>
+        <td>beta</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />url.<wbr />details</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/notes</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/beta/notes</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />url.<wbr />manual</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />contentanalysis.<wbr />default_<wbr />allow</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />discoverystream.<wbr />ctaButtonSponsors</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />discoverystream.<wbr />ctaButtonVariant</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />opaque<wbr />Response<wbr />Blocking.<wbr />synthetic<wbr />Browsing<wbr />Context</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />opaque<wbr />Response<wbr />Blocking.<wbr />synthetic<wbr />Browsing<wbr />Context.<wbr />filter</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />search.<wbr />widget.<wbr />remove<wbr />After<wbr />Days<wbr />Unused</td>
+        <td class="undefined">undefined</td>
+        <td>120</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />tabs.<wbr />remote.<wbr />autostart</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />urlbar.<wbr />quicksuggest.<wbr />rustEnabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />urlbar.<wbr />yelp.<wbr />featureGate</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />urlbar.<wbr />yelp.<wbr />minKeywordLength</td>
+        <td class="undefined">undefined</td>
+        <td>5</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />urlbar.<wbr />yelp.<wbr />priority</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />urlbar.<wbr />yelp.<wbr />suggestedIndex</td>
+        <td class="undefined">undefined</td>
+        <td>0</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>devtools.<wbr />debugger.<wbr />features.<wbr />codemirror-next</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>dom.<wbr />animations-api.<wbr />getAnimations.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>dom.<wbr />animations.<wbr />mainthread-synchronization-with-geometric-animations</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />domrequest.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />element.<wbr />blocking.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>dom.<wbr />event.<wbr />default_<wbr />to_<wbr />passive_<wbr />wheel_<wbr />listeners</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />events.<wbr />mouse-pointer-boundary.<wbr />keep-enter-targets-after-over-target-removed</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>dom.<wbr />events.<wbr />phases.<wbr />correctOrderOnTarget</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />forms.<wbr />always_<wbr />allow_<wbr />pointer_<wbr />events.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />screenwakelock.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>dom.<wbr />screenwakelock.<wbr />testing</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>extensions.<wbr />formautofill.<wbr />addresses.<wbr />capture.<wbr />v2.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>extensions.<wbr />formautofill.<wbr />addresses.<wbr />experiments.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />formautofill.<wbr />heuristics.<wbr />capture<wbr />On<wbr />Form<wbr />Removal</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />formautofill.<wbr />heuristics.<wbr />capture<wbr />On<wbr />Page<wbr />Navigation</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />webcompat-reporter.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>gfx.<wbr />offscreencanvas.<wbr />shared-provider</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>javascript.<wbr />options.<wbr />mem.<wbr />gc_<wbr />parallel_<wbr />marking</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>javascript.<wbr />options.<wbr />tests.<wbr />uint32-pref</td>
+        <td class="undefined">undefined</td>
+        <td>1</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>javascript.<wbr />options.<wbr />use_<wbr />emulates_<wbr />undefined_<wbr />fuse</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>javascript.<wbr />options.<wbr />wasm_<wbr />exnref</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />more_<wbr />color_<wbr />4.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />overflow-overlay.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />cursor.<wbr />block.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>layout.<wbr />tables.<wbr />scrollable-cells</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />use-plugin-fallback</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>media.<wbr />allow-audio-non-utility</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>media.<wbr />getusermedia.<wbr />microphone.<wbr />prefer_<wbr />voice_<wbr />stream_<wbr />with_<wbr />processing.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>memory.<wbr />phc.<wbr />avg_<wbr />delay.<wbr />first</td>
+        <td class="undefined">undefined</td>
+        <td>65536</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>memory.<wbr />phc.<wbr />avg_<wbr />delay.<wbr />normal</td>
+        <td class="undefined">undefined</td>
+        <td>16384</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>memory.<wbr />phc.<wbr />avg_<wbr />delay.<wbr />page_<wbr />reuse</td>
+        <td class="undefined">undefined</td>
+        <td>262144</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />cache.<wbr />purgebyfrecency_<wbr />minprogress_<wbr />disk</td>
+        <td class="undefined">undefined</td>
+        <td>0</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />cache.<wbr />purgebyfrecency_<wbr />minprogress_<wbr />memory</td>
+        <td class="undefined">undefined</td>
+        <td>0</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />dns.<wbr />native_<wbr />https_<wbr />query_<wbr />in_<wbr />automation</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />http.<wbr />http2.<wbr />move_<wbr />to_<wbr />pending_<wbr />list_<wbr />after_<wbr />network_<wbr />change</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />http_<wbr />index_<wbr />format.<wbr />allowed_<wbr />schemes</td>
+        <td class="undefined">undefined</td>
+        <td>file,<wbr />moz-gio</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>pdfjs.<wbr />enableML</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>plugin.<wbr />default.<wbr />state</td>
+        <td>1</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>privacy.<wbr />sanitize.<wbr />sanitize<wbr />On<wbr />Shutdown.<wbr />has<wbr />Migrated<wbr />To<wbr />NewPrefs</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>privacy.<wbr />webrtc.<wbr />show<wbr />Indicators<wbr />On<wbr />Macos14<wbr />AndAbove</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>toolkit.<wbr />telemetry.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>ui.<wbr />mouse.<wbr />right_<wbr />click.<wbr />move_<wbr />caret.<wbr />stop_<wbr />if_<wbr />in_<wbr />focused_<wbr />editable_<wbr />node</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>widget.<wbr />disable_<wbr />file_<wbr />pickers</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>widget.<wbr />gtk.<wbr />titlebar-action-middle-click-enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+    </tbody>
+</table>
+</div>
+
+
+
+<style type="text/css"><!-- /* --><![CDATA[ /* */
+table.diff_firefox124_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
+table.diff_firefox124_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
+table.diff_firefox124_pref_diff thead td { background-color: #ddd; font-weight: bold; }
+table.diff_firefox124_pref_diff td.json,
+table.diff_firefox124_pref_diff td.uri,
+table.diff_firefox124_pref_diff td.dump { word-break: break-all; }
+table.diff_firefox124_pref_diff td.undefined { color: #888; font-style: italic; }
+table.diff_firefox124_pref_diff tr.sameval td:first-child { color: #444; }
+table.diff_firefox124_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
+table.diff_firefox124_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
+table.diff_firefox124_pref_diff tbody tr:hover { background-color: #eee; }
+table.diff_firefox124_pref_diff tbody tr { transition: background 0.125s ease-in-out 0s; }
+/* ]]><!-- */ --></style>
+
+  </div>
+
+  <footer class="post-footer">
+    <details id="comments">
+      <summary><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2024/03/diff-between-firefox-1240-beta-7-default.html">Comments</span></summary>
+      <div id="disqus_thread"></div>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <script type="application/javascript" src="/javascript/disqus_loader.js" defer="defer" async="async"></script>
+    </details>
+  </footer>
+</article><aside class="post-related">
+  <h2>Related Posts</h2>
+  <ul class="post-list"><li class="post-item">
+    <a class="post-link" href="/2019/09/diff-between-firefox-700-beta-10-default.html">
+      <span class="post-meta">2019-09-29</span>
+      <span class="post-title">Diff between firefox 70.0 beta 10 default preference and firefox 69.0.1</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2023/11/diff-between-firefox-1200-beta-6-default.html">
+      <span class="post-meta">2023-11-04</span>
+      <span class="post-title">Diff between firefox 120.0 beta 6 default preference and firefox 119.0</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2024/02/diff-between-firefox-1230-beta-6-default.html">
+      <span class="post-meta">2024-02-04</span>
+      <span class="post-title">Diff between firefox 123.0 beta 6 default preference and firefox 122.0</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2023/10/diff-between-firefox-1190-beta-6-default.html">
+      <span class="post-meta">2023-10-07</span>
+      <span class="post-title">Diff between firefox 119.0 beta 6 default preference and firefox 118.0.1</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2022/10/diff-between-firefox-1070-beta-3-default.html">
+      <span class="post-meta">2022-10-23</span>
+      <span class="post-title">Diff between firefox 107.0 beta 3 default preference and firefox 106.0.1</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2023/06/diff-between-firefox-1150-beta-3-default.html">
+      <span class="post-meta">2023-06-11</span>
+      <span class="post-title">Diff between firefox 115.0 beta 3 default preference and firefox 114.0.1</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2022/02/diff-between-firefox-980-beta-3-default.html">
+      <span class="post-meta">2022-02-12</span>
+      <span class="post-title">Diff between firefox 98.0 beta 3 default preference and firefox 97.0</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2023/08/diff-between-firefox-1170-beta-3-default.html">
+      <span class="post-meta">2023-08-06</span>
+      <span class="post-title">Diff between firefox 117.0 beta 3 default preference and firefox 116.0.1</span></a>
+  </li>
+</ul>
+</aside>
+      </div>
+    </div><footer class="site-footer">
+  <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
+    <h2 class="footer-heading">cat_in_136.blog()</h2>
+    <p>
+      © 2024
+      <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
+        <a href="/about"><span itemprop="name">cat_in_136</span></a>
+      </span>;
+      Content is available under a
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license" itemprop="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">CC BY-NC-SA 4.0</a>
+      unless otherwise noted.
+    </p>
+  </div>
+</footer>
+</body>
+</html>
