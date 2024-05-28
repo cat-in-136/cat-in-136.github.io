@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,max-scale=10,min-scale=0.5,user-scalable=yes" />
+  <title>LinuxのUnshareコマンドを使った簡易コンテナの作成</title>
+
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="https://code.cdn.mozilla.net/fonts/fira.css" />
+
+  <link rel="canonical" href="https://cat-in-136.github.io/2024/05/create-a-basic-container-with-unshare-command-on-linux.html" />
+  <link rel="alternate" type="application/rss+xml" title="cat_in_136.blog() &raquo; Feed" href="/feed.xml" />
+  <meta property="og:url" content="https://cat-in-136.github.io/2024/05/create-a-basic-container-with-unshare-command-on-linux.html" />
+  <meta property="og:title" content="LinuxのUnshareコマンドを使った簡易コンテナの作成" /><meta property="og:description" content="LinuxのコンテナテクノロジーはDockerやPodmanなどの優れたツールが広く使われているが、本質的にはLinuxカーネルの機能である名前空間とcgroupsを活用していることは意外と知ら..." /><meta property="og:type" content="article" /><meta property="og:site_name" content="cat_in_136.blog()" /><meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@cat_in_136" />
+  <meta name="twitter:creator" content="@cat_in_136" />
+</head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" href="/">cat_in_136.blog()</a>
+    <nav class="site-nav">
+      <a href="javascript:void(0);" class="menu-icon" title="barger button"></a>
+      <div class="trigger"><a class="page-link" href="/about">About</a><a class="page-link" href="/archive">Archive</a><a class="page-link" href="/tags">Tags</a></div>
+    </nav>
+  </div>
+</header>
+<div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name"><a href="/2024/05/create-a-basic-container-with-unshare-command-on-linux.html" itemprop="url">LinuxのUnshareコマンドを使った簡易コンテナの作成</a></h1>
+
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2024-05-29T00:14:27+09:00">2024-05-29T00:14:27+09:00</span></div><div class="post-meta">Tags:
+      <span itemprop="keywords"><a class="tag" href="/tags/linux">Linux</a><a class="tag" href="/tags/container">Container</a><a class="tag" href="/tags/unshare">Unshare</a></span></div><div class="post-meta">
+      Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2024-05-29-create-a-basic-container-with-unshare-command-on-linux.md" class="source-path">_posts/2024-05-29-create-a-basic-container-with-unshare-command-on-linux.md</a>
+        (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2024-05-29-create-a-basic-container-with-unshare-command-on-linux.md">History</a>)
+    </div><div class="post-meta">
+      <a href="#comments"><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2024/05/create-a-basic-container-with-unshare-command-on-linux.html">↓Comments</span></a>
+      <script id="dsq-count-scr" src="https://catin136blog.disqus.com/count.js" defer="defer" async="async"></script>
+    </div>
+  </header>
+
+  <div class="post-content" itemprop="articleBody" lang="ja">
+    <p>LinuxのコンテナテクノロジーはDockerやPodmanなどの優れたツールが広く使われているが、本質的にはLinuxカーネルの機能である名前空間とcgroupsを活用していることは意外と知られていない。</p>
+
+<p>Linuxカーネルには、名前空間を分離する機能がある。この機能を活用することで、ホストOSのファイルシステムやネットワークなどのリソースを、コンテナ内に分離された環境として提供できる。</p>
+
+<p>このLinuxの基礎的な機能を使えば、コンテナイメージを使わずにホストOSのリソースをそのまま流用した簡易的なコンテナがつくれる。</p>
+
+<p>本稿では、unshareコマンドを使ってホストOSから分離した名前空間を作成して、簡易的なコンテナを作成する手順を説明する。unshareコマンドは名前空間を操作するための基本的なLinuxコマンドで、rootユーザーでなくても使えるので、できるだけホスト側の権限を最小限に抑えた環境を作ることができる。このアプローチは用途が限られるが、コンテナの仕組みを手軽に理解することの一助にもなるだろう。</p>
+
+<h2 id="検討">検討</h2>
+
+<p>本稿でのルール</p>
+
+<ul>
+  <li>名前空間を使った仮想化</li>
+  <li>docker, podman, lxc そのものはなるべく使わない</li>
+  <li>コンテナイメージを持ってきて使うのではなく、ホスト自身のを流用する</li>
+  <li>可能な限りホスト側は root を使わない</li>
+</ul>
+
+<p>unshare コマンドで「コンテナプロセス」を作る。対話的に使う場合はコマンドを書かないか <code class="language-plaintext highlighter-rouge">bash --login</code> などと書く。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unshare オプション コマンド
+</code></pre></div></div>
+
+<h3 id="root-になりきる">root になりきる</h3>
+
+<p>root になりきる場合は <code class="language-plaintext highlighter-rouge">-r</code> (<code class="language-plaintext highlighter-rouge">--map-root-user</code>) を使う。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>unshare <span class="nt">-r</span> bash <span class="nt">-c</span> <span class="s1">'whoami; id -u; id -g'</span>
+<span class="go">root
+0
+0
+</span></code></pre></div></div>
+
+<p>しかしアクセス権限は当然引き継がれるので、root でしかできない作業が全部できるわけではない。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>unshare <span class="nt">-r</span> bash <span class="nt">-c</span> <span class="s1">'touch /foobar'</span>
+<span class="go">touch: '/foobar' に touch できません: 許可がありません
+</span></code></pre></div></div>
+
+<h4 id="自分に戻る">自分に戻る</h4>
+
+<p>root になりきったあとで自分に戻りたいときもある。</p>
+
+<p>unshare で root になっていても、実際には root ではないので su や sudo は使えない。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>unshare <span class="nt">-r</span> su <span class="si">$(</span><span class="nb">whoami</span><span class="si">)</span>
+<span class="go">su: cannot set groups: 許可されていない操作です
+</span></code></pre></div></div>
+
+<p>なので unshare の中で再度 unshare を実行してユーザを偽装しなおす手段で自分に戻るのが無難そうである。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">id</span> <span class="nt">-u</span><span class="p">;</span> <span class="nb">id</span> <span class="nt">-g</span>
+<span class="go">1000
+1000
+</span><span class="gp">$</span><span class="w"> </span>unshare <span class="nt">-r</span> unshare <span class="nt">--map-user</span><span class="o">=</span><span class="si">$(</span><span class="nb">id</span> <span class="nt">-u</span><span class="si">)</span> <span class="nt">--map-group</span><span class="o">=</span><span class="si">$(</span><span class="nb">id</span> <span class="nt">-g</span><span class="si">)</span> bash <span class="nt">-c</span> <span class="s1">'id -u; id -g'</span>
+<span class="go">1000
+1000
+</span></code></pre></div></div>
+
+<p>１つ目の <code class="language-plaintext highlighter-rouge">unshare -r</code> で uid=0 を外側の uid=1000 にマッピングする。
+そして2つめの <code class="language-plaintext highlighter-rouge">unshare --map-user=1000 --map-group=1000</code> で uid=1000 を外側の uid=0 にマッピングする。
+結果として uid=1000 が uid=1000 にマッピングされて自分に戻す。</p>
+
+<figure>
+
+<svg width="100%" height="100%" viewBox="0.00 0.00 576.00 127.50" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 100%; height: 100%; max-height: 128pt; max-width: 576pt;">
+<g transform="scale(1 1) rotate(0) translate(4 123.5)">
+<polygon fill="white" stroke="none" points="-4,4 -4,-123.5 572,-123.5 572,4 -4,4"></polygon>
+<g class="cluster">
+<polygon fill="none" stroke="black" points="8,-8 8,-111.5 560,-111.5 560,-8 8,-8"></polygon>
+<text text-anchor="middle" x="284" y="-94.2" font-size="14.00">unshare -r</text>
+</g>
+<g class="cluster">
+<polygon fill="none" stroke="black" points="212,-16 212,-78.25 552,-78.25 552,-16 212,-16"></polygon>
+<text text-anchor="middle" x="382" y="-60.95" font-size="14.00">unshare --map-user=1000 --map-group=1000</text>
+</g>
+<!-- msg1 -->
+<g class="node">
+<text text-anchor="middle" x="110" y="-31.7" font-size="14.00">uid=0 を uid=1000 に map</text>
+</g>
+<!-- msg2 -->
+<g class="node">
+<text text-anchor="middle" x="383" y="-31.7" font-size="14.00">uid=1000 を uid=0 に map</text>
+</g>
+</g>
+</svg>
+
+<figcaption>入れ子になったユーザ名前空間のイメージ</figcaption>
+</figure>
+
+<p>なお root になりきる必要がないのならば <code class="language-plaintext highlighter-rouge">-c</code> を使えば良い。下記の例では何もしていないが、これにネットワークの仮想化などを増やすと意味がでてくる。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>unshare <span class="nt">-c</span> bash <span class="nt">-c</span> <span class="s1">'id -u; id -g'</span>
+<span class="go">1000
+1000
+
+</span></code></pre></div></div>
+
+<h3 id="ファイルシステムをいじる">ファイルシステムをいじる</h3>
+
+<p><code class="language-plaintext highlighter-rouge">-m</code> (<code class="language-plaintext highlighter-rouge">--mount</code>) で新しいマウント名前空間を生成できる。既存の特定のディレクトリを置き換える場合には、 <code class="language-plaintext highlighter-rouge">unshare</code> の中で適当にマウントしてしまえばよい。</p>
+
+<p>例えば個人設定をクリーンな状態で動作させたいなどの理由でホームディレクトリを空にした状態をつくるには、ホームディレクトリを tmpfs でマウントし直せば良い。なお、カレントディレクトリをマウントし直した場合、マウント前のディレクトリが見えたままになるので、移動し直すのが良い。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>unshare <span class="nt">-rm</span> <span class="nt">--propagation</span> private bash <span class="nt">--login</span>
+<span class="gp">#</span><span class="w"> </span>mount <span class="nt">-t</span> tmpfs tmpfs <span class="nv">$HOME</span>
+<span class="gp">#</span><span class="w"> </span><span class="nb">cd</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>
+<span class="gp">#</span><span class="w"> </span><span class="nb">ls</span>
+<span class="gp">#</span><span class="w">
+</span></code></pre></div></div>
+
+<p>しかし、ルートディレクトリ <code class="language-plaintext highlighter-rouge">/</code> をすげ替えることはできない。また、他のシステムディレクトリもすげ替えることはできるが、コマンドが実行できなくなるなどの影響がでてしまうので現実的には使えない。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>unshare <span class="nt">-rm</span> <span class="nt">--propagation</span> private bash <span class="nt">--login</span>
+<span class="gp">#</span><span class="w"> </span>mount <span class="nt">-t</span> tmpfs tmpfs /lib64
+<span class="gp">#</span><span class="w"> </span><span class="nb">ls</span> /
+<span class="go">bash: 行 1: /usr/bin/ls: 実行できません: 必要なファイルがありません
+</span></code></pre></div></div>
+
+<p>解決策のひとつは、本稿のルールから逸脱するが、 rootfs をどこかに展開してそこに <code class="language-plaintext highlighter-rouge">chroot</code> でルートディレクトリをすげ替えることである。
+単に <code class="language-plaintext highlighter-rouge">chroot alpine-rootfs /bin/ash --login</code> を実行するには root 権限が必要であるが、 <code class="language-plaintext highlighter-rouge">unshare -r</code> で root になりすませば実際の root 権限なしでいける。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>wget <span class="nt">-q</span> https://dl-cdn.alpinelinux.org/alpine/v3.19/releases/x86_64/alpine-minirootfs-3.19.1-x86_64.tar.gz
+<span class="gp">$</span><span class="w"> </span><span class="nb">mkdir </span>alpine-rootfs
+<span class="gp">$</span><span class="w"> </span><span class="nb">tar </span>xf alpine-minirootfs-3.19.1-x86_64.tar.gz <span class="nt">-C</span> alpine-rootfs
+<span class="gp">$</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-F</span> alpine-rootfs
+<span class="go">bin/  dev/  etc/  home/  lib/  media/  mnt/  opt/  proc/  root/  run/  sbin/  srv/  sys/  tmp/  usr/  var/
+</span><span class="gp">$</span><span class="w"> </span>unshare <span class="nt">-r</span> <span class="nb">chroot </span>alpine-rootfs /bin/ash <span class="nt">--login</span>
+<span class="gp">#</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-F</span>
+<span class="go">bin/  dev/  etc/  home/  lib/  media/  mnt/  opt/  proc/  root/  run/  sbin/  srv/  sys/  tmp/  usr/  var/
+</span><span class="gp">#</span><span class="w"> </span><span class="nb">touch</span> /foobar
+<span class="gp">#</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-F</span>
+<span class="go">bin/  dev/  etc/  foobar  home/  lib/  media/  mnt/  opt/  proc/  root/  run/  sbin/  srv/  sys/  tmp/  usr/  var/
+</span><span class="gp">#</span><span class="w"> </span><span class="nb">exit</span>
+<span class="gp">$</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-F</span> alpine-rootfs
+<span class="go">bin/  dev/  etc/  foobar  home/  lib/  media/  mnt/  opt/  proc/  root/  run/  sbin/  srv/  sys/  tmp/  usr/  var/
+</span></code></pre></div></div>
+
+<p>なお、 chroot を実行するだけではいわゆる脱獄が可能であるため <code class="language-plaintext highlighter-rouge">pivot_root</code> をするのが好ましいとされている。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>unshare <span class="nt">-rm</span> <span class="nt">--propagation</span><span class="o">=</span>private
+<span class="gp">#</span><span class="w"> </span>mount <span class="nt">--bind</span> alpine-rootfs alpine-rootfs
+<span class="gp">#</span><span class="w"> </span><span class="nb">cd </span>alpine-rootfs
+<span class="gp">#</span><span class="w"> </span><span class="nb">mkdir</span> <span class="nt">-p</span> .put_old
+<span class="gp">#</span><span class="w"> </span>pivot_root <span class="nb">.</span> .put_old
+<span class="gp">#</span><span class="w"> </span><span class="nb">cd</span> /
+<span class="gp">#</span><span class="w"> </span><span class="nb">exec</span> /bin/ash <span class="nt">--login</span>
+<span class="gp">#</span><span class="w"> </span>umount <span class="nt">-l</span> /.put_old
+<span class="gp">#</span><span class="w"> </span><span class="nb">rmdir</span> /.put_old
+<span class="gp">#</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-F</span>
+<span class="go">bin/  dev/  etc/  home/  lib/  media/  mnt/  opt/  proc/  root/  run/  sbin/  srv/  sys/  tmp/  usr/  var/
+</span><span class="gp">#</span><span class="w"> </span><span class="nb">touch</span> /foobar
+<span class="gp">#</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-F</span>
+<span class="go">bin/  dev/  etc/  foobar  home/  lib/  media/  mnt/  opt/  proc/  root/  run/  sbin/  srv/  sys/  tmp/  usr/  var/
+</span></code></pre></div></div>
+
+<p>いずれにせよ一部を可変する場合と違って、全体を可変する場合は rootfs をつくってそこに chroot もしくは pivot_root でルートディレクトリを変えるのが基本戦略となる。</p>
+
+<p>overlayfs でルートディレクトリ <code class="language-plaintext highlighter-rouge">/</code> をまるごと書き込み可能な状態にできれば便利であると考えたが、これはエラーが出て動作しなかった。いくつか実装を試したり、既存の実装を確認したがかなり骨の折れる作業となりそうで現実的でない。</p>
+
+<p>参考までに <a href="https://github.com/rootless-containers/rootlesskit">rootlesskit</a> は置換先ディレクトリを tmpfs をマウントし、オリジナルを <code class="language-plaintext highlighter-rouge">.ro0000000000</code> のようなサブディレクトリにマウントし、ファイルやディレクトリはシンボリックリンクをする実装となっていた。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">mkdir</span> <span class="nt">-p</span> <span class="nb">test</span>/test1 <span class="nb">test</span>/test2
+<span class="gp">$</span><span class="w"> </span><span class="nb">touch test</span>/test3
+<span class="gp">$</span><span class="w"> </span>rootlesskit <span class="nt">--copy-up</span><span class="o">=</span><span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>/test <span class="nb">ls</span> <span class="nt">-lFa</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>/test
+<span class="go">合計 0
+drwxrwxrwt. 3 root root 120  3月 31 12:30 ./
+drwxr-xr-x. 3 root root  60  3月 31 12:30 ../
+drwxr-xr-x. 4 root root 100  3月 31 12:30 .ro2787431005/
+</span><span class="gp">lrwxrwxrwx. 1 root root  19  3月 31 12:30 test1 -&gt;</span><span class="w"> </span>.ro2787431005/test1/
+<span class="gp">lrwxrwxrwx. 1 root root  19  3月 31 12:30 test2 -&gt;</span><span class="w"> </span>.ro2787431005/test2/
+<span class="gp">lrwxrwxrwx. 1 root root  19  3月 31 12:30 test3 -&gt;</span><span class="w"> </span>.ro2787431005/test3
+</code></pre></div></div>
+
+<p>というわけで、一部のディレクトリを入れ替える隠すといった小さな差分処理以外は素直に docker や podman などのコンテナ仮想化ソフト群を使うのが現実的であろう。</p>
+
+<h3 id="イーサネットを分離するのは簡単だがつなげるのは面倒">イーサネットを分離するのは簡単だがつなげるのは面倒</h3>
+
+<p>イーサネットを分離するネットワーク名前空間を導入すること自体のは簡単で <code class="language-plaintext highlighter-rouge">-n</code> ( <code class="language-plaintext highlighter-rouge">--net</code> ) を使うだけだ。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>unshare <span class="nt">-cn</span> ip a
+<span class="gp">1: lo: &lt;LOOPBACK&gt;</span><span class="w"> </span>mtu 65536 qdisc noop state DOWN group default qlen 1000
+<span class="go">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span></code></pre></div></div>
+
+<p>ループバックアドレスすら定義されず、 127.0.0.1 すら存在しない。イーサネットを一切使わせないときには便利であろう。</p>
+
+<p>この状態からネットワークにつなげていくとなると途端に難しくなる。というのもネットワークトンネリング構築技術と同じ話になるからだ。</p>
+
+<h4 id="ip-netns-が便利">ip netns が便利</h4>
+
+<p><code class="language-plaintext highlighter-rouge">ip netns</code> を使うのが実のところ便利である。
+unshare だと名前空間に名前がつかないので、ネットワークの配線が非常に難しいからだ。</p>
+
+<p>しかし sudo が必須である。ただ、閉網であるのならば以下の条件下で root 権限不要で使用可能だ</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">unshare -rnm --propagation=private</code> でネットワークとマウントを分離した簡易コンテナをつくる</li>
+  <li><code class="language-plaintext highlighter-rouge">/var/run/netns</code> を分離すること（たとえば tmpfs でマウントしなおすこと）</li>
+  <li><code class="language-plaintext highlighter-rouge">unshare</code> の外界とのイーサネット接続性がないこと（閉網であること）</li>
+</ul>
+
+<p>例えばネットワーク名前空間 ns1 ns2 を作成し、それらを veth-pair でつなぐ例 <a href="https://blog.serverworks.co.jp/tech/2019/08/05/post-70460/">秒速でネットワーク作成 [veth peer] - サーバーワークスエンジニアブログ</a> にある一連の処理を、ユーザ権限で実行できる。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>unshare <span class="nt">-rnm</span> <span class="nt">--propagation</span><span class="o">=</span>private
+<span class="gp">#</span><span class="w"> </span>mount <span class="nt">-t</span> tmpfs tmpfs /var/run
+<span class="gp">#</span><span class="w"> </span>ip netns add ns1
+<span class="gp">#</span><span class="w"> </span>ip netns add ns2
+<span class="gp">#</span><span class="w"> </span>ip <span class="nb">link </span>add eth0-ns1 <span class="nb">type </span>veth peer name eth0-ns2
+<span class="gp">#</span><span class="w"> </span>ip <span class="nb">link set </span>eth0-ns1 netns ns1
+<span class="gp">#</span><span class="w"> </span>ip <span class="nb">link set </span>eth0-ns2 netns ns2
+<span class="gp">#</span><span class="w"> </span>ip netns <span class="nb">exec </span>ns1 ip address add 192.168.0.101/24 dev eth0-ns1
+<span class="gp">#</span><span class="w"> </span>ip netns <span class="nb">exec </span>ns2 ip address add 192.168.0.102/24 dev eth0-ns2
+<span class="gp">#</span><span class="w"> </span>ip netns <span class="nb">exec </span>ns1 ip <span class="nb">link set </span>lo up
+<span class="gp">#</span><span class="w"> </span>ip netns <span class="nb">exec </span>ns2 ip <span class="nb">link set </span>lo up
+<span class="gp">#</span><span class="w"> </span>ip netns <span class="nb">exec </span>ns1 ip <span class="nb">link set </span>eth0-ns1 up
+<span class="gp">#</span><span class="w"> </span>ip netns <span class="nb">exec </span>ns2 ip <span class="nb">link set </span>eth0-ns2 up
+<span class="gp">#</span><span class="w"> </span>ip netns <span class="nb">exec </span>ns1 ip a
+<span class="gp">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt;</span><span class="w"> </span>mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+<span class="go">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host proto kernel_lo
+       valid_lft forever preferred_lft forever
+</span><span class="gp">3: eth0-ns1@if2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt;</span><span class="w"> </span>mtu 1500 qdisc noqueue state UP group default qlen 1000
+<span class="go">    link/ether 8e:11:b1:37:2d:f5 brd ff:ff:ff:ff:ff:ff link-netns ns2
+    inet 192.168.0.101/24 scope global eth0-ns1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::8c11:b1ff:fe37:2df5/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+</span><span class="gp">#</span><span class="w"> </span>ip netns <span class="nb">exec </span>ns2 ip a
+<span class="gp">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt;</span><span class="w"> </span>mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+<span class="go">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host proto kernel_lo
+       valid_lft forever preferred_lft forever
+</span><span class="gp">2: eth0-ns2@if3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt;</span><span class="w"> </span>mtu 1500 qdisc noqueue state UP group default qlen 1000
+<span class="go">    link/ether 9e:5c:50:6a:35:bf brd ff:ff:ff:ff:ff:ff link-netns ns1
+    inet 192.168.0.102/24 scope global eth0-ns2
+       valid_lft forever preferred_lft forever
+    inet6 fe80::9c5c:50ff:fe6a:35bf/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+</span><span class="gp">#</span><span class="w"> </span>ip netns <span class="nb">exec </span>ns1 ping 192.168.0.102 <span class="nt">-c</span> 3 <span class="nt">-i</span> 0
+<span class="go">PING 192.168.0.102 (192.168.0.102) 56(84) バイトのデータ
+64 バイト応答 送信元 192.168.0.102: icmp_seq=1 ttl=64 時間=0.084ミリ秒
+64 バイト応答 送信元 192.168.0.102: icmp_seq=2 ttl=64 時間=0.014ミリ秒
+64 バイト応答 送信元 192.168.0.102: icmp_seq=3 ttl=64 時間=0.012ミリ秒
+
+--- 192.168.0.102 ping 統計 ---
+送信パケット数 3, 受信パケット数 3, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.012/0.036/0.084/0.033 ms, ipg/ewma 0.091/0.067 ms
+</span></code></pre></div></div>
+
+<p>作成したネットワークを図示すると下記の通り。</p>
+
+<figure>
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="100%" preserveAspectRatio="none" style="width: 100%; height: 100%; max-height: 306px; max-width: 142px;" version="1.1" viewBox="0 0 142 306" width="100%" zoomAndPan="magnify">
+  <defs></defs>
+  <g>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="4" x="5" y="16.1387">&nbsp;</text>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="4" x="5" y="160.8496">&nbsp;</text>
+    <rect fill="#E7E7E7" height="57.9375" style="stroke:#E7E7E7;stroke-width:1.0;" width="86" x="31" y="45.8867"></rect>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="23" x="36" y="57.0254">ns1</text>
+    <rect fill="#E7E7E7" height="57.9375" style="stroke:#E7E7E7;stroke-width:1.0;" width="86" x="31" y="190.5977"></rect>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="23" x="36" y="201.7363">ns2</text>
+    <path d="M74,98.8242 L74,154.1953 " fill="none" style="stroke:#181818;stroke-width:1.0;"></path>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="100" x="24" y="130.3179">192.168.0.101/24</text>
+    <path d="M74,154.1953 L74,209.5664 " fill="none" style="stroke:#181818;stroke-width:1.0;"></path>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="100" x="24" y="178.7046">192.168.0.102/24</text>
+    <rect fill="#F1F1F1" height="33.9688" style="stroke:#181818;stroke-width:0.5;" width="76" x="36" y="64.8555"></rect>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="56" x="46" y="85.9941">eth0-ns1</text>
+    <rect fill="#F1F1F1" height="33.9688" style="stroke:#181818;stroke-width:0.5;" width="76" x="36" y="209.5664"></rect>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="56" x="46" y="230.7051">eth0-ns2</text>
+  </g>
+</svg>
+
+<figcaption>作成したネットワークのイメージ</figcaption>
+</figure>
+
+<p>なおこのようなネットワーク関係の作業をするときには、別窓（別プロセスの端末）からアクセスするのが便利である。
+その場合は大本の unshare した端末でのプロセスを確認しておき (<code class="language-plaintext highlighter-rouge">echo $$</code> で出力される)、その名前空間に nsenter で入れば良い。</p>
+
+<p>例えばターゲット先のプロセスIDが 54321 であったとするならば、下記のようにすれば良い。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>nsenter <span class="nt">--preserve-credentials</span> <span class="nt">-U</span> <span class="nt">-n</span> <span class="nt">-m</span> <span class="nt">-t</span> 54321 ip netns <span class="nb">exec </span>ns1 ping 192.168.0.102 <span class="nt">-c</span> 3 <span class="nt">-i</span> 0
+<span class="go">
+PING 192.168.0.102 (192.168.0.102) 56(84) バイトのデータ
+64 バイト応答 送信元 192.168.0.102: icmp_seq=1 ttl=64 時間=0.042ミリ秒
+64 バイト応答 送信元 192.168.0.102: icmp_seq=2 ttl=64 時間=0.020ミリ秒
+64 バイト応答 送信元 192.168.0.102: icmp_seq=3 ttl=64 時間=0.016ミリ秒
+
+--- 192.168.0.102 ping 統計 ---
+送信パケット数 3, 受信パケット数 3, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.016/0.026/0.042/0.011 ms, ipg/ewma 0.091/0.036 ms
+</span></code></pre></div></div>
+
+<p>大本の unshare のプロセスを閉じればネットワーク名前空間もろともなくなるので、元記事と違ってお片付けの作業は省いてそのまま <code class="language-plaintext highlighter-rouge">exit</code> しても良い。</p>
+
+<h4 id="slirp4netns-で外界へのアクセスする">slirp4netns で外界へのアクセスする</h4>
+
+<p>通常のルートレスコンテナは外界への接続性があって、<code class="language-plaintext highlighter-rouge">wget</code> や <code class="language-plaintext highlighter-rouge">git clone</code> などでインターネット上の資産をダウンロードできる。
+コンテナ内に tap デバイスが生えていて、この tap を経由して外界に出ている。（podman v4の場合）</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>podman unshare <span class="nt">--rootless-netns</span>
+<span class="gp">#</span><span class="w"> </span>ip a
+<span class="gp">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt;</span><span class="w"> </span>mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+<span class="go">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host proto kernel_lo 
+       valid_lft forever preferred_lft forever
+</span><span class="gp">2: tap0: &lt;BROADCAST,UP,LOWER_UP&gt;</span><span class="w"> </span>mtu 65520 qdisc fq_codel state UNKNOWN group default qlen 1000
+<span class="go">    link/ether 3e:2b:29:ab:13:fc brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.100/24 brd 10.0.2.255 scope global tap0
+       valid_lft forever preferred_lft forever
+    inet6 fd00::3c2b:29ff:feab:13fc/64 scope global dynamic mngtmpaddr proto kernel_ra 
+       valid_lft 85937sec preferred_lft 13937sec
+    inet6 fe80::3c2b:29ff:feab:13fc/64 scope link proto kernel_ll 
+       valid_lft forever preferred_lft forever
+</span><span class="gp">#</span><span class="w"> </span>ip route
+<span class="go">default via 10.0.2.2 dev tap0
+10.0.2.0/24 dev tap0 proto kernel scope link src 10.0.2.100
+</span></code></pre></div></div>
+
+<p>ユーザ権限で動く bridge が動いていて、 tap0 で受けたものを代理して外界に通信する仕組みになっている。</p>
+
+<figure>
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" height="100%" preserveAspectRatio="none" style="width: 100%; height: 100%; max-height: 365px; max-width: 301px;" version="1.1" viewBox="0 0 301 365" width="100%" zoomAndPan="magnify">
+  <defs></defs>
+  <g>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="4" x="98" y="16.1387">&nbsp;</text>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="97" x="5" y="246.8809">rootless_bridge</text>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="72" x="30" y="260.8496">10.0.2.0/24</text>
+    <rect fill="#E7E7E7" height="43.9688" style="stroke:#E7E7E7;stroke-width:1.0;" width="59" x="132.5" y="276.6289"></rect>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1.0;" width="186" x="107" y="123.4531"></rect>
+    <rect fill="#E2E2F0" height="5" style="stroke:#181818;stroke-width:1.0;" width="186" x="107" y="240.2266"></rect>
+    <path d="M164,88.4531 L164,123.4531 " fill="none" style="stroke:#181818;stroke-width:1.0;"></path>
+    <path d="M160,128.4531 L160,164.8555 " fill="none" style="stroke:#181818;stroke-width:1.0;"></path>
+    <path d="M160,198.8242 L160,240.2266 " fill="none" style="stroke:#181818;stroke-width:1.0;"></path>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="47" x="136.5" y="223.3335">10.0.2.2</text>
+    <path d="M253,128.4531 L253,164.8555 " fill="none" style="stroke:#181818;stroke-width:1.0;"></path>
+    <path d="M253,198.8242 L253,240.2266 " fill="none" style="stroke:#181818;stroke-width:1.0;"></path>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="47" x="229.5" y="223.3335">10.0.2.3</text>
+    <path d="M164,245.2266 L164,281.6289 " fill="none" style="stroke:#181818;stroke-width:1.0;"></path>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="61" x="133.5" y="264.7358">10.0.2.100</text>
+    <path d="M131.5335,52.6574 C134.9347,43.7298 140.2174,42.9323 146.6698,49.7182 C149.5497,41.9178 156.4893,37.9219 163.1698,45.6902 C169.756,39.7223 176.5169,42.9006 178.5327,50.766 C184.9978,45.0104 191.0695,46.4297 194.7841,54.0963 C202.5993,56.9438 203.4747,63.9992 196.127,68.2821 C201.8062,73.1287 201.8643,76.9776 194.9677,80.6449 C191.7918,89.6183 185.2362,91.5181 178.7482,83.8786 C175.7744,92.3534 169.4815,92.7642 163.5505,87.0448 C157.0053,93.8173 149.8862,93.8 146.4082,83.8925 C140.7253,90.7179 135.8498,88.9306 132.0183,81.9613 C123.2858,78.7223 123.9797,72.62 129.6804,67.109 C123.8152,61.4773 124.6465,56.654 131.5335,52.6574 " fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"></path>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="50" x="137" y="70.623">internet</text>
+    <rect fill="#F1F1F1" height="33.9688" style="stroke:#181818;stroke-width:0.5;" width="72" x="126" y="164.8555"></rect>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="52" x="136" y="185.9941">gateway</text>
+    <rect fill="#F1F1F1" height="33.9688" style="stroke:#181818;stroke-width:0.5;" width="46" x="232" y="164.8555"></rect>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="26" x="242" y="185.9941">DNS</text>
+    <rect fill="#F1F1F1" height="33.9688" style="stroke:#181818;stroke-width:0.5;" width="49" x="137.5" y="281.6289"></rect>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="29" x="147.5" y="302.7676">tap0</text>
+  </g>
+</svg>
+<figcaption>rootless bridge を介したネットワーク接続のイメージ</figcaption>
+</figure>
+
+<p>いくつか手段があるが podman v4 では slirp4netns がデフォルトとして使っている。</p>
+
+<blockquote>
+  <p><strong>Terminal 1</strong>: Create user/network/mount namespaces</p>
+
+  <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(host)$</span><span class="w"> </span>unshare <span class="nt">--user</span> <span class="nt">--map-root-user</span> <span class="nt">--net</span> <span class="nt">--mount</span>
+<span class="gp">(namespace)$</span><span class="w"> </span><span class="nb">echo</span> <span class="nv">$$</span> <span class="o">&gt;</span> /tmp/pid
+</code></pre></div>  </div>
+
+  <p>In this documentation, we use <code class="language-plaintext highlighter-rouge">(host)$</code> as the prompt of the host shell, <code class="language-plaintext highlighter-rouge">(namespace)$</code> as the prompt of the shell running in the namespaces.</p>
+
+  <p>(中略)</p>
+
+  <p><strong>Terminal 2</strong>: Start slirp4netns</p>
+
+  <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(host)$</span><span class="w"> </span>slirp4netns <span class="nt">--configure</span> <span class="nt">--mtu</span><span class="o">=</span>65520 <span class="nt">--disable-host-loopback</span> <span class="si">$(</span><span class="nb">cat</span> /tmp/pid<span class="si">)</span> tap0
+<span class="go">starting slirp, MTU=65520
+</span><span class="c">...
+</span></code></pre></div>  </div>
+
+  <p><strong>Terminal 1</strong>: Make sure the <code class="language-plaintext highlighter-rouge">tap0</code> is configured and connected to the Internet</p>
+
+  <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(namespace)$</span><span class="w"> </span>ip a
+<span class="gp">1: lo: &lt;LOOPBACK&gt;</span><span class="w"> </span>mtu 65536 qdisc noop state DOWN group default qlen 1000
+<span class="go">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span><span class="gp">3: tap0: &lt;BROADCAST,UP,LOWER_UP&gt;</span><span class="w"> </span>mtu 65520 qdisc fq_codel state UNKNOWN group default qlen 1000
+<span class="go">    link/ether c2:28:0c:0e:29:06 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.100/24 brd 10.0.2.255 scope global tap0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::c028:cff:fe0e:2906/64 scope link 
+       valid_lft forever preferred_lft forever
+</span><span class="gp">(namespace)$</span><span class="w"> </span><span class="nb">echo</span> <span class="s2">"nameserver 10.0.2.3"</span> <span class="o">&gt;</span> /tmp/resolv.conf
+<span class="gp">(namespace)$</span><span class="w"> </span>mount <span class="nt">--bind</span> /tmp/resolv.conf /etc/resolv.conf
+<span class="gp">(namespace)$</span><span class="w"> </span>curl https://example.com
+</code></pre></div>  </div>
+</blockquote>
+
+<p>上記の手順、すなわち簡易コンテナのプロセス番号を渡す形で <code class="language-plaintext highlighter-rouge">slirp4netns --configure --mtu=65520 --disable-host-loopback PID tap0</code> のように実行すれば、 podman と同様のネットワーク構成が手に入る。</p>
+
+<p>また slirp4netns はポートフォワーディング機能も API 経由で対応している。</p>
+
+<blockquote>
+  <p>slirp4netns can provide QMP-like API server over an UNIX socket file:</p>
+
+  <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(host)$</span><span class="w"> </span>slirp4netns <span class="nt">--api-socket</span> /tmp/slirp4netns.sock ...
+</code></pre></div>  </div>
+
+  <p><code class="language-plaintext highlighter-rouge">add_hostfwd</code>: Expose a port (IPv4 only)</p>
+
+  <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(namespace)$</span><span class="w"> </span><span class="nv">json</span><span class="o">=</span><span class="s1">'{"execute": "add_hostfwd", "arguments": {"proto": "tcp", "host_addr": "0.0.0.0", "host_port": 8080, "guest_addr": "10.0.2.100", "guest_port": 80}}'</span>
+<span class="gp">(namespace)$</span><span class="w"> </span><span class="nb">echo</span> <span class="nt">-n</span> <span class="nv">$json</span> | nc <span class="nt">-U</span> /tmp/slirp4netns.sock
+<span class="go">{"return": {"id": 42}}
+</span></code></pre></div>  </div>
+
+  <p>If <code class="language-plaintext highlighter-rouge">host_addr</code> is not specified, then it defaults to “0.0.0.0”.</p>
+
+  <p>If <code class="language-plaintext highlighter-rouge">guest_addr</code> is not specified, then it will be set to the default address that corresponds to <code class="language-plaintext highlighter-rouge">--configure</code>.</p>
+</blockquote>
+
+<p>なお、 podman v5 で <a href="https://passt.top/">pasta(passt)</a> をデフォルトに使うようになった。ただ qemu, libvirt, podman とのインテグレーションは対応しているもののコマンドラインで使いやすいものではない。</p>
+
+<p>いずれにせよ slirp4netns や pasta がある環境では docker や podman がインストールされていそうであるし、
+そちらを使った方が大幅に楽だ。
+たとえば下記のコマンドで、ネットワーク分離しつつ外界との接続性を維持する。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ podman unshare --rootless-netns
+</code></pre></div></div>
+
+<h3 id="プロセスを分離する">プロセスを分離する</h3>
+
+<p>プロセスを分離するには <code class="language-plaintext highlighter-rouge">-p</code> (<code class="language-plaintext highlighter-rouge">--pid</code>) を指定すればいいが、実際のところ <code class="language-plaintext highlighter-rouge">/proc</code> の分離なども必要となってくるので <code class="language-plaintext highlighter-rouge">-f</code> (<code class="language-plaintext highlighter-rouge">--fork</code>) と <code class="language-plaintext highlighter-rouge">--mount-proc</code> を加えた下記を実行することになる。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>unshare <span class="nt">-rfp</span> <span class="nt">--mount-proc</span> ps <span class="nt">-e</span>
+<span class="go">    PID TTY          TIME CMD
+      1 pts/2    00:00:00 ps
+</span></code></pre></div></div>
+
+<p>これで docker コンテナ内のプロセスのように PID=1 がユーザプログラムになる。</p>
+
+<p><code class="language-plaintext highlighter-rouge">/proc</code> はマウントし直しされる形で分離されていて、 <code class="language-plaintext highlighter-rouge">mount</code> の出力からもそれがわかる。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>mount | <span class="nb">grep</span> <span class="s1">'type proc'</span>
+<span class="go">proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+</span><span class="gp">$</span><span class="w"> </span>unshare <span class="nt">-rfp</span> <span class="nt">--mount-proc</span> mount | <span class="nb">grep</span> <span class="s1">'type proc'</span>
+<span class="go">proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+</span></code></pre></div></div>
+
+<p>プロセスの分離はコンテナどおしの分離という観点では非常に重要ではあるが、今回のような単に簡易的なコンテナで十分なシナリオでは必要性は薄いように思える。</p>
+
+<h2 id="使えそうなワンライナー">使えそうなワンライナー</h2>
+
+<p>というわけで、使い勝手が良さそうなワンライナーとしては下記のぐらいだろうか。</p>
+
+<p>ホームディレクトリをクリア（したとみせかけるため tmpfs でマウント）して実行。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unshare <span class="nt">-rm</span> <span class="nt">--propagation</span> private /bin/bash <span class="nt">-c</span> <span class="s2">"/bin/mount -t tmpfs tmpfs </span><span class="nv">$HOME</span><span class="s2"> &amp;&amp; cd </span><span class="nv">$HOME</span><span class="s2"> &amp;&amp; unshare --map-user=</span><span class="si">$(</span><span class="nb">id</span> <span class="nt">-u</span><span class="si">)</span><span class="s2"> --map-group=</span><span class="si">$(</span><span class="nb">id</span> <span class="nt">-g</span><span class="si">)</span><span class="s2">
+</span></code></pre></div></div>
+
+<p>ネットワーク設定練習用（まっさらな状態から）</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unshare <span class="nt">-cn</span>
+</code></pre></div></div>
+
+<p>ネットワーク設定練習用（外部接続性がある状態から）</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman unshare <span class="nt">--rootless-netns</span>
+</code></pre></div></div>
+
+<h2 id="参考文献">参考文献</h2>
+
+<ul>
+  <li><a href="https://gihyo.jp/admin/serial/01/linux_containers/0002">第2回　コンテナの仕組みとLinuxカーネルのコンテナ機能［1］名前空間とは？ | gihyo.jp</a></li>
+  <li><a href="https://rootlesscontaine.rs/how-it-works/">How it works | Rootless Containers</a></li>
+  <li><a href="https://yohgami.hateblo.jp/entry/20161215/1481755818">chrootとunshareを使い、シェル上でコマンド7つで簡易コンテナ - へにゃぺんて＠日々勉強のまとめ</a></li>
+  <li><a href="https://qiita.com/ngyuki/items/a9cff2ba3fceb97d18ec">unshare -m とか mount –make-shared とか #Linux - Qiita</a></li>
+  <li><a href="https://tenforward.hatenablog.com/entry/2020/05/16/020055">unshare コマンドがマウントプロパゲーションをまともに扱うような変更を入れていた - TenForward</a></li>
+  <li><a href="https://blog.framinal.life/entry/2020/04/09/183208">【コンテナ要素技術】pivot_rootについて例をまじえて説明します - フラミナル</a></li>
+  <li><a href="https://blog.serverworks.co.jp/tech/2019/08/05/post-70460/">秒速でネットワーク作成 [veth peer] - サーバーワークスエンジニアブログ</a></li>
+  <li><a href="https://github.com/rootless-containers/slirp4netns">rootless-containers/slirp4netns: User-mode networking for unprivileged network namespaces</a></li>
+  <li><a href="https://passt.top/passt/about/">passt - Plug A Simple Socket Transport</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <details id="comments">
+      <summary><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2024/05/create-a-basic-container-with-unshare-command-on-linux.html">Comments</span></summary>
+      <div id="disqus_thread"></div>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <script type="application/javascript" src="/javascript/disqus_loader.js" defer="defer" async="async"></script>
+    </details>
+  </footer>
+</article><aside class="post-related">
+  <h2>Related Posts</h2>
+  <ul class="post-list"><li class="post-item">
+    <a class="post-link" href="/2022/05/note-m5paper-power-supply-management.html">
+      <span class="post-meta">2022-05-08</span>
+      <span class="post-title">Note: M5Paper Power Supply/Management</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2017/10/list-of-all-the-config-provided-by-configuration-mania.html">
+      <span class="post-meta">2017-10-26</span>
+      <span class="post-title">List of all the Config provided by Configuration Mania</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2021/09/zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru.html">
+      <span class="post-meta">2021-09-13</span>
+      <span class="post-title">ぜんぜんわからない俺達は雰囲気でbtrfs使っている</span><img class="post-thumb" src="/images/2020-09-13-Btrfs_logo.svg" loading="lazy" alt="thumbnail" /></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2022/08/note-qmk-flash-on-podman-on-linux.html">
+      <span class="post-meta">2022-08-28</span>
+      <span class="post-title">Linux上のpodman上でqmk flashすることに関するメモ</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2023/01/visualize-imaginary-solution.html">
+      <span class="post-meta">2023-01-29</span>
+      <span class="post-title">二次方程式の虚数解の可視化</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2018/02/progress-of-year.html">
+      <span class="post-meta">2018-02-02</span>
+      <span class="post-title">年の進捗</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2022/01/directory-layout-of-library-for-unit-testing-with-platformio.html">
+      <span class="post-meta">2022-01-16</span>
+      <span class="post-title">Note: Directory Layout of library for unit testing with PlatformIO</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2014/06/lukstruecrypt.html">
+      <span class="post-meta">2014-06-29</span>
+      <span class="post-title">LUKSを(TrueCryptみたいに)仮想ドライブファイルで運用するには</span></a>
+  </li>
+</ul>
+</aside>
+      </div>
+    </div><footer class="site-footer">
+  <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
+    <h2 class="footer-heading">cat_in_136.blog()</h2>
+    <p>
+      © 2024
+      <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
+        <a href="/about"><span itemprop="name">cat_in_136</span></a>
+      </span>;
+      Content is available under a
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license" itemprop="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">CC BY-NC-SA 4.0</a>
+      unless otherwise noted.
+    </p>
+  </div>
+</footer>
+</body>
+</html>

@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator>
   <link href="https://cat-in-136.github.io/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://cat-in-136.github.io/" rel="alternate" type="text/html" />
-  <updated>2024-05-27T23:11:37+09:00</updated>
+  <updated>2024-05-29T00:16:27+09:00</updated>
   <id>https://cat-in-136.github.io/</id>
 
   
@@ -17,6 +17,531 @@
 
   
   
+  
+    <entry>
+      <title type="html">LinuxのUnshareコマンドを使った簡易コンテナの作成</title>
+      <link href="https://cat-in-136.github.io/2024/05/create-a-basic-container-with-unshare-command-on-linux.html" rel="alternate" type="text/html" title="LinuxのUnshareコマンドを使った簡易コンテナの作成" />
+      <published>2024-05-29T00:14:27+09:00</published>
+      <updated>2024-05-29T00:14:27+09:00</updated>
+      <id>https://cat-in-136.github.io/2024/05/create-a-basic-container-with-unshare-command-on-linux</id>
+      
+      
+      
+      <content type="html" xml:base="https://cat-in-136.github.io/2024/05/create-a-basic-container-with-unshare-command-on-linux.html">&lt;p&gt;LinuxのコンテナテクノロジーはDockerやPodmanなどの優れたツールが広く使われているが、本質的にはLinuxカーネルの機能である名前空間とcgroupsを活用していることは意外と知られていない。&lt;/p&gt;
+
+&lt;p&gt;Linuxカーネルには、名前空間を分離する機能がある。この機能を活用することで、ホストOSのファイルシステムやネットワークなどのリソースを、コンテナ内に分離された環境として提供できる。&lt;/p&gt;
+
+&lt;p&gt;このLinuxの基礎的な機能を使えば、コンテナイメージを使わずにホストOSのリソースをそのまま流用した簡易的なコンテナがつくれる。&lt;/p&gt;
+
+&lt;p&gt;本稿では、unshareコマンドを使ってホストOSから分離した名前空間を作成して、簡易的なコンテナを作成する手順を説明する。unshareコマンドは名前空間を操作するための基本的なLinuxコマンドで、rootユーザーでなくても使えるので、できるだけホスト側の権限を最小限に抑えた環境を作ることができる。このアプローチは用途が限られるが、コンテナの仕組みを手軽に理解することの一助にもなるだろう。&lt;/p&gt;
+
+&lt;h2 id=&quot;検討&quot;&gt;検討&lt;/h2&gt;
+
+&lt;p&gt;本稿でのルール&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;名前空間を使った仮想化&lt;/li&gt;
+  &lt;li&gt;docker, podman, lxc そのものはなるべく使わない&lt;/li&gt;
+  &lt;li&gt;コンテナイメージを持ってきて使うのではなく、ホスト自身のを流用する&lt;/li&gt;
+  &lt;li&gt;可能な限りホスト側は root を使わない&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;unshare コマンドで「コンテナプロセス」を作る。対話的に使う場合はコマンドを書かないか &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bash --login&lt;/code&gt; などと書く。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;unshare オプション コマンド
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;root-になりきる&quot;&gt;root になりきる&lt;/h3&gt;
+
+&lt;p&gt;root になりきる場合は &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-r&lt;/code&gt; (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--map-root-user&lt;/code&gt;) を使う。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;unshare &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; bash &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;whoami; id -u; id -g&apos;&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;root
+0
+0
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;しかしアクセス権限は当然引き継がれるので、root でしかできない作業が全部できるわけではない。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;unshare &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; bash &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;touch /foobar&apos;&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;touch: &apos;/foobar&apos; に touch できません: 許可がありません
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;自分に戻る&quot;&gt;自分に戻る&lt;/h4&gt;
+
+&lt;p&gt;root になりきったあとで自分に戻りたいときもある。&lt;/p&gt;
+
+&lt;p&gt;unshare で root になっていても、実際には root ではないので su や sudo は使えない。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;unshare &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; su &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;whoami&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;su: cannot set groups: 許可されていない操作です
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;なので unshare の中で再度 unshare を実行してユーザを偽装しなおす手段で自分に戻るのが無難そうである。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-g&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;1000
+1000
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;unshare &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; unshare &lt;span class=&quot;nt&quot;&gt;--map-user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--map-group&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-g&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt; bash &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;id -u; id -g&apos;&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;1000
+1000
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;１つ目の &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unshare -r&lt;/code&gt; で uid=0 を外側の uid=1000 にマッピングする。
+そして2つめの &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unshare --map-user=1000 --map-group=1000&lt;/code&gt; で uid=1000 を外側の uid=0 にマッピングする。
+結果として uid=1000 が uid=1000 にマッピングされて自分に戻す。&lt;/p&gt;
+
+&lt;figure&gt;
+
+&lt;svg width=&quot;100%&quot; height=&quot;100%&quot; viewBox=&quot;0.00 0.00 576.00 127.50&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; style=&quot;width: 100%; height: 100%; max-height: 128pt; max-width: 576pt;&quot;&gt;
+&lt;g transform=&quot;scale(1 1) rotate(0) translate(4 123.5)&quot;&gt;
+&lt;polygon fill=&quot;white&quot; stroke=&quot;none&quot; points=&quot;-4,4 -4,-123.5 572,-123.5 572,4 -4,4&quot;&gt;&lt;/polygon&gt;
+&lt;g class=&quot;cluster&quot;&gt;
+&lt;polygon fill=&quot;none&quot; stroke=&quot;black&quot; points=&quot;8,-8 8,-111.5 560,-111.5 560,-8 8,-8&quot;&gt;&lt;/polygon&gt;
+&lt;text text-anchor=&quot;middle&quot; x=&quot;284&quot; y=&quot;-94.2&quot; font-size=&quot;14.00&quot;&gt;unshare -r&lt;/text&gt;
+&lt;/g&gt;
+&lt;g class=&quot;cluster&quot;&gt;
+&lt;polygon fill=&quot;none&quot; stroke=&quot;black&quot; points=&quot;212,-16 212,-78.25 552,-78.25 552,-16 212,-16&quot;&gt;&lt;/polygon&gt;
+&lt;text text-anchor=&quot;middle&quot; x=&quot;382&quot; y=&quot;-60.95&quot; font-size=&quot;14.00&quot;&gt;unshare --map-user=1000 --map-group=1000&lt;/text&gt;
+&lt;/g&gt;
+&lt;!-- msg1 --&gt;
+&lt;g class=&quot;node&quot;&gt;
+&lt;text text-anchor=&quot;middle&quot; x=&quot;110&quot; y=&quot;-31.7&quot; font-size=&quot;14.00&quot;&gt;uid=0 を uid=1000 に map&lt;/text&gt;
+&lt;/g&gt;
+&lt;!-- msg2 --&gt;
+&lt;g class=&quot;node&quot;&gt;
+&lt;text text-anchor=&quot;middle&quot; x=&quot;383&quot; y=&quot;-31.7&quot; font-size=&quot;14.00&quot;&gt;uid=1000 を uid=0 に map&lt;/text&gt;
+&lt;/g&gt;
+&lt;/g&gt;
+&lt;/svg&gt;
+
+&lt;figcaption&gt;入れ子になったユーザ名前空間のイメージ&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;なお root になりきる必要がないのならば &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-c&lt;/code&gt; を使えば良い。下記の例では何もしていないが、これにネットワークの仮想化などを増やすと意味がでてくる。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;unshare &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; bash &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;id -u; id -g&apos;&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;1000
+1000
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;ファイルシステムをいじる&quot;&gt;ファイルシステムをいじる&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-m&lt;/code&gt; (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--mount&lt;/code&gt;) で新しいマウント名前空間を生成できる。既存の特定のディレクトリを置き換える場合には、 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unshare&lt;/code&gt; の中で適当にマウントしてしまえばよい。&lt;/p&gt;
+
+&lt;p&gt;例えば個人設定をクリーンな状態で動作させたいなどの理由でホームディレクトリを空にした状態をつくるには、ホームディレクトリを tmpfs でマウントし直せば良い。なお、カレントディレクトリをマウントし直した場合、マウント前のディレクトリが見えたままになるので、移動し直すのが良い。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;unshare &lt;span class=&quot;nt&quot;&gt;-rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--propagation&lt;/span&gt; private bash &lt;span class=&quot;nt&quot;&gt;--login&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; tmpfs tmpfs &lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;しかし、ルートディレクトリ &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/&lt;/code&gt; をすげ替えることはできない。また、他のシステムディレクトリもすげ替えることはできるが、コマンドが実行できなくなるなどの影響がでてしまうので現実的には使えない。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;unshare &lt;span class=&quot;nt&quot;&gt;-rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--propagation&lt;/span&gt; private bash &lt;span class=&quot;nt&quot;&gt;--login&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; tmpfs tmpfs /lib64
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /
+&lt;span class=&quot;go&quot;&gt;bash: 行 1: /usr/bin/ls: 実行できません: 必要なファイルがありません
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;解決策のひとつは、本稿のルールから逸脱するが、 rootfs をどこかに展開してそこに &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chroot&lt;/code&gt; でルートディレクトリをすげ替えることである。
+単に &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chroot alpine-rootfs /bin/ash --login&lt;/code&gt; を実行するには root 権限が必要であるが、 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unshare -r&lt;/code&gt; で root になりすませば実際の root 権限なしでいける。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;wget &lt;span class=&quot;nt&quot;&gt;-q&lt;/span&gt; https://dl-cdn.alpinelinux.org/alpine/v3.19/releases/x86_64/alpine-minirootfs-3.19.1-x86_64.tar.gz
+&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;alpine-rootfs
+&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;tar &lt;/span&gt;xf alpine-minirootfs-3.19.1-x86_64.tar.gz &lt;span class=&quot;nt&quot;&gt;-C&lt;/span&gt; alpine-rootfs
+&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-F&lt;/span&gt; alpine-rootfs
+&lt;span class=&quot;go&quot;&gt;bin/  dev/  etc/  home/  lib/  media/  mnt/  opt/  proc/  root/  run/  sbin/  srv/  sys/  tmp/  usr/  var/
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;unshare &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chroot &lt;/span&gt;alpine-rootfs /bin/ash &lt;span class=&quot;nt&quot;&gt;--login&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-F&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;bin/  dev/  etc/  home/  lib/  media/  mnt/  opt/  proc/  root/  run/  sbin/  srv/  sys/  tmp/  usr/  var/
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;touch&lt;/span&gt; /foobar
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-F&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;bin/  dev/  etc/  foobar  home/  lib/  media/  mnt/  opt/  proc/  root/  run/  sbin/  srv/  sys/  tmp/  usr/  var/
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-F&lt;/span&gt; alpine-rootfs
+&lt;span class=&quot;go&quot;&gt;bin/  dev/  etc/  foobar  home/  lib/  media/  mnt/  opt/  proc/  root/  run/  sbin/  srv/  sys/  tmp/  usr/  var/
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;なお、 chroot を実行するだけではいわゆる脱獄が可能であるため &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pivot_root&lt;/code&gt; をするのが好ましいとされている。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;unshare &lt;span class=&quot;nt&quot;&gt;-rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--propagation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;private
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;--bind&lt;/span&gt; alpine-rootfs alpine-rootfs
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;alpine-rootfs
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; .put_old
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;pivot_root &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; .put_old
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; /bin/ash &lt;span class=&quot;nt&quot;&gt;--login&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;umount &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; /.put_old
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;rmdir&lt;/span&gt; /.put_old
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-F&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;bin/  dev/  etc/  home/  lib/  media/  mnt/  opt/  proc/  root/  run/  sbin/  srv/  sys/  tmp/  usr/  var/
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;touch&lt;/span&gt; /foobar
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-F&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;bin/  dev/  etc/  foobar  home/  lib/  media/  mnt/  opt/  proc/  root/  run/  sbin/  srv/  sys/  tmp/  usr/  var/
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;いずれにせよ一部を可変する場合と違って、全体を可変する場合は rootfs をつくってそこに chroot もしくは pivot_root でルートディレクトリを変えるのが基本戦略となる。&lt;/p&gt;
+
+&lt;p&gt;overlayfs でルートディレクトリ &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/&lt;/code&gt; をまるごと書き込み可能な状態にできれば便利であると考えたが、これはエラーが出て動作しなかった。いくつか実装を試したり、既存の実装を確認したがかなり骨の折れる作業となりそうで現実的でない。&lt;/p&gt;
+
+&lt;p&gt;参考までに &lt;a href=&quot;https://github.com/rootless-containers/rootlesskit&quot;&gt;rootlesskit&lt;/a&gt; は置換先ディレクトリを tmpfs をマウントし、オリジナルを &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.ro0000000000&lt;/code&gt; のようなサブディレクトリにマウントし、ファイルやディレクトリはシンボリックリンクをする実装となっていた。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt;/test1 &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt;/test2
+&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;touch test&lt;/span&gt;/test3
+&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;rootlesskit &lt;span class=&quot;nt&quot;&gt;--copy-up&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;/test &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-lFa&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;/test
+&lt;span class=&quot;go&quot;&gt;合計 0
+drwxrwxrwt. 3 root root 120  3月 31 12:30 ./
+drwxr-xr-x. 3 root root  60  3月 31 12:30 ../
+drwxr-xr-x. 4 root root 100  3月 31 12:30 .ro2787431005/
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;lrwxrwxrwx. 1 root root  19  3月 31 12:30 test1 -&amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;.ro2787431005/test1/
+&lt;span class=&quot;gp&quot;&gt;lrwxrwxrwx. 1 root root  19  3月 31 12:30 test2 -&amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;.ro2787431005/test2/
+&lt;span class=&quot;gp&quot;&gt;lrwxrwxrwx. 1 root root  19  3月 31 12:30 test3 -&amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;.ro2787431005/test3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;というわけで、一部のディレクトリを入れ替える隠すといった小さな差分処理以外は素直に docker や podman などのコンテナ仮想化ソフト群を使うのが現実的であろう。&lt;/p&gt;
+
+&lt;h3 id=&quot;イーサネットを分離するのは簡単だがつなげるのは面倒&quot;&gt;イーサネットを分離するのは簡単だがつなげるのは面倒&lt;/h3&gt;
+
+&lt;p&gt;イーサネットを分離するネットワーク名前空間を導入すること自体のは簡単で &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-n&lt;/code&gt; ( &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--net&lt;/code&gt; ) を使うだけだ。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;unshare &lt;span class=&quot;nt&quot;&gt;-cn&lt;/span&gt; ip a
+&lt;span class=&quot;gp&quot;&gt;1: lo: &amp;lt;LOOPBACK&amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;mtu 65536 qdisc noop state DOWN group default qlen 1000
+&lt;span class=&quot;go&quot;&gt;    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;ループバックアドレスすら定義されず、 127.0.0.1 すら存在しない。イーサネットを一切使わせないときには便利であろう。&lt;/p&gt;
+
+&lt;p&gt;この状態からネットワークにつなげていくとなると途端に難しくなる。というのもネットワークトンネリング構築技術と同じ話になるからだ。&lt;/p&gt;
+
+&lt;h4 id=&quot;ip-netns-が便利&quot;&gt;ip netns が便利&lt;/h4&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ip netns&lt;/code&gt; を使うのが実のところ便利である。
+unshare だと名前空間に名前がつかないので、ネットワークの配線が非常に難しいからだ。&lt;/p&gt;
+
+&lt;p&gt;しかし sudo が必須である。ただ、閉網であるのならば以下の条件下で root 権限不要で使用可能だ&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unshare -rnm --propagation=private&lt;/code&gt; でネットワークとマウントを分離した簡易コンテナをつくる&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/var/run/netns&lt;/code&gt; を分離すること（たとえば tmpfs でマウントしなおすこと）&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unshare&lt;/code&gt; の外界とのイーサネット接続性がないこと（閉網であること）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;例えばネットワーク名前空間 ns1 ns2 を作成し、それらを veth-pair でつなぐ例 &lt;a href=&quot;https://blog.serverworks.co.jp/tech/2019/08/05/post-70460/&quot;&gt;秒速でネットワーク作成 [veth peer] - サーバーワークスエンジニアブログ&lt;/a&gt; にある一連の処理を、ユーザ権限で実行できる。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;unshare &lt;span class=&quot;nt&quot;&gt;-rnm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--propagation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;private
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; tmpfs tmpfs /var/run
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;ip netns add ns1
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;ip netns add ns2
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;ip &lt;span class=&quot;nb&quot;&gt;link &lt;/span&gt;add eth0-ns1 &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;veth peer name eth0-ns2
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;ip &lt;span class=&quot;nb&quot;&gt;link set &lt;/span&gt;eth0-ns1 netns ns1
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;ip &lt;span class=&quot;nb&quot;&gt;link set &lt;/span&gt;eth0-ns2 netns ns2
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;ip netns &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;ns1 ip address add 192.168.0.101/24 dev eth0-ns1
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;ip netns &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;ns2 ip address add 192.168.0.102/24 dev eth0-ns2
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;ip netns &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;ns1 ip &lt;span class=&quot;nb&quot;&gt;link set &lt;/span&gt;lo up
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;ip netns &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;ns2 ip &lt;span class=&quot;nb&quot;&gt;link set &lt;/span&gt;lo up
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;ip netns &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;ns1 ip &lt;span class=&quot;nb&quot;&gt;link set &lt;/span&gt;eth0-ns1 up
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;ip netns &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;ns2 ip &lt;span class=&quot;nb&quot;&gt;link set &lt;/span&gt;eth0-ns2 up
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;ip netns &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;ns1 ip a
+&lt;span class=&quot;gp&quot;&gt;1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+&lt;span class=&quot;go&quot;&gt;    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host proto kernel_lo
+       valid_lft forever preferred_lft forever
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;3: eth0-ns1@if2: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;mtu 1500 qdisc noqueue state UP group default qlen 1000
+&lt;span class=&quot;go&quot;&gt;    link/ether 8e:11:b1:37:2d:f5 brd ff:ff:ff:ff:ff:ff link-netns ns2
+    inet 192.168.0.101/24 scope global eth0-ns1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::8c11:b1ff:fe37:2df5/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;ip netns &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;ns2 ip a
+&lt;span class=&quot;gp&quot;&gt;1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+&lt;span class=&quot;go&quot;&gt;    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host proto kernel_lo
+       valid_lft forever preferred_lft forever
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;2: eth0-ns2@if3: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;mtu 1500 qdisc noqueue state UP group default qlen 1000
+&lt;span class=&quot;go&quot;&gt;    link/ether 9e:5c:50:6a:35:bf brd ff:ff:ff:ff:ff:ff link-netns ns1
+    inet 192.168.0.102/24 scope global eth0-ns2
+       valid_lft forever preferred_lft forever
+    inet6 fe80::9c5c:50ff:fe6a:35bf/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;ip netns &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;ns1 ping 192.168.0.102 &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; 3 &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; 0
+&lt;span class=&quot;go&quot;&gt;PING 192.168.0.102 (192.168.0.102) 56(84) バイトのデータ
+64 バイト応答 送信元 192.168.0.102: icmp_seq=1 ttl=64 時間=0.084ミリ秒
+64 バイト応答 送信元 192.168.0.102: icmp_seq=2 ttl=64 時間=0.014ミリ秒
+64 バイト応答 送信元 192.168.0.102: icmp_seq=3 ttl=64 時間=0.012ミリ秒
+
+--- 192.168.0.102 ping 統計 ---
+送信パケット数 3, 受信パケット数 3, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.012/0.036/0.084/0.033 ms, ipg/ewma 0.091/0.067 ms
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;作成したネットワークを図示すると下記の通り。&lt;/p&gt;
+
+&lt;figure&gt;
+
+&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; contentstyletype=&quot;text/css&quot; height=&quot;100%&quot; preserveAspectRatio=&quot;none&quot; style=&quot;width: 100%; height: 100%; max-height: 306px; max-width: 142px;&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 142 306&quot; width=&quot;100%&quot; zoomAndPan=&quot;magnify&quot;&gt;
+  &lt;defs&gt;&lt;/defs&gt;
+  &lt;g&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;12&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;4&quot; x=&quot;5&quot; y=&quot;16.1387&quot;&gt;&amp;nbsp;&lt;/text&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;12&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;4&quot; x=&quot;5&quot; y=&quot;160.8496&quot;&gt;&amp;nbsp;&lt;/text&gt;
+    &lt;rect fill=&quot;#E7E7E7&quot; height=&quot;57.9375&quot; style=&quot;stroke:#E7E7E7;stroke-width:1.0;&quot; width=&quot;86&quot; x=&quot;31&quot; y=&quot;45.8867&quot;&gt;&lt;/rect&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;12&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;23&quot; x=&quot;36&quot; y=&quot;57.0254&quot;&gt;ns1&lt;/text&gt;
+    &lt;rect fill=&quot;#E7E7E7&quot; height=&quot;57.9375&quot; style=&quot;stroke:#E7E7E7;stroke-width:1.0;&quot; width=&quot;86&quot; x=&quot;31&quot; y=&quot;190.5977&quot;&gt;&lt;/rect&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;12&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;23&quot; x=&quot;36&quot; y=&quot;201.7363&quot;&gt;ns2&lt;/text&gt;
+    &lt;path d=&quot;M74,98.8242 L74,154.1953 &quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:1.0;&quot;&gt;&lt;/path&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;11&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;100&quot; x=&quot;24&quot; y=&quot;130.3179&quot;&gt;192.168.0.101/24&lt;/text&gt;
+    &lt;path d=&quot;M74,154.1953 L74,209.5664 &quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:1.0;&quot;&gt;&lt;/path&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;11&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;100&quot; x=&quot;24&quot; y=&quot;178.7046&quot;&gt;192.168.0.102/24&lt;/text&gt;
+    &lt;rect fill=&quot;#F1F1F1&quot; height=&quot;33.9688&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot; width=&quot;76&quot; x=&quot;36&quot; y=&quot;64.8555&quot;&gt;&lt;/rect&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;12&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;56&quot; x=&quot;46&quot; y=&quot;85.9941&quot;&gt;eth0-ns1&lt;/text&gt;
+    &lt;rect fill=&quot;#F1F1F1&quot; height=&quot;33.9688&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot; width=&quot;76&quot; x=&quot;36&quot; y=&quot;209.5664&quot;&gt;&lt;/rect&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;12&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;56&quot; x=&quot;46&quot; y=&quot;230.7051&quot;&gt;eth0-ns2&lt;/text&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;
+
+&lt;figcaption&gt;作成したネットワークのイメージ&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;なおこのようなネットワーク関係の作業をするときには、別窓（別プロセスの端末）からアクセスするのが便利である。
+その場合は大本の unshare した端末でのプロセスを確認しておき (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;echo $$&lt;/code&gt; で出力される)、その名前空間に nsenter で入れば良い。&lt;/p&gt;
+
+&lt;p&gt;例えばターゲット先のプロセスIDが 54321 であったとするならば、下記のようにすれば良い。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;nsenter &lt;span class=&quot;nt&quot;&gt;--preserve-credentials&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-U&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; 54321 ip netns &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;ns1 ping 192.168.0.102 &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; 3 &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; 0
+&lt;span class=&quot;go&quot;&gt;
+PING 192.168.0.102 (192.168.0.102) 56(84) バイトのデータ
+64 バイト応答 送信元 192.168.0.102: icmp_seq=1 ttl=64 時間=0.042ミリ秒
+64 バイト応答 送信元 192.168.0.102: icmp_seq=2 ttl=64 時間=0.020ミリ秒
+64 バイト応答 送信元 192.168.0.102: icmp_seq=3 ttl=64 時間=0.016ミリ秒
+
+--- 192.168.0.102 ping 統計 ---
+送信パケット数 3, 受信パケット数 3, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.016/0.026/0.042/0.011 ms, ipg/ewma 0.091/0.036 ms
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;大本の unshare のプロセスを閉じればネットワーク名前空間もろともなくなるので、元記事と違ってお片付けの作業は省いてそのまま &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;exit&lt;/code&gt; しても良い。&lt;/p&gt;
+
+&lt;h4 id=&quot;slirp4netns-で外界へのアクセスする&quot;&gt;slirp4netns で外界へのアクセスする&lt;/h4&gt;
+
+&lt;p&gt;通常のルートレスコンテナは外界への接続性があって、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wget&lt;/code&gt; や &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git clone&lt;/code&gt; などでインターネット上の資産をダウンロードできる。
+コンテナ内に tap デバイスが生えていて、この tap を経由して外界に出ている。（podman v4の場合）&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;podman unshare &lt;span class=&quot;nt&quot;&gt;--rootless-netns&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;ip a
+&lt;span class=&quot;gp&quot;&gt;1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+&lt;span class=&quot;go&quot;&gt;    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host proto kernel_lo 
+       valid_lft forever preferred_lft forever
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;2: tap0: &amp;lt;BROADCAST,UP,LOWER_UP&amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;mtu 65520 qdisc fq_codel state UNKNOWN group default qlen 1000
+&lt;span class=&quot;go&quot;&gt;    link/ether 3e:2b:29:ab:13:fc brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.100/24 brd 10.0.2.255 scope global tap0
+       valid_lft forever preferred_lft forever
+    inet6 fd00::3c2b:29ff:feab:13fc/64 scope global dynamic mngtmpaddr proto kernel_ra 
+       valid_lft 85937sec preferred_lft 13937sec
+    inet6 fe80::3c2b:29ff:feab:13fc/64 scope link proto kernel_ll 
+       valid_lft forever preferred_lft forever
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;ip route
+&lt;span class=&quot;go&quot;&gt;default via 10.0.2.2 dev tap0
+10.0.2.0/24 dev tap0 proto kernel scope link src 10.0.2.100
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;ユーザ権限で動く bridge が動いていて、 tap0 で受けたものを代理して外界に通信する仕組みになっている。&lt;/p&gt;
+
+&lt;figure&gt;
+
+&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; contentstyletype=&quot;text/css&quot; height=&quot;100%&quot; preserveAspectRatio=&quot;none&quot; style=&quot;width: 100%; height: 100%; max-height: 365px; max-width: 301px;&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 301 365&quot; width=&quot;100%&quot; zoomAndPan=&quot;magnify&quot;&gt;
+  &lt;defs&gt;&lt;/defs&gt;
+  &lt;g&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;12&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;4&quot; x=&quot;98&quot; y=&quot;16.1387&quot;&gt;&amp;nbsp;&lt;/text&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;12&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;97&quot; x=&quot;5&quot; y=&quot;246.8809&quot;&gt;rootless_bridge&lt;/text&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;12&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;72&quot; x=&quot;30&quot; y=&quot;260.8496&quot;&gt;10.0.2.0/24&lt;/text&gt;
+    &lt;rect fill=&quot;#E7E7E7&quot; height=&quot;43.9688&quot; style=&quot;stroke:#E7E7E7;stroke-width:1.0;&quot; width=&quot;59&quot; x=&quot;132.5&quot; y=&quot;276.6289&quot;&gt;&lt;/rect&gt;
+    &lt;rect fill=&quot;#E2E2F0&quot; height=&quot;5&quot; style=&quot;stroke:#181818;stroke-width:1.0;&quot; width=&quot;186&quot; x=&quot;107&quot; y=&quot;123.4531&quot;&gt;&lt;/rect&gt;
+    &lt;rect fill=&quot;#E2E2F0&quot; height=&quot;5&quot; style=&quot;stroke:#181818;stroke-width:1.0;&quot; width=&quot;186&quot; x=&quot;107&quot; y=&quot;240.2266&quot;&gt;&lt;/rect&gt;
+    &lt;path d=&quot;M164,88.4531 L164,123.4531 &quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:1.0;&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M160,128.4531 L160,164.8555 &quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:1.0;&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M160,198.8242 L160,240.2266 &quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:1.0;&quot;&gt;&lt;/path&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;11&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;47&quot; x=&quot;136.5&quot; y=&quot;223.3335&quot;&gt;10.0.2.2&lt;/text&gt;
+    &lt;path d=&quot;M253,128.4531 L253,164.8555 &quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:1.0;&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M253,198.8242 L253,240.2266 &quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:1.0;&quot;&gt;&lt;/path&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;11&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;47&quot; x=&quot;229.5&quot; y=&quot;223.3335&quot;&gt;10.0.2.3&lt;/text&gt;
+    &lt;path d=&quot;M164,245.2266 L164,281.6289 &quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:1.0;&quot;&gt;&lt;/path&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;11&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;61&quot; x=&quot;133.5&quot; y=&quot;264.7358&quot;&gt;10.0.2.100&lt;/text&gt;
+    &lt;path d=&quot;M131.5335,52.6574 C134.9347,43.7298 140.2174,42.9323 146.6698,49.7182 C149.5497,41.9178 156.4893,37.9219 163.1698,45.6902 C169.756,39.7223 176.5169,42.9006 178.5327,50.766 C184.9978,45.0104 191.0695,46.4297 194.7841,54.0963 C202.5993,56.9438 203.4747,63.9992 196.127,68.2821 C201.8062,73.1287 201.8643,76.9776 194.9677,80.6449 C191.7918,89.6183 185.2362,91.5181 178.7482,83.8786 C175.7744,92.3534 169.4815,92.7642 163.5505,87.0448 C157.0053,93.8173 149.8862,93.8 146.4082,83.8925 C140.7253,90.7179 135.8498,88.9306 132.0183,81.9613 C123.2858,78.7223 123.9797,72.62 129.6804,67.109 C123.8152,61.4773 124.6465,56.654 131.5335,52.6574 &quot; fill=&quot;#F1F1F1&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;&gt;&lt;/path&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;12&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;50&quot; x=&quot;137&quot; y=&quot;70.623&quot;&gt;internet&lt;/text&gt;
+    &lt;rect fill=&quot;#F1F1F1&quot; height=&quot;33.9688&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot; width=&quot;72&quot; x=&quot;126&quot; y=&quot;164.8555&quot;&gt;&lt;/rect&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;12&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;52&quot; x=&quot;136&quot; y=&quot;185.9941&quot;&gt;gateway&lt;/text&gt;
+    &lt;rect fill=&quot;#F1F1F1&quot; height=&quot;33.9688&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot; width=&quot;46&quot; x=&quot;232&quot; y=&quot;164.8555&quot;&gt;&lt;/rect&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;12&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;26&quot; x=&quot;242&quot; y=&quot;185.9941&quot;&gt;DNS&lt;/text&gt;
+    &lt;rect fill=&quot;#F1F1F1&quot; height=&quot;33.9688&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot; width=&quot;49&quot; x=&quot;137.5&quot; y=&quot;281.6289&quot;&gt;&lt;/rect&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;12&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;29&quot; x=&quot;147.5&quot; y=&quot;302.7676&quot;&gt;tap0&lt;/text&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;
+&lt;figcaption&gt;rootless bridge を介したネットワーク接続のイメージ&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;いくつか手段があるが podman v4 では slirp4netns がデフォルトとして使っている。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Terminal 1&lt;/strong&gt;: Create user/network/mount namespaces&lt;/p&gt;
+
+  &lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;(host)$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;unshare &lt;span class=&quot;nt&quot;&gt;--user&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--map-root-user&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--net&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--mount&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;(namespace)$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$$&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; /tmp/pid
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+
+  &lt;p&gt;In this documentation, we use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(host)$&lt;/code&gt; as the prompt of the host shell, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(namespace)$&lt;/code&gt; as the prompt of the shell running in the namespaces.&lt;/p&gt;
+
+  &lt;p&gt;(中略)&lt;/p&gt;
+
+  &lt;p&gt;&lt;strong&gt;Terminal 2&lt;/strong&gt;: Start slirp4netns&lt;/p&gt;
+
+  &lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;(host)$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;slirp4netns &lt;span class=&quot;nt&quot;&gt;--configure&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--mtu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;65520 &lt;span class=&quot;nt&quot;&gt;--disable-host-loopback&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /tmp/pid&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt; tap0
+&lt;span class=&quot;go&quot;&gt;starting slirp, MTU=65520
+&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;...
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+
+  &lt;p&gt;&lt;strong&gt;Terminal 1&lt;/strong&gt;: Make sure the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tap0&lt;/code&gt; is configured and connected to the Internet&lt;/p&gt;
+
+  &lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;(namespace)$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;ip a
+&lt;span class=&quot;gp&quot;&gt;1: lo: &amp;lt;LOOPBACK&amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;mtu 65536 qdisc noop state DOWN group default qlen 1000
+&lt;span class=&quot;go&quot;&gt;    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;3: tap0: &amp;lt;BROADCAST,UP,LOWER_UP&amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;mtu 65520 qdisc fq_codel state UNKNOWN group default qlen 1000
+&lt;span class=&quot;go&quot;&gt;    link/ether c2:28:0c:0e:29:06 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.100/24 brd 10.0.2.255 scope global tap0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::c028:cff:fe0e:2906/64 scope link 
+       valid_lft forever preferred_lft forever
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;(namespace)$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;nameserver 10.0.2.3&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; /tmp/resolv.conf
+&lt;span class=&quot;gp&quot;&gt;(namespace)$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;mount &lt;span class=&quot;nt&quot;&gt;--bind&lt;/span&gt; /tmp/resolv.conf /etc/resolv.conf
+&lt;span class=&quot;gp&quot;&gt;(namespace)$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;curl https://example.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;上記の手順、すなわち簡易コンテナのプロセス番号を渡す形で &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;slirp4netns --configure --mtu=65520 --disable-host-loopback PID tap0&lt;/code&gt; のように実行すれば、 podman と同様のネットワーク構成が手に入る。&lt;/p&gt;
+
+&lt;p&gt;また slirp4netns はポートフォワーディング機能も API 経由で対応している。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;slirp4netns can provide QMP-like API server over an UNIX socket file:&lt;/p&gt;
+
+  &lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;(host)$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;slirp4netns &lt;span class=&quot;nt&quot;&gt;--api-socket&lt;/span&gt; /tmp/slirp4netns.sock ...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+
+  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add_hostfwd&lt;/code&gt;: Expose a port (IPv4 only)&lt;/p&gt;
+
+  &lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;(namespace)$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;{&quot;execute&quot;: &quot;add_hostfwd&quot;, &quot;arguments&quot;: {&quot;proto&quot;: &quot;tcp&quot;, &quot;host_addr&quot;: &quot;0.0.0.0&quot;, &quot;host_port&quot;: 8080, &quot;guest_addr&quot;: &quot;10.0.2.100&quot;, &quot;guest_port&quot;: 80}}&apos;&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;(namespace)$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$json&lt;/span&gt; | nc &lt;span class=&quot;nt&quot;&gt;-U&lt;/span&gt; /tmp/slirp4netns.sock
+&lt;span class=&quot;go&quot;&gt;{&quot;return&quot;: {&quot;id&quot;: 42}}
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+
+  &lt;p&gt;If &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;host_addr&lt;/code&gt; is not specified, then it defaults to “0.0.0.0”.&lt;/p&gt;
+
+  &lt;p&gt;If &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;guest_addr&lt;/code&gt; is not specified, then it will be set to the default address that corresponds to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--configure&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;なお、 podman v5 で &lt;a href=&quot;https://passt.top/&quot;&gt;pasta(passt)&lt;/a&gt; をデフォルトに使うようになった。ただ qemu, libvirt, podman とのインテグレーションは対応しているもののコマンドラインで使いやすいものではない。&lt;/p&gt;
+
+&lt;p&gt;いずれにせよ slirp4netns や pasta がある環境では docker や podman がインストールされていそうであるし、
+そちらを使った方が大幅に楽だ。
+たとえば下記のコマンドで、ネットワーク分離しつつ外界との接続性を維持する。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ podman unshare --rootless-netns
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;プロセスを分離する&quot;&gt;プロセスを分離する&lt;/h3&gt;
+
+&lt;p&gt;プロセスを分離するには &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-p&lt;/code&gt; (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--pid&lt;/code&gt;) を指定すればいいが、実際のところ &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/proc&lt;/code&gt; の分離なども必要となってくるので &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-f&lt;/code&gt; (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--fork&lt;/code&gt;) と &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--mount-proc&lt;/code&gt; を加えた下記を実行することになる。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;unshare &lt;span class=&quot;nt&quot;&gt;-rfp&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--mount-proc&lt;/span&gt; ps &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;    PID TTY          TIME CMD
+      1 pts/2    00:00:00 ps
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;これで docker コンテナ内のプロセスのように PID=1 がユーザプログラムになる。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/proc&lt;/code&gt; はマウントし直しされる形で分離されていて、 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mount&lt;/code&gt; の出力からもそれがわかる。&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;mount | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;type proc&apos;&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;unshare &lt;span class=&quot;nt&quot;&gt;-rfp&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--mount-proc&lt;/span&gt; mount | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;type proc&apos;&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;プロセスの分離はコンテナどおしの分離という観点では非常に重要ではあるが、今回のような単に簡易的なコンテナで十分なシナリオでは必要性は薄いように思える。&lt;/p&gt;
+
+&lt;h2 id=&quot;使えそうなワンライナー&quot;&gt;使えそうなワンライナー&lt;/h2&gt;
+
+&lt;p&gt;というわけで、使い勝手が良さそうなワンライナーとしては下記のぐらいだろうか。&lt;/p&gt;
+
+&lt;p&gt;ホームディレクトリをクリア（したとみせかけるため tmpfs でマウント）して実行。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;unshare &lt;span class=&quot;nt&quot;&gt;-rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--propagation&lt;/span&gt; private /bin/bash &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/bin/mount -t tmpfs tmpfs &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; &amp;amp;&amp;amp; cd &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; &amp;amp;&amp;amp; unshare --map-user=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; --map-group=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-g&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;ネットワーク設定練習用（まっさらな状態から）&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;unshare &lt;span class=&quot;nt&quot;&gt;-cn&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;ネットワーク設定練習用（外部接続性がある状態から）&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;podman unshare &lt;span class=&quot;nt&quot;&gt;--rootless-netns&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;参考文献&quot;&gt;参考文献&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gihyo.jp/admin/serial/01/linux_containers/0002&quot;&gt;第2回　コンテナの仕組みとLinuxカーネルのコンテナ機能［1］名前空間とは？ | gihyo.jp&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://rootlesscontaine.rs/how-it-works/&quot;&gt;How it works | Rootless Containers&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://yohgami.hateblo.jp/entry/20161215/1481755818&quot;&gt;chrootとunshareを使い、シェル上でコマンド7つで簡易コンテナ - へにゃぺんて＠日々勉強のまとめ&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://qiita.com/ngyuki/items/a9cff2ba3fceb97d18ec&quot;&gt;unshare -m とか mount –make-shared とか #Linux - Qiita&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://tenforward.hatenablog.com/entry/2020/05/16/020055&quot;&gt;unshare コマンドがマウントプロパゲーションをまともに扱うような変更を入れていた - TenForward&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blog.framinal.life/entry/2020/04/09/183208&quot;&gt;【コンテナ要素技術】pivot_rootについて例をまじえて説明します - フラミナル&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blog.serverworks.co.jp/tech/2019/08/05/post-70460/&quot;&gt;秒速でネットワーク作成 [veth peer] - サーバーワークスエンジニアブログ&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/rootless-containers/slirp4netns&quot;&gt;rootless-containers/slirp4netns: User-mode networking for unprivileged network namespaces&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://passt.top/passt/about/&quot;&gt;passt - Plug A Simple Socket Transport&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+      
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name></name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="linux" />
+      
+        <category term="container" />
+      
+        <category term="unshare" />
+      
+
+      
+        <summary type="html">LinuxのコンテナテクノロジーはDockerやPodmanなどの優れたツールが広く使われているが、本質的にはLinuxカーネルの機能である名前空間とcgroupsを活用していることは意外と知られていない。 Linuxカーネルには、名前空間を分離する機能がある。この機能を活用することで、ホストOSのファイルシステムやネットワークなどのリソースを、コンテナ内に分離された環境として提供できる。 このLinuxの基礎的な機能を使えば、コンテナイメージを使わずにホストOSのリソースをそのまま流用した簡易的なコンテナがつくれる。 本稿では、unshareコマンドを使ってホストOSから分離した名前空間を作成して、簡易的なコンテナを作成する手順を説明する。unshareコマンドは名前空間を操作するための基本的なLinuxコマンドで、rootユーザーでなくても使えるので、できるだけホスト側の権限を最小限に抑えた環境を作ることができる。このアプローチは用途が限られるが、コンテナの仕組みを手軽に理解することの一助にもなるだろう。 検討 本稿でのルール 名前空間を使った仮想化 docker, podman, lxc そのものはなるべく使わない コンテナイメージを持ってきて使うのではなく、ホスト自身のを流用する 可能な限りホスト側は root を使わない unshare コマンドで「コンテナプロセス」を作る。対話的に使う場合はコマンドを書かないか bash --login などと書く。 unshare オプション コマンド root になりきる root になりきる場合は -r (--map-root-user) を使う。 $ unshare -r bash -c &apos;whoami; id -u; id -g&apos; root 0 0 しかしアクセス権限は当然引き継がれるので、root でしかできない作業が全部できるわけではない。 $ unshare -r bash -c &apos;touch /foobar&apos; touch: &apos;/foobar&apos; に touch できません: 許可がありません 自分に戻る root になりきったあとで自分に戻りたいときもある。 unshare で root になっていても、実際には root ではないので su や sudo は使えない。 $ unshare -r su $(whoami) su: cannot set groups: 許可されていない操作です なので unshare の中で再度 unshare を実行してユーザを偽装しなおす手段で自分に戻るのが無難そうである。 $ id -u; id -g 1000 1000 $ unshare -r unshare --map-user=$(id -u) --map-group=$(id -g) bash -c &apos;id -u; id -g&apos; 1000 1000 １つ目の unshare -r で uid=0 を外側の uid=1000 にマッピングする。 そして2つめの unshare --map-user=1000 --map-group=1000 で uid=1000 を外側の uid=0 にマッピングする。 結果として uid=1000 が uid=1000 にマッピングされて自分に戻す。 unshare -r unshare --map-user=1000 --map-group=1000 uid=0 を uid=1000 に map uid=1000 を uid=0 に map 入れ子になったユーザ名前空間のイメージ なお root になりきる必要がないのならば -c を使えば良い。下記の例では何もしていないが、これにネットワークの仮想化などを増やすと意味がでてくる。 $ unshare -c bash -c &apos;id -u; id -g&apos; 1000 1000 ファイルシステムをいじる -m (--mount) で新しいマウント名前空間を生成できる。既存の特定のディレクトリを置き換える場合には、 unshare の中で適当にマウントしてしまえばよい。 例えば個人設定をクリーンな状態で動作させたいなどの理由でホームディレクトリを空にした状態をつくるには、ホームディレクトリを tmpfs でマウントし直せば良い。なお、カレントディレクトリをマウントし直した場合、マウント前のディレクトリが見えたままになるので、移動し直すのが良い。 $ unshare -rm --propagation private bash --login # mount -t tmpfs tmpfs $HOME # cd $(pwd) # ls # しかし、ルートディレクトリ / をすげ替えることはできない。また、他のシステムディレクトリもすげ替えることはできるが、コマンドが実行できなくなるなどの影響がでてしまうので現実的には使えない。 $ unshare -rm --propagation private bash --login # mount -t tmpfs tmpfs /lib64 # ls / bash: 行 1: /usr/bin/ls: 実行できません: 必要なファイルがありません 解決策のひとつは、本稿のルールから逸脱するが、 rootfs をどこかに展開してそこに chroot でルートディレクトリをすげ替えることである。 単に chroot alpine-rootfs /bin/ash --login を実行するには root 権限が必要であるが、 unshare -r で root になりすませば実際の root 権限なしでいける。 $ wget -q https://dl-cdn.alpinelinux.org/alpine/v3.19/releases/x86_64/alpine-minirootfs-3.19.1-x86_64.tar.gz $ mkdir alpine-rootfs $ tar xf alpine-minirootfs-3.19.1-x86_64.tar.gz -C alpine-rootfs $ ls -F alpine-rootfs bin/ dev/ etc/ home/ lib/ media/ mnt/ opt/ proc/ root/ run/ sbin/ srv/ sys/ tmp/ usr/ var/ $ unshare -r chroot alpine-rootfs /bin/ash --login # ls -F bin/ dev/ etc/ home/ lib/ media/ mnt/ opt/ proc/ root/ run/ sbin/ srv/ sys/ tmp/ usr/ var/ # touch /foobar # ls -F bin/ dev/ etc/ foobar home/ lib/ media/ mnt/ opt/ proc/ root/ run/ sbin/ srv/ sys/ tmp/ usr/ var/ # exit $ ls -F alpine-rootfs bin/ dev/ etc/ foobar home/ lib/ media/ mnt/ opt/ proc/ root/ run/ sbin/ srv/ sys/ tmp/ usr/ var/ なお、 chroot を実行するだけではいわゆる脱獄が可能であるため pivot_root をするのが好ましいとされている。 $ unshare -rm --propagation=private # mount --bind alpine-rootfs alpine-rootfs # cd alpine-rootfs # mkdir -p .put_old # pivot_root . .put_old # cd / # exec /bin/ash --login # umount -l /.put_old # rmdir /.put_old # ls -F bin/ dev/ etc/ home/ lib/ media/ mnt/ opt/ proc/ root/ run/ sbin/ srv/ sys/ tmp/ usr/ var/ # touch /foobar # ls -F bin/ dev/ etc/ foobar home/ lib/ media/ mnt/ opt/ proc/ root/ run/ sbin/ srv/ sys/ tmp/ usr/ var/ いずれにせよ一部を可変する場合と違って、全体を可変する場合は rootfs をつくってそこに chroot もしくは pivot_root でルートディレクトリを変えるのが基本戦略となる。 overlayfs でルートディレクトリ / をまるごと書き込み可能な状態にできれば便利であると考えたが、これはエラーが出て動作しなかった。いくつか実装を試したり、既存の実装を確認したがかなり骨の折れる作業となりそうで現実的でない。 参考までに rootlesskit は置換先ディレクトリを tmpfs をマウントし、オリジナルを .ro0000000000 のようなサブディレクトリにマウントし、ファイルやディレクトリはシンボリックリンクをする実装となっていた。 $ mkdir -p test/test1 test/test2 $ touch test/test3 $ rootlesskit --copy-up=$(pwd)/test ls -lFa $(pwd)/test 合計 0 drwxrwxrwt. 3 root root 120 3月 31 12:30 ./ drwxr-xr-x. 3 root root 60 3月 31 12:30 ../ drwxr-xr-x. 4 root root 100 3月 31 12:30 .ro2787431005/ lrwxrwxrwx. 1 root root 19 3月 31 12:30 test1 -&amp;gt; .ro2787431005/test1/ lrwxrwxrwx. 1 root root 19 3月 31 12:30 test2 -&amp;gt; .ro2787431005/test2/ lrwxrwxrwx. 1 root root 19 3月 31 12:30 test3 -&amp;gt; .ro2787431005/test3 というわけで、一部のディレクトリを入れ替える隠すといった小さな差分処理以外は素直に docker や podman などのコンテナ仮想化ソフト群を使うのが現実的であろう。 イーサネットを分離するのは簡単だがつなげるのは面倒 イーサネットを分離するネットワーク名前空間を導入すること自体のは簡単で -n ( --net ) を使うだけだ。 $ unshare -cn ip a 1: lo: &amp;lt;LOOPBACK&amp;gt; mtu 65536 qdisc noop state DOWN group default qlen 1000 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00 ループバックアドレスすら定義されず、 127.0.0.1 すら存在しない。イーサネットを一切使わせないときには便利であろう。 この状態からネットワークにつなげていくとなると途端に難しくなる。というのもネットワークトンネリング構築技術と同じ話になるからだ。 ip netns が便利 ip netns を使うのが実のところ便利である。 unshare だと名前空間に名前がつかないので、ネットワークの配線が非常に難しいからだ。 しかし sudo が必須である。ただ、閉網であるのならば以下の条件下で root 権限不要で使用可能だ unshare -rnm --propagation=private でネットワークとマウントを分離した簡易コンテナをつくる /var/run/netns を分離すること（たとえば tmpfs でマウントしなおすこと） unshare の外界とのイーサネット接続性がないこと（閉網であること） 例えばネットワーク名前空間 ns1 ns2 を作成し、それらを veth-pair でつなぐ例 秒速でネットワーク作成 [veth peer] - サーバーワークスエンジニアブログ にある一連の処理を、ユーザ権限で実行できる。 $ unshare -rnm --propagation=private # mount -t tmpfs tmpfs /var/run # ip netns add ns1 # ip netns add ns2 # ip link add eth0-ns1 type veth peer name eth0-ns2 # ip link set eth0-ns1 netns ns1 # ip link set eth0-ns2 netns ns2 # ip netns exec ns1 ip address add 192.168.0.101/24 dev eth0-ns1 # ip netns exec ns2 ip address add 192.168.0.102/24 dev eth0-ns2 # ip netns exec ns1 ip link set lo up # ip netns exec ns2 ip link set lo up # ip netns exec ns1 ip link set eth0-ns1 up # ip netns exec ns2 ip link set eth0-ns2 up # ip netns exec ns1 ip a 1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00 inet 127.0.0.1/8 scope host lo valid_lft forever preferred_lft forever inet6 ::1/128 scope host proto kernel_lo valid_lft forever preferred_lft forever 3: eth0-ns1@if2: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc noqueue state UP group default qlen 1000 link/ether 8e:11:b1:37:2d:f5 brd ff:ff:ff:ff:ff:ff link-netns ns2 inet 192.168.0.101/24 scope global eth0-ns1 valid_lft forever preferred_lft forever inet6 fe80::8c11:b1ff:fe37:2df5/64 scope link proto kernel_ll valid_lft forever preferred_lft forever # ip netns exec ns2 ip a 1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00 inet 127.0.0.1/8 scope host lo valid_lft forever preferred_lft forever inet6 ::1/128 scope host proto kernel_lo valid_lft forever preferred_lft forever 2: eth0-ns2@if3: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc noqueue state UP group default qlen 1000 link/ether 9e:5c:50:6a:35:bf brd ff:ff:ff:ff:ff:ff link-netns ns1 inet 192.168.0.102/24 scope global eth0-ns2 valid_lft forever preferred_lft forever inet6 fe80::9c5c:50ff:fe6a:35bf/64 scope link proto kernel_ll valid_lft forever preferred_lft forever # ip netns exec ns1 ping 192.168.0.102 -c 3 -i 0 PING 192.168.0.102 (192.168.0.102) 56(84) バイトのデータ 64 バイト応答 送信元 192.168.0.102: icmp_seq=1 ttl=64 時間=0.084ミリ秒 64 バイト応答 送信元 192.168.0.102: icmp_seq=2 ttl=64 時間=0.014ミリ秒 64 バイト応答 送信元 192.168.0.102: icmp_seq=3 ttl=64 時間=0.012ミリ秒 --- 192.168.0.102 ping 統計 --- 送信パケット数 3, 受信パケット数 3, 0% packet loss, time 0ms rtt min/avg/max/mdev = 0.012/0.036/0.084/0.033 ms, ipg/ewma 0.091/0.067 ms 作成したネットワークを図示すると下記の通り。 &amp;nbsp; &amp;nbsp; ns1 ns2 192.168.0.101/24 192.168.0.102/24 eth0-ns1 eth0-ns2 作成したネットワークのイメージ なおこのようなネットワーク関係の作業をするときには、別窓（別プロセスの端末）からアクセスするのが便利である。 その場合は大本の unshare した端末でのプロセスを確認しておき (echo $$ で出力される)、その名前空間に nsenter で入れば良い。 例えばターゲット先のプロセスIDが 54321 であったとするならば、下記のようにすれば良い。 $ nsenter --preserve-credentials -U -n -m -t 54321 ip netns exec ns1 ping 192.168.0.102 -c 3 -i 0 PING 192.168.0.102 (192.168.0.102) 56(84) バイトのデータ 64 バイト応答 送信元 192.168.0.102: icmp_seq=1 ttl=64 時間=0.042ミリ秒 64 バイト応答 送信元 192.168.0.102: icmp_seq=2 ttl=64 時間=0.020ミリ秒 64 バイト応答 送信元 192.168.0.102: icmp_seq=3 ttl=64 時間=0.016ミリ秒 --- 192.168.0.102 ping 統計 --- 送信パケット数 3, 受信パケット数 3, 0% packet loss, time 0ms rtt min/avg/max/mdev = 0.016/0.026/0.042/0.011 ms, ipg/ewma 0.091/0.036 ms 大本の unshare のプロセスを閉じればネットワーク名前空間もろともなくなるので、元記事と違ってお片付けの作業は省いてそのまま exit しても良い。 slirp4netns で外界へのアクセスする 通常のルートレスコンテナは外界への接続性があって、wget や git clone などでインターネット上の資産をダウンロードできる。 コンテナ内に tap デバイスが生えていて、この tap を経由して外界に出ている。（podman v4の場合） $ podman unshare --rootless-netns # ip a 1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00 inet 127.0.0.1/8 scope host lo valid_lft forever preferred_lft forever inet6 ::1/128 scope host proto kernel_lo valid_lft forever preferred_lft forever 2: tap0: &amp;lt;BROADCAST,UP,LOWER_UP&amp;gt; mtu 65520 qdisc fq_codel state UNKNOWN group default qlen 1000 link/ether 3e:2b:29:ab:13:fc brd ff:ff:ff:ff:ff:ff inet 10.0.2.100/24 brd 10.0.2.255 scope global tap0 valid_lft forever preferred_lft forever inet6 fd00::3c2b:29ff:feab:13fc/64 scope global dynamic mngtmpaddr proto kernel_ra valid_lft 85937sec preferred_lft 13937sec inet6 fe80::3c2b:29ff:feab:13fc/64 scope link proto kernel_ll valid_lft forever preferred_lft forever # ip route default via 10.0.2.2 dev tap0 10.0.2.0/24 dev tap0 proto kernel scope link src 10.0.2.100 ユーザ権限で動く bridge が動いていて、 tap0 で受けたものを代理して外界に通信する仕組みになっている。 &amp;nbsp; rootless_bridge 10.0.2.0/24 10.0.2.2 10.0.2.3 10.0.2.100 internet gateway DNS tap0 rootless bridge を介したネットワーク接続のイメージ いくつか手段があるが podman v4 では slirp4netns がデフォルトとして使っている。 Terminal 1: Create user/network/mount namespaces (host)$ unshare --user --map-root-user --net --mount (namespace)$ echo $$ &amp;gt; /tmp/pid In this documentation, we use (host)$ as the prompt of the host shell, (namespace)$ as the prompt of the shell running in the namespaces. (中略) Terminal 2: Start slirp4netns (host)$ slirp4netns --configure --mtu=65520 --disable-host-loopback $(cat /tmp/pid) tap0 starting slirp, MTU=65520 ... Terminal 1: Make sure the tap0 is configured and connected to the Internet (namespace)$ ip a 1: lo: &amp;lt;LOOPBACK&amp;gt; mtu 65536 qdisc noop state DOWN group default qlen 1000 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00 3: tap0: &amp;lt;BROADCAST,UP,LOWER_UP&amp;gt; mtu 65520 qdisc fq_codel state UNKNOWN group default qlen 1000 link/ether c2:28:0c:0e:29:06 brd ff:ff:ff:ff:ff:ff inet 10.0.2.100/24 brd 10.0.2.255 scope global tap0 valid_lft forever preferred_lft forever inet6 fe80::c028:cff:fe0e:2906/64 scope link valid_lft forever preferred_lft forever (namespace)$ echo &quot;nameserver 10.0.2.3&quot; &amp;gt; /tmp/resolv.conf (namespace)$ mount --bind /tmp/resolv.conf /etc/resolv.conf (namespace)$ curl https://example.com 上記の手順、すなわち簡易コンテナのプロセス番号を渡す形で slirp4netns --configure --mtu=65520 --disable-host-loopback PID tap0 のように実行すれば、 podman と同様のネットワーク構成が手に入る。 また slirp4netns はポートフォワーディング機能も API 経由で対応している。 slirp4netns can provide QMP-like API server over an UNIX socket file: (host)$ slirp4netns --api-socket /tmp/slirp4netns.sock ... add_hostfwd: Expose a port (IPv4 only) (namespace)$ json=&apos;{&quot;execute&quot;: &quot;add_hostfwd&quot;, &quot;arguments&quot;: {&quot;proto&quot;: &quot;tcp&quot;, &quot;host_addr&quot;: &quot;0.0.0.0&quot;, &quot;host_port&quot;: 8080, &quot;guest_addr&quot;: &quot;10.0.2.100&quot;, &quot;guest_port&quot;: 80}}&apos; (namespace)$ echo -n $json | nc -U /tmp/slirp4netns.sock {&quot;return&quot;: {&quot;id&quot;: 42}} If host_addr is not specified, then it defaults to “0.0.0.0”. If guest_addr is not specified, then it will be set to the default address that corresponds to --configure. なお、 podman v5 で pasta(passt) をデフォルトに使うようになった。ただ qemu, libvirt, podman とのインテグレーションは対応しているもののコマンドラインで使いやすいものではない。 いずれにせよ slirp4netns や pasta がある環境では docker や podman がインストールされていそうであるし、 そちらを使った方が大幅に楽だ。 たとえば下記のコマンドで、ネットワーク分離しつつ外界との接続性を維持する。 $ podman unshare --rootless-netns プロセスを分離する プロセスを分離するには -p (--pid) を指定すればいいが、実際のところ /proc の分離なども必要となってくるので -f (--fork) と --mount-proc を加えた下記を実行することになる。 $ unshare -rfp --mount-proc ps -e PID TTY TIME CMD 1 pts/2 00:00:00 ps これで docker コンテナ内のプロセスのように PID=1 がユーザプログラムになる。 /proc はマウントし直しされる形で分離されていて、 mount の出力からもそれがわかる。 $ mount | grep &apos;type proc&apos; proc on /proc type proc (rw,nosuid,nodev,noexec,relatime) $ unshare -rfp --mount-proc mount | grep &apos;type proc&apos; proc on /proc type proc (rw,nosuid,nodev,noexec,relatime) proc on /proc type proc (rw,nosuid,nodev,noexec,relatime) プロセスの分離はコンテナどおしの分離という観点では非常に重要ではあるが、今回のような単に簡易的なコンテナで十分なシナリオでは必要性は薄いように思える。 使えそうなワンライナー というわけで、使い勝手が良さそうなワンライナーとしては下記のぐらいだろうか。 ホームディレクトリをクリア（したとみせかけるため tmpfs でマウント）して実行。 unshare -rm --propagation private /bin/bash -c &quot;/bin/mount -t tmpfs tmpfs $HOME &amp;amp;&amp;amp; cd $HOME &amp;amp;&amp;amp; unshare --map-user=$(id -u) --map-group=$(id -g) ネットワーク設定練習用（まっさらな状態から） unshare -cn ネットワーク設定練習用（外部接続性がある状態から） podman unshare --rootless-netns 参考文献 第2回　コンテナの仕組みとLinuxカーネルのコンテナ機能［1］名前空間とは？ | gihyo.jp How it works | Rootless Containers chrootとunshareを使い、シェル上でコマンド7つで簡易コンテナ - へにゃぺんて＠日々勉強のまとめ unshare -m とか mount –make-shared とか #Linux - Qiita unshare コマンドがマウントプロパゲーションをまともに扱うような変更を入れていた - TenForward 【コンテナ要素技術】pivot_rootについて例をまじえて説明します - フラミナル 秒速でネットワーク作成 [veth peer] - サーバーワークスエンジニアブログ rootless-containers/slirp4netns: User-mode networking for unprivileged network namespaces passt - Plug A Simple Socket Transport</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Diff between firefox 127.0 beta 6 default preference and firefox 126.0</title>
@@ -6494,905 +7019,6 @@ table.diff_firefox120_pref_diff tbody tr { transition: background 0.125s ease-in
 
       
         <summary type="html">This is difference between the default preference of Firefox 120.0 beta 6 and one of 119.0. This diff table is generated with my small script firefox-prefjs-surveyer. Preference difference PrefFirefox 119.0Firefox 120.0 beta 6 app.normandy.test-prefs.bool undefined false app.normandy.test-prefs.integer undefined 0 app.normandy.test-prefs.string undefined app.releaseNotesURL https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=whatsnew https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=whatsnew app.releaseNotesURL.aboutDialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog app.update.channel release beta app.update.url.details https://www.mozilla.org/%LOCALE%/firefox/notes https://www.mozilla.org/%LOCALE%/firefox/beta/notes app.update.url.manual https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update browser.display.focus_background_color #117722 undefined browser.display.focus_ring_on_anything false undefined browser.display.focus_ring_style 1 undefined browser.display.focus_ring_width 1 undefined browser.display.focus_text_color #ffffff undefined browser.display.use_focus_colors false undefined browser.migrate.chrome.get_permissions.enabled undefined true browser.migrate.content-modal.enabled true undefined browser.newtabpage.activity-stream.discoverystream.config {&amp;quot;api_key_pref&amp;quot;:&amp;quot;extensions.pocket.oAuthConsumerKey&amp;quot;,&amp;quot;collapsible&amp;quot;:true,&amp;quot;enabled&amp;quot;:true,&amp;quot;show_spocs&amp;quot;:false,&amp;quot;hardcoded_layout&amp;quot;:true,&amp;quot;layout_endpoint&amp;quot;:&amp;quot;https://getpocket.cdn.mozilla.net/v3/newtab/layout?version=1&amp;amp;consumer_key=$apiKey&amp;amp;layout_variant=basic&amp;quot;} {&amp;quot;api_key_pref&amp;quot;:&amp;quot;extensions.pocket.oAuthConsumerKey&amp;quot;,&amp;quot;collapsible&amp;quot;:true,&amp;quot;enabled&amp;quot;:true} browser.newtabpage.activity-stream.system.showSponsored undefined false browser.newtabpage.activity-stream.telemetry.ut.events false true browser.privatebrowsing.resetPBM.enabled undefined false browser.privatebrowsing.resetPBM.showConfirmationDialog undefined true browser.search.newSearchConfig.enabled undefined false browser.theme.windows.accent-color-in-tabs.enabled undefined false browser.topsites.contile.sov.enabled false true browser.urlbar.bestMatch.blockingEnabled true undefined browser.urlbar.bestMatch.enabled false undefined browser.urlbar.eventTelemetry.enabled false undefined browser.urlbar.merino.enabled true undefined browser.urlbar.quickactions.enabled undefined true browser.urlbar.quickactions.showPrefs undefined true browser.urlbar.quicksuggest.blockingEnabled true undefined browser.urlbar.quicksuggest.remoteSettings.enabled true undefined browser.urlbar.quicksuggest.rustEnabled undefined false browser.urlbar.resultMenu true undefined browser.urlbar.shortcuts.quickactions undefined true browser.urlbar.showSearchTerms.featureGate false true browser.urlbar.suggest.bestmatch true undefined browser.urlbar.suggest.quickactions undefined true browser.urlbar.suggest.recentsearches undefined true browser.urlbar.switchTabs.searchAllContainers undefined false browser.urlbar.trending.featureGate undefined true cookiebanners.bannerClicking.pollingInterval undefined 500 cookiebanners.bannerClicking.timeout 3000 undefined cookiebanners.bannerClicking.timeoutAfterDOMContentLoaded undefined 20000 cookiebanners.bannerClicking.timeoutAfterLoad undefined 5000 cookiebanners.service.enableGlobalRules.subFrames undefined true cookiebanners.ui.desktop.enabled false true devtools.performance.recording.features [&amp;quot;js&amp;quot;,&amp;quot;leaf&amp;quot;,&amp;quot;stackwalk&amp;quot;,&amp;quot;cpu&amp;quot;,&amp;quot;screenshots&amp;quot;] [&amp;quot;js&amp;quot;,&amp;quot;stackwalk&amp;quot;,&amp;quot;cpu&amp;quot;,&amp;quot;screenshots&amp;quot;] devtools.performance.recording.features.remote [&amp;quot;js&amp;quot;,&amp;quot;leaf&amp;quot;,&amp;quot;stackwalk&amp;quot;,&amp;quot;cpu&amp;quot;,&amp;quot;screenshots&amp;quot;,&amp;quot;java&amp;quot;] [&amp;quot;js&amp;quot;,&amp;quot;stackwalk&amp;quot;,&amp;quot;cpu&amp;quot;,&amp;quot;screenshots&amp;quot;,&amp;quot;java&amp;quot;] dom.cache.privateBrowsing.enabled undefined false dom.document.edit_command.contentReadOnly.enabled true false dom.document.edit_command.insertBrOnReturn.enabled true false dom.event.keypress.key.allow_lone_surrogate true false dom.forms.always_allow_pointer_events.enabled false true dom.forms.fieldset_disable_only_descendants.enabled false true dom.iframe_lazy_loading.enabled undefined false dom.security.https_first_schemeless undefined false dom.w3c_pointer_events.getcoalescedevents_only_in_securecontext undefined false dom.webgpu.testing.assert-hardware-adapter undefined false dom.webgpu.workers.enabled undefined false dom.window.sizeToContent.enabled true false dom.workers.importScripts.enforceStrictMimeType false true editor.block_inline_check.use_computed_style undefined true extensions.InstallTrigger.enabled true false extensions.formautofill.firstTimeUse true undefined extensions.formautofill.heuristics.interactivityCheckMode undefined focusability extensions.script_about_blank_without_permission undefined false extensions.webcompat-reporter.enabled false true fission.enforceBlocklistedPrefsInSubprocesses false true geo.provider.network.url https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY% https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY% gfx.canvas.remote.allow-in-parent undefined false gfx.canvas.remote.texture-timeout-ms undefined 10000 gfx.canvas.remote.worker-threads undefined 0 gfx.webrender.blob-images true undefined image.mem.max_legal_imgframe_size_kb undefined -1 javascript.options.gc_delay.interslice 100 250 javascript.options.use_fdlibm_for_sin_cos_tan false true javascript.options.wasm_function_references false true javascript.options.wasm_gc false true javascript.options.wasm_tail_calls undefined false layout.css.allow-mixed-page-sizes false true layout.css.always_underline_links undefined false layout.css.computed-style.styles-outside-flat-tree false undefined layout.css.light-dark.enabled false true layout.css.text-wrap-balance-after-clamp.enabled undefined true layout.css.text-wrap-balance.enabled undefined false layout.css.text-wrap-balance.limit undefined 10 layout.css.zoom.enabled undefined false layout.details.force-block-layout undefined true layout.dynamic-reflow-roots.enabled false true media.allow-audio-non-utility true false media.audiograph.single_thread.enabled true undefined media.clockdrift.buffering 50 undefined media.webrtc.platformencoder false true memory.phc.enabled false true messaging-system.askForFeedback undefined true network.auth.use_redirect_for_retries undefined false network.cookie.sameSite.noneRequiresSecure false true network.early-hints.enabled false true network.early-hints.preconnect.enabled false true network.http.http2.move_to_pending_list_after_network_change undefined false network.http.useragent.forceRVOnly 109 undefined network.jar.record_failure_reason false true network.predictor.enable-prefetch false true network.url.strict_protocol_setter undefined true network.websocket.auto-follow-http-redirects false undefined pdfjs.enableStampEditor false true print.enabled undefined true privacy.annotate_channels.strict_list.enabled false true privacy.fingerprintingProtection.WebCompatService.logLevel undefined Error privacy.fingerprintingProtection.granularOverrides undefined privacy.globalprivacycontrol.functionality.enabled false true privacy.globalprivacycontrol.pbmode.enabled undefined true privacy.partition.bloburl_per_agent_cluster false undefined privacy.query_stripping.strip_on_share.enableTestMode undefined false privacy.query_stripping.strip_on_share.enabled false true security.disallow_non_local_systemprincipal_in_tests undefined false security.enterprise_roots.enabled false true security.remote_settings.crlite_filters.enabled false true security.ssl3.ecdhe_ecdsa_aes_128_sha true false security.ssl3.ecdhe_ecdsa_aes_256_sha true false security.webauth.webauthn_enable_android_fido2 false undefined services.sync.engine.bookmarks.validation.enabled undefined true services.sync.engine.passwords.validation.enabled undefined true svg.nearestAndFarthestViewportElement.enabled true false toolkit.shopping.environment undefined prod toolkit.telemetry.enabled false true ui.mouse.right_click.collapse_selection.stop_if_non_collapsed_selection undefined true ui.mouse.right_click.collapse_selection.stop_if_non_editable_node undefined false webgl.gl_khr_no_error undefined true</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Diff between firefox 119.0 beta 6 default preference and firefox 118.0.1</title>
-      <link href="https://cat-in-136.github.io/2023/10/diff-between-firefox-1190-beta-6-default.html" rel="alternate" type="text/html" title="Diff between firefox 119.0 beta 6 default preference and firefox 118.0.1" />
-      <published>2023-10-07T16:27:11+09:00</published>
-      <updated>2023-10-07T16:27:11+09:00</updated>
-      <id>https://cat-in-136.github.io/2023/10/diff-between-firefox-1190-beta-6-default</id>
-      
-      
-      
-      <content type="html" xml:base="https://cat-in-136.github.io/2023/10/diff-between-firefox-1190-beta-6-default.html">&lt;p&gt;
-This is difference between the default preference of Firefox 119.0 beta 6 and one of 118.0.1.
-This diff table is generated with my small script &lt;a href=&quot;https://github.com/cat-in-136/firefox-prefjs-surveyer&quot;&gt;firefox-prefjs-surveyer&lt;/a&gt;.
-&lt;/p&gt;
-
-&lt;div&gt;
-&lt;table class=&quot;diff_firefox119_pref_diff&quot;&gt;
-&lt;caption&gt;Preference difference&lt;/caption&gt;
-&lt;thead&gt;
-&lt;tr&gt;&lt;td&gt;Pref&lt;/td&gt;&lt;td&gt;Firefox 119.0.1&lt;/td&gt;&lt;td&gt;Firefox 119.0 beta 6&lt;/td&gt;&lt;/tr&gt;
-&lt;/thead&gt;
-    &lt;tbody&gt;
-      &lt;tr&gt;
-        &lt;td&gt;accessibility.&lt;wbr /&gt;ARIAReflection.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;bool&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;integer&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;string&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;releaseNotesURL&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=whatsnew&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=whatsnew&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;releaseNotesURL.&lt;wbr /&gt;aboutDialog&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;channel&lt;/td&gt;
-        &lt;td&gt;release&lt;/td&gt;
-        &lt;td&gt;beta&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;url.&lt;wbr /&gt;details&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/notes&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/beta/notes&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;url.&lt;wbr /&gt;manual&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;contentblocking.&lt;wbr /&gt;features.&lt;wbr /&gt;strict&lt;/td&gt;
-        &lt;td&gt;tp,&lt;wbr /&gt;tpPrivate,&lt;wbr /&gt;cookieBehavior5,&lt;wbr /&gt;cookieBehaviorPBM5,&lt;wbr /&gt;cm,&lt;wbr /&gt;fp,&lt;wbr /&gt;stp,&lt;wbr /&gt;emailTP,&lt;wbr /&gt;emailTPPrivate,&lt;wbr /&gt;lvl2,&lt;wbr /&gt;rp,&lt;wbr /&gt;rpTop,&lt;wbr /&gt;ocsp,&lt;wbr /&gt;qps,&lt;wbr /&gt;qpsPBM&lt;/td&gt;
-        &lt;td&gt;tp,&lt;wbr /&gt;tpPrivate,&lt;wbr /&gt;cookieBehavior5,&lt;wbr /&gt;cookieBehaviorPBM5,&lt;wbr /&gt;cm,&lt;wbr /&gt;fp,&lt;wbr /&gt;stp,&lt;wbr /&gt;emailTP,&lt;wbr /&gt;emailTPPrivate,&lt;wbr /&gt;lvl2,&lt;wbr /&gt;rp,&lt;wbr /&gt;rpTop,&lt;wbr /&gt;ocsp,&lt;wbr /&gt;qps,&lt;wbr /&gt;qpsPBM,&lt;wbr /&gt;fpp,&lt;wbr /&gt;fppPrivate&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;firefox-view.&lt;wbr /&gt;max-history-rows&lt;/td&gt;
-        &lt;td&gt;500&lt;/td&gt;
-        &lt;td&gt;300&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;fixup.&lt;wbr /&gt;alternate.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;migrate.&lt;wbr /&gt;chrome.&lt;wbr /&gt;extensions.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;discoverystream.&lt;wbr /&gt;spoc&lt;wbr /&gt;Topsites&lt;wbr /&gt;Placement.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;improvesearch.&lt;wbr /&gt;topSite&lt;wbr /&gt;SearchShortcuts.&lt;wbr /&gt;searchEngines&lt;/td&gt;
-        &lt;td&gt;google,&lt;wbr /&gt;amazon&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;ut.&lt;wbr /&gt;events&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;places.&lt;wbr /&gt;interactions.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;privatebrowsing.&lt;wbr /&gt;enable-new-indicator&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;privatebrowsing.&lt;wbr /&gt;enable-new-logo&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;search.&lt;wbr /&gt;serpEvent&lt;wbr /&gt;Telemetry.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;search.&lt;wbr /&gt;serpEvent&lt;wbr /&gt;Telemetry&lt;wbr /&gt;Categorization.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;sessionstore.&lt;wbr /&gt;closedTabsFromAllWindows&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;sessionstore.&lt;wbr /&gt;closedTabsFromClosedWindows&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;sessionstore.&lt;wbr /&gt;persist_&lt;wbr /&gt;closed_&lt;wbr /&gt;tabs_&lt;wbr /&gt;between_&lt;wbr /&gt;sessions&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;shopping.&lt;wbr /&gt;experience2023.&lt;wbr /&gt;ads.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;shopping.&lt;wbr /&gt;experience2023.&lt;wbr /&gt;ads.&lt;wbr /&gt;userEnabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;shopping.&lt;wbr /&gt;experience2023.&lt;wbr /&gt;survey.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;shopping.&lt;wbr /&gt;experience2023.&lt;wbr /&gt;survey.&lt;wbr /&gt;hasSeen&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;shopping.&lt;wbr /&gt;experience2023.&lt;wbr /&gt;survey.&lt;wbr /&gt;pdpVisits&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;tabs.&lt;wbr /&gt;firefox-view-newIcon&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;tabs.&lt;wbr /&gt;firefox-view-next&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;tabs.&lt;wbr /&gt;remote.&lt;wbr /&gt;coep.&lt;wbr /&gt;credential&lt;wbr /&gt;less&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;topsites.&lt;wbr /&gt;contile.&lt;wbr /&gt;sov.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;underline_&lt;wbr /&gt;anchors&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;quickactions.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;quickactions.&lt;wbr /&gt;showPrefs&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;shortcuts.&lt;wbr /&gt;quickactions&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;showSearchTerms.&lt;wbr /&gt;featureGate&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;suggest.&lt;wbr /&gt;quickactions&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;trending.&lt;wbr /&gt;featureGate&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;canvas.&lt;wbr /&gt;create&lt;wbr /&gt;ConicGradient.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;cookiebanners.&lt;wbr /&gt;ui.&lt;wbr /&gt;desktop.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;devtools.&lt;wbr /&gt;debugger.&lt;wbr /&gt;features.&lt;wbr /&gt;map-scopes&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;devtools.&lt;wbr /&gt;inspector.&lt;wbr /&gt;ruleview.&lt;wbr /&gt;inline-compatibility-warning.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;animations-api.&lt;wbr /&gt;autoremove.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;animations-api.&lt;wbr /&gt;core.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;animations-api.&lt;wbr /&gt;implicit-keyframes.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;document.&lt;wbr /&gt;edit_&lt;wbr /&gt;command.&lt;wbr /&gt;contentReadOnly.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;document.&lt;wbr /&gt;edit_&lt;wbr /&gt;command.&lt;wbr /&gt;insert&lt;wbr /&gt;Br&lt;wbr /&gt;OnReturn.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;enable_&lt;wbr /&gt;window_&lt;wbr /&gt;print&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;event.&lt;wbr /&gt;keypress.&lt;wbr /&gt;key.&lt;wbr /&gt;allow_&lt;wbr /&gt;lone_&lt;wbr /&gt;surrogate&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;events.&lt;wbr /&gt;phases.&lt;wbr /&gt;correct&lt;wbr /&gt;Order&lt;wbr /&gt;OnTarget&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;focus.&lt;wbr /&gt;fixup&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;forms.&lt;wbr /&gt;always_&lt;wbr /&gt;allow_&lt;wbr /&gt;pointer_&lt;wbr /&gt;events.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;forms.&lt;wbr /&gt;autocapitalize&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;forms.&lt;wbr /&gt;fieldset_&lt;wbr /&gt;disable_&lt;wbr /&gt;only_&lt;wbr /&gt;descendants.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;forms.&lt;wbr /&gt;inputmode&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;input_&lt;wbr /&gt;events.&lt;wbr /&gt;security.&lt;wbr /&gt;isUserInput&lt;wbr /&gt;Handling&lt;wbr /&gt;DelayTest&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;input_&lt;wbr /&gt;events.&lt;wbr /&gt;security.&lt;wbr /&gt;minNumTicks&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;3&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;input_&lt;wbr /&gt;events.&lt;wbr /&gt;security.&lt;wbr /&gt;minTimeElapsedInMS&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;100&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;media.&lt;wbr /&gt;mediasession.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;mouseevent.&lt;wbr /&gt;click.&lt;wbr /&gt;hack.&lt;wbr /&gt;use_&lt;wbr /&gt;legacy_&lt;wbr /&gt;non-primary_&lt;wbr /&gt;dispatch&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;picture_&lt;wbr /&gt;source_&lt;wbr /&gt;dimension_&lt;wbr /&gt;attributes.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;storageManager.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;visualviewport.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;webgpu.&lt;wbr /&gt;swap-chain.&lt;wbr /&gt;external-texture-dx12&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;weblocks.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;window.&lt;wbr /&gt;sidebar.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;workers.&lt;wbr /&gt;importScripts.&lt;wbr /&gt;enforce&lt;wbr /&gt;StrictMimeType&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;workers.&lt;wbr /&gt;requestAnimationFrame&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;extensions.&lt;wbr /&gt;InstallTrigger.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;extensions.&lt;wbr /&gt;webcompat-reporter.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;extensions.&lt;wbr /&gt;webcompat.&lt;wbr /&gt;use&lt;wbr /&gt;ScriptingAPI&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;fission.&lt;wbr /&gt;enforce&lt;wbr /&gt;Blocklisted&lt;wbr /&gt;Prefs&lt;wbr /&gt;InSubprocesses&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;geo.&lt;wbr /&gt;provider.&lt;wbr /&gt;network.&lt;wbr /&gt;url&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY%&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;gfx.&lt;wbr /&gt;downloadable_&lt;wbr /&gt;fonts.&lt;wbr /&gt;sanitize_&lt;wbr /&gt;omt&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;html5.&lt;wbr /&gt;inert.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;image.&lt;wbr /&gt;webp.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;array_&lt;wbr /&gt;grouping&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;mem.&lt;wbr /&gt;gc_&lt;wbr /&gt;parallel_&lt;wbr /&gt;marking_&lt;wbr /&gt;threshold_&lt;wbr /&gt;kb&lt;/td&gt;
-        &lt;td&gt;200000&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;mem.&lt;wbr /&gt;gc_&lt;wbr /&gt;parallel_&lt;wbr /&gt;marking_&lt;wbr /&gt;threshold_&lt;wbr /&gt;mb&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;200&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;spectre.&lt;wbr /&gt;disable_&lt;wbr /&gt;for_&lt;wbr /&gt;isolated_&lt;wbr /&gt;content&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;wasm_&lt;wbr /&gt;final_&lt;wbr /&gt;types&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;well_&lt;wbr /&gt;formed_&lt;wbr /&gt;unicode_&lt;wbr /&gt;strings&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;allow-mixed-page-sizes&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;font-loading-api.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;font-loading-api.&lt;wbr /&gt;workers.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;font-metrics-overrides.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;grid-item-baxis-measurement.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;hyphenate-character.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;line-height-moz-block-height.&lt;wbr /&gt;content.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;linear-easing-function.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;motion-path.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;moz-broken.&lt;wbr /&gt;content.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;moz-document.&lt;wbr /&gt;content.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;overflow-logical.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;page-size.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;scrollbar-gutter.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;dynamic-reflow-roots.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;oopif_&lt;wbr /&gt;activity_&lt;wbr /&gt;grace_&lt;wbr /&gt;period_&lt;wbr /&gt;ms&lt;/td&gt;
-        &lt;td&gt;1000&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;allow-audio-non-utility&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;gmp.&lt;wbr /&gt;use-minimal-xpcom&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;webrtc.&lt;wbr /&gt;platformencoder&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;memory.&lt;wbr /&gt;phc.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;auth.&lt;wbr /&gt;allow_&lt;wbr /&gt;multiple_&lt;wbr /&gt;challenges_&lt;wbr /&gt;same_&lt;wbr /&gt;line&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;auth.&lt;wbr /&gt;use_&lt;wbr /&gt;new_&lt;wbr /&gt;parse_&lt;wbr /&gt;realm&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;cookie.&lt;wbr /&gt;reject&lt;wbr /&gt;Foreign&lt;wbr /&gt;With&lt;wbr /&gt;Exceptions.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;cookie.&lt;wbr /&gt;sameSite.&lt;wbr /&gt;none&lt;wbr /&gt;Requires&lt;wbr /&gt;Secure&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;dns.&lt;wbr /&gt;limit_&lt;wbr /&gt;253_&lt;wbr /&gt;chars&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;dns.&lt;wbr /&gt;skipTRR-when-parental-control-enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;early-hints.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;early-hints.&lt;wbr /&gt;preconnect.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;fetchpriority.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http3.&lt;wbr /&gt;cc_&lt;wbr /&gt;algorithm&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;1&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;jar.&lt;wbr /&gt;record_&lt;wbr /&gt;failure_&lt;wbr /&gt;reason&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;predictor.&lt;wbr /&gt;enable-prefetch&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;pdfjs.&lt;wbr /&gt;enable&lt;wbr /&gt;StampEditor&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;privacy.&lt;wbr /&gt;annotate_&lt;wbr /&gt;channels.&lt;wbr /&gt;strict_&lt;wbr /&gt;list.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;privacy.&lt;wbr /&gt;partition.&lt;wbr /&gt;bloburl_&lt;wbr /&gt;per_&lt;wbr /&gt;partition_&lt;wbr /&gt;key&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;block_&lt;wbr /&gt;fileuri_&lt;wbr /&gt;script_&lt;wbr /&gt;with_&lt;wbr /&gt;wrong_&lt;wbr /&gt;mime&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;disallow_&lt;wbr /&gt;non_&lt;wbr /&gt;local_&lt;wbr /&gt;systemprincipal_&lt;wbr /&gt;in_&lt;wbr /&gt;tests&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;insecure_&lt;wbr /&gt;connection_&lt;wbr /&gt;icon.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;insecure_&lt;wbr /&gt;connection_&lt;wbr /&gt;icon.&lt;wbr /&gt;pbmode.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;mixed_&lt;wbr /&gt;content.&lt;wbr /&gt;upgrade_&lt;wbr /&gt;display_&lt;wbr /&gt;content.&lt;wbr /&gt;audio&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;mixed_&lt;wbr /&gt;content.&lt;wbr /&gt;upgrade_&lt;wbr /&gt;display_&lt;wbr /&gt;content.&lt;wbr /&gt;image&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;mixed_&lt;wbr /&gt;content.&lt;wbr /&gt;upgrade_&lt;wbr /&gt;display_&lt;wbr /&gt;content.&lt;wbr /&gt;video&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;remote_&lt;wbr /&gt;settings.&lt;wbr /&gt;crlite_&lt;wbr /&gt;filters.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;ssl3.&lt;wbr /&gt;ecdhe_&lt;wbr /&gt;ecdsa_&lt;wbr /&gt;aes_&lt;wbr /&gt;128_&lt;wbr /&gt;sha&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;ssl3.&lt;wbr /&gt;ecdhe_&lt;wbr /&gt;ecdsa_&lt;wbr /&gt;aes_&lt;wbr /&gt;256_&lt;wbr /&gt;sha&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;engine.&lt;wbr /&gt;bookmarks.&lt;wbr /&gt;validation.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;engine.&lt;wbr /&gt;passwords.&lt;wbr /&gt;validation.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;svg.&lt;wbr /&gt;nearest&lt;wbr /&gt;And&lt;wbr /&gt;Farthest&lt;wbr /&gt;ViewportElement.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;ui.&lt;wbr /&gt;use_&lt;wbr /&gt;activity_&lt;wbr /&gt;cursor&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;webgl.&lt;wbr /&gt;max-vert-ids-per-draw&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;30000000&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;widget.&lt;wbr /&gt;dmabuf.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;widget.&lt;wbr /&gt;gtk.&lt;wbr /&gt;hide-pointer-while-typing.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;widget.&lt;wbr /&gt;gtk.&lt;wbr /&gt;rounded-bottom-corners.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-    &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-
-
-&lt;style type=&quot;text/css&quot;&gt;&lt;!-- /* --&gt;&lt;![CDATA[ /* */
-table.diff_firefox119_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
-table.diff_firefox119_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
-table.diff_firefox119_pref_diff thead td { background-color: #ddd; font-weight: bold; }
-table.diff_firefox119_pref_diff td.json,
-table.diff_firefox119_pref_diff td.uri,
-table.diff_firefox119_pref_diff td.dump { word-break: break-all; }
-table.diff_firefox119_pref_diff td.undefined { color: #888; font-style: italic; }
-table.diff_firefox119_pref_diff tr.sameval td:first-child { color: #444; }
-table.diff_firefox119_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
-table.diff_firefox119_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
-table.diff_firefox119_pref_diff tbody tr:hover { background-color: #eee; }
-table.diff_firefox119_pref_diff tbody tr { transition: background 0.125s ease-in-out 0s; }
-/* ]]&gt;&lt;!-- */ --&gt;&lt;/style&gt;</content>
-      
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>cat_in_136</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="pref diff" />
-      
-        <category term="mozilla" />
-      
-
-      
-        <summary type="html">This is difference between the default preference of Firefox 119.0 beta 6 and one of 118.0.1. This diff table is generated with my small script firefox-prefjs-surveyer. Preference difference PrefFirefox 119.0.1Firefox 119.0 beta 6 accessibility.ARIAReflection.enabled false true app.normandy.test-prefs.bool undefined false app.normandy.test-prefs.integer undefined 0 app.normandy.test-prefs.string undefined app.releaseNotesURL https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=whatsnew https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=whatsnew app.releaseNotesURL.aboutDialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog app.update.channel release beta app.update.url.details https://www.mozilla.org/%LOCALE%/firefox/notes https://www.mozilla.org/%LOCALE%/firefox/beta/notes app.update.url.manual https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update browser.contentblocking.features.strict tp,tpPrivate,cookieBehavior5,cookieBehaviorPBM5,cm,fp,stp,emailTP,emailTPPrivate,lvl2,rp,rpTop,ocsp,qps,qpsPBM tp,tpPrivate,cookieBehavior5,cookieBehaviorPBM5,cm,fp,stp,emailTP,emailTPPrivate,lvl2,rp,rpTop,ocsp,qps,qpsPBM,fpp,fppPrivate browser.firefox-view.max-history-rows 500 300 browser.fixup.alternate.enabled false undefined browser.migrate.chrome.extensions.enabled false true browser.newtabpage.activity-stream.discoverystream.spocTopsitesPlacement.enabled undefined true browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.searchEngines google,amazon browser.newtabpage.activity-stream.telemetry.ut.events false true browser.places.interactions.enabled undefined true browser.privatebrowsing.enable-new-indicator true undefined browser.privatebrowsing.enable-new-logo true undefined browser.search.serpEventTelemetry.enabled false true browser.search.serpEventTelemetryCategorization.enabled undefined false browser.sessionstore.closedTabsFromAllWindows false true browser.sessionstore.closedTabsFromClosedWindows false true browser.sessionstore.persist_closed_tabs_between_sessions false true browser.shopping.experience2023.ads.enabled true false browser.shopping.experience2023.ads.userEnabled undefined false browser.shopping.experience2023.survey.enabled undefined true browser.shopping.experience2023.survey.hasSeen undefined false browser.shopping.experience2023.survey.pdpVisits undefined 0 browser.tabs.firefox-view-newIcon undefined true browser.tabs.firefox-view-next false true browser.tabs.remote.coep.credentialless false true browser.topsites.contile.sov.enabled false true browser.underline_anchors true undefined browser.urlbar.quickactions.enabled undefined true browser.urlbar.quickactions.showPrefs undefined true browser.urlbar.shortcuts.quickactions undefined true browser.urlbar.showSearchTerms.featureGate false true browser.urlbar.suggest.quickactions undefined true browser.urlbar.trending.featureGate undefined true canvas.createConicGradient.enabled true undefined cookiebanners.ui.desktop.enabled false true devtools.debugger.features.map-scopes true undefined devtools.inspector.ruleview.inline-compatibility-warning.enabled true undefined dom.animations-api.autoremove.enabled true undefined dom.animations-api.core.enabled true undefined dom.animations-api.implicit-keyframes.enabled true undefined dom.document.edit_command.contentReadOnly.enabled true false dom.document.edit_command.insertBrOnReturn.enabled true false dom.enable_window_print true undefined dom.event.keypress.key.allow_lone_surrogate true false dom.events.phases.correctOrderOnTarget false true dom.focus.fixup true undefined dom.forms.always_allow_pointer_events.enabled false true dom.forms.autocapitalize true undefined dom.forms.fieldset_disable_only_descendants.enabled false true dom.forms.inputmode true undefined dom.input_events.security.isUserInputHandlingDelayTest undefined false dom.input_events.security.minNumTicks undefined 3 dom.input_events.security.minTimeElapsedInMS undefined 100 dom.media.mediasession.enabled true undefined dom.mouseevent.click.hack.use_legacy_non-primary_dispatch undefined dom.picture_source_dimension_attributes.enabled true undefined dom.storageManager.enabled true undefined dom.visualviewport.enabled true undefined dom.webgpu.swap-chain.external-texture-dx12 undefined false dom.weblocks.enabled true undefined dom.window.sidebar.enabled false undefined dom.workers.importScripts.enforceStrictMimeType false true dom.workers.requestAnimationFrame true undefined extensions.InstallTrigger.enabled true false extensions.webcompat-reporter.enabled false true extensions.webcompat.useScriptingAPI undefined true fission.enforceBlocklistedPrefsInSubprocesses false true geo.provider.network.url https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY% https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY% gfx.downloadable_fonts.sanitize_omt true undefined html5.inert.enabled true undefined image.webp.enabled true undefined javascript.options.array_grouping undefined true javascript.options.mem.gc_parallel_marking_threshold_kb 200000 undefined javascript.options.mem.gc_parallel_marking_threshold_mb undefined 200 javascript.options.spectre.disable_for_isolated_content false true javascript.options.wasm_final_types false undefined javascript.options.well_formed_unicode_strings undefined true layout.css.allow-mixed-page-sizes false true layout.css.font-loading-api.enabled true undefined layout.css.font-loading-api.workers.enabled true undefined layout.css.font-metrics-overrides.enabled true undefined layout.css.grid-item-baxis-measurement.enabled true undefined layout.css.hyphenate-character.enabled true undefined layout.css.line-height-moz-block-height.content.enabled false undefined layout.css.linear-easing-function.enabled true undefined layout.css.motion-path.enabled true undefined layout.css.moz-broken.content.enabled undefined false layout.css.moz-document.content.enabled false undefined layout.css.overflow-logical.enabled true undefined layout.css.page-size.enabled true undefined layout.css.scrollbar-gutter.enabled true undefined layout.dynamic-reflow-roots.enabled false true layout.oopif_activity_grace_period_ms 1000 undefined media.allow-audio-non-utility true false media.gmp.use-minimal-xpcom false true media.webrtc.platformencoder false true memory.phc.enabled undefined false network.auth.allow_multiple_challenges_same_line true undefined network.auth.use_new_parse_realm true undefined network.cookie.rejectForeignWithExceptions.enabled false undefined network.cookie.sameSite.noneRequiresSecure false true network.dns.limit_253_chars true undefined network.dns.skipTRR-when-parental-control-enabled true undefined network.early-hints.enabled false true network.early-hints.preconnect.enabled false true network.fetchpriority.enabled undefined false network.http.http3.cc_algorithm undefined 1 network.jar.record_failure_reason false true network.predictor.enable-prefetch false true pdfjs.enableStampEditor false true privacy.annotate_channels.strict_list.enabled false true privacy.partition.bloburl_per_partition_key false true security.block_fileuri_script_with_wrong_mime false true security.disallow_non_local_systemprincipal_in_tests undefined false security.insecure_connection_icon.enabled true undefined security.insecure_connection_icon.pbmode.enabled true undefined security.mixed_content.upgrade_display_content.audio undefined true security.mixed_content.upgrade_display_content.image undefined false security.mixed_content.upgrade_display_content.video undefined true security.remote_settings.crlite_filters.enabled false true security.ssl3.ecdhe_ecdsa_aes_128_sha true false security.ssl3.ecdhe_ecdsa_aes_256_sha true false services.sync.engine.bookmarks.validation.enabled undefined true services.sync.engine.passwords.validation.enabled undefined true svg.nearestAndFarthestViewportElement.enabled true false toolkit.telemetry.enabled false true ui.use_activity_cursor false undefined webgl.max-vert-ids-per-draw undefined 30000000 widget.dmabuf.enabled undefined true widget.gtk.hide-pointer-while-typing.enabled undefined true widget.gtk.rounded-bottom-corners.enabled undefined false</summary>
       
 
       
