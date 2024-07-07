@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,max-scale=10,min-scale=0.5,user-scalable=yes" />
+  <title>Build Complex CLI Apps in Rust: Derive and Builder APIs for Argument Order</title>
+
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="https://code.cdn.mozilla.net/fonts/fira.css" />
+
+  <link rel="canonical" href="https://cat-in-136.github.io/2024/07/build-complex-cli-apps-in-rust-derive-and-builder-apis-for-argument-order.html" />
+  <link rel="alternate" type="application/rss+xml" title="cat_in_136.blog() &raquo; Feed" href="/feed.xml" />
+  <meta property="og:url" content="https://cat-in-136.github.io/2024/07/build-complex-cli-apps-in-rust-derive-and-builder-apis-for-argument-order.html" />
+  <meta property="og:title" content="Build Complex CLI Apps in Rust: Derive and Builder APIs for Argument Order" /><meta property="og:description" content="clap is a popular library for building command-line interfaces (CLIs) in Rust. Its user-friendly ..." /><meta property="og:type" content="article" /><meta property="og:site_name" content="cat_in_136.blog()" /><meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@cat_in_136" />
+  <meta name="twitter:creator" content="@cat_in_136" />
+</head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" href="/">cat_in_136.blog()</a>
+    <nav class="site-nav">
+      <a href="javascript:void(0);" class="menu-icon" title="barger button"></a>
+      <div class="trigger"><a class="page-link" href="/about">About</a><a class="page-link" href="/archive">Archive</a><a class="page-link" href="/tags">Tags</a></div>
+    </nav>
+  </div>
+</header>
+<div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name"><a href="/2024/07/build-complex-cli-apps-in-rust-derive-and-builder-apis-for-argument-order.html" itemprop="url">Build Complex CLI Apps in Rust: Derive and Builder APIs for Argument Order</a></h1>
+
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2024-07-08T00:57:03+09:00">2024-07-08T00:57:03+09:00</span></div><div class="post-meta">Modified at: <span itemprop="dateModified" content="2024-07-08T00:57:03+09:00">2024-07-08T00:57:03+09:00</span></div><div class="post-meta">Tags:
+      <span itemprop="keywords"><a class="tag" href="/tags/rustlang">Rustlang</a><a class="tag" href="/tags/howto">Howto</a><a class="tag" href="/tags/cui">Cui</a></span></div><div class="post-meta">
+      Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2024-07-08-build-complex-cli-apps-in-rust-derive-and-builder-apis-for-argument-order.md" class="source-path">_posts/2024-07-08-build-complex-cli-apps-in-rust-derive-and-builder-apis-for-argument-order.md</a>
+        (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2024-07-08-build-complex-cli-apps-in-rust-derive-and-builder-apis-for-argument-order.md">History</a>)
+    </div><div class="post-meta">
+      <a href="#comments"><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2024/07/build-complex-cli-apps-in-rust-derive-and-builder-apis-for-argument-order.html">↓Comments</span></a>
+      <script id="dsq-count-scr" src="https://catin136blog.disqus.com/count.js" defer="defer" async="async"></script>
+    </div>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><a href="https://crates.io/crates/clap">clap</a> is a popular library for building command-line interfaces (CLIs) in Rust.
+Its user-friendly API allows to create feature-rich CLIs with minimal code.
+clap provides two main approaches to define command-line options.</p>
+
+<ul>
+  <li>The derive API: This is a simpler approach defining a struct and decorate it with the <code class="language-plaintext highlighter-rouge">#[derive(clap)]</code> attribute.
+The derive API automatically generates options based on the struct fields, but it provides limited customization.</li>
+  <li>The builder API: This approach uses the <code class="language-plaintext highlighter-rouge">clap::App</code> structure to define options individually.
+It provides more flexibility and allows for detailed configuration.</li>
+</ul>
+
+<p>The <a href="https://docs.rs/clap/latest/clap/_faq/index.html">clap FAQ page</a> states that the derive API cannot handle the argument order, so the builder API should be used for such use cases.</p>
+
+<blockquote>
+  <p>The <a href="https://docs.rs/clap/latest/clap/_tutorial/index.html">Builder API</a> is a lower-level API that someone might want to use for</p>
+  <ul>
+    <li>Faster compile times if you aren’t already using other procedural macros</li>
+    <li>More flexibility, e.g. you can look up an <a href="https://docs.rs/clap/latest/clap/struct.ArgMatches.html#method.get_many">arguments values</a>,
+their <a href="https://docs.rs/clap/latest/clap/struct.ArgMatches.html#method.indices_of">ordering with other arguments</a>, and <a href="https://docs.rs/clap/latest/clap/struct.ArgMatches.html#method.value_source">what set
+them</a>.  The Derive API can only report values and not
+indices of or other data.</li>
+  </ul>
+</blockquote>
+
+<p>I wanted to implement something that would take care of the argument order, but I wanted to enjoy the convenience of the derive API.</p>
+
+<p>Consider the following code.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">clap</span><span class="p">::</span><span class="n">Parser</span><span class="p">;</span>
+
+<span class="nd">#[derive(Parser,</span> <span class="nd">Debug)]</span>
+<span class="k">struct</span> <span class="n">Cli</span> <span class="p">{</span>
+    <span class="nd">#[arg(short</span> <span class="nd">=</span> <span class="sc">'f'</span><span class="nd">,</span> <span class="nd">long)]</span>
+    <span class="n">foo</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="nd">#[arg(short</span> <span class="nd">=</span> <span class="sc">'b'</span><span class="nd">,</span> <span class="nd">long)]</span>
+    <span class="n">bar</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nd">#[arg(long,</span> <span class="nd">value_delimiter</span> <span class="nd">=</span> <span class="sc">','</span><span class="nd">)]</span>
+    <span class="n">baz</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">args</span> <span class="o">=</span> <span class="nn">Cli</span><span class="p">::</span><span class="nf">parse</span><span class="p">();</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{args:?}"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The argument specification for this short program is as follows:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">foo</code>:.
+    <ul>
+      <li>Boolean flag argument.</li>
+      <li>Specified with the short option <code class="language-plaintext highlighter-rouge">-f</code> or the long option <code class="language-plaintext highlighter-rouge">--foo</code>.</li>
+      <li><code class="language-plaintext highlighter-rouge">true</code> if given, <code class="language-plaintext highlighter-rouge">false</code> if absent.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">bar</code>: Optional string argument.
+    <ul>
+      <li>Optional string argument.</li>
+      <li>Specified with the short option <code class="language-plaintext highlighter-rouge">-b</code> or the long option <code class="language-plaintext highlighter-rouge">--bar</code>.</li>
+      <li>The value is the string if specified, <code class="language-plaintext highlighter-rouge">None</code> if absent.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">baz</code>:: Comma separated list of strings.
+    <ul>
+      <li>comma-separated list of strings.</li>
+      <li>Specified only with long option <code class="language-plaintext highlighter-rouge">--baz</code>.</li>
+      <li>Multiple values can be specified separated by commas (e.g., <code class="language-plaintext highlighter-rouge">--baz value1,value2,value3</code>)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The result of the execution is as follows, where the order of each option is not given.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>cargo run <span class="nt">--</span> <span class="nt">--baz</span> baz1,baz2 <span class="nt">-f</span> <span class="nt">-b</span> bar <span class="nt">--baz</span> baz3
+<span class="go">    Finished dev [unoptimized + debuginfo] target(s) in 0.02s
+     Running `target/debug/clap-with-order --baz baz1,baz2 -f -b bar --baz baz3`
+Cli { foo: true, bar: Some("bar"), baz: ["baz1", "baz2", "baz3"] }
+</span></code></pre></div></div>
+
+<p>I want to get the order like <code class="language-plaintext highlighter-rouge">baz=baz1</code>, <code class="language-plaintext highlighter-rouge">baz=baz2</code>, <code class="language-plaintext highlighter-rouge">foo</code>, <code class="language-plaintext highlighter-rouge">bar=bar</code>, <code class="language-plaintext highlighter-rouge">baz=baz3</code>, etc. `</p>
+
+<p>The implementation of <a href="https://docs.rs/clap/latest/clap/trait.Parser.html#method.parse"><code class="language-plaintext highlighter-rouge">Parser::parse()</code></a> is as follows:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">fn</span> <span class="nf">parse</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="k">Self</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="k">mut</span> <span class="n">matches</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">Self</span> <span class="k">as</span> <span class="n">CommandFactory</span><span class="o">&gt;</span><span class="p">::</span><span class="nf">command</span><span class="p">()</span><span class="nf">.get_matches</span><span class="p">();</span>
+        <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">Self</span> <span class="k">as</span> <span class="n">FromArgMatches</span><span class="o">&gt;</span><span class="p">::</span><span class="nf">from_arg_matches_mut</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">matches</span><span class="p">)</span>
+            <span class="nf">.map_err</span><span class="p">(</span><span class="nn">format_error</span><span class="p">::</span><span class="o">&lt;</span><span class="k">Self</span><span class="o">&gt;</span><span class="p">);</span>
+        <span class="k">match</span> <span class="n">res</span> <span class="p">{</span>
+            <span class="nf">Ok</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="p">,</span>
+            <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="p">{</span>
+                <span class="c1">// Since this is more of a development-time error, we aren't doing as fancy of a quit</span>
+                <span class="c1">// as `get_matches`</span>
+                <span class="n">e</span><span class="nf">.exit</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>Interestingly, the <code class="language-plaintext highlighter-rouge">matches: ArgMatches</code> is returned in the process of this function, which is used in the builder API.
+But it is immediately taken into the <code class="language-plaintext highlighter-rouge">from_arg_matches_mut()</code> function, and the lifetime of the <code class="language-plaintext highlighter-rouge">matches</code> is consumed here.</p>
+
+<p>So I thought that if I could get <code class="language-plaintext highlighter-rouge">matches</code>, I could use the builder API while enjoying the convenience of derive API argument definitions.
+I can use the derive API for unordered argument options, and use the builder API only for the ones I need to take into account. In this example, the order of all options <code class="language-plaintext highlighter-rouge">foo</code>, <code class="language-plaintext highlighter-rouge">bar</code>, and <code class="language-plaintext highlighter-rouge">baz</code> needs to be considered.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">clap</span><span class="p">::{</span><span class="n">CommandFactory</span><span class="p">,</span> <span class="n">FromArgMatches</span><span class="p">,</span> <span class="n">Parser</span><span class="p">};</span>
+
+<span class="nd">#[derive(Parser,</span> <span class="nd">Debug)]</span>
+<span class="k">struct</span> <span class="n">Cli</span> <span class="p">{</span>
+    <span class="nd">#[arg(short</span> <span class="nd">=</span> <span class="sc">'f'</span><span class="nd">,</span> <span class="nd">long)]</span>
+    <span class="n">foo</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="nd">#[arg(short</span> <span class="nd">=</span> <span class="sc">'b'</span><span class="nd">,</span> <span class="nd">long)]</span>
+    <span class="n">bar</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nd">#[arg(long,</span> <span class="nd">value_delimiter</span> <span class="nd">=</span> <span class="sc">','</span><span class="nd">)]</span>
+    <span class="n">baz</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">matches</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">Cli</span> <span class="k">as</span> <span class="n">CommandFactory</span><span class="o">&gt;</span><span class="p">::</span><span class="nf">command</span><span class="p">()</span><span class="nf">.get_matches</span><span class="p">();</span>
+    <span class="k">let</span> <span class="n">args</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">Cli</span> <span class="k">as</span> <span class="n">FromArgMatches</span><span class="o">&gt;</span><span class="p">::</span><span class="nf">from_arg_matches_mut</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">matches</span><span class="nf">.clone</span><span class="p">());</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{args:?}"</span><span class="p">);</span>
+
+    <span class="k">let</span> <span class="n">foo_indices</span> <span class="o">=</span> <span class="n">matches</span>
+        <span class="nf">.indices_of</span><span class="p">(</span><span class="s">"foo"</span><span class="p">)</span>
+        <span class="nf">.map</span><span class="p">(|</span><span class="n">v</span><span class="p">|</span> <span class="n">v</span><span class="py">.collect</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;&gt;</span><span class="p">())</span>
+        <span class="nf">.unwrap_or_default</span><span class="p">();</span>
+    <span class="k">let</span> <span class="n">bar_indices</span> <span class="o">=</span> <span class="n">matches</span>
+        <span class="nf">.indices_of</span><span class="p">(</span><span class="s">"bar"</span><span class="p">)</span>
+        <span class="nf">.map</span><span class="p">(|</span><span class="n">v</span><span class="p">|</span> <span class="n">v</span><span class="py">.collect</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;&gt;</span><span class="p">())</span>
+        <span class="nf">.unwrap_or_default</span><span class="p">();</span>
+    <span class="k">let</span> <span class="n">baz_indices</span> <span class="o">=</span> <span class="n">matches</span>
+        <span class="nf">.indices_of</span><span class="p">(</span><span class="s">"baz"</span><span class="p">)</span>
+        <span class="nf">.map</span><span class="p">(|</span><span class="n">v</span><span class="p">|</span> <span class="n">v</span><span class="py">.collect</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;&gt;</span><span class="p">())</span>
+        <span class="nf">.unwrap_or_default</span><span class="p">();</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"foo-indices {foo_indices:?}"</span><span class="p">);</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"bar-indices {bar_indices:?}"</span><span class="p">);</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"baz-indices {baz_indices:?}"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The result of this execution is shown below, which shows the order in which each option is specified:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cargo run -- --baz baz1,baz2 -f -b bar --baz baz3
+   Compiling clap-with-order v0.1.0
+    Finished dev [unoptimized + debuginfo] target(s) in 0.69s
+     Running `target/debug/clap-with-order --baz baz1,baz2 -f -b bar --baz baz3`
+Ok(Cli { foo: true, bar: Some("bar"), baz: ["baz1", "baz2", "baz3"] })
+foo-indices [4]
+bar-indices [6]
+baz-indices [2, 3, 8]
+</code></pre></div></div>
+
+<p>To take the arguments in the order just like <code class="language-plaintext highlighter-rouge">baz=baz1</code>, <code class="language-plaintext highlighter-rouge">baz=baz2</code>, <code class="language-plaintext highlighter-rouge">foo</code>, <code class="language-plaintext highlighter-rouge">bar=bar</code>, <code class="language-plaintext highlighter-rouge">baz=baz3</code>, make a vector consisting of pair tuple of the derive API value and the argument order of the builder API as shown below, and sort it by argument order.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">clap</span><span class="p">::{</span><span class="n">CommandFactory</span><span class="p">,</span> <span class="n">FromArgMatches</span><span class="p">,</span> <span class="n">Parser</span><span class="p">};</span>
+
+<span class="nd">#[derive(Parser,</span> <span class="nd">Debug)]</span>
+<span class="k">struct</span> <span class="n">Cli</span> <span class="p">{</span>
+    <span class="nd">#[arg(short</span> <span class="nd">=</span> <span class="sc">'f'</span><span class="nd">,</span> <span class="nd">long)]</span>
+    <span class="n">foo</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="nd">#[arg(short</span> <span class="nd">=</span> <span class="sc">'b'</span><span class="nd">,</span> <span class="nd">long)]</span>
+    <span class="n">bar</span><span class="p">:</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nd">#[arg(long,</span> <span class="nd">value_delimiter</span> <span class="nd">=</span> <span class="sc">','</span><span class="nd">)]</span>
+    <span class="n">baz</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">enum</span> <span class="n">FooBarBaz</span> <span class="p">{</span>
+    <span class="nf">Foo</span><span class="p">(</span><span class="nb">bool</span><span class="p">),</span>
+    <span class="nf">Bar</span><span class="p">(</span><span class="nb">String</span><span class="p">),</span>
+    <span class="nf">Baz</span><span class="p">(</span><span class="nb">String</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">matches</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">Cli</span> <span class="k">as</span> <span class="n">CommandFactory</span><span class="o">&gt;</span><span class="p">::</span><span class="nf">command</span><span class="p">()</span><span class="nf">.get_matches</span><span class="p">();</span>
+    <span class="k">let</span> <span class="n">args</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">Cli</span> <span class="k">as</span> <span class="n">FromArgMatches</span><span class="o">&gt;</span><span class="p">::</span><span class="nf">from_arg_matches_mut</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="n">matches</span><span class="nf">.clone</span><span class="p">())</span><span class="nf">.unwrap</span><span class="p">();</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{args:?}"</span><span class="p">);</span>
+
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">foobarbaz</span> <span class="o">=</span> <span class="nn">Vec</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nf">Some</span><span class="p">(</span><span class="k">mut</span> <span class="n">indices</span><span class="p">)</span> <span class="o">=</span> <span class="n">matches</span><span class="nf">.indices_of</span><span class="p">(</span><span class="s">"foo"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nf">Some</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">=</span> <span class="n">indices</span><span class="nf">.next</span><span class="p">()</span> <span class="p">{</span>
+            <span class="n">foobarbaz</span><span class="nf">.push</span><span class="p">((</span><span class="n">index</span><span class="p">,</span> <span class="nn">FooBarBaz</span><span class="p">::</span><span class="nf">Foo</span><span class="p">(</span><span class="n">args</span><span class="py">.foo</span><span class="p">)));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nf">Some</span><span class="p">(</span><span class="k">mut</span> <span class="n">indices</span><span class="p">)</span> <span class="o">=</span> <span class="n">matches</span><span class="nf">.indices_of</span><span class="p">(</span><span class="s">"bar"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="p">(</span><span class="nf">Some</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="nf">Some</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="o">=</span> <span class="p">(</span><span class="n">args</span><span class="py">.bar</span><span class="p">,</span> <span class="n">indices</span><span class="nf">.next</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">foobarbaz</span><span class="nf">.push</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="nn">FooBarBaz</span><span class="p">::</span><span class="nf">Bar</span><span class="p">(</span><span class="n">v</span><span class="p">)));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nf">Some</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span> <span class="o">=</span> <span class="n">matches</span><span class="nf">.indices_of</span><span class="p">(</span><span class="s">"baz"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">in</span> <span class="n">args</span><span class="py">.baz</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.zip</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">foobarbaz</span><span class="nf">.push</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="nn">FooBarBaz</span><span class="p">::</span><span class="nf">Baz</span><span class="p">(</span><span class="n">v</span><span class="nf">.clone</span><span class="p">())));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">foobarbaz</span><span class="nf">.sort_by_key</span><span class="p">(|</span><span class="n">v</span><span class="p">|</span> <span class="n">v</span><span class="na">.0</span><span class="p">);</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"foobarbaz: {foobarbaz:?}"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This gives us what I wanted.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>cargo run <span class="nt">--</span> <span class="nt">--baz</span> baz1,baz2 <span class="nt">-f</span> <span class="nt">-b</span> bar <span class="nt">--baz</span> baz3
+<span class="go">   Compiling clap-with-order v0.1.0
+    Finished dev [unoptimized + debuginfo] target(s) in 0.65s
+     Running `target/debug/clap-with-order --baz baz1,baz2 -f -b bar --baz baz3`
+Cli { foo: true, bar: Some("bar"), baz: ["baz1", "baz2", "baz3"] }
+foobarbaz: [(2, Baz("baz1")), (3, Baz("baz2")), (4, Foo(true)), (6, Bar("bar")), (8, Baz("baz3"))]
+</span></code></pre></div></div>
+
+<p>In this result, the argument order is left, but if not needed, the following processing can be added at the end to take out only the values.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="n">foobarbaz</span> <span class="o">=</span> <span class="n">foobarbaz</span><span class="nf">.drain</span><span class="p">(</span><span class="o">..</span><span class="p">)</span><span class="nf">.map</span><span class="p">(|</span><span class="n">v</span><span class="p">|</span> <span class="n">v</span><span class="na">.1</span><span class="p">)</span><span class="py">.collect</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;&gt;</span><span class="p">();</span>
+<span class="nd">println!</span><span class="p">(</span><span class="s">"foobarbaz: {foobarbaz:?}"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">cargo run -- --baz baz1,baz2 -f -b bar --baz baz3
+   Compiling clap-with-order v0.1.0
+    Finished dev [unoptimized + debuginfo] target(s) in 0.65s
+     Running `target/debug/clap-with-order --baz baz1,baz2 -f -b bar --baz baz3`
+Cli { foo: true, bar: Some("bar"), baz: ["baz1", "baz2", "baz3"] }
+foobarbaz: [Baz("baz1"), Baz("baz2"), Foo(true), Bar("bar"), Baz("baz3")]
+</span></code></pre></div></div>
+
+<p>This article describes how to use the clap library to create command line tools using both the derive API, which does not handle argument order but is easy to use, and the builder API, which does handle argument order but is complex. By using both the derive API and the builder API in this way, it is possible to build more complex and flexible command line interfaces.</p>
+
+  </div>
+
+  <footer class="post-footer">
+    <details id="comments">
+      <summary><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2024/07/build-complex-cli-apps-in-rust-derive-and-builder-apis-for-argument-order.html">Comments</span></summary>
+      <div id="disqus_thread"></div>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <script type="application/javascript" src="/javascript/disqus_loader.js" defer="defer" async="async"></script>
+    </details>
+  </footer>
+</article><aside class="post-related">
+  <h2>Related Posts</h2>
+  <ul class="post-list"><li class="post-item">
+    <a class="post-link" href="/2017/10/list-of-all-the-config-provided-by-configuration-mania.html">
+      <span class="post-meta">2017-10-26</span>
+      <span class="post-title">List of all the Config provided by Configuration Mania</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2018/04/rust-error-handling-question.html">
+      <span class="post-meta">2018-04-29</span>
+      <span class="post-title">rustのエラー処理と疑問符演算子</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2022/01/directory-layout-of-library-for-unit-testing-with-platformio.html">
+      <span class="post-meta">2022-01-16</span>
+      <span class="post-title">Note: Directory Layout of library for unit testing with PlatformIO</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2015/05/declaration-of-a-parameter-as-array-with-static-keyword-in-c-language.html">
+      <span class="post-meta">2015-05-01</span>
+      <span class="post-title">C言語での static キーワード付き配列パラメータ宣言</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2017/07/apply-to-html-svg-filter-inkscape.html">
+      <span class="post-meta">2017-07-22</span>
+      <span class="post-title">Apply to HTML elements the SVG filters of inkscape preset filters</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2022/05/note-m5paper-power-supply-management.html">
+      <span class="post-meta">2022-05-08</span>
+      <span class="post-title">Note: M5Paper Power Supply/Management</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2021/09/zenzen-wakaranai-oretachi-funikide-btrfs-wo-tsukatteiru.html">
+      <span class="post-meta">2021-09-13</span>
+      <span class="post-title">ぜんぜんわからない俺達は雰囲気でbtrfs使っている</span><img class="post-thumb" src="/images/2020-09-13-Btrfs_logo.svg" loading="lazy" alt="thumbnail" /></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2020/05/port-glsl-sandbox-effect-to-gstreamer-glshader.html">
+      <span class="post-meta">2020-05-03</span>
+      <span class="post-title">Porting GLSL Sandbox effect to GStreamer glshader element</span></a>
+  </li>
+</ul>
+</aside>
+      </div>
+    </div><footer class="site-footer">
+  <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
+    <h2 class="footer-heading">cat_in_136.blog()</h2>
+    <p>
+      © 2024
+      <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
+        <a href="/about"><span itemprop="name">cat_in_136</span></a>
+      </span>;
+      Content is available under a
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license" itemprop="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">CC BY-NC-SA 4.0</a>
+      unless otherwise noted.
+    </p>
+  </div>
+</footer>
+</body>
+</html>

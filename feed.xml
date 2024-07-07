@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator>
   <link href="https://cat-in-136.github.io/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://cat-in-136.github.io/" rel="alternate" type="text/html" />
-  <updated>2024-06-15T23:45:43+09:00</updated>
+  <updated>2024-07-08T01:00:43+09:00</updated>
   <id>https://cat-in-136.github.io/</id>
 
   
@@ -17,6 +17,275 @@
 
   
   
+  
+    <entry>
+      <title type="html">Build Complex CLI Apps in Rust: Derive and Builder APIs for Argument Order</title>
+      <link href="https://cat-in-136.github.io/2024/07/build-complex-cli-apps-in-rust-derive-and-builder-apis-for-argument-order.html" rel="alternate" type="text/html" title="Build Complex CLI Apps in Rust: Derive and Builder APIs for Argument Order" />
+      <published>2024-07-08T00:57:03+09:00</published>
+      <updated>2024-07-08T00:57:03+09:00</updated>
+      <id>https://cat-in-136.github.io/2024/07/build-complex-cli-apps-in-rust-derive-and-builder-apis-for-argument-order</id>
+      
+      
+      
+      <content type="html" xml:base="https://cat-in-136.github.io/2024/07/build-complex-cli-apps-in-rust-derive-and-builder-apis-for-argument-order.html">&lt;p&gt;&lt;a href=&quot;https://crates.io/crates/clap&quot;&gt;clap&lt;/a&gt; is a popular library for building command-line interfaces (CLIs) in Rust.
+Its user-friendly API allows to create feature-rich CLIs with minimal code.
+clap provides two main approaches to define command-line options.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The derive API: This is a simpler approach defining a struct and decorate it with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#[derive(clap)]&lt;/code&gt; attribute.
+The derive API automatically generates options based on the struct fields, but it provides limited customization.&lt;/li&gt;
+  &lt;li&gt;The builder API: This approach uses the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;clap::App&lt;/code&gt; structure to define options individually.
+It provides more flexibility and allows for detailed configuration.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://docs.rs/clap/latest/clap/_faq/index.html&quot;&gt;clap FAQ page&lt;/a&gt; states that the derive API cannot handle the argument order, so the builder API should be used for such use cases.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The &lt;a href=&quot;https://docs.rs/clap/latest/clap/_tutorial/index.html&quot;&gt;Builder API&lt;/a&gt; is a lower-level API that someone might want to use for&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Faster compile times if you aren’t already using other procedural macros&lt;/li&gt;
+    &lt;li&gt;More flexibility, e.g. you can look up an &lt;a href=&quot;https://docs.rs/clap/latest/clap/struct.ArgMatches.html#method.get_many&quot;&gt;arguments values&lt;/a&gt;,
+their &lt;a href=&quot;https://docs.rs/clap/latest/clap/struct.ArgMatches.html#method.indices_of&quot;&gt;ordering with other arguments&lt;/a&gt;, and &lt;a href=&quot;https://docs.rs/clap/latest/clap/struct.ArgMatches.html#method.value_source&quot;&gt;what set
+them&lt;/a&gt;.  The Derive API can only report values and not
+indices of or other data.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I wanted to implement something that would take care of the argument order, but I wanted to enjoy the convenience of the derive API.&lt;/p&gt;
+
+&lt;p&gt;Consider the following code.&lt;/p&gt;
+
+&lt;div class=&quot;language-rust highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;clap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Parser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nd&quot;&gt;#[derive(Parser,&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;Debug)]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Cli&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;#[arg(short&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;&apos;f&apos;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;long)]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;#[arg(short&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;&apos;b&apos;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;long)]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Option&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;#[arg(long,&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;value_delimiter&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;&apos;,&apos;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;)]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;baz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Vec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Cli&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;println!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;{args:?}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The argument specification for this short program is as follows:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;foo&lt;/code&gt;:.
+    &lt;ul&gt;
+      &lt;li&gt;Boolean flag argument.&lt;/li&gt;
+      &lt;li&gt;Specified with the short option &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-f&lt;/code&gt; or the long option &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--foo&lt;/code&gt;.&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;true&lt;/code&gt; if given, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;false&lt;/code&gt; if absent.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bar&lt;/code&gt;: Optional string argument.
+    &lt;ul&gt;
+      &lt;li&gt;Optional string argument.&lt;/li&gt;
+      &lt;li&gt;Specified with the short option &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-b&lt;/code&gt; or the long option &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--bar&lt;/code&gt;.&lt;/li&gt;
+      &lt;li&gt;The value is the string if specified, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;None&lt;/code&gt; if absent.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;baz&lt;/code&gt;:: Comma separated list of strings.
+    &lt;ul&gt;
+      &lt;li&gt;comma-separated list of strings.&lt;/li&gt;
+      &lt;li&gt;Specified only with long option &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--baz&lt;/code&gt;.&lt;/li&gt;
+      &lt;li&gt;Multiple values can be specified separated by commas (e.g., &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--baz value1,value2,value3&lt;/code&gt;)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The result of the execution is as follows, where the order of each option is not given.&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;cargo run &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--baz&lt;/span&gt; baz1,baz2 &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; bar &lt;span class=&quot;nt&quot;&gt;--baz&lt;/span&gt; baz3
+&lt;span class=&quot;go&quot;&gt;    Finished dev [unoptimized + debuginfo] target(s) in 0.02s
+     Running `target/debug/clap-with-order --baz baz1,baz2 -f -b bar --baz baz3`
+Cli { foo: true, bar: Some(&quot;bar&quot;), baz: [&quot;baz1&quot;, &quot;baz2&quot;, &quot;baz3&quot;] }
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;I want to get the order like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;baz=baz1&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;baz=baz2&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;foo&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bar=bar&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;baz=baz3&lt;/code&gt;, etc. `&lt;/p&gt;
+
+&lt;p&gt;The implementation of &lt;a href=&quot;https://docs.rs/clap/latest/clap/trait.Parser.html#method.parse&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Parser::parse()&lt;/code&gt;&lt;/a&gt; is as follows:&lt;/p&gt;
+
+&lt;div class=&quot;language-rust highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;k&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;mut&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matches&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CommandFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.get_matches&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FromArgMatches&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;from_arg_matches_mut&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;mut&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matches&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;nf&quot;&gt;.map_err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;format_error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nf&quot;&gt;Ok&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;nf&quot;&gt;Err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;// Since this is more of a development-time error, we aren&apos;t doing as fancy of a quit&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;// as `get_matches`&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Interestingly, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;matches: ArgMatches&lt;/code&gt; is returned in the process of this function, which is used in the builder API.
+But it is immediately taken into the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from_arg_matches_mut()&lt;/code&gt; function, and the lifetime of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;matches&lt;/code&gt; is consumed here.&lt;/p&gt;
+
+&lt;p&gt;So I thought that if I could get &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;matches&lt;/code&gt;, I could use the builder API while enjoying the convenience of derive API argument definitions.
+I can use the derive API for unordered argument options, and use the builder API only for the ones I need to take into account. In this example, the order of all options &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;foo&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bar&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;baz&lt;/code&gt; needs to be considered.&lt;/p&gt;
+
+&lt;div class=&quot;language-rust highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;clap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CommandFactory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FromArgMatches&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Parser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;nd&quot;&gt;#[derive(Parser,&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;Debug)]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Cli&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;#[arg(short&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;&apos;f&apos;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;long)]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;#[arg(short&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;&apos;b&apos;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;long)]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Option&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;#[arg(long,&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;value_delimiter&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;&apos;,&apos;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;)]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;baz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Vec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matches&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Cli&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CommandFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.get_matches&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Cli&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FromArgMatches&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;from_arg_matches_mut&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;mut&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matches&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.clone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;println!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;{args:?}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo_indices&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matches&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;.indices_of&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;foo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;.map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;.collect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Vec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;.unwrap_or_default&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bar_indices&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matches&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;.indices_of&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;bar&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;.map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;.collect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Vec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;.unwrap_or_default&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;baz_indices&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matches&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;.indices_of&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;baz&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;.map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;.collect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Vec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;.unwrap_or_default&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;println!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;foo-indices {foo_indices:?}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;println!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;bar-indices {bar_indices:?}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;println!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;baz-indices {baz_indices:?}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The result of this execution is shown below, which shows the order in which each option is specified:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cargo run -- --baz baz1,baz2 -f -b bar --baz baz3
+   Compiling clap-with-order v0.1.0
+    Finished dev [unoptimized + debuginfo] target(s) in 0.69s
+     Running `target/debug/clap-with-order --baz baz1,baz2 -f -b bar --baz baz3`
+Ok(Cli { foo: true, bar: Some(&quot;bar&quot;), baz: [&quot;baz1&quot;, &quot;baz2&quot;, &quot;baz3&quot;] })
+foo-indices [4]
+bar-indices [6]
+baz-indices [2, 3, 8]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To take the arguments in the order just like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;baz=baz1&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;baz=baz2&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;foo&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bar=bar&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;baz=baz3&lt;/code&gt;, make a vector consisting of pair tuple of the derive API value and the argument order of the builder API as shown below, and sort it by argument order.&lt;/p&gt;
+
+&lt;div class=&quot;language-rust highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;clap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CommandFactory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FromArgMatches&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Parser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;nd&quot;&gt;#[derive(Parser,&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;Debug)]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Cli&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;#[arg(short&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;&apos;f&apos;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;long)]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;#[arg(short&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;&apos;b&apos;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;long)]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Option&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;#[arg(long,&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;value_delimiter&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;&apos;,&apos;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;)]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;baz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Vec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nd&quot;&gt;#[derive(Debug)]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;enum&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FooBarBaz&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;Foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;Bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;Baz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matches&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Cli&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CommandFactory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.get_matches&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Cli&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FromArgMatches&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;from_arg_matches_mut&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;mut&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matches&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.clone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.unwrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;println!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;{args:?}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;mut&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foobarbaz&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Vec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Some&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;mut&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;indices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matches&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.indices_of&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;foo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Some&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;indices&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;foobarbaz&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;FooBarBaz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;.foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)));&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Some&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;mut&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;indices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matches&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.indices_of&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;bar&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Some&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Some&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;.bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;indices&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;foobarbaz&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;FooBarBaz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)));&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Some&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;indices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matches&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.indices_of&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;baz&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;.baz&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.iter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.zip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;indices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;foobarbaz&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;FooBarBaz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Baz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.clone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())));&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;foobarbaz&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.sort_by_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;println!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;foobarbaz: {foobarbaz:?}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This gives us what I wanted.&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;cargo run &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--baz&lt;/span&gt; baz1,baz2 &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; bar &lt;span class=&quot;nt&quot;&gt;--baz&lt;/span&gt; baz3
+&lt;span class=&quot;go&quot;&gt;   Compiling clap-with-order v0.1.0
+    Finished dev [unoptimized + debuginfo] target(s) in 0.65s
+     Running `target/debug/clap-with-order --baz baz1,baz2 -f -b bar --baz baz3`
+Cli { foo: true, bar: Some(&quot;bar&quot;), baz: [&quot;baz1&quot;, &quot;baz2&quot;, &quot;baz3&quot;] }
+foobarbaz: [(2, Baz(&quot;baz1&quot;)), (3, Baz(&quot;baz2&quot;)), (4, Foo(true)), (6, Bar(&quot;bar&quot;)), (8, Baz(&quot;baz3&quot;))]
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In this result, the argument order is left, but if not needed, the following processing can be added at the end to take out only the values.&lt;/p&gt;
+
+&lt;div class=&quot;language-rust highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foobarbaz&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foobarbaz&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.drain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;..&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;.collect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Vec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;println!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;foobarbaz: {foobarbaz:?}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;cargo run -- --baz baz1,baz2 -f -b bar --baz baz3
+   Compiling clap-with-order v0.1.0
+    Finished dev [unoptimized + debuginfo] target(s) in 0.65s
+     Running `target/debug/clap-with-order --baz baz1,baz2 -f -b bar --baz baz3`
+Cli { foo: true, bar: Some(&quot;bar&quot;), baz: [&quot;baz1&quot;, &quot;baz2&quot;, &quot;baz3&quot;] }
+foobarbaz: [Baz(&quot;baz1&quot;), Baz(&quot;baz2&quot;), Foo(true), Bar(&quot;bar&quot;), Baz(&quot;baz3&quot;)]
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This article describes how to use the clap library to create command line tools using both the derive API, which does not handle argument order but is easy to use, and the builder API, which does handle argument order but is complex. By using both the derive API and the builder API in this way, it is possible to build more complex and flexible command line interfaces.&lt;/p&gt;</content>
+      
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name></name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="rustlang" />
+      
+        <category term="howto" />
+      
+        <category term="cui" />
+      
+
+      
+        <summary type="html">clap is a popular library for building command-line interfaces (CLIs) in Rust. Its user-friendly API allows to create feature-rich CLIs with minimal code. clap provides two main approaches to define command-line options. The derive API: This is a simpler approach defining a struct and decorate it with the #[derive(clap)] attribute. The derive API automatically generates options based on the struct fields, but it provides limited customization. The builder API: This approach uses the clap::App structure to define options individually. It provides more flexibility and allows for detailed configuration. The clap FAQ page states that the derive API cannot handle the argument order, so the builder API should be used for such use cases. The Builder API is a lower-level API that someone might want to use for Faster compile times if you aren’t already using other procedural macros More flexibility, e.g. you can look up an arguments values, their ordering with other arguments, and what set them. The Derive API can only report values and not indices of or other data. I wanted to implement something that would take care of the argument order, but I wanted to enjoy the convenience of the derive API. Consider the following code. use clap::Parser; #[derive(Parser, Debug)] struct Cli { #[arg(short = &apos;f&apos;, long)] foo: bool, #[arg(short = &apos;b&apos;, long)] bar: Option&amp;lt;String&amp;gt;, #[arg(long, value_delimiter = &apos;,&apos;)] baz: Vec&amp;lt;String&amp;gt;, } fn main() { let args = Cli::parse(); println!(&quot;{args:?}&quot;); } The argument specification for this short program is as follows: foo:. Boolean flag argument. Specified with the short option -f or the long option --foo. true if given, false if absent. bar: Optional string argument. Optional string argument. Specified with the short option -b or the long option --bar. The value is the string if specified, None if absent. baz:: Comma separated list of strings. comma-separated list of strings. Specified only with long option --baz. Multiple values can be specified separated by commas (e.g., --baz value1,value2,value3) The result of the execution is as follows, where the order of each option is not given. $ cargo run -- --baz baz1,baz2 -f -b bar --baz baz3 Finished dev [unoptimized + debuginfo] target(s) in 0.02s Running `target/debug/clap-with-order --baz baz1,baz2 -f -b bar --baz baz3` Cli { foo: true, bar: Some(&quot;bar&quot;), baz: [&quot;baz1&quot;, &quot;baz2&quot;, &quot;baz3&quot;] } I want to get the order like baz=baz1, baz=baz2, foo, bar=bar, baz=baz3, etc. ` The implementation of Parser::parse() is as follows: fn parse() -&amp;gt; Self { let mut matches = &amp;lt;Self as CommandFactory&amp;gt;::command().get_matches(); let res = &amp;lt;Self as FromArgMatches&amp;gt;::from_arg_matches_mut(&amp;amp;mut matches) .map_err(format_error::&amp;lt;Self&amp;gt;); match res { Ok(s) =&amp;gt; s, Err(e) =&amp;gt; { // Since this is more of a development-time error, we aren&apos;t doing as fancy of a quit // as `get_matches` e.exit() } } } Interestingly, the matches: ArgMatches is returned in the process of this function, which is used in the builder API. But it is immediately taken into the from_arg_matches_mut() function, and the lifetime of the matches is consumed here. So I thought that if I could get matches, I could use the builder API while enjoying the convenience of derive API argument definitions. I can use the derive API for unordered argument options, and use the builder API only for the ones I need to take into account. In this example, the order of all options foo, bar, and baz needs to be considered. use clap::{CommandFactory, FromArgMatches, Parser}; #[derive(Parser, Debug)] struct Cli { #[arg(short = &apos;f&apos;, long)] foo: bool, #[arg(short = &apos;b&apos;, long)] bar: Option&amp;lt;String&amp;gt;, #[arg(long, value_delimiter = &apos;,&apos;)] baz: Vec&amp;lt;String&amp;gt;, } fn main() { let matches = &amp;lt;Cli as CommandFactory&amp;gt;::command().get_matches(); let args = &amp;lt;Cli as FromArgMatches&amp;gt;::from_arg_matches_mut(&amp;amp;mut matches.clone()); println!(&quot;{args:?}&quot;); let foo_indices = matches .indices_of(&quot;foo&quot;) .map(|v| v.collect::&amp;lt;Vec&amp;lt;_&amp;gt;&amp;gt;()) .unwrap_or_default(); let bar_indices = matches .indices_of(&quot;bar&quot;) .map(|v| v.collect::&amp;lt;Vec&amp;lt;_&amp;gt;&amp;gt;()) .unwrap_or_default(); let baz_indices = matches .indices_of(&quot;baz&quot;) .map(|v| v.collect::&amp;lt;Vec&amp;lt;_&amp;gt;&amp;gt;()) .unwrap_or_default(); println!(&quot;foo-indices {foo_indices:?}&quot;); println!(&quot;bar-indices {bar_indices:?}&quot;); println!(&quot;baz-indices {baz_indices:?}&quot;); } The result of this execution is shown below, which shows the order in which each option is specified: cargo run -- --baz baz1,baz2 -f -b bar --baz baz3 Compiling clap-with-order v0.1.0 Finished dev [unoptimized + debuginfo] target(s) in 0.69s Running `target/debug/clap-with-order --baz baz1,baz2 -f -b bar --baz baz3` Ok(Cli { foo: true, bar: Some(&quot;bar&quot;), baz: [&quot;baz1&quot;, &quot;baz2&quot;, &quot;baz3&quot;] }) foo-indices [4] bar-indices [6] baz-indices [2, 3, 8] To take the arguments in the order just like baz=baz1, baz=baz2, foo, bar=bar, baz=baz3, make a vector consisting of pair tuple of the derive API value and the argument order of the builder API as shown below, and sort it by argument order. use clap::{CommandFactory, FromArgMatches, Parser}; #[derive(Parser, Debug)] struct Cli { #[arg(short = &apos;f&apos;, long)] foo: bool, #[arg(short = &apos;b&apos;, long)] bar: Option&amp;lt;String&amp;gt;, #[arg(long, value_delimiter = &apos;,&apos;)] baz: Vec&amp;lt;String&amp;gt;, } #[derive(Debug)] enum FooBarBaz { Foo(bool), Bar(String), Baz(String), } fn main() { let matches = &amp;lt;Cli as CommandFactory&amp;gt;::command().get_matches(); let args = &amp;lt;Cli as FromArgMatches&amp;gt;::from_arg_matches_mut(&amp;amp;mut matches.clone()).unwrap(); println!(&quot;{args:?}&quot;); let mut foobarbaz = Vec::new(); if let Some(mut indices) = matches.indices_of(&quot;foo&quot;) { if let Some(index) = indices.next() { foobarbaz.push((index, FooBarBaz::Foo(args.foo))); } } if let Some(mut indices) = matches.indices_of(&quot;bar&quot;) { if let (Some(v), Some(i)) = (args.bar, indices.next()) { foobarbaz.push((i, FooBarBaz::Bar(v))); } } if let Some(indices) = matches.indices_of(&quot;baz&quot;) { for (v, i) in args.baz.iter().zip(indices) { foobarbaz.push((i, FooBarBaz::Baz(v.clone()))); } } foobarbaz.sort_by_key(|v| v.0); println!(&quot;foobarbaz: {foobarbaz:?}&quot;); } This gives us what I wanted. $ cargo run -- --baz baz1,baz2 -f -b bar --baz baz3 Compiling clap-with-order v0.1.0 Finished dev [unoptimized + debuginfo] target(s) in 0.65s Running `target/debug/clap-with-order --baz baz1,baz2 -f -b bar --baz baz3` Cli { foo: true, bar: Some(&quot;bar&quot;), baz: [&quot;baz1&quot;, &quot;baz2&quot;, &quot;baz3&quot;] } foobarbaz: [(2, Baz(&quot;baz1&quot;)), (3, Baz(&quot;baz2&quot;)), (4, Foo(true)), (6, Bar(&quot;bar&quot;)), (8, Baz(&quot;baz3&quot;))] In this result, the argument order is left, but if not needed, the following processing can be added at the end to take out only the values. let foobarbaz = foobarbaz.drain(..).map(|v| v.1).collect::&amp;lt;Vec&amp;lt;_&amp;gt;&amp;gt;(); println!(&quot;foobarbaz: {foobarbaz:?}&quot;); cargo run -- --baz baz1,baz2 -f -b bar --baz baz3 Compiling clap-with-order v0.1.0 Finished dev [unoptimized + debuginfo] target(s) in 0.65s Running `target/debug/clap-with-order --baz baz1,baz2 -f -b bar --baz baz3` Cli { foo: true, bar: Some(&quot;bar&quot;), baz: [&quot;baz1&quot;, &quot;baz2&quot;, &quot;baz3&quot;] } foobarbaz: [Baz(&quot;baz1&quot;), Baz(&quot;baz2&quot;), Foo(true), Bar(&quot;bar&quot;), Baz(&quot;baz3&quot;)] This article describes how to use the clap library to create command line tools using both the derive API, which does not handle argument order but is easy to use, and the builder API, which does handle argument order but is complex. By using both the derive API and the builder API in this way, it is possible to build more complex and flexible command line interfaces.</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Diff between firefox 128.0 beta 3 default preference and firefox 127.0</title>
@@ -6520,767 +6789,6 @@ table.diff_firefox122_pref_diff tbody tr { transition: background 0.125s ease-in
 
       
         <summary type="html">2023年7月に、OSCHINA が OSDN の買収を発表した。しかし、OSCHINA のプレスリリースによると、買収は 2022年に行われたとされている。 2022 年，开源中国 (OSCHINA) 正式收购日本老牌开源社区 OSDN。 プレスリリースでは、OSDN の歴史と OSCHINA の歴史が紹介され、オープンソースソフトウェアの発展や中国企業のソフトウェア開発の効率化に貢献したことが述べられている。しかし、OSDN の撤退や運用・保守の強化について言及されていない。 一般的に、企業が他の企業を買収する場合、買収した企業の運用・保守を強化したり、統合したりするのが普通である。しかし、OSDN は買収後も接続できない状況が続いている。 本稿は、OSDN が根本的に接続不能になる前に、できることをメモしたものである。 アクセス状況 OSDN へのアクセスは一部可能だが、ログインはできない。ログインすると PHP の CGI に飛ぶが、そこでエラーになる。そのため、ログインもユーザページの閲覧もできない状態になっている。 ソースコードの取得 現時点では、ソースコードを入手することは可能だ。 OSDNが生きていたころにSSHキーを設定し、それがまだ.sshに残っている場合は、以下のコマンドでアクセスできる。 $ git clone アカウント名@git.osdn.net:/gitroot/プロジェクト名/レポジトリ名.git sourceforge.jp は現在 osdn.net になっているが、リダイレクトされているため、昔と変わらず git.sourceforge.jp でもアクセスできる。 $ git clone アカウント名@git.sourceforge.jp:/gitroot/プロジェクト名/レポジトリ名.git 他人のプロジェクトのソースを取得するには、 git clone の際に HTTPS アクセスする必要がある。 また、OSDN にログインできないため、公開鍵の新規登録設定ができない状況にある。そのため、SSH キーが何らかの理由で使えない状況にある場合にも同様に、HTTPS アクセスが必須である。 HTTPS アクセスでは TLS 証明書エラーが出るため、環境変数 GIT_SSL_NO_VERIFY を設定して証明書検証を無効にして git clone する。 この場合、OSDN アカウントがなくても readonly アクセスが可能になる。 $ GIT_SSL_NO_VERIFY=true git clone https://git.osdn.net/gitroot/プロジェクト名/レポジトリ名.git Web インタフェースの https://ja.osdn.net/projects/プロジェクト名/scm/git/レポジトリ名/ は非常に重く遅い。 旧 Web インタフェースの http://git.osdn.net/view?p=プロジェクト名/レポジトリ名.git からは快適に閲覧可能。 ホームページおよびサーバデータの救出 Web サーバは死んでいるが、SSH/SCP でファイルの救出は可能。 /home/groups/プロジェクト名の先頭1字/プロジェクト名の先頭2字/プロジェクト名/ にプロジェクトのホームページの内容がある。 $ ssh -2 -C shell.osdn.net -l ユーザ名 ユーザ名@sf-usr-shell:~$ uname -a Linux sf-usr-shell 3.16.0-11-amd64 #1 SMP Debian 3.16.84-1 (2020-06-09) x86_64 GNU/Linux リリースファイルのダウンロード リリースページ（ https://ja.osdn.net/projects/プロジェクト名/releases/リリース番号 ）にはダウンロードファイルが表示されず、またダウンロードも不可な状態になってしまっている。 ダウンロードする場合は、直接ミラーサイトを参照することでリリースファイルをダウンロードできる。例えば、IIJ のサイトを参照することでダウンロードできる。 https://ftp.iij.ad.jp/pub/osdn.jp/プロジェクト名/ References 开源中国收购日本老牌开源社区 OSDN - OSCHINA - 中文开源技术交流社区 中国のオープンソースコミュニティ OSCHINA が OSDN を取得、サイトは独立を維持 | スラド オープンソース OSDNのミラーコンテンツ 2023/11/19</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Diff between firefox 121.0 beta 3 default preference and firefox 120.0</title>
-      <link href="https://cat-in-136.github.io/2023/11/diff-between-firefox-1210-beta-3-default.html" rel="alternate" type="text/html" title="Diff between firefox 121.0 beta 3 default preference and firefox 120.0" />
-      <published>2023-11-26T11:43:20+09:00</published>
-      <updated>2023-11-26T11:43:20+09:00</updated>
-      <id>https://cat-in-136.github.io/2023/11/diff-between-firefox-1210-beta-3-default</id>
-      
-      
-      
-      <content type="html" xml:base="https://cat-in-136.github.io/2023/11/diff-between-firefox-1210-beta-3-default.html">&lt;p&gt;
-This is difference between the default preference of Firefox 121.0 beta 3 and one of 120.0.
-This diff table is generated with my small script &lt;a href=&quot;https://github.com/cat-in-136/firefox-prefjs-surveyer&quot;&gt;firefox-prefjs-surveyer&lt;/a&gt;.
-&lt;/p&gt;
-
-&lt;div&gt;
-&lt;table class=&quot;diff_firefox121_pref_diff&quot;&gt;
-&lt;caption&gt;Preference difference&lt;/caption&gt;
-&lt;thead&gt;
-&lt;tr&gt;&lt;td&gt;Pref&lt;/td&gt;&lt;td&gt;Firefox 120.0&lt;/td&gt;&lt;td&gt;Firefox 121.0 beta 3&lt;/td&gt;&lt;/tr&gt;
-&lt;/thead&gt;
-    &lt;tbody&gt;
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;bool&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;integer&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;normandy.&lt;wbr /&gt;test-prefs.&lt;wbr /&gt;string&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;releaseNotesURL&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=whatsnew&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=whatsnew&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;releaseNotesURL.&lt;wbr /&gt;aboutDialog&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;channel&lt;/td&gt;
-        &lt;td&gt;release&lt;/td&gt;
-        &lt;td&gt;beta&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;url.&lt;wbr /&gt;details&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/notes&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/beta/notes&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;app.&lt;wbr /&gt;update.&lt;wbr /&gt;url.&lt;wbr /&gt;manual&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;contentanalysis.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;contentanalysis.&lt;wbr /&gt;is_&lt;wbr /&gt;per_&lt;wbr /&gt;user&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;contentanalysis.&lt;wbr /&gt;pipe_&lt;wbr /&gt;path_&lt;wbr /&gt;name&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;path_user&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;contentanalysis.&lt;wbr /&gt;silent_&lt;wbr /&gt;notifications&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;contentblocking.&lt;wbr /&gt;report.&lt;wbr /&gt;vpn_&lt;wbr /&gt;regions&lt;/td&gt;
-        &lt;td&gt;as,&lt;wbr /&gt;at,&lt;wbr /&gt;be,&lt;wbr /&gt;ca,&lt;wbr /&gt;ch,&lt;wbr /&gt;de,&lt;wbr /&gt;es,&lt;wbr /&gt;fi,&lt;wbr /&gt;fr,&lt;wbr /&gt;gb,&lt;wbr /&gt;gg,&lt;wbr /&gt;ie,&lt;wbr /&gt;im,&lt;wbr /&gt;io,&lt;wbr /&gt;it,&lt;wbr /&gt;je,&lt;wbr /&gt;mp,&lt;wbr /&gt;my,&lt;wbr /&gt;nl,&lt;wbr /&gt;nz,&lt;wbr /&gt;pr,&lt;wbr /&gt;se,&lt;wbr /&gt;sg,&lt;wbr /&gt;uk,&lt;wbr /&gt;um,&lt;wbr /&gt;us,&lt;wbr /&gt;vg,&lt;wbr /&gt;vi&lt;/td&gt;
-        &lt;td&gt;ca,&lt;wbr /&gt;my,&lt;wbr /&gt;nz,&lt;wbr /&gt;sg,&lt;wbr /&gt;gb,&lt;wbr /&gt;gg,&lt;wbr /&gt;im,&lt;wbr /&gt;io,&lt;wbr /&gt;je,&lt;wbr /&gt;uk,&lt;wbr /&gt;vg,&lt;wbr /&gt;as,&lt;wbr /&gt;mp,&lt;wbr /&gt;pr,&lt;wbr /&gt;um,&lt;wbr /&gt;us,&lt;wbr /&gt;vi,&lt;wbr /&gt;de,&lt;wbr /&gt;fr,&lt;wbr /&gt;at,&lt;wbr /&gt;be,&lt;wbr /&gt;ch,&lt;wbr /&gt;es,&lt;wbr /&gt;it,&lt;wbr /&gt;ie,&lt;wbr /&gt;nl,&lt;wbr /&gt;se,&lt;wbr /&gt;fi,&lt;wbr /&gt;bg,&lt;wbr /&gt;cy,&lt;wbr /&gt;cz,&lt;wbr /&gt;dk,&lt;wbr /&gt;ee,&lt;wbr /&gt;hr,&lt;wbr /&gt;hu,&lt;wbr /&gt;lt,&lt;wbr /&gt;lu,&lt;wbr /&gt;lv,&lt;wbr /&gt;mt,&lt;wbr /&gt;pl,&lt;wbr /&gt;pt,&lt;wbr /&gt;ro,&lt;wbr /&gt;si,&lt;wbr /&gt;sk&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;firefox-view.&lt;wbr /&gt;search.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;mailto.&lt;wbr /&gt;dualPrompt&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;mailto.&lt;wbr /&gt;dualPrompt.&lt;wbr /&gt;os&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;mailto.&lt;wbr /&gt;prompt.&lt;wbr /&gt;os&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;newtabpage.&lt;wbr /&gt;activity-stream.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;ut.&lt;wbr /&gt;events&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;safebrowsing.&lt;wbr /&gt;passwords.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;safebrowsing.&lt;wbr /&gt;provider.&lt;wbr /&gt;google4.&lt;wbr /&gt;lists&lt;/td&gt;
-        &lt;td&gt;goog-badbinurl-proto,&lt;wbr /&gt;goog-downloadwhite-proto,&lt;wbr /&gt;goog-phish-proto,&lt;wbr /&gt;googpub-phish-proto,&lt;wbr /&gt;goog-malware-proto,&lt;wbr /&gt;goog-unwanted-proto,&lt;wbr /&gt;goog-harmful-proto,&lt;wbr /&gt;goog-passwordwhite-proto&lt;/td&gt;
-        &lt;td&gt;goog-badbinurl-proto,&lt;wbr /&gt;goog-downloadwhite-proto,&lt;wbr /&gt;goog-phish-proto,&lt;wbr /&gt;googpub-phish-proto,&lt;wbr /&gt;goog-malware-proto,&lt;wbr /&gt;goog-unwanted-proto,&lt;wbr /&gt;goog-harmful-proto&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;tabs.&lt;wbr /&gt;documentchannel.&lt;wbr /&gt;parent-controlled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;tabs.&lt;wbr /&gt;documentchannel.&lt;wbr /&gt;speculative-load&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;topsites.&lt;wbr /&gt;contile.&lt;wbr /&gt;sov.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;translations.&lt;wbr /&gt;autoTranslate&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;translations.&lt;wbr /&gt;languageIdentification.&lt;wbr /&gt;useFastText&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;quickactions.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;quickactions.&lt;wbr /&gt;showPrefs&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;quicksuggest.&lt;wbr /&gt;contextualOptIn&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;quicksuggest.&lt;wbr /&gt;contextualOptIn.&lt;wbr /&gt;sayHello&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;quicksuggest.&lt;wbr /&gt;contextualOptIn.&lt;wbr /&gt;topPosition&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;shortcuts.&lt;wbr /&gt;quickactions&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;showSearchTerms.&lt;wbr /&gt;featureGate&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;suggest.&lt;wbr /&gt;quickactions&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;browser.&lt;wbr /&gt;urlbar.&lt;wbr /&gt;trending.&lt;wbr /&gt;featureGate&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;cookiebanners.&lt;wbr /&gt;bannerClicking.&lt;wbr /&gt;executeOnce&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;cookiebanners.&lt;wbr /&gt;service.&lt;wbr /&gt;enableGlobalRules&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;cookiebanners.&lt;wbr /&gt;ui.&lt;wbr /&gt;desktop.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;devtools.&lt;wbr /&gt;debugger.&lt;wbr /&gt;pause-on-debugger-statement&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;devtools.&lt;wbr /&gt;performance.&lt;wbr /&gt;recording.&lt;wbr /&gt;power.&lt;wbr /&gt;external-url&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;devtools.&lt;wbr /&gt;toolbox.&lt;wbr /&gt;force-chrome-prefs&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;animations.&lt;wbr /&gt;mainthread-synchronization-with-geometric-animations&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;document.&lt;wbr /&gt;edit_&lt;wbr /&gt;command.&lt;wbr /&gt;content&lt;wbr /&gt;ReadOnly.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;document.&lt;wbr /&gt;edit_&lt;wbr /&gt;command.&lt;wbr /&gt;insert&lt;wbr /&gt;Br&lt;wbr /&gt;OnReturn.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;element.&lt;wbr /&gt;customstateset.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;element.&lt;wbr /&gt;invokers.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;event.&lt;wbr /&gt;keypress.&lt;wbr /&gt;key.&lt;wbr /&gt;allow_&lt;wbr /&gt;lone_&lt;wbr /&gt;surrogate&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;forms.&lt;wbr /&gt;always_&lt;wbr /&gt;allow_&lt;wbr /&gt;pointer_&lt;wbr /&gt;events.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;forms.&lt;wbr /&gt;fieldset_&lt;wbr /&gt;disable_&lt;wbr /&gt;only_&lt;wbr /&gt;descendants.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;iframe_&lt;wbr /&gt;lazy_&lt;wbr /&gt;loading.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;resize_&lt;wbr /&gt;observer.&lt;wbr /&gt;last_&lt;wbr /&gt;reported_&lt;wbr /&gt;size_&lt;wbr /&gt;invalid&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;select.&lt;wbr /&gt;showPicker.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;webgpu.&lt;wbr /&gt;hal-labels&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;dom.&lt;wbr /&gt;workers.&lt;wbr /&gt;importScripts.&lt;wbr /&gt;enforce&lt;wbr /&gt;Strict&lt;wbr /&gt;MimeType&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;editor.&lt;wbr /&gt;block_&lt;wbr /&gt;inline_&lt;wbr /&gt;check.&lt;wbr /&gt;use_&lt;wbr /&gt;computed_&lt;wbr /&gt;style&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;editor.&lt;wbr /&gt;join_&lt;wbr /&gt;split_&lt;wbr /&gt;direction.&lt;wbr /&gt;compatible_&lt;wbr /&gt;with_&lt;wbr /&gt;the_&lt;wbr /&gt;other_&lt;wbr /&gt;browsers&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;extensions.&lt;wbr /&gt;InstallTrigger.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;extensions.&lt;wbr /&gt;abuseReport.&lt;wbr /&gt;amoFormEnabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;extensions.&lt;wbr /&gt;abuseReport.&lt;wbr /&gt;amoFormURL&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://addons.mozilla.org/%LOCALE%/%APP%/feedback/addon/%addonID%/&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;extensions.&lt;wbr /&gt;webcompat-reporter.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;fission.&lt;wbr /&gt;enforce&lt;wbr /&gt;Blocklisted&lt;wbr /&gt;Prefs&lt;wbr /&gt;InSubprocesses&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;use_&lt;wbr /&gt;fdlibm_&lt;wbr /&gt;for_&lt;wbr /&gt;sin_&lt;wbr /&gt;cos_&lt;wbr /&gt;tan&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;javascript.&lt;wbr /&gt;options.&lt;wbr /&gt;wasm_&lt;wbr /&gt;tail_&lt;wbr /&gt;calls&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;allow-mixed-page-sizes&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;bucket-attribute-names.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;has-selector.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;modern-range-pseudos.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;scroll-anchoring.&lt;wbr /&gt;absolute-update&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;text-align.&lt;wbr /&gt;justify-only-after-last-tab&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;text-indent-keywords.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;text-wrap-balance.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;css.&lt;wbr /&gt;webkit-range-pseudos.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;layout.&lt;wbr /&gt;dynamic-reflow-roots.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;allow-audio-non-utility&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;autoplay.&lt;wbr /&gt;block-webaudio&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;videocontrols.&lt;wbr /&gt;lock-video-orientation&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;media.&lt;wbr /&gt;webrtc.&lt;wbr /&gt;platformencoder&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;memory.&lt;wbr /&gt;phc.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;auth.&lt;wbr /&gt;use_&lt;wbr /&gt;redirect_&lt;wbr /&gt;for_&lt;wbr /&gt;retries&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;cookie.&lt;wbr /&gt;sameSite.&lt;wbr /&gt;noneRequiresSecure&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;early-hints.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http2.&lt;wbr /&gt;move_&lt;wbr /&gt;to_&lt;wbr /&gt;pending_&lt;wbr /&gt;list_&lt;wbr /&gt;after_&lt;wbr /&gt;network_&lt;wbr /&gt;change&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;http.&lt;wbr /&gt;http3.&lt;wbr /&gt;retry_&lt;wbr /&gt;different_&lt;wbr /&gt;ip_&lt;wbr /&gt;family&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;jar.&lt;wbr /&gt;record_&lt;wbr /&gt;failure_&lt;wbr /&gt;reason&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;predictor.&lt;wbr /&gt;enable-prefetch&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;send_&lt;wbr /&gt;OnDataFinished&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;send_&lt;wbr /&gt;OnDataFinished.&lt;wbr /&gt;html5parser&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;send_&lt;wbr /&gt;OnDataFinished.&lt;wbr /&gt;nsInputStreamPump&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;network.&lt;wbr /&gt;send_&lt;wbr /&gt;OnDataFinished_&lt;wbr /&gt;after_&lt;wbr /&gt;progress_&lt;wbr /&gt;updates&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;pdfjs.&lt;wbr /&gt;viewerCssTheme&lt;/td&gt;
-        &lt;td&gt;0&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;plugins.&lt;wbr /&gt;rewrite_&lt;wbr /&gt;youtube_&lt;wbr /&gt;embeds&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;privacy.&lt;wbr /&gt;annotate_&lt;wbr /&gt;channels.&lt;wbr /&gt;strict_&lt;wbr /&gt;list.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;privacy.&lt;wbr /&gt;expose&lt;wbr /&gt;Content&lt;wbr /&gt;Title&lt;wbr /&gt;InWindow&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;privacy.&lt;wbr /&gt;expose&lt;wbr /&gt;Content&lt;wbr /&gt;Title&lt;wbr /&gt;InWindow.&lt;wbr /&gt;pbm&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;disallow_&lt;wbr /&gt;non_&lt;wbr /&gt;local_&lt;wbr /&gt;systemprincipal_&lt;wbr /&gt;in_&lt;wbr /&gt;tests&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;remote_&lt;wbr /&gt;settings.&lt;wbr /&gt;crlite_&lt;wbr /&gt;filters.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;ssl3.&lt;wbr /&gt;ecdhe_&lt;wbr /&gt;ecdsa_&lt;wbr /&gt;aes_&lt;wbr /&gt;128_&lt;wbr /&gt;sha&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;ssl3.&lt;wbr /&gt;ecdhe_&lt;wbr /&gt;ecdsa_&lt;wbr /&gt;aes_&lt;wbr /&gt;256_&lt;wbr /&gt;sha&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;security.&lt;wbr /&gt;webauthn.&lt;wbr /&gt;enable_&lt;wbr /&gt;macos_&lt;wbr /&gt;passkeys&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;engine.&lt;wbr /&gt;bookmarks.&lt;wbr /&gt;validation.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;services.&lt;wbr /&gt;sync.&lt;wbr /&gt;engine.&lt;wbr /&gt;passwords.&lt;wbr /&gt;validation.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;svg.&lt;wbr /&gt;nearest&lt;wbr /&gt;And&lt;wbr /&gt;Farthest&lt;wbr /&gt;ViewportElement.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;dap_&lt;wbr /&gt;helper&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://helper1.dap.cloudflareresearch.com/v02&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://dap.services.mozilla.com&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;dap_&lt;wbr /&gt;helper_&lt;wbr /&gt;owner&lt;/td&gt;
-        &lt;td&gt;Cloudflare&lt;/td&gt;
-        &lt;td&gt;Mozilla&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;dap_&lt;wbr /&gt;leader&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://dap-02.api.divviup.org&lt;/td&gt;
-        &lt;td class=&quot;uri&quot;&gt;https://dap-07-1.api.divviup.org/&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;dap_&lt;wbr /&gt;task1_&lt;wbr /&gt;taskid&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;dap_&lt;wbr /&gt;visit_&lt;wbr /&gt;counting_&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;dap_&lt;wbr /&gt;visit_&lt;wbr /&gt;counting_&lt;wbr /&gt;experiment_&lt;wbr /&gt;list&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td class=&quot;json&quot;&gt;[]&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;toolkit.&lt;wbr /&gt;telemetry.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;ui.&lt;wbr /&gt;mouse.&lt;wbr /&gt;right_&lt;wbr /&gt;click.&lt;wbr /&gt;collapse_&lt;wbr /&gt;selection.&lt;wbr /&gt;stop_&lt;wbr /&gt;if_&lt;wbr /&gt;non_&lt;wbr /&gt;collapsed_&lt;wbr /&gt;selection&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;ui.&lt;wbr /&gt;mouse.&lt;wbr /&gt;right_&lt;wbr /&gt;click.&lt;wbr /&gt;collapse_&lt;wbr /&gt;selection.&lt;wbr /&gt;stop_&lt;wbr /&gt;if_&lt;wbr /&gt;non_&lt;wbr /&gt;editable_&lt;wbr /&gt;node&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;ui.&lt;wbr /&gt;new-webcompat-reporter.&lt;wbr /&gt;enabled&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;false&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;ui.&lt;wbr /&gt;new-webcompat-reporter.&lt;wbr /&gt;reason-dropdown&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;0&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;newkey&quot;&gt;
-        &lt;td&gt;ui.&lt;wbr /&gt;new-webcompat-reporter.&lt;wbr /&gt;send-more-info-link&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr&gt;
-        &lt;td&gt;urlclassifier.&lt;wbr /&gt;disallow_&lt;wbr /&gt;completions&lt;/td&gt;
-        &lt;td&gt;goog-downloadwhite-digest256,&lt;wbr /&gt;base-track-digest256,&lt;wbr /&gt;mozstd-trackwhite-digest256,&lt;wbr /&gt;content-track-digest256,&lt;wbr /&gt;mozplugin-block-digest256,&lt;wbr /&gt;mozplugin2-block-digest256,&lt;wbr /&gt;goog-passwordwhite-proto,&lt;wbr /&gt;ads-track-digest256,&lt;wbr /&gt;social-track-digest256,&lt;wbr /&gt;analytics-track-digest256,&lt;wbr /&gt;base-fingerprinting-track-digest256,&lt;wbr /&gt;content-fingerprinting-track-digest256,&lt;wbr /&gt;base-cryptomining-track-digest256,&lt;wbr /&gt;content-cryptomining-track-digest256,&lt;wbr /&gt;fanboyannoyance-ads-digest256,&lt;wbr /&gt;fanboysocial-ads-digest256,&lt;wbr /&gt;easylist-ads-digest256,&lt;wbr /&gt;easyprivacy-ads-digest256,&lt;wbr /&gt;adguard-ads-digest256,&lt;wbr /&gt;social-tracking-protection-digest256,&lt;wbr /&gt;social-tracking-protection-facebook-digest256,&lt;wbr /&gt;social-tracking-protection-linkedin-digest256,&lt;wbr /&gt;social-tracking-protection-twitter-digest256,&lt;wbr /&gt;base-email-track-digest256,&lt;wbr /&gt;content-email-track-digest256&lt;/td&gt;
-        &lt;td&gt;goog-downloadwhite-digest256,&lt;wbr /&gt;base-track-digest256,&lt;wbr /&gt;mozstd-trackwhite-digest256,&lt;wbr /&gt;content-track-digest256,&lt;wbr /&gt;mozplugin-block-digest256,&lt;wbr /&gt;mozplugin2-block-digest256,&lt;wbr /&gt;ads-track-digest256,&lt;wbr /&gt;social-track-digest256,&lt;wbr /&gt;analytics-track-digest256,&lt;wbr /&gt;base-fingerprinting-track-digest256,&lt;wbr /&gt;content-fingerprinting-track-digest256,&lt;wbr /&gt;base-cryptomining-track-digest256,&lt;wbr /&gt;content-cryptomining-track-digest256,&lt;wbr /&gt;fanboyannoyance-ads-digest256,&lt;wbr /&gt;fanboysocial-ads-digest256,&lt;wbr /&gt;easylist-ads-digest256,&lt;wbr /&gt;easyprivacy-ads-digest256,&lt;wbr /&gt;adguard-ads-digest256,&lt;wbr /&gt;social-tracking-protection-digest256,&lt;wbr /&gt;social-tracking-protection-facebook-digest256,&lt;wbr /&gt;social-tracking-protection-linkedin-digest256,&lt;wbr /&gt;social-tracking-protection-twitter-digest256,&lt;wbr /&gt;base-email-track-digest256,&lt;wbr /&gt;content-email-track-digest256&lt;/td&gt;
-      &lt;/tr&gt;
-
-      &lt;tr class=&quot;oldkey&quot;&gt;
-        &lt;td&gt;urlclassifier.&lt;wbr /&gt;passwordAllowTable&lt;/td&gt;
-        &lt;td&gt;goog-passwordwhite-proto&lt;/td&gt;
-        &lt;td class=&quot;undefined&quot;&gt;undefined&lt;/td&gt;
-      &lt;/tr&gt;
-
-    &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-
-
-&lt;style type=&quot;text/css&quot;&gt;&lt;!-- /* --&gt;&lt;![CDATA[ /* */
-table.diff_firefox121_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
-table.diff_firefox121_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
-table.diff_firefox121_pref_diff thead td { background-color: #ddd; font-weight: bold; }
-table.diff_firefox121_pref_diff td.json,
-table.diff_firefox121_pref_diff td.uri,
-table.diff_firefox121_pref_diff td.dump { word-break: break-all; }
-table.diff_firefox121_pref_diff td.undefined { color: #888; font-style: italic; }
-table.diff_firefox121_pref_diff tr.sameval td:first-child { color: #444; }
-table.diff_firefox121_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
-table.diff_firefox121_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
-table.diff_firefox121_pref_diff tbody tr:hover { background-color: #eee; }
-table.diff_firefox121_pref_diff tbody tr { transition: background 0.125s ease-in-out 0s; }
-/* ]]&gt;&lt;!-- */ --&gt;&lt;/style&gt;</content>
-      
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>cat_in_136</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="pref diff" />
-      
-        <category term="mozilla" />
-      
-
-      
-        <summary type="html">This is difference between the default preference of Firefox 121.0 beta 3 and one of 120.0. This diff table is generated with my small script firefox-prefjs-surveyer. Preference difference PrefFirefox 120.0Firefox 121.0 beta 3 app.normandy.test-prefs.bool undefined false app.normandy.test-prefs.integer undefined 0 app.normandy.test-prefs.string undefined app.releaseNotesURL https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=whatsnew https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=whatsnew app.releaseNotesURL.aboutDialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog https://www.mozilla.org/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;amp;utm_medium=firefox-desktop&amp;amp;utm_campaign=about-dialog app.update.channel release beta app.update.url.details https://www.mozilla.org/%LOCALE%/firefox/notes https://www.mozilla.org/%LOCALE%/firefox/beta/notes app.update.url.manual https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update browser.contentanalysis.enabled undefined false browser.contentanalysis.is_per_user undefined true browser.contentanalysis.pipe_path_name undefined path_user browser.contentanalysis.silent_notifications undefined false browser.contentblocking.report.vpn_regions as,at,be,ca,ch,de,es,fi,fr,gb,gg,ie,im,io,it,je,mp,my,nl,nz,pr,se,sg,uk,um,us,vg,vi ca,my,nz,sg,gb,gg,im,io,je,uk,vg,as,mp,pr,um,us,vi,de,fr,at,be,ch,es,it,ie,nl,se,fi,bg,cy,cz,dk,ee,hr,hu,lt,lu,lv,mt,pl,pt,ro,si,sk browser.firefox-view.search.enabled undefined false browser.mailto.dualPrompt undefined false browser.mailto.dualPrompt.os undefined false browser.mailto.prompt.os undefined true browser.newtabpage.activity-stream.telemetry.ut.events false true browser.safebrowsing.passwords.enabled false undefined browser.safebrowsing.provider.google4.lists goog-badbinurl-proto,goog-downloadwhite-proto,goog-phish-proto,googpub-phish-proto,goog-malware-proto,goog-unwanted-proto,goog-harmful-proto,goog-passwordwhite-proto goog-badbinurl-proto,goog-downloadwhite-proto,goog-phish-proto,googpub-phish-proto,goog-malware-proto,goog-unwanted-proto,goog-harmful-proto browser.tabs.documentchannel.parent-controlled false true browser.tabs.documentchannel.speculative-load undefined false browser.topsites.contile.sov.enabled false true browser.translations.autoTranslate false undefined browser.translations.languageIdentification.useFastText false undefined browser.urlbar.quickactions.enabled undefined true browser.urlbar.quickactions.showPrefs undefined true browser.urlbar.quicksuggest.contextualOptIn undefined false browser.urlbar.quicksuggest.contextualOptIn.sayHello undefined false browser.urlbar.quicksuggest.contextualOptIn.topPosition undefined true browser.urlbar.shortcuts.quickactions undefined true browser.urlbar.showSearchTerms.featureGate false true browser.urlbar.suggest.quickactions undefined true browser.urlbar.trending.featureGate undefined true cookiebanners.bannerClicking.executeOnce undefined true cookiebanners.service.enableGlobalRules false true cookiebanners.ui.desktop.enabled false true devtools.debugger.pause-on-debugger-statement undefined true devtools.performance.recording.power.external-url undefined devtools.toolbox.force-chrome-prefs true undefined dom.animations.mainthread-synchronization-with-geometric-animations true false dom.document.edit_command.contentReadOnly.enabled true false dom.document.edit_command.insertBrOnReturn.enabled true false dom.element.customstateset.enabled undefined false dom.element.invokers.enabled undefined false dom.event.keypress.key.allow_lone_surrogate true false dom.forms.always_allow_pointer_events.enabled false true dom.forms.fieldset_disable_only_descendants.enabled false true dom.iframe_lazy_loading.enabled false true dom.resize_observer.last_reported_size_invalid true undefined dom.select.showPicker.enabled undefined false dom.webgpu.hal-labels undefined false dom.workers.importScripts.enforceStrictMimeType false true editor.block_inline_check.use_computed_style false true editor.join_split_direction.compatible_with_the_other_browsers true undefined extensions.InstallTrigger.enabled true false extensions.abuseReport.amoFormEnabled undefined false extensions.abuseReport.amoFormURL undefined https://addons.mozilla.org/%LOCALE%/%APP%/feedback/addon/%addonID%/ extensions.webcompat-reporter.enabled false true fission.enforceBlocklistedPrefsInSubprocesses false true javascript.options.use_fdlibm_for_sin_cos_tan false true javascript.options.wasm_tail_calls false true layout.css.allow-mixed-page-sizes false true layout.css.bucket-attribute-names.enabled true undefined layout.css.has-selector.enabled false true layout.css.modern-range-pseudos.enabled undefined false layout.css.scroll-anchoring.absolute-update undefined true layout.css.text-align.justify-only-after-last-tab undefined true layout.css.text-indent-keywords.enabled undefined true layout.css.text-wrap-balance.enabled false true layout.css.webkit-range-pseudos.enabled false undefined layout.dynamic-reflow-roots.enabled false true media.allow-audio-non-utility true false media.autoplay.block-webaudio true undefined media.videocontrols.lock-video-orientation false undefined media.webrtc.platformencoder false true memory.phc.enabled false true network.auth.use_redirect_for_retries false true network.cookie.sameSite.noneRequiresSecure false true network.early-hints.enabled false true network.http.http2.move_to_pending_list_after_network_change false true network.http.http3.retry_different_ip_family false true network.jar.record_failure_reason false true network.predictor.enable-prefetch false true network.send_OnDataFinished undefined false network.send_OnDataFinished.html5parser undefined false network.send_OnDataFinished.nsInputStreamPump undefined false network.send_OnDataFinished_after_progress_updates undefined false pdfjs.viewerCssTheme 0 undefined plugins.rewrite_youtube_embeds true false privacy.annotate_channels.strict_list.enabled false true privacy.exposeContentTitleInWindow undefined true privacy.exposeContentTitleInWindow.pbm undefined true security.disallow_non_local_systemprincipal_in_tests undefined false security.remote_settings.crlite_filters.enabled false true security.ssl3.ecdhe_ecdsa_aes_128_sha true false security.ssl3.ecdhe_ecdsa_aes_256_sha true false security.webauthn.enable_macos_passkeys undefined false services.sync.engine.bookmarks.validation.enabled undefined true services.sync.engine.passwords.validation.enabled undefined true svg.nearestAndFarthestViewportElement.enabled true false toolkit.telemetry.dap_helper https://helper1.dap.cloudflareresearch.com/v02 https://dap.services.mozilla.com toolkit.telemetry.dap_helper_owner Cloudflare Mozilla toolkit.telemetry.dap_leader https://dap-02.api.divviup.org https://dap-07-1.api.divviup.org/ toolkit.telemetry.dap_task1_taskid undefined toolkit.telemetry.dap_visit_counting_enabled undefined false toolkit.telemetry.dap_visit_counting_experiment_list undefined [] toolkit.telemetry.enabled false true ui.mouse.right_click.collapse_selection.stop_if_non_collapsed_selection undefined true ui.mouse.right_click.collapse_selection.stop_if_non_editable_node undefined false ui.new-webcompat-reporter.enabled undefined false ui.new-webcompat-reporter.reason-dropdown undefined 0 ui.new-webcompat-reporter.send-more-info-link undefined true urlclassifier.disallow_completions goog-downloadwhite-digest256,base-track-digest256,mozstd-trackwhite-digest256,content-track-digest256,mozplugin-block-digest256,mozplugin2-block-digest256,goog-passwordwhite-proto,ads-track-digest256,social-track-digest256,analytics-track-digest256,base-fingerprinting-track-digest256,content-fingerprinting-track-digest256,base-cryptomining-track-digest256,content-cryptomining-track-digest256,fanboyannoyance-ads-digest256,fanboysocial-ads-digest256,easylist-ads-digest256,easyprivacy-ads-digest256,adguard-ads-digest256,social-tracking-protection-digest256,social-tracking-protection-facebook-digest256,social-tracking-protection-linkedin-digest256,social-tracking-protection-twitter-digest256,base-email-track-digest256,content-email-track-digest256 goog-downloadwhite-digest256,base-track-digest256,mozstd-trackwhite-digest256,content-track-digest256,mozplugin-block-digest256,mozplugin2-block-digest256,ads-track-digest256,social-track-digest256,analytics-track-digest256,base-fingerprinting-track-digest256,content-fingerprinting-track-digest256,base-cryptomining-track-digest256,content-cryptomining-track-digest256,fanboyannoyance-ads-digest256,fanboysocial-ads-digest256,easylist-ads-digest256,easyprivacy-ads-digest256,adguard-ads-digest256,social-tracking-protection-digest256,social-tracking-protection-facebook-digest256,social-tracking-protection-linkedin-digest256,social-tracking-protection-twitter-digest256,base-email-track-digest256,content-email-track-digest256 urlclassifier.passwordAllowTable goog-passwordwhite-proto undefined</summary>
       
 
       
