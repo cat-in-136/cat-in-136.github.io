@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,max-scale=10,min-scale=0.5,user-scalable=yes" />
+  <title>Arduinoでｽﾀｯｸﾁｬﾝ アールティver.のDynamixelサーボを操作する手順と注意点</title>
+
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="https://code.cdn.mozilla.net/fonts/fira.css" />
+
+  <link rel="canonical" href="https://cat-in-136.github.io/2024/07/steps-and-notes-to-control-dynamixel-servo-of-stackchan-rt-ver-with-arduino.html" />
+  <link rel="alternate" type="application/rss+xml" title="cat_in_136.blog() &raquo; Feed" href="/feed.xml" />
+  <meta property="og:url" content="https://cat-in-136.github.io/2024/07/steps-and-notes-to-control-dynamixel-servo-of-stackchan-rt-ver-with-arduino.html" />
+  <meta property="og:title" content="Arduinoでｽﾀｯｸﾁｬﾝ アールティver.のDynamixelサーボを操作する手順と注意点" /><meta property="og:description" content="ｽﾀｯｸﾁｬﾝ アールティver. は、株式会社アールティが開発・販売する手のひらサイズの小型ロボットで2024年6月上旬に発売された。 このロボットは、オリジナルのｽﾀｯｸﾁｬﾝ（通称ししかわ..." /><meta property="og:type" content="article" /><meta property="og:image" content="https://live.staticflickr.com/65535/53856188253_8a838ddec6_b.jpg" /><meta property="og:site_name" content="cat_in_136.blog()" /><meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@cat_in_136" />
+  <meta name="twitter:creator" content="@cat_in_136" />
+</head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" href="/">cat_in_136.blog()</a>
+    <nav class="site-nav">
+      <a href="javascript:void(0);" class="menu-icon" title="barger button"></a>
+      <div class="trigger"><a class="page-link" href="/about">About</a><a class="page-link" href="/archive">Archive</a><a class="page-link" href="/tags">Tags</a></div>
+    </nav>
+  </div>
+</header>
+<div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name"><a href="/2024/07/steps-and-notes-to-control-dynamixel-servo-of-stackchan-rt-ver-with-arduino.html" itemprop="url">Arduinoでｽﾀｯｸﾁｬﾝ アールティver.のDynamixelサーボを操作する手順と注意点</a></h1>
+
+    <div class="post-meta">Post date: <span itemprop="datePublished" content="2024-07-28T07:25:54+09:00">2024-07-28T07:25:54+09:00</span></div><div class="post-meta">Tags:
+      <span itemprop="keywords"><a class="tag" href="/tags/%EF%BD%BD%EF%BE%80%EF%BD%AF%EF%BD%B8%EF%BE%81%EF%BD%AC%EF%BE%9D">ｽﾀｯｸﾁｬﾝ</a><a class="tag" href="/tags/stackchan">Stackchan</a><a class="tag" href="/tags/dynamixel">Dynamixel</a></span></div><div class="post-meta">
+      Github source: <a href="https://github.com/cat-in-136/blog/blob/master/_posts/2024-07-28-steps-and-notes-to-control-dynamixel-servo-of-stackchan-rt-ver-with-arduino.md" class="source-path">_posts/2024-07-28-steps-and-notes-to-control-dynamixel-servo-of-stackchan-rt-ver-with-arduino.md</a>
+        (<a href="https://github.com/cat-in-136/blog/commits/master/_posts/2024-07-28-steps-and-notes-to-control-dynamixel-servo-of-stackchan-rt-ver-with-arduino.md">History</a>)
+    </div><div class="post-meta">
+      <a href="#comments"><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2024/07/steps-and-notes-to-control-dynamixel-servo-of-stackchan-rt-ver-with-arduino.html">↓Comments</span></a>
+      <script id="dsq-count-scr" src="https://catin136blog.disqus.com/count.js" defer="defer" async="async"></script>
+    </div>
+  </header>
+
+  <div class="post-content" itemprop="articleBody" lang="ja">
+    <p><strong>ｽﾀｯｸﾁｬﾝ アールティver.</strong> は、株式会社アールティが開発・販売する手のひらサイズの小型ロボットで2024年6月上旬に発売された。
+このロボットは、オリジナルのｽﾀｯｸﾁｬﾝ（通称ししかわ版）をベースに、さまざまな改良が加えられている。（β版は2023年に少量販売されたが仕様が異なる）</p>
+
+<p>アールティver.の特徴として、DYNAMIXELサーボと M5Stack CoreS3 を採用していることが挙げられる。
+資料がネット上にもそう多くなく自作コードに書き換えて動作させるときにたいへん苦労したのでここに記すものとする。</p>
+
+<figure>
+<a data-flickr-embed="true" href="https://www.flickr.com/photos/27992339@N00/53856188253" title="Stack-chan and Hydrangea"><img src="https://live.staticflickr.com/65535/53856188253_84739caca3_k.jpg" width="2048" height="1365" alt="Stack-chan and Hydrangea" /></a><script async="async" src="https://embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+<figcaption>Stack-chan and Hydrangea</figcaption>
+</figure>
+
+<h2 id="ピン配置">ピン配置</h2>
+
+<p>ｽﾀｯｸﾁｬﾝ アールティver. で使用される M5Stack CoreS3 のピン配置について、 M-BUS の 2x15 ピンの配列に合わせて記載すると下記のようになる。
+ここでは M5Stack の回路図に従い、背面から覗く方向で左上を1番ピン、その右を2番ピンのように記載した。</p>
+
+<table>
+    <caption>M5Stack CoreS3 Pin Assignment</caption>
+	<thead><tr>
+		<th>Note</th>
+		<th>GPIO</th>
+		<th>Analog</th>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th>Analog</th>
+		<th>GPIO</th>
+		<th>Note</th>
+	</tr></thead>
+	<tbody><tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #000000; color: #FFFFFF">GND</td>
+		<td style="border-top: 1px solid #000000; border-left: 1px solid #000000; background-color: #FFFFFF; color: #808080">1</td>
+		<td style="border-top: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #808080">2</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #134F5C; color: #FFFFFF">ADC</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G10</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">ADC1_CH9/T10</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #000000; color: #FFFFFF">GND</td>
+		<td style="border-left: 1px solid #000000; background-color: #FFFFFF; color: #808080">3</td>
+		<td style="border-right: 1px solid #000000; background-color: #FFFFFF; color: #808080">4</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #666666; color: #FFFFFF">PB_IN</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G8</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">ADC1_CH7/T8</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">PortB</td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #000000; color: #FFFFFF">GND</td>
+		<td style="border-left: 1px solid #000000; background-color: #FFFFFF; color: #808080">5</td>
+		<td style="border-right: 1px solid #000000; background-color: #FFFFFF; color: #808080">6</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #D9D9D9; color: #000000">RST/EN</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">LCD,SD</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G37</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #4BACC6; color: #000000">MOSI</td>
+		<td style="border-left: 1px solid #000000; background-color: #FFFFFF; color: #808080">7</td>
+		<td style="border-right: 1px solid #000000; background-color: #FFFFFF; color: #808080">8</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FCE5CD; color: #000000">GPIO</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G5</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">ADC1_CH4/T5</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">LCD,SD</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G35</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #4BACC6; color: #000000">MISO</td>
+		<td style="border-left: 1px solid #000000; background-color: #FFFFFF; color: #808080">9</td>
+		<td style="border-right: 1px solid #000000; background-color: #FFFFFF; color: #808080">10</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #666666; color: #FFFFFF">PB_OUT</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G9</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">ADC1_CH8/T9</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">PortB</td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">LCD,SD</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G36</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #4BACC6; color: #000000">SCK</td>
+		<td style="border-left: 1px solid #000000; background-color: #FFFFFF; color: #808080">11</td>
+		<td style="border-right: 1px solid #000000; background-color: #FFFFFF; color: #808080">12</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #CC0000; color: #FFFFFF">3.3V</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I1</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G44</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">RXD0</td>
+		<td style="border-left: 1px solid #000000; background-color: #FFFFFF; color: #808080">13</td>
+		<td style="border-right: 1px solid #000000; background-color: #FFFFFF; color: #808080">14</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">TXD0</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G43</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">O</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">PortC</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">ADC2_CH7</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G18</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #1155CC; color: #FFFFFF">PC_RX</td>
+		<td style="border-left: 1px solid #000000; background-color: #FFFFFF; color: #808080">15</td>
+		<td style="border-right: 1px solid #000000; background-color: #FFFFFF; color: #808080">16</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #1155CC; color: #FFFFFF">PC_TX</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G17</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">ADC2_CH6</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">PortC</td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I2C_SYS</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">ADC2_CH1/T12</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G12</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #E69138; color: #FFFFFF">intSDA</td>
+		<td style="border-left: 1px solid #000000; background-color: #FFFFFF; color: #808080">17</td>
+		<td style="border-right: 1px solid #000000; background-color: #FFFFFF; color: #808080">18</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #E69138; color: #FFFFFF">intSCL</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G11</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">ADC2_CH0/T11</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I2C_SYS</td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">PortA</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">ADC1_CH1/T2</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G2</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #E06666; color: #FFFFFF">PA_SDA</td>
+		<td style="border-left: 1px solid #000000; background-color: #FFFFFF; color: #808080">19</td>
+		<td style="border-right: 1px solid #000000; background-color: #FFFFFF; color: #808080">20</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #E06666; color: #FFFFFF">PA_SCL</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G1</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">ADC1_CH0/T1</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">PortA</td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">ADC1_CH5/T6</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G6</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FCE5CD; color: #000000">GPIO</td>
+		<td style="border-left: 1px solid #000000; background-color: #FFFFFF; color: #808080">21</td>
+		<td style="border-right: 1px solid #000000; background-color: #FFFFFF; color: #808080">22</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FCE5CD; color: #000000">GPIO</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G7</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">ADC1_CH6/T7</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">ADC2_CH2/T13</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G13</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I2S_DOUT</td>
+		<td style="border-left: 1px solid #000000; background-color: #FFFFFF; color: #808080">23</td>
+		<td style="border-right: 1px solid #000000; background-color: #FFFFFF; color: #808080">24</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I2S_LRCK</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G0</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #8064A2; color: #FFFFFF">NC</td>
+		<td style="border-left: 1px solid #000000; background-color: #FFFFFF; color: #808080">25</td>
+		<td style="border-right: 1px solid #000000; background-color: #FFFFFF; color: #808080">26</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I2S_DIN</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G14</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">ADC2_CH3/T14</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">I/O/T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #8064A2; color: #FFFFFF">NC</td>
+		<td style="border-left: 1px solid #000000; background-color: #FFFFFF; color: #808080">27</td>
+		<td style="border-right: 1px solid #000000; background-color: #FFFFFF; color: #808080">28</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #CC0000; color: #FFFFFF">5V</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #8064A2; color: #FFFFFF">NC</td>
+		<td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; background-color: #FFFFFF; color: #808080">29</td>
+		<td style="border-bottom: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #808080">30</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFD966; color: #000000">BATTERY</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+	</tr>
+</tbody></table>
+
+<figure>
+<table>
+    <tbody><tr>
+        <td><img class="fitcontain" src="/images/2024-07-28-stackchan-rt-pcb-front.jpg" width="1600" height="1600" loading="lazy" /></td>
+        <td><img class="fitcontain" src="/images/2024-07-28-stackchan-rt-pcb-back.jpg" width="1600" height="1600" loading="lazy" /></td>
+    </tr></tbody>
+</table>
+<figcaption>RT-Stackchan v1.0.0 PCB</figcaption>
+</figure>
+
+<p>ｽﾀｯｸﾁｬﾝ アールティver. の基板（RT-Stackchan v1.0.0 PCB）は、オリジナル版のｽﾀｯｸﾁｬﾝ基板と若干異なる。
+アールティ社のロゴであるうさぎさんの絵がシルクで描かれているなどの外見上の差はすぐに気づくが、回路の違いも一部見られた。</p>
+
+<p>PCB のピン配置は下記の通りであった。M-BUS のピン番号と M5Stack CoreS3 の GPIO ピン番号を記載した。</p>
+
+<table>
+    <caption>Port.B Pin assignment</caption>
+	<thead><tr>
+		<th style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></th>
+		<th style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000">M-BUS pin #</th>
+		<th style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000">S3</th>
+	</tr></thead>
+	<tbody><tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">-</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #B7B7B7">4</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G8</td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFD966; color: #000000">-</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #B7B7B7">10</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G9</td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #CC0000; color: #FFFFFF">5V</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #B7B7B7">28</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #000000; color: #FFFFFF">G</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #B7B7B7">1</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+	</tr>
+</tbody></table>
+
+<table>
+    <caption>Port.C Pin assignment</caption>
+	<thead><tr>
+		<th style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></th>
+		<th style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000">M-BUS pin #</th>
+		<th style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000">S3</th>
+	</tr></thead>
+	<tbody><tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">R</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #B7B7B7">15</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G18</td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFD966; color: #000000">T</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #B7B7B7">16</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G17</td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #CC0000; color: #FFFFFF">5V</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #B7B7B7">28</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #000000; color: #FFFFFF">G</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #B7B7B7">1</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></td>
+	</tr>
+</tbody></table>
+
+<table>
+    <caption>Serial Servo Pin assignment</caption>
+	<thead><tr>
+		<th style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"></th>
+		<th style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000">M-BUS pin #</th>
+		<th style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000">S3</th>
+	</tr></thead>
+	<tbody><tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">RXD2</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #B7B7B7">21</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G6</td>
+	</tr>
+	<tr>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">TXD2</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #B7B7B7">22</td>
+		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; background-color: #FFFFFF; color: #000000">G7</td>
+	</tr>
+</tbody></table>
+
+<p>シリアルサーボ制御用のこのピンは RS485ドライバー MAX3485 (筆者の PCB に実装されていたのは STMicro の ST3485EI であった)を介して、 TTL に変換されているようだ。
+これらがDYNAMIXELサーボ用の 3P Molex コネクタに接続してあった。</p>
+
+<figure>
+<img class="fitcontain" src="/images/2024-07-28-stackchan-rt-pcb-servo-schematics.svg" width="838" height="455" loading="lazy" />
+<figcaption>DYNAMIXELサーボ制御関連部の推定回路図</figcaption>
+</figure>
+
+<p>Molex コネクタ付近でそれぞれの3番ピン（信号ピン、「SIG」とシルク印刷あり）はR13で0オーム抵抗接続によって短絡している。
+だから、組み立てマニュアルにはｽﾀｯｸﾁｬﾝの頭側のコネクタに接続するよう指示されているが電気的には下側（バッテリー側）のコネクタに接続しても同じである。</p>
+
+<figure>
+<img class="fitcontain" src="/images/2024-07-28-cable-connecting.jpg" width="500" height="375" loading="lazy" />
+<figcaption>基板の取り付けの指示図（<a href="https://github.com/rt-net/stack-chan/blob/main/docs/assembly_ja.md#%E5%9F%BA%E6%9D%BF%E3%81%AE%E5%8F%96%E3%82%8A%E4%BB%98%E3%81%91">ｽﾀｯｸﾁｬﾝ アールティver. 組み立てマニュアル</a>から引用）</figcaption>
+</figure>
+
+<p>注意すべき点として、オリジナル版のｽﾀｯｸﾁｬﾝ基板の回路配線に従うと
+G5,G7はPWM用、G18,G17はシリアルサーボ用と勘違いしてしまいそうだが、アールティ版と配線が異なっていた。
+特に <strong>G18,G17とサーボの制御側とは接続していなかった</strong> （R17,R18が実装されておらず開放されていたのでつながっていない）。</p>
+
+<h2 id="dynamixel-サーボの配線改良">DYNAMIXEL サーボの配線改良</h2>
+
+<p>アールティ出荷時には各DYNAMIXELサーボにID=1とID=2が設定されている（そのIDの値がシールで貼られている）。
+組み立てマニュアルではこれらのIDに対応した配線コネクタの繋げ方が指示してある。</p>
+
+<p>筆者はこの配線で最初使用したが、この方法でロール軸（ID=2のDYNAMIXELサーボ）のサーボホーンとケーブルが干渉する問題に直面した（下の写真の左）。
+そこで、ID=2のDYNAMIXELサーボの接続コネクタを変えることで干渉しないようにすることした（下の写真の右）。</p>
+
+<figure>
+<img class="fitcontain" src="/images/2024-07-28-dynamixel-connection-photo.jpg" width="1920" height="1080" loading="lazy" />
+<figcaption>DYNAMIXEL 配線変更とサーボホーンの干渉状況</figcaption>
+</figure>
+
+<p>メインコントローラ（M5Stack CoreS3）とDYNAMIXELサーボは、コマンドデータ（パケット）を送受信することで通信を行う。
+信号線はバスになっており、複数の機器が共通の線を使って通信を行うことができる。
+ｽﾀｯｸﾁｬﾝ アールティver.の場合は2つのDYNAMIXELサーボが接続される。
+各DYNAMIXELサーボには、機器の識別番号であるIDが割り当てられており、このIDを指定することで、
+特定のサーボだけを制御することができる。</p>
+
+<p>このバス配線の特徴から、組み立てマニュアルの配線(下図の Recommended Connection)から
+ID=2の接続コネクタを変えた配線（下図の Alternative Connection)でも電気的には同じであり、
+制御プログラムも変更なしで使うことができる。`</p>
+
+<figure>
+<img class="fitcontain" src="/images/2024-07-28-dynamixel-connection.svg" width="92" height="106" loading="lazy" />
+<figcaption>DYNAMIXEL 配線図</figcaption>
+</figure>
+
+<p>図の説明：</p>
+
+<ul>
+  <li>Recommended Connection: 組み立てマニュアルに記載されている標準的な配線方法</li>
+  <li>Alternative Connection: 筆者が採用した、サーボホーンとの干渉を避けるための配線方法。この方法では、ID=2のDYNAMIXELサーボの接続コネクタを変更している。</li>
+</ul>
+
+<h2 id="esp32arduino-から-dynamixel-サーボの制御方法">ESP32/Arduino から DYNAMIXEL サーボの制御方法</h2>
+
+<p><a href="https://github.com/ROBOTIS-GIT/dynamixel2arduino">robotis-git/Dynamixel2Arduino</a> を使う。</p>
+
+<p>Dynamixel2Arduinoは、DYNAMIXEL の製造元である ROBOTIS社が提供する公式ライブラリであり、
+このライブラリを使用するのが無難であろう。</p>
+
+<p>このライブラリは、ROBOTIS 社製の OpenCM などの専用ボードを主要ユーザとして想定した作りになっているため、
+サンプルコードをそのままでは初期化ができない（コンパイルも通らない）。</p>
+
+<p>結論から言うと下記のような流れで初期化処理をすれば良い。</p>
+
+<ol>
+  <li>Dynamixel2Arduino ライブラリの外側で一旦ハードウェアシリアルをボーレートやピン番号を指定して初期化する ( <code class="language-plaintext highlighter-rouge">DXL_SERIAL.begin(...)</code> )</li>
+  <li>Dynamixel2Arduino の初期化にはハードウェアシリアルの参照を渡す (<code class="language-plaintext highlighter-rouge">Dynamixel2Arduino(DXL_SERIAL)</code>)</li>
+  <li>その後で Dynamixel2Arduino を <code class="language-plaintext highlighter-rouge">begin()</code> する</li>
+</ol>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;Dynamixel2Arduino.h&gt;</span><span class="cp">
+</span>
+<span class="c1">// ハードウェアシリアルを定義</span>
+<span class="cp">#define DXL_RX_PIN 6
+#define DXL_TX_PIN 7
+#define DXL_BAUD 1000000
+</span><span class="n">HardwareSerial</span> <span class="o">&amp;</span><span class="n">DXL_SERIAL</span> <span class="o">=</span> <span class="n">Serial1</span><span class="p">;</span>
+
+<span class="c1">// Dynamixel2Arduinoオブジェクトを生成</span>
+<span class="n">Dynamixel2Arduino</span> <span class="n">dxl</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// ...</span>
+
+  <span class="c1">// ハードウェアシリアルを初期化</span>
+  <span class="n">DXL_SERIAL</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">DXL_BAUD</span><span class="p">,</span> <span class="n">SERIAL_8N1</span><span class="p">,</span> <span class="n">DXL_RX_PIN</span><span class="p">,</span> <span class="n">DXL_TX_PIN</span><span class="p">);</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span> <span class="c1">// ここのウエイトの妥当性は未調査</span>
+
+  <span class="c1">// Dynamixel2Arduinoライブラリを初期化</span>
+  <span class="n">dxl</span> <span class="o">=</span> <span class="n">Dynamixel2Arduino</span><span class="p">(</span><span class="n">DXL_SERIAL</span><span class="p">);</span>
+  <span class="n">dxl</span><span class="p">.</span><span class="n">setPortProtocolVersion</span><span class="p">(</span><span class="mf">2.0</span><span class="n">f</span><span class="p">);</span> <span class="c1">// 通信プロトコルバージョンを設定</span>
+
+  <span class="n">dxl</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">DXL_BAUD</span><span class="p">);</span> <span class="c1">// DYNAMIXELとの通信を開始</span>
+
+  <span class="n">dxl</span><span class="p">.</span><span class="n">torqueOn</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// サーボのトルクをオンにする</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>ポイントとしては Dynamixel2Arduino ライブラリ自身でハードウェアシリアルの初期化コードが入っているのだけれども、
+これを使わずに自力でハードウェアシリアルを用意する。</p>
+
+<h2 id="ｽﾀｯｸﾁｬﾝをdynamixel2arduinoで制御するにおける注意事項">ｽﾀｯｸﾁｬﾝをDynamixel2Arduinoで制御するにおける注意事項</h2>
+
+<p>座標系はオリジナルのｽﾀｯｸﾁｬﾝと同様に右手系で、
+ｽﾀｯｸﾁｬﾝが左を向く方向がID=1(ロール軸)のDYNAMIXELサーボの正の向き、
+ｽﾀｯｸﾁｬﾝが下を向く方向がID=2(ピッチ軸)のDYNAMIXELサーボの正の向きである。</p>
+
+<figure>
+<img class="fitcontain" src="/images/2024-07-28-coordinate.jpg" width="4032" height="3024" loading="lazy" />
+<figcaption>ｽﾀｯｸﾁｬﾝの座標系 ( <a href="https://github.com/stack-chan/stack-chan/blob/dev/v1.0/firmware/docs/api_ja.md">stack-chan/firmware/docs/api_ja.md at dev/v1.0 · stack-chan/stack-chan</a> から図を引用)</figcaption>
+</figure>
+
+<p>ｽﾀｯｸﾁｬﾝが真正面を向いたとき、
+ID=1(ロール軸)のDYNAMIXELサーボが0度、
+ID=2(ピッチ軸)のDYNAMIXELサーボが180度であった。</p>
+
+<p>ｽﾀｯｸﾁｬﾝを右に向かせるにはID=1(ロール軸)のDYNAMIXELサーボに負の値を指定する必要があるので、
+オペレーションモードが 0〜360 の範囲内でしか使えない <code class="language-plaintext highlighter-rouge">OP_POSITION</code> モードを使うと右に向かせることはできない。</p>
+
+<p>そこで <code class="language-plaintext highlighter-rouge">OP_EXTENDED_POSITION</code> モードに変えるとｽﾀｯｸﾁｬﾝの真正面のときにDYNAMIXELサーボが認識する角度が
+ID=1(ロール軸)のDYNAMIXELサーボが180度、
+ID=2(ピッチ軸)のDYNAMIXELサーボが180度となる現象が発生した。</p>
+
+<p>なぜこのような挙動になるのかはわからなかったが、DYNAMIXELサーボが認識する角度をログ表示して確認するのが確実であろう。</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">const</span> <span class="k">auto</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">dxl</span><span class="p">.</span><span class="n">getPresentPosition</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">UNIT_DEGREE</span><span class="p">);</span>
+  <span class="n">M5_LOGI</span><span class="p">(</span><span class="s">"pos %f"</span><span class="p">,</span> <span class="n">pos</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>ｽﾀｯｸﾁｬﾝを指定の角度に向けさせるには <code class="language-plaintext highlighter-rouge">setGoalPosition()</code> 関数を使えばよい。</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">dxl</span><span class="p">.</span><span class="n">setOperatingMode</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">OP_EXTENDED_POSITION</span><span class="p">);</span>
+  <span class="n">dxl</span><span class="p">.</span><span class="n">setGoalPosition</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span> <span class="o">+</span> <span class="mi">180</span><span class="p">,</span> <span class="n">UNIT_DEGREE</span><span class="p">);</span> <span class="c1">// ｽﾀｯｸﾁｬﾝを右90度 = -90度に回転</span>
+</code></pre></div></div>
+
+<p>これでDYNAMIXELサーボが回転しはじめる。しかしDYNAMIXELサーボの動作が停止したかどうかを取得するための関数はない。</p>
+
+<p>Dynamixel2Arduino ライブラリは必ずしもすべての DYNAMIXEL のコマンドを関数として提供しておらず、
+XL330-M288-Tの電子マニュアルなどを参照して任意コマンド（ Control Table Item ）実行する関数を実行する必要がある。</p>
+
+<p>この場合は<a href="https://emanual.robotis.com/docs/en/dxl/x/xl330-m288/#moving-status">XL330-M288-Tの電子マニュアルのMoving Status</a>によると、
+Moving Status の結果の値について、bit1 (Profile Ongoing) が0のとき Profile completed 状態を示す、
+つまり動作を完了していることを示すのでこれで確認した。</p>
+
+<p>何らかの理由で目標位置に到着しない（モノにぶつかってサーボが目標位置まで回らなかった場合も含む）ときには
+bit0(最下位ビット)は 0 ( Arrived 状態 ) にならないので注意が必要だ。</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">auto</span> <span class="n">status</span> <span class="o">=</span> <span class="n">dxl</span><span class="p">.</span><span class="n">readControlTableItem</span><span class="p">(</span><span class="n">ControlTableItem</span><span class="o">::</span><span class="n">MOVING_STATUS</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+ <span class="kt">bool</span> <span class="n">is_moving</span> <span class="o">=</span> <span class="p">(</span><span class="n">status</span> <span class="o">&amp;</span> <span class="mh">0x02</span><span class="p">)</span> <span class="o">!=</span> <span class="mh">0x00</span><span class="p">;</span> <span class="c1">// Arrived かつ Profile completed 状態</span>
+</code></pre></div></div>
+
+<p>設定系のコマンドも同様に任意コマンド（ Control Table Item ）実行する関数を実行する必要があるものがある。</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">dxl</span><span class="p">.</span><span class="n">writeControlTableItem</span><span class="p">(</span><span class="n">ControlTableItem</span><span class="o">::</span><span class="n">PROFILE_ACCELERATION</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+  <span class="n">dxl</span><span class="p">.</span><span class="n">writeControlTableItem</span><span class="p">(</span><span class="n">ControlTableItem</span><span class="o">::</span><span class="n">PROFILE_VELOCITY</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="おわりに">おわりに</h2>
+
+<p>Dynamixel2Arduinoライブラリを使って、ｽﾀｯｸﾁｬﾝ アールティver. を制御する方法について解説した。
+座標系や初期角度など、ややこしいところについては具体的な手順を踏んで説明した。</p>
+
+<p>この記事が、ｽﾀｯｸﾁｬﾝ アールティver. を Arduino で動かそうとする人の助けになれば幸いである。</p>
+
+<h2 id="参考文献">参考文献</h2>
+
+<ul>
+  <li>ｽﾀｯｸﾁｬﾝ <a href="https://github.com/stack-chan/stack-chan/">stack-chan/stack-chan: A JavaScript-driven M5Stack-embedded super-kawaii robot.</a></li>
+  <li>ｽﾀｯｸﾁｬﾝ アールティver <a href="https://github.com/rt-net/stack-chan">rt-net/stack-chan: This is the repository for Stack-chan RT ver.</a>
+    <ul>
+      <li>アールティロボットショップ（販売サイト）
+        <ul>
+          <li><a href="https://rt-net.jp/shop-rt-stackchan-v1">【新製品】ｽﾀｯｸﾁｬﾝ アールティver. [RT-Stackchan-V1]</a></li>
+          <li><a href="https://rt-net.jp/shop-rt-stackchan-diy-v1">【新製品】ｽﾀｯｸﾁｬﾝ アールティver. 組立キット [RT-Stackchan-DIY-V1]</a></li>
+        </ul>
+      </li>
+      <li>ｽﾀｯｸﾁｬﾝ アールティver. 組み立てマニュアル <a href="https://github.com/rt-net/stack-chan/blob/main/docs/assembly_ja.md">stack-chan/docs/assembly_ja.md at main · rt-net/stack-chan</a></li>
+      <li><a href="https://github.com/rt-net/stack-chan/commit/f1f901cf">量産ｽﾀｯｸﾁｬﾝ試作基板の動作テスト · rt-net/stack-chan@f1f901c</a> (コミットログ)</li>
+    </ul>
+  </li>
+  <li><a href="https://docs.m5stack.com/en/core/CoreS3">M5Stack CoreS3</a></li>
+  <li><a href="https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf">ESP32-S3 Series Datasheet</a></li>
+  <li>ROBOTIS DYNAMIXEL
+    <ul>
+      <li><a href="https://emanual.robotis.com/docs/en/dxl/x/xl330-m288/">XL330-M288-T</a> (ROBOTIS e-Manual)</li>
+      <li><a href="https://emanual.robotis.com/docs/en/dxl/protocol2/">DYNAMIXEL Protocol 2.0</a> (ROBOTIS e-Manual)</li>
+      <li><a href="https://www.besttechnology.co.jp/modules/knowledge/?DYNAMIXEL%20Communiation%20Protocol%202.0">Besttechnology - Dynamixel通信プロトコルV2マニュアル [DYNAMIXEL Communiation Protocol 2.0] - ナレッジベース</a></li>
+      <li><a href="https://github.com/ROBOTIS-GIT/Dynamixel2Arduino">ROBOTIS-GIT/Dynamixel2Arduino: DYNAMIXEL protocol library for Arduino</a></li>
+      <li><a href="https://forum.robotis.com/t/esp32-s3-dxl-mkr-shield-mash-up-in-arduino/1871">ESP32 S3 + DXL MKR Shield Mash-Up in ARDUINO - Projects and Learning - ROBOTIS</a></li>
+    </ul>
+  </li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <details id="comments">
+      <summary><span class="disqus-comment-count" data-disqus-url="https://cat-in-136.github.io/2024/07/steps-and-notes-to-control-dynamixel-servo-of-stackchan-rt-ver-with-arduino.html">Comments</span></summary>
+      <div id="disqus_thread"></div>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <script type="application/javascript" src="/javascript/disqus_loader.js" defer="defer" async="async"></script>
+    </details>
+  </footer>
+</article><aside class="post-related">
+  <h2>Related Posts</h2>
+  <ul class="post-list"><li class="post-item">
+    <a class="post-link" href="/2013/03/html-copy.html">
+      <span class="post-meta">2013-03-04</span>
+      <span class="post-title">HTML の COPY 禁止をするにはどうすればいいですか? </span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2023/01/visualize-imaginary-solution.html">
+      <span class="post-meta">2023-01-29</span>
+      <span class="post-title">二次方程式の虚数解の可視化</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2013/03/html-user-select.html">
+      <span class="post-meta">2013-03-05</span>
+      <span class="post-title">HTML でのコピペしやすさを user-select などで向上させる</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2011/03/javascript-typed-array-use-native.html">
+      <span class="post-meta">2011-03-19</span>
+      <span class="post-title">JavaScript Typed Array use native endian</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2017/07/apply-to-html-svg-filter-inkscape.html">
+      <span class="post-meta">2017-07-22</span>
+      <span class="post-title">Apply to HTML elements the SVG filters of inkscape preset filters</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2017/10/list-of-all-the-config-provided-by-configuration-mania.html">
+      <span class="post-meta">2017-10-26</span>
+      <span class="post-title">List of all the Config provided by Configuration Mania</span></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2014/03/bezier-4-diff.html">
+      <span class="post-meta">2014-03-26</span>
+      <span class="post-title">ベジェ曲線で描く円弧と本物の円弧の差（中心角について一般化）</span><img class="post-thumb" src="/images/generic-theta-tile.png" loading="lazy" alt="thumbnail" /></a>
+  </li>
+<li class="post-item">
+    <a class="post-link" href="/2012/05/blog-post.html">
+      <span class="post-meta">2012-05-19</span>
+      <span class="post-title">調布に通っている電通生なら、調布駅に沿って川あるの知ってるよね? な、なんだってー(たぶん嘘)</span><img class="post-thumb" src="/images/ksj_w15_52l_2k_chofu.png" loading="lazy" alt="thumbnail" /></a>
+  </li>
+</ul>
+</aside>
+      </div>
+    </div><footer class="site-footer">
+  <div class="wrapper" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WebSite">
+    <h2 class="footer-heading">cat_in_136.blog()</h2>
+    <p>
+      © 2024
+      <span itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Person">
+        <a href="/about"><span itemprop="name">cat_in_136</span></a>
+      </span>;
+      Content is available under a
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license" itemprop="license" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">CC BY-NC-SA 4.0</a>
+      unless otherwise noted.
+    </p>
+  </div>
+</footer>
+</body>
+</html>

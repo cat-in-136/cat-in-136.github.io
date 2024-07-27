@@ -581,6 +581,9 @@ hr {
 .post-content table:not([class]):not([style]) caption {
   text-align: center;
 }
+.post-content table:not([class]):not([style]):has(tbody:only-child > tr:only-child > td:first-child .MathJax_Preview), .post-content table:not([class]):not([style]):has(tbody:only-child > tr:only-child > td:first-child .MathJax_Preview) td {
+  border: none;
+}
 .post-content:lang(ja) {
   text-align: justify;
   text-justify: inter-ideograph;
