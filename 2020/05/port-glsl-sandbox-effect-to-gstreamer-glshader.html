@@ -60,7 +60,7 @@ So, I looked into how to stream “shader” into Gstreamer.</p>
 <p>An input is actually required for glshader.
 glshader is an implement of <code class="language-plaintext highlighter-rouge">GstBaseTransform</code>, which shall have a sink pad.</p>
 
-<figure> <img class="fitcontain" src="/images/2020-05-03-port-glsl-sandbox-effect-to-gstreamer-glshader-diagram-glshader.svg" width="957" height="256" loading="lazy" />
+<figure> <img class="fitcontain" src="/images/2020-05-03-port-glsl-sandbox-effect-to-gstreamer-glshader-diagram-glshader.svg" width="956" height="255" loading="lazy" />
 <figcaption>Example diagram of glshader</figcaption>
 </figure>
 
@@ -95,7 +95,7 @@ without conversion.</p>
 <p>The output parameter <code class="language-plaintext highlighter-rouge">gl_FragColor</code> is same.
 <code class="language-plaintext highlighter-rouge">Gl_FragCoord</code> can be used in the same way, but the coordinate systems are different.</p>
 
-<figure> <object width="673" height="184" data="/images/2020-05-03-port-glsl-sandbox-effect-to-gstreamer-glshader-coordinate-system.svg"></object>
+<figure> <object width="672" height="184" data="/images/2020-05-03-port-glsl-sandbox-effect-to-gstreamer-glshader-coordinate-system.svg"></object>
 <figcaption>Coordinate system difference</figcaption>
 </figure>
 
