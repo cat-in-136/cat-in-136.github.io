@@ -5,6 +5,7 @@ author: cat_in_136
 tags:
 - jekyll
 - travis-ci
+- "GitHub Page"
 - "チラシの裏"
 date: '2015-04-30T00:42:49+09:00'
 ---
@@ -32,8 +33,8 @@ date: '2015-04-30T00:42:49+09:00'
 
 アウトプット:
 
- * [.travis.yml](https://github.com/cat-in-136/blog/blob/master/.travis.yml)
- * [Rakefile](https://github.com/cat-in-136/blog/blob/master/Rakefile)
+ * [.travis.yml](https://github.com/cat-in-136/cat-in-136.github.io/blob/ffdfa35f4398ce1adb7619ab0515f711fbc14911/.travis.yml)
+ * [Rakefile](https://github.com/cat-in-136/cat-in-136.github.io/blob/ffdfa35f4398ce1adb7619ab0515f711fbc14911/Rakefile)
 
 
  1. Travis を Jekyll ソースのレポジトリと紐付ける。
