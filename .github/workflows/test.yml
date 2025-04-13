@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Install LAPACKE and OpenBLAS
       run: sudo apt-get install liblapacke-dev libopenblas-dev -y
