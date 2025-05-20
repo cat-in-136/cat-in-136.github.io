@@ -2,10 +2,11 @@
 layout: post
 title: Jekyll ブログデプロイを Custom GitHub Actions Workflows に切り替えた
 tags:
-- Jekyll
+- jekyll
 - GitHub Page
 - チラシの裏
 date: '2025-04-14T01:10:39+09:00'
+last_modified_at: '2025-05-21T01:07:31+09:00'
 ---
 これまで、GitHub Pagesではソースコードだけでなく、ビルド成果物もリポジトリで管理する必要があった。そのため、CIプロセスを利用してビルドを行い、ソースコードとは別のGitHub Pages用のリポジトリにプッシュする方法を採用していた。
 
