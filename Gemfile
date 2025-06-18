@@ -10,7 +10,7 @@ ruby RUBY_VERSION
 #
 # This will help ensure the proper Jekyll version is running.
 # Happy Jekylling!
-gem 'jekyll', '~> 4.3'
+gem 'jekyll', '~> 4.4'
 
 # If you have any plugins, put them here!
 group :jekyll_plugins do
@@ -19,7 +19,7 @@ group :jekyll_plugins do
   gem 'jekyll-paginate-v2'
 end
 
-gem 'fastimage', '~> 2.3'
+gem 'fastimage', '~> 2.4'
 
 group :lsi do
   gem 'numo-narray'
