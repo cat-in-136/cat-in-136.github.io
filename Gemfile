@@ -21,11 +21,7 @@ end
 
 gem 'fastimage', '~> 2.4'
 
-group :lsi do
-  gem 'numo-narray'
-  gem 'numo-linalg'
-  gem 'classifier-reborn'
-end
+gem 'jekyll-tagging-related_posts', '~> 1.3'
 
 gem 'rake'
 gem 'term-ansicolor'

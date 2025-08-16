@@ -5,9 +5,6 @@ GEM
       public_suffix (>= 2.0.2, < 7.0)
     base64 (0.3.0)
     bigdecimal (3.2.2)
-    classifier-reborn (2.3.0)
-      fast-stemmer (~> 1.0)
-      matrix (~> 0.4)
     colorator (1.1.0)
     concurrent-ruby (1.3.5)
     csv (3.3.5)
@@ -15,7 +12,6 @@ GEM
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0)
     eventmachine (1.2.7)
-    fast-stemmer (1.0.2)
     fastimage (2.4.0)
     ffi (1.17.2)
     ffi (1.17.2-aarch64-linux-gnu)
@@ -29,31 +25,31 @@ GEM
     ffi (1.17.2-x86_64-linux-gnu)
     ffi (1.17.2-x86_64-linux-musl)
     forwardable-extended (2.6.0)
-    google-protobuf (4.31.1)
+    google-protobuf (4.32.0)
       bigdecimal
       rake (>= 13)
-    google-protobuf (4.31.1-aarch64-linux-gnu)
+    google-protobuf (4.32.0-aarch64-linux-gnu)
       bigdecimal
       rake (>= 13)
-    google-protobuf (4.31.1-aarch64-linux-musl)
+    google-protobuf (4.32.0-aarch64-linux-musl)
       bigdecimal
       rake (>= 13)
-    google-protobuf (4.31.1-arm64-darwin)
+    google-protobuf (4.32.0-arm64-darwin)
       bigdecimal
       rake (>= 13)
-    google-protobuf (4.31.1-x86-linux-gnu)
+    google-protobuf (4.32.0-x86-linux-gnu)
       bigdecimal
       rake (>= 13)
-    google-protobuf (4.31.1-x86-linux-musl)
+    google-protobuf (4.32.0-x86-linux-musl)
       bigdecimal
       rake (>= 13)
-    google-protobuf (4.31.1-x86_64-darwin)
+    google-protobuf (4.32.0-x86_64-darwin)
       bigdecimal
       rake (>= 13)
-    google-protobuf (4.31.1-x86_64-linux-gnu)
+    google-protobuf (4.32.0-x86_64-linux-gnu)
       bigdecimal
       rake (>= 13)
-    google-protobuf (4.31.1-x86_64-linux-musl)
+    google-protobuf (4.32.0-x86_64-linux-musl)
       bigdecimal
       rake (>= 13)
     http_parser.rb (0.8.0)
@@ -84,9 +80,11 @@ GEM
       jekyll (>= 3.0, < 5.0)
     jekyll-sass-converter (3.1.0)
       sass-embedded (~> 1.75)
+    jekyll-tagging-related_posts (1.3.1)
+      jekyll (>= 3.9, < 5.0)
     jekyll-watch (2.2.1)
       listen (~> 3.0)
-    json (2.12.2)
+    json (2.13.2)
     kramdown (2.5.1)
       rexml (>= 3.3.9)
     kramdown-parser-gfm (1.1.0)
@@ -95,11 +93,7 @@ GEM
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    matrix (0.4.3)
     mercenary (0.4.0)
-    numo-linalg (0.1.7)
-      numo-narray (>= 0.9.1.4)
-    numo-narray (0.9.2.1)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
     public_suffix (6.0.2)
@@ -108,47 +102,45 @@ GEM
     rb-inotify (0.11.1)
       ffi (~> 1.0)
     rexml (3.4.1)
-    rouge (4.5.2)
+    rouge (4.6.0)
     safe_yaml (1.0.5)
-    sass-embedded (1.89.2)
+    sass-embedded (1.90.0)
       google-protobuf (~> 4.31)
       rake (>= 13)
-    sass-embedded (1.89.2-aarch64-linux-android)
+    sass-embedded (1.90.0-aarch64-linux-android)
       google-protobuf (~> 4.31)
-    sass-embedded (1.89.2-aarch64-linux-gnu)
+    sass-embedded (1.90.0-aarch64-linux-gnu)
       google-protobuf (~> 4.31)
-    sass-embedded (1.89.2-aarch64-linux-musl)
+    sass-embedded (1.90.0-aarch64-linux-musl)
       google-protobuf (~> 4.31)
-    sass-embedded (1.89.2-aarch64-mingw-ucrt)
+    sass-embedded (1.90.0-arm-linux-androideabi)
       google-protobuf (~> 4.31)
-    sass-embedded (1.89.2-arm-linux-androideabi)
+    sass-embedded (1.90.0-arm-linux-gnueabihf)
       google-protobuf (~> 4.31)
-    sass-embedded (1.89.2-arm-linux-gnueabihf)
+    sass-embedded (1.90.0-arm-linux-musleabihf)
       google-protobuf (~> 4.31)
-    sass-embedded (1.89.2-arm-linux-musleabihf)
+    sass-embedded (1.90.0-arm64-darwin)
       google-protobuf (~> 4.31)
-    sass-embedded (1.89.2-arm64-darwin)
+    sass-embedded (1.90.0-riscv64-linux-android)
       google-protobuf (~> 4.31)
-    sass-embedded (1.89.2-riscv64-linux-android)
+    sass-embedded (1.90.0-riscv64-linux-gnu)
       google-protobuf (~> 4.31)
-    sass-embedded (1.89.2-riscv64-linux-gnu)
+    sass-embedded (1.90.0-riscv64-linux-musl)
       google-protobuf (~> 4.31)
-    sass-embedded (1.89.2-riscv64-linux-musl)
+    sass-embedded (1.90.0-x86_64-darwin)
       google-protobuf (~> 4.31)
-    sass-embedded (1.89.2-x86_64-darwin)
+    sass-embedded (1.90.0-x86_64-linux-android)
       google-protobuf (~> 4.31)
-    sass-embedded (1.89.2-x86_64-linux-android)
+    sass-embedded (1.90.0-x86_64-linux-gnu)
       google-protobuf (~> 4.31)
-    sass-embedded (1.89.2-x86_64-linux-gnu)
-      google-protobuf (~> 4.31)
-    sass-embedded (1.89.2-x86_64-linux-musl)
+    sass-embedded (1.90.0-x86_64-linux-musl)
       google-protobuf (~> 4.31)
     sync (0.5.0)
     term-ansicolor (1.11.2)
       tins (~> 1.0)
     terminal-table (3.0.2)
       unicode-display_width (>= 1.1.1, < 3)
-    tins (1.38.0)
+    tins (1.39.1)
       bigdecimal
       sync
     unicode-display_width (2.6.0)
@@ -158,7 +150,6 @@ PLATFORMS
   aarch64-linux-android
   aarch64-linux-gnu
   aarch64-linux-musl
-  aarch64-mingw-ucrt
   arm-linux-androideabi
   arm-linux-gnu
   arm-linux-gnueabihf
@@ -178,15 +169,13 @@ PLATFORMS
 
 DEPENDENCIES
   base64
-  classifier-reborn
   csv
   fastimage (~> 2.4)
   http_parser.rb (~> 0.6.0)
   jekyll (~> 4.4)
   jekyll-archives
   jekyll-paginate-v2
-  numo-linalg
-  numo-narray
+  jekyll-tagging-related_posts (~> 1.3)
   rake
   term-ansicolor
   tzinfo (>= 1, < 3)
@@ -194,7 +183,7 @@ DEPENDENCIES
   wdm (~> 0.1.1)
 
 RUBY VERSION
-   ruby 3.3.8p144
+   ruby 3.4.4p34
 
 BUNDLED WITH
-   2.5.22
+   2.6.7

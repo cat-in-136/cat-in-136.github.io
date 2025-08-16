@@ -18,12 +18,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install LAPACKE and OpenBLAS
-      run: sudo apt-get install liblapacke-dev libopenblas-dev -y
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.3
+        ruby-version: 3.4
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
     - name: Generate document

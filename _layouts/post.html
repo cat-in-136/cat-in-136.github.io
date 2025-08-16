@@ -51,6 +51,7 @@ layout: default
   </footer>
 </article>
 {%- if site.related_posts -%}
+{%- if site.related_posts.size >= 1 -%}
 <aside class="post-related">
   <h2>Related Posts</h2>
   <ul class="post-list">
@@ -59,4 +60,5 @@ layout: default
     {%- endfor -%}
   </ul>
 </aside>
+{%- endif -%}
 {%- endif -%}
