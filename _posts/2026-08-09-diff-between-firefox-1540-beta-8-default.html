@@ -1,0 +1,987 @@
+---
+layout: post
+title: Diff between Firefox 154.0 beta 8 default preference and Firefox 153.0.3
+author: cat_in_136
+tags:
+- pref diff
+- mozilla
+date: '2026-08-09T07:39:15+09:00'
+---
+<p>
+This article shows the difference between the default preferences of Firefox 154.0 beta 8 and Firefox 153.0.3.
+The diff table below is generated using my small script <a href="https://github.com/cat-in-136/firefox-prefjs-surveyer">firefox-prefjs-surveyer</a>.
+</p>
+
+<div>
+  <table class="diff_firefox154_pref_diff">
+    <caption>Preference difference</caption>
+    <thead>
+    <tr><td>Pref</td><td>Firefox 153.0.3</td><td>Firefox 154.0 beta 8</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>app.<wbr />releaseNotesURL</td>
+        <td class="uri">https://www.firefox.com/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=whatsnew</td>
+        <td class="uri">https://www.firefox.com/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=whatsnew</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />releaseNotesURL.<wbr />aboutDialog</td>
+        <td class="uri">https://www.firefox.com/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=about-dialog</td>
+        <td class="uri">https://www.firefox.com/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=about-dialog</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />channel</td>
+        <td>release</td>
+        <td>beta</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />url.<wbr />details</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/notes</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/beta/notes</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />url.<wbr />manual</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />aboutwelcome.<wbr />experimentsGate.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />bypassAutoTriggerActions</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />cache.<wbr />disk.<wbr />index.<wbr />max_<wbr />dump_<wbr />interval_<wbr />ms</td>
+        <td class="undefined">undefined</td>
+        <td>60000</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />compactmode.<wbr />auto.<wbr />threshold</td>
+        <td class="undefined">undefined</td>
+        <td>0.<wbr />05</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />contentanalysis.<wbr />use_<wbr />wasm_<wbr />backend</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />contentanalysis.<wbr />wasm_<wbr />module_<wbr />extension_<wbr />require_<wbr />signature</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />ipProtection.<wbr />fxa.<wbr />useActivateFlow</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />ml.<wbr />pageExtractor.<wbr />headlessTimeoutMs</td>
+        <td class="undefined">undefined</td>
+        <td>15000</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />discoverystream.<wbr />sections.<wbr />contextualAds.<wbr />region-config</td>
+        <td></td>
+        <td>US</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />feeds.<wbr />pictureofthedayfeed</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />feeds.<wbr />privacyfeed</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />feeds.<wbr />stocksfeed</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />feeds.<wbr />webnotificationsfeed</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />privacyInfo.<wbr />url</td>
+        <td class="uri">https://support.mozilla.org/1/firefox/153.0.3/Linux/en-US/sponsor-privacy</td>
+        <td class="uri">https://support.mozilla.org/1/firefox/154.0/Linux/en-US/sponsor-privacy</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />sectionsLearnMore.<wbr />url</td>
+        <td class="uri">https://support.mozilla.org/1/firefox/153.0.3/Linux/en-US/firefox-new-tab-personalization</td>
+        <td class="uri">https://support.mozilla.org/1/firefox/154.0/Linux/en-US/firefox-new-tab-personalization</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />support.<wbr />url</td>
+        <td class="uri">https://support.mozilla.org/1/firefox/153.0.3/Linux/en-US/new-tab</td>
+        <td class="uri">https://support.mozilla.org/1/firefox/154.0/Linux/en-US/new-tab</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />telemetry.<wbr />ut.<wbr />events</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />topSitesGroupedPins</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />unifiedAds.<wbr />adsClient.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />weather.<wbr />hourlyEndpoint</td>
+        <td class="uri">https://merino.services.mozilla.com/api/v1/weather/hourly-forecasts</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />weather.<wbr />reportEndpoint</td>
+        <td class="uri">https://merino.services.mozilla.com/api/v1/suggest</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />crossword.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />crossword.<wbr />endpoint</td>
+        <td class="undefined">undefined</td>
+        <td class="uri">https://prod-games-particle.merino.prod.webservices.mozgcp.net/index.html</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />crossword.<wbr />interaction</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />crossword.<wbr />size</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />maximized</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />pictureOfTheDay.<wbr />dismissedDate</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />pictureOfTheDay.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />pictureOfTheDay.<wbr />endpoint</td>
+        <td class="undefined">undefined</td>
+        <td class="uri">https://merino.services.mozilla.com/api/v1/rss/picture-of-the-day</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />pictureOfTheDay.<wbr />interaction</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />pictureOfTheDay.<wbr />setAsWallpaper.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />pictureOfTheDay.<wbr />size</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />pictureOfTheDay.<wbr />wallpaperActive</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />privacy.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />privacy.<wbr />maxCount</td>
+        <td class="undefined">undefined</td>
+        <td>100</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />privacy.<wbr />size</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />stocks.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />stocks.<wbr />size</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />system.<wbr />crossword.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />system.<wbr />maximized</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />system.<wbr />pictureOfTheDay.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />system.<wbr />privacy.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />system.<wbr />stocks.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />preonboarding.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />referrals.<wbr />code</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />referrals.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />shell.<wbr />shortcut.<wbr />test</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />smartwindow.<wbr />autoTabGrouping.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />smartwindow.<wbr />autoTabGrouping.<wbr />loglevel</td>
+        <td class="undefined">undefined</td>
+        <td>Warn</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />smartwindow.<wbr />autoTabGrouping.<wbr />maxGroups</td>
+        <td class="undefined">undefined</td>
+        <td>3</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />smartwindow.<wbr />autoTabGrouping.<wbr />minCandidateTabs</td>
+        <td class="undefined">undefined</td>
+        <td>4</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />smartwindow.<wbr />autoTabGrouping.<wbr />minCohesion</td>
+        <td class="undefined">undefined</td>
+        <td>0.<wbr />1</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />smartwindow.<wbr />autoTabGrouping.<wbr />minTabsPerGroup</td>
+        <td class="undefined">undefined</td>
+        <td>2</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />smartwindow.<wbr />autoTabGrouping.<wbr />timeoutMs</td>
+        <td class="undefined">undefined</td>
+        <td>8000</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />smartwindow.<wbr />mistralRelease</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />tabs.<wbr />contextmenu.<wbr />altstructure.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />tabs.<wbr />selectMRUOnClose</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />urlbar.<wbr />ipc.<wbr />chromeMessagePassing</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>clipboard.<wbr />readCustomFormatsFromClipboard.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>devtools.<wbr />browserconsole.<wbr />filter.<wbr />chrome</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>devtools.<wbr />browserconsole.<wbr />filter.<wbr />content</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>devtools.<wbr />netmonitor.<wbr />bodyLimit</td>
+        <td class="undefined">undefined</td>
+        <td>1048576</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>devtools.<wbr />netmonitor.<wbr />requestBodyLimit</td>
+        <td>1048576</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>devtools.<wbr />netmonitor.<wbr />responseBodyLimit</td>
+        <td>1048576</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>devtools.<wbr />performance.<wbr />recording.<wbr />duration.<wbr />aboutlogging</td>
+        <td class="undefined">undefined</td>
+        <td>0</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>devtools.<wbr />performance.<wbr />recording.<wbr />entries.<wbr />aboutlogging</td>
+        <td class="undefined">undefined</td>
+        <td>10000000</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>devtools.<wbr />performance.<wbr />recording.<wbr />features.<wbr />aboutlogging</td>
+        <td class="undefined">undefined</td>
+        <td class="json">[&quot;js&quot;,&quot;stackwalk&quot;,&quot;cpu&quot;,&quot;screenshots&quot;,&quot;memory&quot;]</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>devtools.<wbr />performance.<wbr />recording.<wbr />interval.<wbr />aboutlogging</td>
+        <td class="undefined">undefined</td>
+        <td>1000</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>devtools.<wbr />performance.<wbr />recording.<wbr />preset.<wbr />aboutlogging</td>
+        <td class="undefined">undefined</td>
+        <td>web-developer</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>devtools.<wbr />performance.<wbr />recording.<wbr />threads.<wbr />aboutlogging</td>
+        <td class="undefined">undefined</td>
+        <td class="json">[&quot;GeckoMain&quot;,&quot;Compositor&quot;,&quot;Renderer&quot;]</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>devtools.<wbr />webconsole.<wbr />filter.<wbr />chrome</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>devtools.<wbr />webconsole.<wbr />filter.<wbr />content</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />audio_<wbr />session.<wbr />block_<wbr />start_<wbr />during_<wbr />interrupt.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />clipboard.<wbr />customFormatSupport.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>dom.<wbr />details_<wbr />group.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>dom.<wbr />document.<wbr />name_<wbr />getter_<wbr />follow_<wbr />spec.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />document_<wbr />language_<wbr />metadata.<wbr />load_<wbr />timeout_<wbr />ms</td>
+        <td class="undefined">undefined</td>
+        <td>4000</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />document_<wbr />language_<wbr />metadata.<wbr />max_<wbr />retries</td>
+        <td class="undefined">undefined</td>
+        <td>3</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />document_<wbr />language_<wbr />metadata.<wbr />retry_<wbr />delay_<wbr />base_<wbr />ms</td>
+        <td class="undefined">undefined</td>
+        <td>500</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />editcontext.<wbr />allow_<wbr />canvas</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />event.<wbr />keypress.<wbr />key.<wbr />allow_<wbr />lone_<wbr />surrogate</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />forms.<wbr />datetime.<wbr />timepicker</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />forms.<wbr />submit_<wbr />async_<wbr />navigation</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />jsipc.<wbr />check_<wbr />safeForUntrustedWebProcess</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />quotaManager.<wbr />maxOriginsToSaveInOneBatch</td>
+        <td class="undefined">undefined</td>
+        <td>25</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />quotaManager.<wbr />originMetadataFlushCheckIntervalMs</td>
+        <td class="undefined">undefined</td>
+        <td>120000</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />quotaManager.<wbr />originWriteQuiescentThresholdMs</td>
+        <td class="undefined">undefined</td>
+        <td>300000</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>dom.<wbr />serializer.<wbr />includeCommonAncestor.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />speculation_<wbr />rules.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />worker.<wbr />remoteDebugger.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />formautofill.<wbr />addresses.<wbr />supported</td>
+        <td>detect</td>
+        <td>on</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />formautofill.<wbr />useml</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />webcompat-reporter.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>general.<wbr />autoscroll.<wbr />speed_<wbr />multiplier</td>
+        <td class="undefined">undefined</td>
+        <td>100</td>
+      </tr>
+
+      <tr>
+        <td>gfx.<wbr />webrender.<wbr />compositor</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>gfx.<wbr />webrender.<wbr />enable-angle</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>gl.<wbr />allow-high-power</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>identity.<wbr />fxaccounts.<wbr />auth.<wbr />useBearer</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>javascript.<wbr />options.<wbr />asmjs</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>javascript.<wbr />options.<wbr />experimental.<wbr />iterator_<wbr />chunking</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>javascript.<wbr />options.<wbr />experimental.<wbr />iterator_<wbr />includes</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>javascript.<wbr />options.<wbr />experimental.<wbr />iterator_<wbr />join</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>javascript.<wbr />options.<wbr />throw_<wbr />on_<wbr />asmjs_<wbr />validation_<wbr />failure</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>javascript.<wbr />options.<wbr />warn_<wbr />asmjs_<wbr />deprecation</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>layout.<wbr />css.<wbr />alpha-color-function.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />anchor-positioning.<wbr />position-try-order.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>layout.<wbr />css.<wbr />line-clamp.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>layout.<wbr />css.<wbr />margin-trim.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>layout.<wbr />css.<wbr />progress-function.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>layout.<wbr />css.<wbr />text-box.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>layout.<wbr />css.<wbr />text-decoration-inset-percentage.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>layout.<wbr />css.<wbr />tree-counting-functions.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>layout.<wbr />css.<wbr />typed-om-color.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>media.<wbr />audio.<wbr />reuse-stream-on-seek</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>media.<wbr />geckoview.<wbr />audio_<wbr />session_<wbr />type.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>media.<wbr />seek-resume.<wbr />audio-preroll-usecs</td>
+        <td class="undefined">undefined</td>
+        <td>100000</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>media.<wbr />seek-resume.<wbr />video-preroll-frames-hw</td>
+        <td class="undefined">undefined</td>
+        <td>1</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>media.<wbr />seek-resume.<wbr />video-preroll-frames-sw</td>
+        <td class="undefined">undefined</td>
+        <td>3</td>
+      </tr>
+
+      <tr>
+        <td>media.<wbr />webrtc.<wbr />hw.<wbr />h264.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />cache.<wbr />entry_<wbr />wait_<wbr />timeout_<wbr />ms</td>
+        <td class="undefined">undefined</td>
+        <td>20000</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />cache.<wbr />no_<wbr />vary_<wbr />search</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />dns.<wbr />refresh_<wbr />negative_<wbr />addr_<wbr />on_<wbr />use</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />http.<wbr />decode_<wbr />content_<wbr />for_<wbr />known_<wbr />compressed_<wbr />extensions</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />http.<wbr />happy_<wbr />eyeballs_<wbr />connection_<wbr />attempt_<wbr />delay</td>
+        <td>250</td>
+        <td>50</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />http.<wbr />happy_<wbr />eyeballs_<wbr />connection_<wbr />attempt_<wbr />delay_<wbr />multiplier</td>
+        <td class="undefined">undefined</td>
+        <td>2</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />http.<wbr />happy_<wbr />eyeballs_<wbr />resolution_<wbr />delay</td>
+        <td>50</td>
+        <td>25</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />http.<wbr />happy_<wbr />eyeballs_<wbr />retry_<wbr />without_<wbr />trr</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />http.<wbr />happy_<wbr />eyeballs_<wbr />upgrade_<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />lna.<wbr />websocket.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />mimesniff.<wbr />sniff_<wbr />misconfigured_<wbr />types</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />sslkeylog_<wbr />warning</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>pdfjs.<wbr />enableSelectionRendering</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>pdfjs.<wbr />enableSignatureVerification</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>permissions.<wbr />desktop-notification.<wbr />notNow.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>permissions.<wbr />desktop-notification.<wbr />telemetry.<wbr />siteCategories</td>
+        <td class="json">{&quot;facebook.com&quot;:&quot;social&quot;,&quot;instagram.com&quot;:&quot;social&quot;,&quot;twitter.com&quot;:&quot;social&quot;,&quot;x.com&quot;:&quot;social&quot;,&quot;tiktok.com&quot;:&quot;social&quot;,&quot;linkedin.com&quot;:&quot;social&quot;,&quot;reddit.com&quot;:&quot;social&quot;,&quot;pinterest.com&quot;:&quot;social&quot;,&quot;snapchat.com&quot;:&quot;social&quot;,&quot;tumblr.com&quot;:&quot;social&quot;,&quot;slack.com&quot;:&quot;chat_communication&quot;,&quot;discord.com&quot;:&quot;chat_communication&quot;,&quot;teams.microsoft.com&quot;:&quot;chat_communication&quot;,&quot;zoom.us&quot;:&quot;chat_communication&quot;,&quot;whatsapp.com&quot;:&quot;chat_communication&quot;,&quot;telegram.org&quot;:&quot;chat_communication&quot;,&quot;messenger.com&quot;:&quot;chat_communication&quot;,&quot;skype.com&quot;:&quot;chat_communication&quot;,&quot;signal.org&quot;:&quot;chat_communication&quot;,&quot;viber.com&quot;:&quot;chat_communication&quot;,&quot;mail.google.com&quot;:&quot;email&quot;,&quot;gmail.com&quot;:&quot;email&quot;,&quot;outlook.com&quot;:&quot;email&quot;,&quot;outlook.live.com&quot;:&quot;email&quot;,&quot;mail.yahoo.com&quot;:&quot;email&quot;,&quot;yahoo.com&quot;:&quot;email&quot;,&quot;protonmail.com&quot;:&quot;email&quot;,&quot;aol.com&quot;:&quot;email&quot;,&quot;icloud.com&quot;:&quot;email&quot;,&quot;zoho.com&quot;:&quot;email&quot;,&quot;youtube.com&quot;:&quot;media_streaming&quot;,&quot;netflix.com&quot;:&quot;media_streaming&quot;,&quot;twitch.tv&quot;:&quot;media_streaming&quot;,&quot;hulu.com&quot;:&quot;media_streaming&quot;,&quot;disneyplus.com&quot;:&quot;media_streaming&quot;,&quot;hbomax.com&quot;:&quot;media_streaming&quot;,&quot;primevideo.com&quot;:&quot;media_streaming&quot;,&quot;crunchyroll.com&quot;:&quot;media_streaming&quot;,&quot;paramountplus.com&quot;:&quot;media_streaming&quot;,&quot;spotify.com&quot;:&quot;media_streaming&quot;,&quot;soundcloud.com&quot;:&quot;media_streaming&quot;,&quot;pandora.com&quot;:&quot;media_streaming&quot;,&quot;tv.apple.com&quot;:&quot;media_streaming&quot;,&quot;steampowered.com&quot;:&quot;gaming&quot;,&quot;steamcommunity.com&quot;:&quot;gaming&quot;,&quot;store.epicgames.com&quot;:&quot;gaming&quot;,&quot;roblox.com&quot;:&quot;gaming&quot;,&quot;playstation.com&quot;:&quot;gaming&quot;,&quot;xbox.com&quot;:&quot;gaming&quot;,&quot;nintendo.com&quot;:&quot;gaming&quot;,&quot;battle.net&quot;:&quot;gaming&quot;,&quot;itch.io&quot;:&quot;gaming&quot;,&quot;chess.com&quot;:&quot;gaming&quot;,&quot;calendar.google.com&quot;:&quot;calendar&quot;,&quot;outlook.live.com&quot;:&quot;calendar&quot;,&quot;calendar.yahoo.com&quot;:&quot;calendar&quot;,&quot;calendar.com&quot;:&quot;calendar&quot;,&quot;drive.google.com&quot;:&quot;productivity_collaboration&quot;,&quot;docs.google.com&quot;:&quot;productivity_collaboration&quot;,&quot;sheets.google.com&quot;:&quot;productivity_collaboration&quot;,&quot;office.com&quot;:&quot;productivity_collaboration&quot;,&quot;onedrive.live.com&quot;:&quot;productivity_collaboration&quot;,&quot;dropbox.com&quot;:&quot;productivity_collaboration&quot;,&quot;box.com&quot;:&quot;productivity_collaboration&quot;,&quot;notion.so&quot;:&quot;productivity_collaboration&quot;,&quot;trello.com&quot;:&quot;productivity_collaboration&quot;,&quot;asana.com&quot;:&quot;productivity_collaboration&quot;,&quot;monday.com&quot;:&quot;productivity_collaboration&quot;,&quot;atlassian.com&quot;:&quot;productivity_collaboration&quot;,&quot;gitlab.com&quot;:&quot;productivity_collaboration&quot;,&quot;bitbucket.org&quot;:&quot;productivity_collaboration&quot;,&quot;miro.com&quot;:&quot;productivity_collaboration&quot;,&quot;figma.com&quot;:&quot;productivity_collaboration&quot;,&quot;cnn.com&quot;:&quot;news_publishers&quot;,&quot;nytimes.com&quot;:&quot;news_publishers&quot;,&quot;bbc.com&quot;:&quot;news_publishers&quot;,&quot;theguardian.com&quot;:&quot;news_publishers&quot;,&quot;washingtonpost.com&quot;:&quot;news_publishers&quot;,&quot;foxnews.com&quot;:&quot;news_publishers&quot;,&quot;reuters.com&quot;:&quot;news_publishers&quot;,&quot;apnews.com&quot;:&quot;news_publishers&quot;,&quot;bloomberg.com&quot;:&quot;news_publishers&quot;,&quot;wsj.com&quot;:&quot;news_publishers&quot;,&quot;usatoday.com&quot;:&quot;news_publishers&quot;,&quot;nbcnews.com&quot;:&quot;news_publishers&quot;,&quot;abcnews.go.com&quot;:&quot;news_publishers&quot;,&quot;cbsnews.com&quot;:&quot;news_publishers&quot;,&quot;npr.org&quot;:&quot;news_publishers&quot;,&quot;time.com&quot;:&quot;news_publishers&quot;,&quot;newsweek.com&quot;:&quot;news_publishers&quot;,&quot;politico.com&quot;:&quot;news_publishers&quot;,&quot;huffpost.com&quot;:&quot;news_publishers&quot;,&quot;buzzfeednews.com&quot;:&quot;news_publishers&quot;}</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>places.<wbr />semanticHistory.<wbr />smartwindow.<wbr />distanceThreshold</td>
+        <td class="undefined">undefined</td>
+        <td>0.<wbr />6</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>privacy.<wbr />trackingprotection.<wbr />content.<wbr />mirror.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>privacy.<wbr />trackingprotection.<wbr />urlclassifier.<wbr />disable_<wbr />for_<wbr />channel_<wbr />classifier</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>security.<wbr />csp.<wbr />truncate_<wbr />blocked_<wbr />uri_<wbr />for_<wbr />frame_<wbr />navigations</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>security.<wbr />ssl3.<wbr />ecdhe_<wbr />ecdsa_<wbr />aes_<wbr />256_<wbr />sha</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>security.<wbr />tls.<wbr />enable_<wbr />mlkem1024</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>sidebar.<wbr />openTabsPanel.<wbr />collapsedWindows</td>
+        <td class="undefined">undefined</td>
+        <td class="json">{}</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>signon.<wbr />rustMirror.<wbr />collectFailedOrigins</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>signon.<wbr />rustMirror.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>signon.<wbr />storage.<wbr />rust.<wbr />active</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>signon.<wbr />storage.<wbr />rust.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>signon.<wbr />storage.<wbr />rust.<wbr />migrationAttempts</td>
+        <td class="undefined">undefined</td>
+        <td>0</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>telemetry.<wbr />fog.<wbr />enable_<wbr />fog_<wbr />transport</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>toolkit.<wbr />telemetry.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>toolkit.<wbr />telemetry.<wbr />site_<wbr />categories</td>
+        <td class="undefined">undefined</td>
+        <td class="json">{&quot;facebook.com&quot;:&quot;social&quot;,&quot;instagram.com&quot;:&quot;social&quot;,&quot;twitter.com&quot;:&quot;social&quot;,&quot;x.com&quot;:&quot;social&quot;,&quot;tiktok.com&quot;:&quot;social&quot;,&quot;linkedin.com&quot;:&quot;social&quot;,&quot;reddit.com&quot;:&quot;social&quot;,&quot;pinterest.com&quot;:&quot;social&quot;,&quot;snapchat.com&quot;:&quot;social&quot;,&quot;tumblr.com&quot;:&quot;social&quot;,&quot;slack.com&quot;:&quot;chat_communication&quot;,&quot;discord.com&quot;:&quot;chat_communication&quot;,&quot;teams.microsoft.com&quot;:&quot;chat_communication&quot;,&quot;zoom.us&quot;:&quot;chat_communication&quot;,&quot;whatsapp.com&quot;:&quot;chat_communication&quot;,&quot;telegram.org&quot;:&quot;chat_communication&quot;,&quot;messenger.com&quot;:&quot;chat_communication&quot;,&quot;skype.com&quot;:&quot;chat_communication&quot;,&quot;signal.org&quot;:&quot;chat_communication&quot;,&quot;viber.com&quot;:&quot;chat_communication&quot;,&quot;mail.google.com&quot;:&quot;email&quot;,&quot;gmail.com&quot;:&quot;email&quot;,&quot;outlook.com&quot;:&quot;email&quot;,&quot;outlook.live.com&quot;:&quot;email&quot;,&quot;mail.yahoo.com&quot;:&quot;email&quot;,&quot;yahoo.com&quot;:&quot;email&quot;,&quot;protonmail.com&quot;:&quot;email&quot;,&quot;aol.com&quot;:&quot;email&quot;,&quot;icloud.com&quot;:&quot;email&quot;,&quot;zoho.com&quot;:&quot;email&quot;,&quot;youtube.com&quot;:&quot;media_streaming&quot;,&quot;netflix.com&quot;:&quot;media_streaming&quot;,&quot;twitch.tv&quot;:&quot;media_streaming&quot;,&quot;hulu.com&quot;:&quot;media_streaming&quot;,&quot;disneyplus.com&quot;:&quot;media_streaming&quot;,&quot;hbomax.com&quot;:&quot;media_streaming&quot;,&quot;primevideo.com&quot;:&quot;media_streaming&quot;,&quot;crunchyroll.com&quot;:&quot;media_streaming&quot;,&quot;paramountplus.com&quot;:&quot;media_streaming&quot;,&quot;spotify.com&quot;:&quot;media_streaming&quot;,&quot;soundcloud.com&quot;:&quot;media_streaming&quot;,&quot;pandora.com&quot;:&quot;media_streaming&quot;,&quot;tv.apple.com&quot;:&quot;media_streaming&quot;,&quot;steampowered.com&quot;:&quot;gaming&quot;,&quot;steamcommunity.com&quot;:&quot;gaming&quot;,&quot;store.epicgames.com&quot;:&quot;gaming&quot;,&quot;roblox.com&quot;:&quot;gaming&quot;,&quot;playstation.com&quot;:&quot;gaming&quot;,&quot;xbox.com&quot;:&quot;gaming&quot;,&quot;nintendo.com&quot;:&quot;gaming&quot;,&quot;battle.net&quot;:&quot;gaming&quot;,&quot;itch.io&quot;:&quot;gaming&quot;,&quot;chess.com&quot;:&quot;gaming&quot;,&quot;calendar.google.com&quot;:&quot;calendar&quot;,&quot;outlook.live.com&quot;:&quot;calendar&quot;,&quot;calendar.yahoo.com&quot;:&quot;calendar&quot;,&quot;calendar.com&quot;:&quot;calendar&quot;,&quot;drive.google.com&quot;:&quot;productivity_collaboration&quot;,&quot;docs.google.com&quot;:&quot;productivity_collaboration&quot;,&quot;sheets.google.com&quot;:&quot;productivity_collaboration&quot;,&quot;office.com&quot;:&quot;productivity_collaboration&quot;,&quot;onedrive.live.com&quot;:&quot;productivity_collaboration&quot;,&quot;dropbox.com&quot;:&quot;productivity_collaboration&quot;,&quot;box.com&quot;:&quot;productivity_collaboration&quot;,&quot;notion.so&quot;:&quot;productivity_collaboration&quot;,&quot;trello.com&quot;:&quot;productivity_collaboration&quot;,&quot;asana.com&quot;:&quot;productivity_collaboration&quot;,&quot;monday.com&quot;:&quot;productivity_collaboration&quot;,&quot;atlassian.com&quot;:&quot;productivity_collaboration&quot;,&quot;gitlab.com&quot;:&quot;productivity_collaboration&quot;,&quot;bitbucket.org&quot;:&quot;productivity_collaboration&quot;,&quot;miro.com&quot;:&quot;productivity_collaboration&quot;,&quot;figma.com&quot;:&quot;productivity_collaboration&quot;,&quot;cnn.com&quot;:&quot;news_publishers&quot;,&quot;nytimes.com&quot;:&quot;news_publishers&quot;,&quot;bbc.com&quot;:&quot;news_publishers&quot;,&quot;theguardian.com&quot;:&quot;news_publishers&quot;,&quot;washingtonpost.com&quot;:&quot;news_publishers&quot;,&quot;foxnews.com&quot;:&quot;news_publishers&quot;,&quot;reuters.com&quot;:&quot;news_publishers&quot;,&quot;apnews.com&quot;:&quot;news_publishers&quot;,&quot;bloomberg.com&quot;:&quot;news_publishers&quot;,&quot;wsj.com&quot;:&quot;news_publishers&quot;,&quot;usatoday.com&quot;:&quot;news_publishers&quot;,&quot;nbcnews.com&quot;:&quot;news_publishers&quot;,&quot;abcnews.go.com&quot;:&quot;news_publishers&quot;,&quot;cbsnews.com&quot;:&quot;news_publishers&quot;,&quot;npr.org&quot;:&quot;news_publishers&quot;,&quot;time.com&quot;:&quot;news_publishers&quot;,&quot;newsweek.com&quot;:&quot;news_publishers&quot;,&quot;politico.com&quot;:&quot;news_publishers&quot;,&quot;huffpost.com&quot;:&quot;news_publishers&quot;,&quot;buzzfeednews.com&quot;:&quot;news_publishers&quot;}</td>
+      </tr>
+
+      <tr>
+        <td>webgl.<wbr />disable-angle</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>widget.<wbr />gtk.<wbr />x11-key-repeat-throttle.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>widget.<wbr />wayland.<wbr />session-management.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+<style type="text/css"><!-- /* --><![CDATA[ /* */
+table.diff_firefox154_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
+table.diff_firefox154_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
+table.diff_firefox154_pref_diff thead td { background-color: #ddd; font-weight: bold; }
+table.diff_firefox154_pref_diff td.json,
+table.diff_firefox154_pref_diff td.uri,
+table.diff_firefox154_pref_diff td.dump { word-break: break-all; }
+table.diff_firefox154_pref_diff td.undefined { color: #888; font-style: italic; }
+table.diff_firefox154_pref_diff tr.sameval td:first-child { color: #444; }
+table.diff_firefox154_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
+table.diff_firefox154_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
+table.diff_firefox154_pref_diff tbody tr:hover { background-color: #eee; }
+table.diff_firefox154_pref_diff tbody tr { transition: background 0.125s ease-in-out 0s; }
+/* ]]><!-- */ --></style>
