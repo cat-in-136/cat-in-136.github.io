@@ -1,0 +1,1318 @@
+---
+layout: post
+title: Diff between Firefox 159.0 beta 3 default preference and Firefox 158.0
+author: cat_in_136
+tags:
+- pref diff
+- mozilla
+date: '2026-10-18T01:26:37+09:00'
+---
+<p>
+This article shows the difference between the default preferences of Firefox 159.0 beta 3 and Firefox 158.0.
+The diff table below is generated using my small script <a href="https://github.com/cat-in-136/firefox-prefjs-surveyer">firefox-prefjs-surveyer</a>.
+</p>
+
+<div>
+  <table class="diff_firefox159_pref_diff">
+    <caption>Preference difference</caption>
+    <thead>
+    <tr><td>Pref</td><td>Firefox 158.0</td><td>Firefox 159.0 beta 3</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>app.<wbr />normandy.<wbr />api_<wbr />url</td>
+        <td class="uri">https://normandy.cdn.mozilla.net/api/v1</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />releaseNotesURL</td>
+        <td class="uri">https://www.firefox.com/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=whatsnew</td>
+        <td class="uri">https://www.firefox.com/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=whatsnew</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />releaseNotesURL.<wbr />aboutDialog</td>
+        <td class="uri">https://www.firefox.com/%LOCALE%/firefox/%VERSION%/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=about-dialog</td>
+        <td class="uri">https://www.firefox.com/%LOCALE%/firefox/%VERSION%beta/releasenotes/?utm_source=firefox-browser&amp;utm_medium=firefox-desktop&amp;utm_campaign=about-dialog</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />channel</td>
+        <td>release</td>
+        <td>beta</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>app.<wbr />update.<wbr />disabledForTesting</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />url.<wbr />details</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/notes</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/beta/notes</td>
+      </tr>
+
+      <tr>
+        <td>app.<wbr />update.<wbr />url.<wbr />manual</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/new?reason=manual-update</td>
+        <td class="uri">https://www.mozilla.org/%LOCALE%/firefox/beta?reason=manual-update</td>
+      </tr>
+
+      <tr>
+        <td>apz.<wbr />axis_<wbr />lock.<wbr />mode</td>
+        <td>2</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>apz.<wbr />content_<wbr />response_<wbr />timeout</td>
+        <td>400</td>
+        <td>60000</td>
+      </tr>
+
+      <tr>
+        <td>apz.<wbr />touch_<wbr />move_<wbr />tolerance</td>
+        <td>0.<wbr />1</td>
+        <td>0.<wbr />0</td>
+      </tr>
+
+      <tr>
+        <td>apz.<wbr />touch_<wbr />start_<wbr />tolerance</td>
+        <td>0.<wbr />1</td>
+        <td>0.<wbr />0</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />backup.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />contentblocking.<wbr />introCount</td>
+        <td class="undefined">undefined</td>
+        <td>99</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />discovery.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />dom.<wbr />window.<wbr />dump.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />download.<wbr />alwaysOpenPanel</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />download.<wbr />panel.<wbr />shown</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />http.<wbr />blank_<wbr />page_<wbr />with_<wbr />error_<wbr />response.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />load-xul-position.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />mini-window.<wbr />toolbar.<wbr />edge-zone-px</td>
+        <td class="undefined">undefined</td>
+        <td>12</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />mini-window.<wbr />toolbar.<wbr />hide-delay-ms</td>
+        <td class="undefined">undefined</td>
+        <td>2000</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />mini-window.<wbr />toolbar.<wbr />hover-reveal-delay-ms</td>
+        <td class="undefined">undefined</td>
+        <td>50</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />ml.<wbr />enable</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />ml.<wbr />hwinference.<wbr />browser_<wbr />idle_<wbr />shutdown_<wbr />grace_<wbr />ms</td>
+        <td class="undefined">undefined</td>
+        <td>120000</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />ml.<wbr />llama.<wbr />hwInference</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />asrouter.<wbr />userprefs.<wbr />cfr.<wbr />features</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />discoverystream.<wbr />optIn-region-weather-config</td>
+        <td>DE,<wbr />GB,<wbr />FR,<wbr />ES,<wbr />IT,<wbr />CH,<wbr />AT,<wbr />BE,<wbr />IE,<wbr />NL,<wbr />PL,<wbr />CZ,<wbr />SE,<wbr />SG,<wbr />HU,<wbr />SK,<wbr />FI,<wbr />DK,<wbr />NO,<wbr />PT</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />discoverystream.<wbr />rec.<wbr />impressions</td>
+        <td class="json">{}</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />feeds.<wbr />sportsfeed</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />hideTopSitesTitle</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />pageLayouts.<wbr />spacesOrder</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />pageLayouts.<wbr />widgetFirstContentSlot.<wbr />widget</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />privacyInfo.<wbr />url</td>
+        <td class="uri">https://support.mozilla.org/1/firefox/158.0/Linux/en-US/sponsor-privacy</td>
+        <td class="uri">https://support.mozilla.org/1/firefox/159.0/Linux/en-US/sponsor-privacy</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />sectionsLearnMore.<wbr />url</td>
+        <td class="uri">https://support.mozilla.org/1/firefox/158.0/Linux/en-US/firefox-new-tab-personalization</td>
+        <td class="uri">https://support.mozilla.org/1/firefox/159.0/Linux/en-US/firefox-new-tab-personalization</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />showSponsoredTopSites</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />sports.<wbr />worldCup.<wbr />liveEndpoint</td>
+        <td class="uri">https://merino.services.mozilla.com/api/v1/wcs/live</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />sports.<wbr />worldCup.<wbr />matchesEndpoint</td>
+        <td class="uri">https://merino.services.mozilla.com/api/v1/wcs/matches</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />sports.<wbr />worldCup.<wbr />teamsEndpoint</td>
+        <td class="uri">https://merino.services.mozilla.com/api/v1/wcs/teams</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />sports.<wbr />worldCup.<wbr />watchLiveEndpoint</td>
+        <td class="uri">https://merino.services.mozilla.com/api/v1/wcs/watch-links</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />support.<wbr />url</td>
+        <td class="uri">https://support.mozilla.org/1/firefox/158.0/Linux/en-US/new-tab</td>
+        <td class="uri">https://support.mozilla.org/1/firefox/159.0/Linux/en-US/new-tab</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />telemetry.<wbr />structuredIngestion.<wbr />endpoint</td>
+        <td class="uri">https://incoming.telemetry.mozilla.org/submit</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />testing.<wbr />shouldInitializeFeeds</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />topSitesGroupedPins</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />clocks.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />clocks.<wbr />region-block</td>
+        <td class="undefined">undefined</td>
+        <td>DE,<wbr />FR,<wbr />PL,<wbr />US</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />crossword.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />focusTimer.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />focusTimer.<wbr />region-block</td>
+        <td class="undefined">undefined</td>
+        <td>DE,<wbr />FR,<wbr />PL,<wbr />US</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />lists.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />lists.<wbr />region-block</td>
+        <td class="undefined">undefined</td>
+        <td>DE,<wbr />FR,<wbr />PL,<wbr />US</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />marketGate.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />marketGate.<wbr />enforceOnNightly</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />pictureOfTheDay.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />pictureOfTheDay.<wbr />region-block</td>
+        <td class="undefined">undefined</td>
+        <td>DE,<wbr />FR,<wbr />PL,<wbr />US</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />privacy.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />recentSearches.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />sports.<wbr />forceLiveDataTrustable</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />sportsWidget.<wbr />celebrations.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />sportsWidget.<wbr />celebrations.<wbr />windowMs</td>
+        <td>86400000</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />sportsWidget.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />sportsWidget.<wbr />interaction</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />sportsWidget.<wbr />live.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />sportsWidget.<wbr />pollIdleMs</td>
+        <td>21600000</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />sportsWidget.<wbr />pollLiveMs</td>
+        <td>180000</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />sportsWidget.<wbr />pollMatchDayMs</td>
+        <td>1800000</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />sportsWidget.<wbr />pollPregameLeadMs</td>
+        <td>600000</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />sportsWidget.<wbr />size</td>
+        <td></td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />stocks.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />system.<wbr />clocks.<wbr />region-block</td>
+        <td class="undefined">undefined</td>
+        <td>PL</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />system.<wbr />crossword.<wbr />locale-config</td>
+        <td class="undefined">undefined</td>
+        <td>en-CA,<wbr />en-GB,<wbr />en-US</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />system.<wbr />crossword.<wbr />region-block</td>
+        <td class="undefined">undefined</td>
+        <td>PL</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />system.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />system.<wbr />focusTimer.<wbr />region-block</td>
+        <td class="undefined">undefined</td>
+        <td>PL</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />system.<wbr />lists.<wbr />region-block</td>
+        <td class="undefined">undefined</td>
+        <td>PL</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />system.<wbr />pictureOfTheDay.<wbr />region-block</td>
+        <td class="undefined">undefined</td>
+        <td>PL</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />system.<wbr />region-block</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />newtabpage.<wbr />activity-stream.<wbr />widgets.<wbr />system.<wbr />sportsWidget.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />pagethumbnails.<wbr />capturing_<wbr />disabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />preonboarding.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />region.<wbr />network.<wbr />url</td>
+        <td class="uri">https://location.services.mozilla.com/v1/country?key=%MOZILLA_API_KEY%</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />safebrowsing.<wbr />blockedURIs.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />safebrowsing.<wbr />downloads.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />safebrowsing.<wbr />malware.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />safebrowsing.<wbr />phishing.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />search.<wbr />update</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />sessionstore.<wbr />resume_<wbr />from_<wbr />crash</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />shell.<wbr />checkDefaultBrowser</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>browser.<wbr />smartwindow.<wbr />aitab.<wbr />viewerURL</td>
+        <td></td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />smartwindow.<wbr />resume<wbr />Activity.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />smartwindow.<wbr />search<wbr />The<wbr />Web<wbr />Answers</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />startup.<wbr />couldRestoreSession.<wbr />count</td>
+        <td>0</td>
+        <td>-1</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />startup.<wbr />homepage_<wbr />override.<wbr />mstone</td>
+        <td class="undefined">undefined</td>
+        <td>ignore</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />tabs.<wbr />remote.<wbr />unloadDelayMs</td>
+        <td class="undefined">undefined</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />tabs.<wbr />warnOnCloseOtherTabs</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />tabs.<wbr />warnOnOpen</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />toolbars.<wbr />bookmarks.<wbr />visibility</td>
+        <td>newtab</td>
+        <td>never</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />topsites.<wbr />contile.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />translations.<wbr />enable</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />urlbar.<wbr />mentions.<wbr />maxGroupResults</td>
+        <td class="undefined">undefined</td>
+        <td>5</td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />urlbar.<wbr />merino.<wbr />endpointURL</td>
+        <td class="uri">https://merino.services.mozilla.com/api/v1/suggest</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />urlbar.<wbr />merino.<wbr />ohttp<wbr />ConfigURL</td>
+        <td class="uri">https://ohttp-gateway-merino.services.mozilla.com/ohttp-configs</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />urlbar.<wbr />merino.<wbr />ohttp<wbr />RelayURL</td>
+        <td class="uri">https://ohttp-merino.mozilla.fastly-edge.com</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />urlbar.<wbr />suggest.<wbr />searches</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>browser.<wbr />usedOnWindows10.<wbr />introURL</td>
+        <td class="undefined">undefined</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>browser.<wbr />warnOnQuit</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>content.<wbr />notify.<wbr />backoffcount</td>
+        <td>-1</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>content.<wbr />notify.<wbr />interval</td>
+        <td>120000</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>content.<wbr />notify.<wbr />ontimer</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>datareporting.<wbr />healthreport.<wbr />documentServerURI</td>
+        <td class="undefined">undefined</td>
+        <td class="uri">http://%(server)s/dummy/healthreport/</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>datareporting.<wbr />healthreport.<wbr />logging.<wbr />consoleEnabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>datareporting.<wbr />healthreport.<wbr />service.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>datareporting.<wbr />healthreport.<wbr />service.<wbr />firstRun</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>datareporting.<wbr />healthreport.<wbr />uploadEnabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>datareporting.<wbr />policy.<wbr />dataSubmission<wbr />Enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>datareporting.<wbr />policy.<wbr />dataSubmission<wbr />Policy<wbr />Accepted</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>datareporting.<wbr />policy.<wbr />dataSubmission<wbr />Policy<wbr />Bypass<wbr />Notification</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>datareporting.<wbr />usage.<wbr />uploadEnabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>devtools.<wbr />settings.<wbr />redesign-enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />disable_<wbr />open_<wbr />during_<wbr />load</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />file.<wbr />createInChild</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />fs.<wbr />privateBrowsing.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />input_<wbr />events.<wbr />security.<wbr />minNumTicks</td>
+        <td>3</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />input_<wbr />events.<wbr />security.<wbr />minTimeElapsedInMS</td>
+        <td>100</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />ipc.<wbr />processPriorityManager.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />ipc.<wbr />reportProcessHangs</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />max_<wbr />script_<wbr />run_<wbr />time</td>
+        <td>10</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />navigation.<wbr />navigationRateLimit.<wbr />count</td>
+        <td>200</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />permissions.<wbr />testing.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />push.<wbr />connection.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />push.<wbr />window_<wbr />pushmanager.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />scoped-custom-element-registries.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>dom.<wbr />security.<wbr />sanitizer.<wbr />while-parsing</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>dom.<wbr />successive_<wbr />dialog_<wbr />time_<wbr />limit</td>
+        <td class="undefined">undefined</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />autoDisableScopes</td>
+        <td>15</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />blocklist.<wbr />detailsURL</td>
+        <td class="uri">https://blocked.cdn.mozilla.net/</td>
+        <td class="uri">http://%(server)s/extensions-dummy/blocklistDetailsURL</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />blocklist.<wbr />itemURL</td>
+        <td class="uri">https://blocked.cdn.mozilla.net/%blockID%.html</td>
+        <td class="uri">http://%(server)s/extensions-dummy/blocklistItemURL</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>extensions.<wbr />enabledScopes</td>
+        <td class="undefined">undefined</td>
+        <td>5</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />formautofill.<wbr />addresses.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />formautofill.<wbr />addresses.<wbr />supported</td>
+        <td>detect</td>
+        <td>on</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />formautofill.<wbr />creditCards.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>extensions.<wbr />formautofill.<wbr />suppress<wbr />Unrecognized<wbr />Autocomplete.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />getAddons.<wbr />cache.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />getAddons.<wbr />discovery.<wbr />api_<wbr />url</td>
+        <td class="uri">https://services.addons.mozilla.org/api/v4/discovery/?lang=%LOCALE%&amp;edition=%DISTRIBUTION%</td>
+        <td class="uri">data:, </td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />getAddons.<wbr />get.<wbr />url</td>
+        <td class="uri">https://services.addons.mozilla.org/api/v4/addons/search/?guid=%IDS%&amp;lang=%LOCALE%</td>
+        <td class="uri">http://%(server)s/extensions-dummy/repositoryGetURL</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />getAddons.<wbr />search.<wbr />browseURL</td>
+        <td class="uri">https://addons.mozilla.org/%LOCALE%/firefox/search?q=%TERMS%&amp;platform=%OS%&amp;appver=%VERSION%</td>
+        <td class="uri">http://%(server)s/extensions-dummy/repositoryBrowseURL</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>extensions.<wbr />hotfix.<wbr />url</td>
+        <td class="undefined">undefined</td>
+        <td class="uri">http://%(server)s/extensions-dummy/hotfixURL</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>extensions.<wbr />install<wbr />Distro<wbr />Addons</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />systemAddon.<wbr />update.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />update.<wbr />background.<wbr />url</td>
+        <td class="uri">https://versioncheck-bg.addons.mozilla.org/update/VersionCheck.php?reqVersion=%REQ_VERSION%&amp;id=%ITEM_ID%&amp;version=%ITEM_VERSION%&amp;maxAppVersion=%ITEM_MAXAPPVERSION%&amp;status=%ITEM_STATUS%&amp;appID=%APP_ID%&amp;appVersion=%APP_VERSION%&amp;appOS=%APP_OS%&amp;appABI=%APP_ABI%&amp;locale=%APP_LOCALE%&amp;currentAppVersion=%CURRENT_APP_VERSION%&amp;updateType=%UPDATE_TYPE%&amp;compatMode=%COMPATIBILITY_MODE%</td>
+        <td class="uri">http://%(server)s/extensions-dummy/updateBackgroundURL</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />update.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>extensions.<wbr />update.<wbr />notifyUser</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />update.<wbr />url</td>
+        <td class="uri">https://versioncheck.addons.mozilla.org/update/VersionCheck.php?reqVersion=%REQ_VERSION%&amp;id=%ITEM_ID%&amp;version=%ITEM_VERSION%&amp;maxAppVersion=%ITEM_MAXAPPVERSION%&amp;status=%ITEM_STATUS%&amp;appID=%APP_ID%&amp;appVersion=%APP_VERSION%&amp;appOS=%APP_OS%&amp;appABI=%APP_ABI%&amp;locale=%APP_LOCALE%&amp;currentAppVersion=%CURRENT_APP_VERSION%&amp;updateType=%UPDATE_TYPE%&amp;compatMode=%COMPATIBILITY_MODE%</td>
+        <td class="uri">http://%(server)s/extensions-dummy/updateURL</td>
+      </tr>
+
+      <tr>
+        <td>extensions.<wbr />webcompat-reporter.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>focusmanager.<wbr />testmode</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>general.<wbr />useragent.<wbr />updates.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>geo.<wbr />prompt.<wbr />open_<wbr />system_<wbr />prefs</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>geo.<wbr />provider.<wbr />network.<wbr />url</td>
+        <td class="uri">https://www.googleapis.com/geolocation/v1/geolocate?key=%GOOGLE_LOCATION_SERVICE_API_KEY%&amp;solution_channel=%OS%</td>
+        <td></td>
+      </tr>
+
+      <tr class="newkey">
+        <td>geo.<wbr />provider.<wbr />testing</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>geo.<wbr />wifi.<wbr />scan</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>gfx.<wbr />canvas.<wbr />remote.<wbr />use-draw-image-fast-path-dmabuf</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>identity.<wbr />fxaccounts.<wbr />auth.<wbr />uri</td>
+        <td class="uri">https://api.accounts.firefox.com/v1</td>
+        <td class="uri">https://{server}/dummy/fxa</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>image.<wbr />natural-size-fallback.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />attr.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />content.<wbr />alt-text.<wbr />enabled</td>
+        <td>true</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>layout.<wbr />css.<wbr />display-grid-lanes.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>layout.<wbr />css.<wbr />grid-template-masonry-value.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>layout.<wbr />css.<wbr />namespace.<wbr />exposed-in-workers-and-worklets</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>layout.<wbr />css.<wbr />scroll-driven-animations.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>media.<wbr />hardware-video-decoding-vulkan.<wbr />prefer-system-ffmpeg</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>media.<wbr />videocontrols.<wbr />picture-in-picture.<wbr />enable-when-occluded.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>mousewheel.<wbr />allow_<wbr />scrolling_<wbr />more_<wbr />than_<wbr />one_<wbr />page</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />captive-portal-service.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />connectivity-service.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />http.<wbr />http3.<wbr />fallback_<wbr />to_<wbr />h2_<wbr />on_<wbr />protocol_<wbr />error</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />http.<wbr />upload_<wbr />copy_<wbr />max_<wbr />segment_<wbr />size</td>
+        <td class="undefined">undefined</td>
+        <td>4096</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />idn.<wbr />allowed_<wbr />limited_<wbr />use_<wbr />scripts</td>
+        <td class="undefined">undefined</td>
+        <td>Bali, Cans, Java, Nko</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />manage-offline-status</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>network.<wbr />sntp.<wbr />pools</td>
+        <td class="undefined">undefined</td>
+        <td>%(server)s</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />tcp.<wbr />notsent_<wbr />lowat</td>
+        <td>0</td>
+        <td>32768</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />tcp.<wbr />user_<wbr />timeout</td>
+        <td>0</td>
+        <td>30</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />trr.<wbr />allow_<wbr />default_<wbr />http3_<wbr />first</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>network.<wbr />trr.<wbr />preserve_<wbr />on_<wbr />background</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>permissions.<wbr />isolateBy.<wbr />userContext</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>privacy.<wbr />trackingprotection.<wbr />pbmode.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>remote.<wbr />prefs.<wbr />recommended.<wbr />applied</td>
+        <td class="undefined">undefined</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>security.<wbr />certerrors.<wbr />mitm.<wbr />priming.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>security.<wbr />fileuri.<wbr />strict_<wbr />origin_<wbr />policy</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>security.<wbr />notification_<wbr />enable_<wbr />delay</td>
+        <td>500</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>security.<wbr />remote_<wbr />settings.<wbr />intermediates.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>security.<wbr />webauthn.<wbr />related_<wbr />origin_<wbr />requests_<wbr />mode</td>
+        <td>2</td>
+        <td>1</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>services.<wbr />settings.<wbr />loglevel</td>
+        <td class="undefined">undefined</td>
+        <td>off</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>services.<wbr />settings.<wbr />server</td>
+        <td class="undefined">undefined</td>
+        <td class="uri">data:,#remote-settings-dummy/v1</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>sidebar.<wbr />newTool.<wbr />migration.<wbr />passwords</td>
+        <td class="undefined">undefined</td>
+        <td class="json">{&quot;visibilityPref&quot;:&quot;browser.contextual-password-manager.enabled&quot;}</td>
+      </tr>
+
+      <tr>
+        <td>signon.<wbr />autofillForms</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>signon.<wbr />management.<wbr />page.<wbr />breach-alerts.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>signon.<wbr />management.<wbr />page.<wbr />vulnerable-passwords.<wbr />enabled</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>signon.<wbr />rememberSignons</td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>signon.<wbr />storage.<wbr />rust.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>startup.<wbr />homepage_<wbr />welcome_<wbr />url</td>
+        <td class="uri">about:welcome</td>
+        <td class="uri">about:blank</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>telemetry.<wbr />fog.<wbr />enable_<wbr />store_<wbr />submitted_<wbr />pings</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>telemetry.<wbr />fog.<wbr />test.<wbr />decelerate_<wbr />early_<wbr />events</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>telemetry.<wbr />fog.<wbr />test.<wbr />localhost_<wbr />port</td>
+        <td>0</td>
+        <td>-1</td>
+      </tr>
+
+      <tr>
+        <td>termsofuse.<wbr />bypassNotification</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>toolkit.<wbr />coverage.<wbr />enabled</td>
+        <td>false</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr class="oldkey">
+        <td>toolkit.<wbr />coverage.<wbr />endpoint.<wbr />base</td>
+        <td class="uri">https://coverage.mozilla.org</td>
+        <td class="undefined">undefined</td>
+      </tr>
+
+      <tr>
+        <td>toolkit.<wbr />startup.<wbr />max_<wbr />resumed_<wbr />crashes</td>
+        <td>3</td>
+        <td>-1</td>
+      </tr>
+
+      <tr>
+        <td>toolkit.<wbr />telemetry.<wbr />enabled</td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>toolkit.<wbr />telemetry.<wbr />server</td>
+        <td class="uri">https://incoming.telemetry.mozilla.org</td>
+        <td class="uri">https://%(server)s/telemetry-dummy/</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>ui.<wbr />mouse.<wbr />right_<wbr />click.<wbr />select_<wbr />in_<wbr />editable</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>ui.<wbr />mouse.<wbr />right_<wbr />click.<wbr />select_<wbr />under_<wbr />cursor</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>widget.<wbr />swipe.<wbr />haptic-feedback.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+      <tr class="newkey">
+        <td>widget.<wbr />windows.<wbr />window_<wbr />occlusion_<wbr />tracking.<wbr />enabled</td>
+        <td class="undefined">undefined</td>
+        <td>false</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+</div>
+
+<style type="text/css"><!-- /* --><![CDATA[ /* */
+table.diff_firefox159_pref_diff { border-collapse: collapse; font-size: x-small; overflow: auto; }
+table.diff_firefox159_pref_diff td { border: 1px solid #ddd; padding: 1px; vertical-align: top; }
+table.diff_firefox159_pref_diff thead td { background-color: #ddd; font-weight: bold; }
+table.diff_firefox159_pref_diff td.json,
+table.diff_firefox159_pref_diff td.uri,
+table.diff_firefox159_pref_diff td.dump { word-break: break-all; }
+table.diff_firefox159_pref_diff td.undefined { color: #888; font-style: italic; }
+table.diff_firefox159_pref_diff tr.sameval td:first-child { color: #444; }
+table.diff_firefox159_pref_diff tr.newkey  td:first-child { text-decoration: underline;    }
+table.diff_firefox159_pref_diff tr.oldkey  td:first-child { text-decoration: line-through; }
+table.diff_firefox159_pref_diff tbody tr:hover { background-color: #eee; }
+table.diff_firefox159_pref_diff tbody tr { transition: background 0.125s ease-in-out 0s; }
+/* ]]><!-- */ --></style>
